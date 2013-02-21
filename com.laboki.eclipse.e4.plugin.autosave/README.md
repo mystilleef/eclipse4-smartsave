@@ -7,11 +7,9 @@ This plugin is for development and testing ONLY. Please don't distribute it. It'
 
 AUTOSAVE
 --------
-It's the 21st century. Pressing [ctrl+s] should be outlawed. 
-Applications should always preserve states! This Eclipse 4 
-plugin automatically saves your files. Why? Because you have 
-better things to do with your time than worry about losing
-your files.
+This Eclipse 4 plugin automatically saves your files. 
+Why? Because you have better things to do than worry 
+about losing your files.
 
 CURRENT FEATURES
 ----------------
