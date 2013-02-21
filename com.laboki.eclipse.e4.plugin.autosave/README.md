@@ -15,12 +15,12 @@ your files.
 
 CURRENT FEATURES
 ----------------
-* Saves files every 5 seconds if there are no buffer activities.
-* Saves files when editor loses focus.
+* Automatically saves files every 5 seconds if there are no buffer activities.
+* Automatically saves files when editor loses focus.
 
 TODO
 ----
 * Option to change save interval in preferences window.
 * Option to prevent saving if compiler warnings and/or errors are present in preferences window.
-* Option to disable automatic saving in menu and preferences dialog.
+* Option to disable automatic saving in menu and preferences window.
 * Figure out i18n.
