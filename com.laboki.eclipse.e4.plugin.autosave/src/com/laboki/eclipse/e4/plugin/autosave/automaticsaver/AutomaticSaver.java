@@ -13,14 +13,14 @@ public final class AutomaticSaver {
 	private final Listener bufferModificationListener;
 	private final Listener partActivationListener;
 	private final CaretMovementListener caretMovementListener = new CaretMovementListener(new CaretMovementListenerHandler());
-	private static final String BUFFER_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
-	private static final String PART_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
+	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
+	private static final String EDITOR_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
 
 	public AutomaticSaver(final MPart editorPart) {
 		this.saveCountDownTimer = new SaveCountDownTimer(editorPart);
 		this.eventBroker = editorPart.getContext().get(IEventBroker.class);
-		this.bufferModificationListener = new Listener(AutomaticSaver.BUFFER_IS_MODIFIED, new BufferModificationHandler(editorPart), this.eventBroker);
-		this.partActivationListener = new Listener(AutomaticSaver.PART_IS_ACTIVE, new PartActivationHandler(editorPart), this.eventBroker);
+		this.bufferModificationListener = new Listener(AutomaticSaver.EDITOR_IS_MODIFIED, new BufferModificationHandler(editorPart), this.eventBroker);
+		this.partActivationListener = new Listener(AutomaticSaver.EDITOR_IS_ACTIVE, new PartActivationHandler(editorPart), this.eventBroker);
 	}
 
 	private final class BufferModificationHandler implements ListenerHandler {
