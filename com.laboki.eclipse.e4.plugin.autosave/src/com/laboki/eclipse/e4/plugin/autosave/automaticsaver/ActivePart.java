@@ -1,8 +1,14 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
+import java.util.Iterator;
+
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
@@ -11,8 +17,47 @@ public final class ActivePart {
 
 	private ActivePart() {}
 
+	public static IEditorPart getEditor() {
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+	}
+
 	public static StyledText getBuffer() {
-		return (StyledText) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getAdapter(Control.class);
+		return (StyledText) ActivePart.getEditor().getAdapter(Control.class);
+	}
+
+	public static SourceViewer getView() {
+		return (SourceViewer) ActivePart.getEditor().getAdapter(ITextOperationTarget.class);
+	}
+
+	public static void save() {
+		ActivePart.getEditor().doSave(null);
+	}
+
+	public static boolean isModified() {
+		return ActivePart.getEditor().isDirty();
+	}
+
+	static boolean hasWarnings() {
+		return ActivePart.getAnnotationSeverity("warning");
+	}
+
+	static boolean hasErrors() {
+		return ActivePart.getAnnotationSeverity("error");
+	}
+
+	private static boolean getAnnotationSeverity(final String problemSeverity) {
+		final Iterator<Annotation> iterator = ActivePart.getView().getAnnotationModel().getAnnotationIterator();
+		while (iterator.hasNext())
+			if (iterator.next().getType().endsWith(problemSeverity)) return true;
+		return false;
+	}
+
+	static boolean canCheckWarnings() {
+		return false;
+	}
+
+	static boolean canCheckErrors() {
+		return true;
 	}
 
 	public static boolean isInvalid(final MPart activePart) {

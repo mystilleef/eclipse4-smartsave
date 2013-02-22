@@ -2,28 +2,28 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
 final class SaveDecider {
 
-	private final EditorContext editor = new EditorContext();
+	private SaveDecider() {}
 
-	void save() {
-		if (this.canSaveFile()) this.editor.save();
+	static void save() {
+		if (SaveDecider.canSaveFile()) ActivePart.save();
 	}
 
-	private boolean canSaveFile() {
-		if (this.bufferIsNotModified()) return false;
-		if (this.hasWarnings()) return false;
-		if (this.hasErrors()) return false;
+	private static boolean canSaveFile() {
+		if (SaveDecider.bufferIsNotModified()) return false;
+		if (SaveDecider.hasWarnings()) return false;
+		if (SaveDecider.hasErrors()) return false;
 		return true;
 	}
 
-	private boolean bufferIsNotModified() {
-		return !this.editor.isModified();
+	private static boolean bufferIsNotModified() {
+		return !ActivePart.isModified();
 	}
 
-	private boolean hasWarnings() {
-		return EditorContext.canCheckWarnings() && this.editor.hasWarnings();
+	private static boolean hasWarnings() {
+		return ActivePart.canCheckWarnings() && ActivePart.hasWarnings();
 	}
 
-	private boolean hasErrors() {
-		return EditorContext.canCheckErrors() && this.editor.hasErrors();
+	private static boolean hasErrors() {
+		return ActivePart.canCheckErrors() && ActivePart.hasErrors();
 	}
 }
