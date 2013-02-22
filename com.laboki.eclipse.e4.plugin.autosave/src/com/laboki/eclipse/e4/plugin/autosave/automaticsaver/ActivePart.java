@@ -13,27 +13,27 @@ import org.eclipse.ui.PlatformUI;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 
-public final class ActivePart {
+final class ActivePart {
 
 	private ActivePart() {}
 
-	public static IEditorPart getEditor() {
+	static IEditorPart getEditor() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	}
 
-	public static StyledText getBuffer() {
+	static StyledText getBuffer() {
 		return (StyledText) ActivePart.getEditor().getAdapter(Control.class);
 	}
 
-	public static SourceViewer getView() {
+	static SourceViewer getView() {
 		return (SourceViewer) ActivePart.getEditor().getAdapter(ITextOperationTarget.class);
 	}
 
-	public static void save() {
+	static void save() {
 		ActivePart.getEditor().doSave(null);
 	}
 
-	public static boolean isModified() {
+	static boolean isModified() {
 		return ActivePart.getEditor().isDirty();
 	}
 
@@ -48,8 +48,12 @@ public final class ActivePart {
 	private static boolean getAnnotationSeverity(final String problemSeverity) {
 		final Iterator<Annotation> iterator = ActivePart.getView().getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
-			if (iterator.next().getType().endsWith(problemSeverity)) return true;
+			if (ActivePart.hasProblems(problemSeverity, iterator)) return true;
 		return false;
+	}
+
+	private static boolean hasProblems(final String problemSeverity, final Iterator<Annotation> iterator) {
+		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
 	static boolean canCheckWarnings() {
@@ -60,25 +64,25 @@ public final class ActivePart {
 		return true;
 	}
 
-	public static boolean isInvalid(final MPart activePart) {
+	static boolean isInvalid(final MPart activePart) {
 		if (ActivePart.isNotAnEditor(activePart)) return true;
 		if (ActivePart.isTagged(activePart)) return true;
 		return false;
 	}
 
-	public static boolean isNotAnEditor(final MPart activePart) {
+	static boolean isNotAnEditor(final MPart activePart) {
 		if (activePart == null) return true;
 		if (activePart.getTags().contains("Editor")) return false;
 		return true;
 	}
 
-	public static boolean isTagged(final MPart activePart) {
+	static boolean isTagged(final MPart activePart) {
 		if (activePart == null) return true;
 		if (activePart.getContext().containsKey(AddonMetadata.PLUGIN_NAME)) return true;
 		return false;
 	}
 
-	public static boolean isNotTagged(final MPart activePart) {
+	static boolean isNotTagged(final MPart activePart) {
 		return !ActivePart.isTagged(activePart);
 	}
 }
