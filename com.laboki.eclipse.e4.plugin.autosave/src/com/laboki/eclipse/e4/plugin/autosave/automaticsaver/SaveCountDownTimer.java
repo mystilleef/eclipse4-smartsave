@@ -5,19 +5,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Display;
 
 final class SaveCountDownTimer implements Runnable {
 
-	private final int saveIntervalInSeconds = 5;
-	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	private ScheduledFuture<?> schedulerHandle;
-	private final SaveDecider saveDecider;
-
-	public SaveCountDownTimer(final MPart editorPart) {
-		this.saveDecider = new SaveDecider(editorPart);
-	}
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private final SaveDecider saveDecider = new SaveDecider();
+	private final int saveIntervalInSeconds = 5;
 
 	@Override
 	public void run() {
