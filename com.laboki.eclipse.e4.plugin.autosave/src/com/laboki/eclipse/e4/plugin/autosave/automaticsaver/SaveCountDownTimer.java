@@ -11,7 +11,6 @@ final class SaveCountDownTimer implements Runnable {
 
 	private ScheduledFuture<?> schedulerHandle;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-	private final int saveIntervalInSeconds = 5;
 
 	@Override
 	public void run() {
@@ -29,7 +28,7 @@ final class SaveCountDownTimer implements Runnable {
 	}
 
 	private void start() {
-		this.schedulerHandle = this.scheduler.schedule(this, this.saveIntervalInSeconds, TimeUnit.SECONDS);
+		this.schedulerHandle = this.scheduler.schedule(this, ActivePart.getSaveIntervalInSeconds(), TimeUnit.SECONDS);
 	}
 
 	void stop() {

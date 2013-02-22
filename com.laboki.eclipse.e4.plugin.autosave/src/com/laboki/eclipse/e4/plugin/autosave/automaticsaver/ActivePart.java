@@ -15,6 +15,8 @@ import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 
 final class ActivePart {
 
+	private static final int SAVE_INTERVAL_IN_SECONDS = 5;
+
 	private ActivePart() {}
 
 	static IEditorPart getEditor() {
@@ -54,6 +56,10 @@ final class ActivePart {
 
 	private static boolean hasProblems(final String problemSeverity, final Iterator<Annotation> iterator) {
 		return iterator.next().getType().endsWith(problemSeverity);
+	}
+
+	static int getSaveIntervalInSeconds() {
+		return ActivePart.SAVE_INTERVAL_IN_SECONDS;
 	}
 
 	static boolean canCheckWarnings() {
