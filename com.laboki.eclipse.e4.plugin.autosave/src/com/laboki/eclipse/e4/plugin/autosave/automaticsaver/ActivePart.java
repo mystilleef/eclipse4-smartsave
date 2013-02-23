@@ -16,7 +16,16 @@ import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferen
 
 final class ActivePart {
 
-	private ActivePart() {}
+	private static ActivePart instance;
+
+	private ActivePart() {
+		Preferences.initialize();
+	}
+
+	public static synchronized ActivePart initialize() {
+		if (ActivePart.instance == null) ActivePart.instance = new ActivePart();
+		return ActivePart.instance;
+	}
 
 	static IEditorPart getEditor() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
