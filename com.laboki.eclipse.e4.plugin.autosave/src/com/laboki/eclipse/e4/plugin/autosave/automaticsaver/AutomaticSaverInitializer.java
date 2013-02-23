@@ -9,11 +9,13 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.osgi.service.event.Event;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
+import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferences;
 
 public final class AutomaticSaverInitializer {
 
 	public AutomaticSaverInitializer() {
 		System.out.println("Initializing automatic saver factory addon.");
+		Preferences.initialize();
 	}
 
 	@Inject

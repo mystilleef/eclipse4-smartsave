@@ -16,7 +16,7 @@ public final class PreferencesStore {
 	private static final String CHECK_WARNINGS_KEY = "checkWarnings";
 	private static final String CHECK_ERRORS_KEY = "checkErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
-	private static final IEclipsePreferences PREFERENCES = InstanceScope.INSTANCE.getNode(AddonMetadata.PLUGIN_NAME);
+	static final IEclipsePreferences PREFERENCES = InstanceScope.INSTANCE.getNode(AddonMetadata.PLUGIN_NAME);
 
 	private PreferencesStore() {}
 
@@ -58,6 +58,14 @@ public final class PreferencesStore {
 	public static int getSaveIntervalInSeconds() {
 		PreferencesStore.sync();
 		return PreferencesStore.PREFERENCES.getInt(PreferencesStore.SAVE_INTERVAL_KEY, PreferencesStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
+	}
+
+	public static void clear() {
+		try {
+			PreferencesStore.PREFERENCES.clear();
+		} catch (final BackingStoreException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void flush() {

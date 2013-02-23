@@ -2,6 +2,7 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
 
 public final class Preferences implements IPreferencesHandler {
 
+	private static Preferences instance;
 	private static int saveIntervalInSeconds = PreferencesStore.getSaveIntervalInSeconds();
 	private static boolean canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
 	private static boolean canCheckErrors = PreferencesStore.getCanCheckErrors();
@@ -9,6 +10,11 @@ public final class Preferences implements IPreferencesHandler {
 	@SuppressWarnings("unused") private final PreferencesListener listener = new PreferencesListener(this);
 
 	private Preferences() {}
+
+	public static synchronized Preferences initialize() {
+		if (Preferences.instance == null) Preferences.instance = new Preferences();
+		return Preferences.instance;
+	}
 
 	public static int saveIntervalInSeconds() {
 		return Preferences.saveIntervalInSeconds;
