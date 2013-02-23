@@ -5,7 +5,8 @@ final class SaveDecider {
 	private SaveDecider() {}
 
 	static void save() {
-		if (SaveDecider.canSaveFile()) ActivePart.save();
+		if (!ActivePart.canSaveAutomatically() || !SaveDecider.canSaveFile()) return;
+		ActivePart.save();
 	}
 
 	private static boolean canSaveFile() {

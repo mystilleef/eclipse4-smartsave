@@ -51,6 +51,7 @@ public final class AutomaticSaver {
 	}
 
 	protected void startAutomaticSaving() {
+		if (!ActivePart.canSaveAutomatically()) return;
 		this.startMonitoringEvents();
 		this.startCountDownToSaveFile();
 	}
