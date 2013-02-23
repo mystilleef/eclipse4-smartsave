@@ -12,13 +12,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
+import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferences;
 
 final class ActivePart {
-
-	public static final boolean CAN_CHECK_WARNINGS_DEFAULT_VALUE = false;
-	public static final boolean CAN_CHECK_ERRORS_DEFAULT_VALUE = true;
-	public static final boolean CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE = true;
-	public static final int SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE = 5;
 
 	private ActivePart() {}
 
@@ -62,15 +58,19 @@ final class ActivePart {
 	}
 
 	static boolean canCheckWarnings() {
-		return false;
+		return Preferences.canCheckWarnings();
 	}
 
 	static boolean canCheckErrors() {
-		return true;
+		return Preferences.canCheckErrors();
+	}
+
+	static boolean canSaveAutomatically() {
+		return Preferences.canSaveAutomatically();
 	}
 
 	static int getSaveIntervalInSeconds() {
-		return ActivePart.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE;
+		return Preferences.saveIntervalInSeconds();
 	}
 
 	static boolean isInvalid(final MPart activePart) {
