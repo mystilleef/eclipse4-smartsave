@@ -15,7 +15,11 @@ import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 
 final class ActivePart {
 
+	private static boolean canCheckWarningsDefaultValue;
+	private static boolean canCheckErrorsDefaultValue = true;
+	private static boolean canSaveAutomaticallyDefaultValue = true;
 	private static final int SAVE_INTERVAL_IN_SECONDS = 5;
+	private static int saveIntervalInSecondsDefaultValue = ActivePart.SAVE_INTERVAL_IN_SECONDS;
 
 	private ActivePart() {}
 
@@ -59,7 +63,7 @@ final class ActivePart {
 	}
 
 	static int getSaveIntervalInSeconds() {
-		return ActivePart.SAVE_INTERVAL_IN_SECONDS;
+		return ActivePart.saveIntervalInSecondsDefaultValue;
 	}
 
 	static boolean canCheckWarnings() {
@@ -90,5 +94,21 @@ final class ActivePart {
 
 	static boolean isNotTagged(final MPart activePart) {
 		return !ActivePart.isTagged(activePart);
+	}
+
+	public static int getGetSaveIntervalInSecondsDefaultValue() {
+		return ActivePart.saveIntervalInSecondsDefaultValue;
+	}
+
+	public static boolean getCanCheckErrorsDefaultValue() {
+		return ActivePart.canCheckErrorsDefaultValue;
+	}
+
+	public static boolean getCanCheckWarningsDefaultValue() {
+		return ActivePart.canCheckWarningsDefaultValue;
+	}
+
+	public static boolean getCanSaveAutomaticallyDefaultValue() {
+		return ActivePart.canSaveAutomaticallyDefaultValue;
 	}
 }
