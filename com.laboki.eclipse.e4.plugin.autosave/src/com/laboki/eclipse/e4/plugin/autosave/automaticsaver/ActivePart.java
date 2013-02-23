@@ -15,11 +15,10 @@ import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 
 final class ActivePart {
 
-	private static boolean canCheckWarningsDefaultValue;
-	private static boolean canCheckErrorsDefaultValue = true;
-	private static boolean canSaveAutomaticallyDefaultValue = true;
-	private static final int SAVE_INTERVAL_IN_SECONDS = 5;
-	private static int saveIntervalInSecondsDefaultValue = ActivePart.SAVE_INTERVAL_IN_SECONDS;
+	public static final boolean CAN_CHECK_WARNINGS_DEFAULT_VALUE = false;
+	public static final boolean CAN_CHECK_ERRORS_DEFAULT_VALUE = true;
+	public static final boolean CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE = true;
+	public static final int SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE = 5;
 
 	private ActivePart() {}
 
@@ -62,16 +61,16 @@ final class ActivePart {
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
-	static int getSaveIntervalInSeconds() {
-		return ActivePart.saveIntervalInSecondsDefaultValue;
-	}
-
 	static boolean canCheckWarnings() {
 		return false;
 	}
 
 	static boolean canCheckErrors() {
 		return true;
+	}
+
+	static int getSaveIntervalInSeconds() {
+		return ActivePart.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE;
 	}
 
 	static boolean isInvalid(final MPart activePart) {
@@ -94,21 +93,5 @@ final class ActivePart {
 
 	static boolean isNotTagged(final MPart activePart) {
 		return !ActivePart.isTagged(activePart);
-	}
-
-	public static int getGetSaveIntervalInSecondsDefaultValue() {
-		return ActivePart.saveIntervalInSecondsDefaultValue;
-	}
-
-	public static boolean getCanCheckErrorsDefaultValue() {
-		return ActivePart.canCheckErrorsDefaultValue;
-	}
-
-	public static boolean getCanCheckWarningsDefaultValue() {
-		return ActivePart.canCheckWarningsDefaultValue;
-	}
-
-	public static boolean getCanSaveAutomaticallyDefaultValue() {
-		return ActivePart.canSaveAutomaticallyDefaultValue;
 	}
 }
