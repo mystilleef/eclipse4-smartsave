@@ -7,9 +7,11 @@ public final class Preferences implements IPreferencesHandler {
 	private static boolean canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
 	private static boolean canCheckErrors = PreferencesStore.getCanCheckErrors();
 	private static boolean canCheckWarnings = PreferencesStore.getCanCheckWarnings();
-	@SuppressWarnings("unused") private final PreferencesListener listener = new PreferencesListener(this);
+	private final PreferencesListener listener = new PreferencesListener(this);
 
-	private Preferences() {}
+	private Preferences() {
+		this.listener.start();
+	}
 
 	public static synchronized Preferences initialize() {
 		if (Preferences.instance == null) Preferences.instance = new Preferences();

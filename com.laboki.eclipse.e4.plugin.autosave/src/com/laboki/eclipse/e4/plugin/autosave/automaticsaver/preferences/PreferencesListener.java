@@ -9,14 +9,13 @@ public final class PreferencesListener {
 
 	public PreferencesListener(final IPreferencesHandler handler) {
 		this.listener = new ChangeListener(handler);
-		this.start();
 	}
 
-	private void start() {
+	public void start() {
 		PreferencesStore.PREFERENCES.addPreferenceChangeListener(this.listener);
 	}
 
-	void stop() {
+	public void stop() {
 		PreferencesStore.PREFERENCES.removePreferenceChangeListener(this.listener);
 	}
 

@@ -13,7 +13,6 @@ import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 public final class AutomaticSaverInitializer {
 
 	public AutomaticSaverInitializer() {
-		System.out.println("Initializing automatic saver factory addon.");
 		ActivePart.initialize();
 	}
 
