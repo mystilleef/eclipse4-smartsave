@@ -25,7 +25,7 @@ public final class AddonInitializer {
 	}
 
 	private static void installAddon(final MApplication application, final Class<?> addonClass) {
-		AddonInitializer.removeAddon(application, addonClass); // TODO: Remove this after testing.
+		AddonInitializer.removeAddon(application, addonClass);
 		if (AddonInitializer.addonIsInstalled(application, addonClass)) return;
 		application.getAddons().add(AddonInitializer.createAddon(addonClass));
 	}

@@ -3,7 +3,9 @@ AUTOMATIC SAVING FOR ECLIPSE 4
 
 WARNING! 
 --------
-This plugin is for development and testing ONLY. Please don't distribute it. It's not feature complete or extensively tested!
+This plugin is for development and testing ONLY. 
+Please don't distribute it. It's not feature 
+complete or extensively tested!
 
 AUTOSAVE
 --------

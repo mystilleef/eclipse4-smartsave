@@ -1,7 +1,7 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
 
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
@@ -16,69 +16,83 @@ public final class PreferencesStore {
 	private static final String CHECK_WARNINGS_KEY = "checkWarnings";
 	private static final String CHECK_ERRORS_KEY = "checkErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
-	static final IEclipsePreferences PREFERENCES = InstanceScope.INSTANCE.getNode(AddonMetadata.PLUGIN_NAME);
 
 	private PreferencesStore() {}
 
 	public static void setCanSaveAutomatically(final boolean saveAutomatically) {
-		PreferencesStore.PREFERENCES.putBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
-		PreferencesStore.flush();
+		PreferencesStore.setBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
 	}
 
 	public static boolean getCanSaveAutomatically() {
-		PreferencesStore.sync();
-		return PreferencesStore.PREFERENCES.getBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, PreferencesStore.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
+		return PreferencesStore.getBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, PreferencesStore.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
 	}
 
 	public static void setCanCheckWarnings(final boolean checkWarnings) {
-		PreferencesStore.PREFERENCES.putBoolean(PreferencesStore.CHECK_WARNINGS_KEY, checkWarnings);
-		PreferencesStore.flush();
+		PreferencesStore.setBoolean(PreferencesStore.CHECK_WARNINGS_KEY, checkWarnings);
 	}
 
 	public static boolean getCanCheckWarnings() {
-		PreferencesStore.sync();
-		return PreferencesStore.PREFERENCES.getBoolean(PreferencesStore.CHECK_WARNINGS_KEY, PreferencesStore.CAN_CHECK_WARNINGS_DEFAULT_VALUE);
+		return PreferencesStore.getBoolean(PreferencesStore.CHECK_WARNINGS_KEY, PreferencesStore.CAN_CHECK_WARNINGS_DEFAULT_VALUE);
 	}
 
 	public static void setCanCheckErrors(final boolean checkErrors) {
-		PreferencesStore.PREFERENCES.putBoolean(PreferencesStore.CHECK_ERRORS_KEY, checkErrors);
-		PreferencesStore.flush();
+		PreferencesStore.setBoolean(PreferencesStore.CHECK_ERRORS_KEY, checkErrors);
 	}
 
 	public static boolean getCanCheckErrors() {
-		PreferencesStore.sync();
-		return PreferencesStore.PREFERENCES.getBoolean(PreferencesStore.CHECK_ERRORS_KEY, PreferencesStore.CAN_CHECK_ERRORS_DEFAULT_VALUE);
+		return PreferencesStore.getBoolean(PreferencesStore.CHECK_ERRORS_KEY, PreferencesStore.CAN_CHECK_ERRORS_DEFAULT_VALUE);
 	}
 
 	public static void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
-		PreferencesStore.PREFERENCES.putInt(PreferencesStore.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
-		PreferencesStore.flush();
+		PreferencesStore.setInt(PreferencesStore.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
 	}
 
 	public static int getSaveIntervalInSeconds() {
-		PreferencesStore.sync();
-		return PreferencesStore.PREFERENCES.getInt(PreferencesStore.SAVE_INTERVAL_KEY, PreferencesStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
+		return PreferencesStore.getInt(PreferencesStore.SAVE_INTERVAL_KEY, PreferencesStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
 	}
 
 	public static void clear() {
 		try {
-			PreferencesStore.PREFERENCES.clear();
+			final IEclipsePreferences pref = PreferencesStore.getPreferences();
+			pref.clear();
+			PreferencesStore.sync(pref);
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void flush() {
-		try {
-			PreferencesStore.PREFERENCES.flush();
-		} catch (final BackingStoreException e) {
-			e.printStackTrace();
-		}
+	public static IEclipsePreferences getPreferences() {
+		return ConfigurationScope.INSTANCE.getNode(AddonMetadata.PLUGIN_NAME);
 	}
 
-	private static void sync() {
+	private static void setBoolean(final String key, final boolean value) {
+		final IEclipsePreferences pref = PreferencesStore.getPreferences();
+		pref.putBoolean(key, value);
+		PreferencesStore.sync(pref);
+	}
+
+	private static boolean getBoolean(final String key, final boolean defaultValue) {
+		final IEclipsePreferences pref = PreferencesStore.getPreferences();
+		PreferencesStore.sync(pref);
+		return pref.getBoolean(key, defaultValue);
+	}
+
+	private static void setInt(final String key, final int value) {
+		final IEclipsePreferences pref = PreferencesStore.getPreferences();
+		pref.putInt(key, value);
+		PreferencesStore.sync(pref);
+	}
+
+	private static int getInt(final String key, final int defaultValue) {
+		final IEclipsePreferences pref = PreferencesStore.getPreferences();
+		PreferencesStore.sync(pref);
+		return pref.getInt(key, defaultValue);
+	}
+
+	private static void sync(final IEclipsePreferences preferences) {
 		try {
-			PreferencesStore.PREFERENCES.sync();
+			preferences.flush();
+			preferences.sync();
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}

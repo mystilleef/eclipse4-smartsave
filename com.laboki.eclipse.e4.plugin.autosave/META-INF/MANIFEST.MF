@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Autosave
 Bundle-SymbolicName: com.laboki.eclipse.e4.plugin.autosave;singleton:=true
-Bundle-Version: 20130222
+Bundle-Version: 20130223
 Bundle-Vendor: LABOKI
 Export-Package: com.laboki.eclipse.e4.plugin.autosave;uses:="org.eclipse.e4.ui.model.application",
  com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
