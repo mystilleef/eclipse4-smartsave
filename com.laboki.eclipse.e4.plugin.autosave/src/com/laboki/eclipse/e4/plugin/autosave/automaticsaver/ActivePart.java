@@ -66,12 +66,12 @@ final class ActivePart {
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
-	static boolean canCheckWarnings() {
-		return Preferences.canCheckWarnings();
+	static boolean canSaveIfWarnings() {
+		return Preferences.canSaveIfWarnings();
 	}
 
-	static boolean canCheckErrors() {
-		return Preferences.canCheckErrors();
+	static boolean canSaveIfErrors() {
+		return Preferences.canSaveIfErrors();
 	}
 
 	static boolean canSaveAutomatically() {

@@ -22,7 +22,7 @@ class ResponseComboViewer extends ComboViewer {
 	private void setProperties() {
 		this.setContentProvider(ArrayContentProvider.getInstance());
 		this.setLabelProvider(this.labelProvider);
-		this.setInput(this.getResponses());
+		this.setInput(this.responses);
 	}
 
 	void startListening() {
@@ -35,7 +35,7 @@ class ResponseComboViewer extends ComboViewer {
 
 	protected void handleResponseSelection(@SuppressWarnings("unused") final SelectionChangedEvent event) {}
 
-	public Response[] getResponses() {
+	protected Response[] getResponses() {
 		return this.responses;
 	}
 

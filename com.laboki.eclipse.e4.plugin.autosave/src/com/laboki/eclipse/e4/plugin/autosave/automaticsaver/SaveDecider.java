@@ -21,10 +21,12 @@ final class SaveDecider {
 	}
 
 	private static boolean hasWarnings() {
-		return ActivePart.canCheckWarnings() && ActivePart.hasWarnings();
+		if (ActivePart.canSaveIfWarnings()) return false;
+		return ActivePart.hasWarnings();
 	}
 
 	private static boolean hasErrors() {
-		return ActivePart.canCheckErrors() && ActivePart.hasErrors();
+		if (ActivePart.canSaveIfErrors()) return false;
+		return ActivePart.hasErrors();
 	}
 }

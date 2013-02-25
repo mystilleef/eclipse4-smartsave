@@ -5,8 +5,8 @@ public final class Preferences implements IPreferencesHandler {
 	private static Preferences instance;
 	private static int saveIntervalInSeconds = PreferencesStore.getSaveIntervalInSeconds();
 	private static boolean canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
-	private static boolean canCheckErrors = PreferencesStore.getCanCheckErrors();
-	private static boolean canCheckWarnings = PreferencesStore.getCanCheckWarnings();
+	private static boolean canSaveIfErrors = PreferencesStore.getCanSaveIfErrors();
+	private static boolean canSaveIfWarnings = PreferencesStore.getCanSaveIfWarnings();
 	private final PreferencesListener listener = new PreferencesListener(this);
 
 	private Preferences() {
@@ -26,12 +26,12 @@ public final class Preferences implements IPreferencesHandler {
 		return Preferences.canSaveAutomatically;
 	}
 
-	public static boolean canCheckErrors() {
-		return Preferences.canCheckErrors;
+	public static boolean canSaveIfErrors() {
+		return Preferences.canSaveIfErrors;
 	}
 
-	public static boolean canCheckWarnings() {
-		return Preferences.canCheckWarnings;
+	public static boolean canSaveIfWarnings() {
+		return Preferences.canSaveIfWarnings;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public final class Preferences implements IPreferencesHandler {
 		Preferences.canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
 		System.out.print(Preferences.canSaveAutomatically);
 		System.out.println(" :Preferences changed event handler called in Preferences module!");
-		Preferences.canCheckErrors = PreferencesStore.getCanCheckErrors();
-		Preferences.canCheckWarnings = PreferencesStore.getCanCheckWarnings();
+		Preferences.canSaveIfErrors = PreferencesStore.getCanSaveIfErrors();
+		Preferences.canSaveIfWarnings = PreferencesStore.getCanSaveIfWarnings();
 	}
 }

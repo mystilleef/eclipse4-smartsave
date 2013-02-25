@@ -1,6 +1,5 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
 
-import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -18,8 +17,9 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 	@Override
 	protected Control createContents(final Composite parent) {
 		final Composite pageComposite = AutosavePage.createPageComposite(parent);
-		this.createColorEditor(pageComposite);
-		AutosavePage.createComboView(pageComposite);
+		AutosavePage.createSaveComboView(pageComposite, "Save files Automatically: ");
+		AutosavePage.createErrorComboView(pageComposite, "Save files when errors are present: ");
+		AutosavePage.createWarningComboView(pageComposite, "Save files when warnings are present: ");
 		return pageComposite;
 	}
 
@@ -36,12 +36,6 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 		return data;
 	}
 
-	private void createColorEditor(final Composite pageComposite) {
-		final ColorFieldEditor colorEditor = new ColorFieldEditor("Blue", "Highlight Color", AutosavePage.createHorizontalLayoutComposite(pageComposite));
-		colorEditor.setPage(this);
-		colorEditor.load();
-	}
-
 	private static Composite createHorizontalLayoutComposite(final Composite pageComposite) {
 		final Composite layoutComposite = new Composite(pageComposite, SWT.NONE);
 		layoutComposite.setLayout(new GridLayout());
@@ -49,11 +43,27 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 		return layoutComposite;
 	}
 
-	private static void createComboView(final Composite pageComposite) {
+	private static void createSaveComboView(final Composite pageComposite, final String name) {
 		final Composite composite = AutosavePage.createHorizontalLayoutComposite(pageComposite);
-		final Label label = new Label(composite, SWT.NONE);
-		label.setText("Save files automatically:");
+		AutosavePage.createLabel(composite, name);
 		new SaveResponseComboViewer(composite).startListening();
+	}
+
+	private static void createErrorComboView(final Composite pageComposite, final String name) {
+		final Composite composite = AutosavePage.createHorizontalLayoutComposite(pageComposite);
+		AutosavePage.createLabel(composite, name);
+		new ErrorResponseComboViewer(composite).startListening();
+	}
+
+	private static void createWarningComboView(final Composite pageComposite, final String name) {
+		final Composite composite = AutosavePage.createHorizontalLayoutComposite(pageComposite);
+		AutosavePage.createLabel(composite, name);
+		new WarningResponseComboViewer(composite).startListening();
+	}
+
+	private static void createLabel(final Composite composite, final String name) {
+		final Label label = new Label(composite, SWT.NONE);
+		label.setText(name);
 	}
 
 	@Override

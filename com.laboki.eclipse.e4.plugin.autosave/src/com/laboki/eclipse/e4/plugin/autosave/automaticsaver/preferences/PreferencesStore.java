@@ -8,13 +8,13 @@ import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 
 public final class PreferencesStore {
 
-	private static final boolean CAN_CHECK_WARNINGS_DEFAULT_VALUE = false;
-	private static final boolean CAN_CHECK_ERRORS_DEFAULT_VALUE = true;
+	private static final boolean CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE = true;
+	private static final boolean CAN_SAVE_IF_ERRORS_DEFAULT_VALUE = false;
 	private static final boolean CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE = true;
 	private static final int SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE = 5;
 	private static final String SAVE_AUTOMATICALLY_KEY = "saveAutomatically";
-	private static final String CHECK_WARNINGS_KEY = "checkWarnings";
-	private static final String CHECK_ERRORS_KEY = "checkErrors";
+	private static final String WARNINGS_KEY = "saveIfWarnings";
+	private static final String ERRORS_KEY = "saveIfErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
 
 	private PreferencesStore() {}
@@ -27,20 +27,20 @@ public final class PreferencesStore {
 		return PreferencesStore.getBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, PreferencesStore.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
 	}
 
-	public static void setCanCheckWarnings(final boolean checkWarnings) {
-		PreferencesStore.setBoolean(PreferencesStore.CHECK_WARNINGS_KEY, checkWarnings);
+	public static void setCanSaveIfWarnings(final boolean checkWarnings) {
+		PreferencesStore.setBoolean(PreferencesStore.WARNINGS_KEY, checkWarnings);
 	}
 
-	public static boolean getCanCheckWarnings() {
-		return PreferencesStore.getBoolean(PreferencesStore.CHECK_WARNINGS_KEY, PreferencesStore.CAN_CHECK_WARNINGS_DEFAULT_VALUE);
+	public static boolean getCanSaveIfWarnings() {
+		return PreferencesStore.getBoolean(PreferencesStore.WARNINGS_KEY, PreferencesStore.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
 	}
 
-	public static void setCanCheckErrors(final boolean checkErrors) {
-		PreferencesStore.setBoolean(PreferencesStore.CHECK_ERRORS_KEY, checkErrors);
+	public static void setCanSaveIfErrors(final boolean checkErrors) {
+		PreferencesStore.setBoolean(PreferencesStore.ERRORS_KEY, checkErrors);
 	}
 
-	public static boolean getCanCheckErrors() {
-		return PreferencesStore.getBoolean(PreferencesStore.CHECK_ERRORS_KEY, PreferencesStore.CAN_CHECK_ERRORS_DEFAULT_VALUE);
+	public static boolean getCanSaveIfErrors() {
+		return PreferencesStore.getBoolean(PreferencesStore.ERRORS_KEY, PreferencesStore.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
 	}
 
 	public static void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
