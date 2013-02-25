@@ -5,8 +5,13 @@ final class SaveDecider {
 	private SaveDecider() {}
 
 	static void save() {
+		if (SaveDecider.hasSelection()) return;
 		if (!ActivePart.canSaveAutomatically() || !SaveDecider.canSaveFile()) return;
 		ActivePart.save();
+	}
+
+	private static boolean hasSelection() {
+		return ActivePart.getBuffer().getSelectionCount() != 0;
 	}
 
 	private static boolean canSaveFile() {

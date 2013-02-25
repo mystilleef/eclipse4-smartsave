@@ -42,8 +42,8 @@ public final class AutomaticSaver {
 	}
 
 	protected void stopListeningForBufferModification() {
-		this.bufferModificationListener.stop();
 		this.save();
+		this.bufferModificationListener.stop();
 	}
 
 	private void save() {

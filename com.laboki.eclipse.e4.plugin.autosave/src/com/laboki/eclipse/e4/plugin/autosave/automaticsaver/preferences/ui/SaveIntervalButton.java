@@ -1,5 +1,7 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
 
+import java.text.MessageFormat;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -14,8 +16,6 @@ final class SaveIntervalButton implements IPreferencesHandler {
 
 	private static Button button;
 	private static SaveIntervalDialog dialog;
-	private static final String SECONDS = " sec";
-	private static final String MINUTES = " min";
 	private static final int SIXTY_SECONDS = 60;
 	private final PreferencesListener preferencesListener = new PreferencesListener(this);
 	private final SelectionListener buttonListener = new ButtonListener();
@@ -46,9 +46,9 @@ final class SaveIntervalButton implements IPreferencesHandler {
 	}
 
 	private static String formatMinutesAndSeconds(final int minutes, final int seconds) {
-		if (minutes == 0) return String.valueOf(seconds) + SaveIntervalButton.SECONDS;
-		if (seconds == 0) return String.valueOf(minutes) + SaveIntervalButton.MINUTES;
-		return String.valueOf(minutes) + " min " + String.valueOf(seconds) + SaveIntervalButton.SECONDS;
+		if (minutes == 0) return MessageFormat.format(" {0} sec ", String.valueOf(seconds));
+		if (seconds == 0) return MessageFormat.format(" {0} min ", String.valueOf(minutes));
+		return MessageFormat.format(" {0} min {1} sec ", String.valueOf(minutes), String.valueOf(seconds));
 	}
 
 	public void startListening() {
