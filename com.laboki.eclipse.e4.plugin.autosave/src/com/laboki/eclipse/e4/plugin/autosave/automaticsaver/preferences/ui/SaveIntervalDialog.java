@@ -21,11 +21,11 @@ final class SaveIntervalDialog {
 	}
 
 	private static void setProperties() {
-		SaveIntervalDialog.dialog.setLayout(SaveIntervalDialog.createLayout());
-		SaveIntervalDialog.dialog.setText("Save Interval");
+		SaveIntervalDialog.getDialog().setLayout(SaveIntervalDialog.createLayout());
+		SaveIntervalDialog.getDialog().setText("Save Interval");
 		SaveIntervalDialog.addLabel();
 		SaveIntervalDialog.addSpinnerSection();
-		SaveIntervalDialog.dialog.pack();
+		SaveIntervalDialog.getDialog().pack();
 	}
 
 	private static GridLayout createLayout() {
@@ -39,7 +39,7 @@ final class SaveIntervalDialog {
 
 	private static void addLabel() {
 		final String text = "Press ESC or ENTER to close window.";
-		final StyledText fieldText = new StyledText(SaveIntervalDialog.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
+		final StyledText fieldText = new StyledText(SaveIntervalDialog.getDialog(), SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
 		SaveIntervalDialog.setLabelProperties(text, fieldText);
 		SaveIntervalDialog.setLabelStyle(text, fieldText);
 	}
@@ -48,7 +48,7 @@ final class SaveIntervalDialog {
 		fieldText.setText(text);
 		fieldText.setEditable(false);
 		fieldText.setCaret(null);
-		fieldText.setBackground(SaveIntervalDialog.dialog.getBackground());
+		fieldText.setBackground(SaveIntervalDialog.getDialog().getBackground());
 		fieldText.setLayoutData(new GridData());
 	}
 
@@ -73,13 +73,22 @@ final class SaveIntervalDialog {
 	}
 
 	private static Composite createSpinnerComposite() {
-		final Composite composite = new Composite(SaveIntervalDialog.dialog, SWT.NONE);
+		final Composite composite = new Composite(SaveIntervalDialog.getDialog(), SWT.NONE);
 		composite.setLayout(new GridLayout(SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS, false));
 		composite.setLayoutData(new GridData());
 		return composite;
 	}
 
 	public static void show() {
-		SaveIntervalDialog.dialog.open();
+		SaveIntervalDialog.getDialog().open();
+	}
+
+	public static Shell getDialog() {
+		return SaveIntervalDialog.dialog;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("SaveIntervalDialog [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

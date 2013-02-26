@@ -1,9 +1,12 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Spinner;
 
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.IPreferencesHandler;
@@ -18,8 +21,9 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 	private static final int SPINNER_DIGITS = 0;
 	private static final int SPINNER_MAXIMUM = 600;
 	private static final int SPINNER_MINIMUM = 1;
-	private final PreferencesListener listener = new PreferencesListener(this);
-	private final ModifyListener spinnerListener = new SpinnerModifyListener();
+	private final PreferencesListener preferencesListener = new PreferencesListener(this);
+	private final ModifyListener modifyListener = new SpinnerModifyListener();
+	private final KeyListener keyListener = new SpinnerKeyListener();
 	private static Spinner spinner;
 
 	public SaveIntervalDialogSpinner(final Composite composite) {
@@ -34,8 +38,9 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 	}
 
 	public void startListening() {
-		this.listener.start();
-		SaveIntervalDialogSpinner.spinner.addModifyListener(this.spinnerListener);
+		this.preferencesListener.start();
+		SaveIntervalDialogSpinner.spinner.addModifyListener(this.modifyListener);
+		SaveIntervalDialogSpinner.spinner.addKeyListener(this.keyListener);
 	}
 
 	@Override
@@ -45,22 +50,40 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 
 	private void updateSelection() {
 		if (SaveIntervalDialogSpinner.spinner.getSelection() == PreferencesStore.getSaveIntervalInSeconds()) return;
-		SaveIntervalDialogSpinner.spinner.removeModifyListener(this.spinnerListener);
+		SaveIntervalDialogSpinner.spinner.removeModifyListener(this.modifyListener);
 		SaveIntervalDialogSpinner.spinner.setSelection(PreferencesStore.getSaveIntervalInSeconds());
-		SaveIntervalDialogSpinner.spinner.addModifyListener(this.spinnerListener);
+		SaveIntervalDialogSpinner.spinner.addModifyListener(this.modifyListener);
 	}
 
 	public static Spinner getSpinner() {
 		return SaveIntervalDialogSpinner.spinner;
 	}
 
-	private final class SpinnerModifyListener implements ModifyListener {
+	private final class SpinnerModifyListener implements ModifyListener, Runnable {
 
 		public SpinnerModifyListener() {}
 
 		@Override
-		public void modifyText(final ModifyEvent event) {
+		public void run() {
 			PreferencesStore.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.getSpinner().getSelection());
 		}
+
+		@Override
+		public void modifyText(final ModifyEvent event) {
+			Display.getDefault().asyncExec(this);
+		}
+	}
+
+	private final class SpinnerKeyListener implements KeyListener {
+
+		public SpinnerKeyListener() {}
+
+		@Override
+		public void keyPressed(final KeyEvent event) {
+			if (event.keyCode == SWT.CR) SaveIntervalDialogSpinner.getSpinner().getShell().close();
+		}
+
+		@Override
+		public void keyReleased(final KeyEvent event) {}
 	}
 }

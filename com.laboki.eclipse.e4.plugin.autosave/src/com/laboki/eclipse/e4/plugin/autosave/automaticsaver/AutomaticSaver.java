@@ -15,7 +15,7 @@ public final class AutomaticSaver {
 	private final CaretMovementListener caretMovementListener = new CaretMovementListener(new CaretMovementListenerHandler());
 	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
 	private static final String EDITOR_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
-	private final SaveCountDownTimer saveCountDownTimer = new SaveCountDownTimer();
+	private final SaveJobCountDownTimer saveCountDownTimer = new SaveJobCountDownTimer("AutoSaveJob");
 
 	public AutomaticSaver(final MPart editorPart) {
 		this.eventBroker = editorPart.getContext().get(IEventBroker.class);
@@ -47,7 +47,7 @@ public final class AutomaticSaver {
 	}
 
 	private static void save() {
-		SaveCountDownTimer.save();
+		SaveJobCountDownTimer.save();
 	}
 
 	protected void startAutomaticSaving() {
@@ -130,19 +130,18 @@ public final class AutomaticSaver {
 		}
 	}
 
-	private final class CaretMovementListenerHandler implements ListenerHandler {
+	private final class CaretMovementListenerHandler implements ListenerHandler, Runnable {
 
 		public CaretMovementListenerHandler() {}
 
 		@Override
-		public void handle(final Object event) {
-			Display.getDefault().asyncExec(new Runnable() {
+		public void run() {
+			AutomaticSaver.this.startAutomaticSaving();
+		}
 
-				@Override
-				public void run() {
-					AutomaticSaver.this.startAutomaticSaving();
-				}
-			});
+		@Override
+		public void handle(final Object event) {
+			Display.getDefault().asyncExec(this);
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.IPreferencesHandler;
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesListener;
@@ -71,9 +72,14 @@ final class SaveIntervalButton implements IPreferencesHandler {
 		} else SaveIntervalDialog.show();
 	}
 
-	private final class ButtonListener implements SelectionListener {
+	private final class ButtonListener implements SelectionListener, Runnable {
 
 		public ButtonListener() {}
+
+		@Override
+		public void run() {
+			SaveIntervalButton.this.showSaveIntervalDialog();
+		}
 
 		@Override
 		public void widgetDefaultSelected(final SelectionEvent event) {
@@ -82,7 +88,7 @@ final class SaveIntervalButton implements IPreferencesHandler {
 
 		@Override
 		public void widgetSelected(final SelectionEvent event) {
-			SaveIntervalButton.this.showSaveIntervalDialog();
+			Display.getDefault().asyncExec(this);
 		}
 	}
 }

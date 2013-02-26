@@ -3,6 +3,7 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.swt.widgets.Display;
 
 public final class PreferencesListener {
 
@@ -21,7 +22,7 @@ public final class PreferencesListener {
 		this.preferences.removePreferenceChangeListener(this.listener);
 	}
 
-	private final class ChangeListener implements IPreferenceChangeListener {
+	private final class ChangeListener implements IPreferenceChangeListener, Runnable {
 
 		private final IPreferencesHandler handler;
 
@@ -30,8 +31,13 @@ public final class PreferencesListener {
 		}
 
 		@Override
-		public void preferenceChange(final PreferenceChangeEvent event) {
+		public void run() {
 			this.handler.preferencesChanged();
+		}
+
+		@Override
+		public void preferenceChange(final PreferenceChangeEvent event) {
+			Display.getDefault().asyncExec(this);
 		}
 	}
 }
