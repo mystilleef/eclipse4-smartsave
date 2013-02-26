@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.laboki.eclipse.e4.feature.autosave_201302225.2.0.jar" id="com.laboki.eclipse.e4.feature.autosave" version="201302225.2"/>
+</site>
