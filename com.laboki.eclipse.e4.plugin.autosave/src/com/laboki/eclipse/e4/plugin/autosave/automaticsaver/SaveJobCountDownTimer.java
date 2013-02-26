@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Display;
 
 final class SaveJobCountDownTimer extends Job {
 
-	private static final int MILLI_SECOND_UNITS = 1000;
+	private static final int TO_MILLISECONDS = 1000;
 
 	public SaveJobCountDownTimer(final String saveJob) {
 		super(saveJob);
@@ -17,13 +17,7 @@ final class SaveJobCountDownTimer extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				SaveJobCountDownTimer.save();
-			}
-		});
+		Display.getDefault().asyncExec(this.new SaveJobRunnable());
 		return Status.OK_STATUS;
 	}
 
@@ -32,20 +26,29 @@ final class SaveJobCountDownTimer extends Job {
 	}
 
 	private void start() {
-		this.schedule(ActivePart.getSaveIntervalInSeconds() * SaveJobCountDownTimer.MILLI_SECOND_UNITS);
+		this.schedule(ActivePart.getSaveIntervalInSeconds() * SaveJobCountDownTimer.TO_MILLISECONDS);
 	}
 
 	void stop() {
-		this.cancel();
-		// if (!this.cancel()) try {
-		// this.join();
-		// } catch (final InterruptedException e) {
-		// e.printStackTrace();
-		// }
+		if (!this.cancel()) try {
+			this.join();
+		} catch (final InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	void restart() {
 		this.stop();
 		this.start();
+	}
+
+	private final class SaveJobRunnable implements Runnable {
+	
+		public SaveJobRunnable() {}
+	
+		@Override
+		public void run() {
+			SaveJobCountDownTimer.save();
+		}
 	}
 }
