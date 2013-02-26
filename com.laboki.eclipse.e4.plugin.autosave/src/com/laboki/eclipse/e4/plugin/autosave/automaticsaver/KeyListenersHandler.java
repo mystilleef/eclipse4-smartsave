@@ -2,7 +2,7 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
 interface KeyListenersHandler {
 
-	void keyPress(Object event);
+	void keyPress();
 
-	void keyRelease(Object event);
+	void keyRelease();
 }
