@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 
+// TODO: If there are jobs that are still running, don't save. if readAndDispatch is true, don't save.
 final class SaveJobCountDownTimer extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;

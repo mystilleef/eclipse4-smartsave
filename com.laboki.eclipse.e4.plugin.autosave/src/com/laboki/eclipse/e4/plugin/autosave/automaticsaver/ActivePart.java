@@ -8,6 +8,7 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
@@ -25,6 +26,12 @@ final class ActivePart {
 	public static synchronized ActivePart initialize() {
 		if (ActivePart.instance == null) ActivePart.instance = new ActivePart();
 		return ActivePart.instance;
+	}
+
+	public static Display getDisplay() {
+		Display display = Display.getCurrent();
+		if (display == null) display = Display.getDefault();
+		return display;
 	}
 
 	static IEditorPart getEditor() {

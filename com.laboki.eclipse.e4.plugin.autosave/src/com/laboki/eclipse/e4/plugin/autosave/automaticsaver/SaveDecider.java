@@ -9,6 +9,7 @@ final class SaveDecider {
 	SaveDecider() {}
 
 	void save() {
+		while (ActivePart.getDisplay().readAndDispatch()) {}
 		if (this.hasSelection()) return;
 		if (!ActivePart.canSaveAutomatically() || !this.canSaveFile()) return;
 		ActivePart.save(this.editorPart);
