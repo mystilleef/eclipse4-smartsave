@@ -34,6 +34,10 @@ final class ActivePart {
 		return display;
 	}
 
+	public static void flushEvents() {
+		while (ActivePart.getDisplay().readAndDispatch()) {}
+	}
+
 	static IEditorPart getEditor() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	}
@@ -56,33 +60,41 @@ final class ActivePart {
 
 	static void save() {
 		ActivePart.getEditor().doSave(null);
+		ActivePart.flushEvents();
 	}
 
 	static void save(final IEditorPart editor) {
 		editor.doSave(null);
+		ActivePart.flushEvents();
 	}
 
 	static boolean isModified() {
+		ActivePart.flushEvents();
 		return ActivePart.getEditor().isDirty();
 	}
 
 	static boolean isModified(final IEditorPart editor) {
+		ActivePart.flushEvents();
 		return editor.isDirty();
 	}
 
 	static boolean hasWarnings() {
+		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity("warning");
 	}
 
 	static boolean hasWarnings(final IEditorPart editor) {
+		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity("warning", editor);
 	}
 
 	static boolean hasErrors() {
+		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity("error");
 	}
 
 	static boolean hasErrors(final IEditorPart editor) {
+		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity("error", editor);
 	}
 
