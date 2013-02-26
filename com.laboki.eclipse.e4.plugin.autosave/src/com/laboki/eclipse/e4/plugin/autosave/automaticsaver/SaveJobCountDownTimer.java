@@ -6,7 +6,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 
-// TODO: If there are jobs that are still running, don't save. if readAndDispatch is true, don't save.
 final class SaveJobCountDownTimer extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;
@@ -15,6 +14,22 @@ final class SaveJobCountDownTimer extends Job {
 	public SaveJobCountDownTimer(final String name) {
 		super(name);
 		this.setPriority(Job.DECORATE);
+	}
+
+	@Override
+	public boolean shouldSchedule() {
+		return super.shouldSchedule() && this.checkJobPreconditions();
+	}
+
+	@Override
+	public boolean shouldRun() {
+		return super.shouldRun() && this.checkJobPreconditions();
+	}
+
+	private boolean checkJobPreconditions() {
+		if (this.getState() == Job.WAITING) return false;
+		if (this.getState() == Job.SLEEPING) return false;
+		return true;
 	}
 
 	@Override
@@ -39,6 +54,7 @@ final class SaveJobCountDownTimer extends Job {
 	}
 
 	private void start() {
+		if (ActivePart.getDisplay().readAndDispatch()) return;
 		this.schedule(ActivePart.getSaveIntervalInSeconds() * SaveJobCountDownTimer.TO_MILLISECONDS);
 	}
 
