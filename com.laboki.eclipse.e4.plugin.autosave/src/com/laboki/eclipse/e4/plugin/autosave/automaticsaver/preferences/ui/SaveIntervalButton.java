@@ -29,6 +29,8 @@ final class SaveIntervalButton implements IPreferencesHandler {
 
 	private static void updateText() {
 		SaveIntervalButton.button.setText(SaveIntervalButton.minutesAndSeconds(PreferencesStore.getSaveIntervalInSeconds()));
+		SaveIntervalButton.button.pack();
+		SaveIntervalButton.button.update();
 	}
 
 	private static String minutesAndSeconds(final int intervalInSeconds) {
