@@ -23,6 +23,16 @@ final class SaveJobCountDownTimer extends Job {
 		return Status.OK_STATUS;
 	}
 
+	private final class SaveJobRunnable implements Runnable {
+
+		public SaveJobRunnable() {}
+
+		@Override
+		public void run() {
+			SaveJobCountDownTimer.this.save();
+		}
+	}
+
 	void save() {
 		this.decider.save();
 	}
@@ -32,25 +42,11 @@ final class SaveJobCountDownTimer extends Job {
 	}
 
 	void stop() {
-		if (!this.cancel()) try {
-			this.join();
-		} catch (final InterruptedException e) {
-			e.printStackTrace();
-		}
+		this.cancel();
 	}
 
 	void restart() {
 		this.stop();
 		this.start();
-	}
-
-	private final class SaveJobRunnable implements Runnable {
-
-		public SaveJobRunnable() {}
-
-		@Override
-		public void run() {
-			SaveJobCountDownTimer.this.save();
-		}
 	}
 }

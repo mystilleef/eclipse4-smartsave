@@ -2,15 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Autosave
 Bundle-SymbolicName: com.laboki.eclipse.e4.plugin.autosave;singleton:=true
-Bundle-Version: 20130227.4
+Bundle-Version: 20130227.5
 Bundle-Vendor: LABOKI
 Export-Package: com.laboki.eclipse.e4.plugin.autosave;uses:="org.eclipse.e4.ui.model.application",
  com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
   uses:="org.eclipse.e4.core.services.events,
    org.eclipse.jface.text.source,
+   org.eclipse.core.runtime,
+   org.eclipse.core.runtime.jobs,
    org.osgi.service.event,
    org.eclipse.e4.ui.model.application.ui.basic,
    org.eclipse.ui,
+   org.eclipse.swt.events,
    org.eclipse.swt.custom",
  com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
