@@ -3,6 +3,7 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 
 // This class manages all the events needed to trigger automatic saving.
@@ -37,17 +38,16 @@ public final class AutomaticSaver {
 	}
 
 	protected void startListeningForBufferModification() {
-		this.save();
 		this.bufferModificationListener.start();
 	}
 
 	protected void stopListeningForBufferModification() {
-		this.save();
+		AutomaticSaver.save();
 		this.bufferModificationListener.stop();
 	}
 
-	private void save() {
-		this.saveCountDownTimer.save();
+	private static void save() {
+		SaveCountDownTimer.save();
 	}
 
 	protected void startAutomaticSaving() {
@@ -87,8 +87,18 @@ public final class AutomaticSaver {
 
 		@Override
 		public void handle(final Object event) {
-			if (this.editor.isDirty()) AutomaticSaver.this.startAutomaticSaving();
-			else AutomaticSaver.this.stopAutomaticSaving();
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					if (BufferModificationHandler.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving();
+					else AutomaticSaver.this.stopAutomaticSaving();
+				}
+			});
+		}
+
+		public MPart getEditor() {
+			return this.editor;
 		}
 	}
 
@@ -102,12 +112,18 @@ public final class AutomaticSaver {
 
 		@Override
 		public void handle(final Object event) {
-			final MPart activePart = (MPart) ((Event) event).getProperty(UIEvents.EventTags.ELEMENT);
-			if (this.editorIsActive(activePart)) AutomaticSaver.this.startListeningForBufferModification();
-			else AutomaticSaver.this.stopListeningForBufferModification();
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					final MPart activePart = (MPart) ((Event) event).getProperty(UIEvents.EventTags.ELEMENT);
+					if (PartActivationHandler.this.editorIsActive(activePart)) AutomaticSaver.this.startListeningForBufferModification();
+					else AutomaticSaver.this.stopListeningForBufferModification();
+				}
+			});
 		}
 
-		private boolean editorIsActive(final MPart activePart) {
+		protected boolean editorIsActive(final MPart activePart) {
 			if (ActivePart.isNotAnEditor(activePart)) return false;
 			if (ActivePart.isNotTagged(activePart)) return false;
 			return this.editor == activePart;
@@ -120,7 +136,13 @@ public final class AutomaticSaver {
 
 		@Override
 		public void handle(final Object event) {
-			AutomaticSaver.this.startAutomaticSaving();
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					AutomaticSaver.this.startAutomaticSaving();
+				}
+			});
 		}
 	}
 

@@ -23,8 +23,8 @@ final class SaveCountDownTimer implements Runnable {
 		});
 	}
 
-	void save() {
-		this.run();
+	static void save() {
+		SaveDecider.save();
 	}
 
 	private void start() {
