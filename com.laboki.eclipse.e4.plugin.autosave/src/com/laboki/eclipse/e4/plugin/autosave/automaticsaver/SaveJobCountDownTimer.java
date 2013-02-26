@@ -18,6 +18,7 @@ final class SaveJobCountDownTimer extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
+		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
 		Display.getDefault().asyncExec(this.new SaveJobRunnable());
 		return Status.OK_STATUS;
 	}
