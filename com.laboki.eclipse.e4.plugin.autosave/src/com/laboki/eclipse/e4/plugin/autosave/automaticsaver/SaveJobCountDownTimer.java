@@ -9,9 +9,10 @@ import org.eclipse.swt.widgets.Display;
 final class SaveJobCountDownTimer extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;
+	private final SaveDecider decider = new SaveDecider();
 
-	public SaveJobCountDownTimer(final String saveJob) {
-		super(saveJob);
+	public SaveJobCountDownTimer(final String name) {
+		super(name);
 		this.setPriority(Job.DECORATE);
 	}
 
@@ -21,8 +22,8 @@ final class SaveJobCountDownTimer extends Job {
 		return Status.OK_STATUS;
 	}
 
-	static void save() {
-		SaveDecider.save();
+	void save() {
+		this.decider.save();
 	}
 
 	private void start() {
@@ -43,12 +44,12 @@ final class SaveJobCountDownTimer extends Job {
 	}
 
 	private final class SaveJobRunnable implements Runnable {
-	
+
 		public SaveJobRunnable() {}
-	
+
 		@Override
 		public void run() {
-			SaveJobCountDownTimer.save();
+			SaveJobCountDownTimer.this.save();
 		}
 	}
 }

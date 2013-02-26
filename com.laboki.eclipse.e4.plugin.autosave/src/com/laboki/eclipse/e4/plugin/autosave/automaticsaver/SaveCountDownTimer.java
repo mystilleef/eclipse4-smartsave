@@ -11,6 +11,7 @@ final class SaveCountDownTimer implements Runnable {
 
 	private ScheduledFuture<?> schedulerHandle;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private final SaveDecider decider = new SaveDecider();
 
 	@Override
 	public void run() {
@@ -18,13 +19,13 @@ final class SaveCountDownTimer implements Runnable {
 
 			@Override
 			public void run() {
-				SaveDecider.save();
+				SaveCountDownTimer.this.save();
 			}
 		});
 	}
 
-	static void save() {
-		SaveDecider.save();
+	void save() {
+		this.decider.save();
 	}
 
 	private void start() {
@@ -43,5 +44,9 @@ final class SaveCountDownTimer implements Runnable {
 	void restart() {
 		this.stop();
 		this.start();
+	}
+
+	public SaveDecider getDecider() {
+		return this.decider;
 	}
 }

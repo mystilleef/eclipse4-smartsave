@@ -35,28 +35,59 @@ final class ActivePart {
 		return (StyledText) ActivePart.getEditor().getAdapter(Control.class);
 	}
 
+	static StyledText getBuffer(final IEditorPart editor) {
+		return (StyledText) editor.getAdapter(Control.class);
+	}
+
 	static SourceViewer getView() {
 		return (SourceViewer) ActivePart.getEditor().getAdapter(ITextOperationTarget.class);
+	}
+
+	static SourceViewer getView(final IEditorPart editor) {
+		return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
 	}
 
 	static void save() {
 		ActivePart.getEditor().doSave(null);
 	}
 
+	static void save(final IEditorPart editor) {
+		editor.doSave(null);
+	}
+
 	static boolean isModified() {
 		return ActivePart.getEditor().isDirty();
+	}
+
+	static boolean isModified(final IEditorPart editor) {
+		return editor.isDirty();
 	}
 
 	static boolean hasWarnings() {
 		return ActivePart.getAnnotationSeverity("warning");
 	}
 
+	static boolean hasWarnings(final IEditorPart editor) {
+		return ActivePart.getAnnotationSeverity("warning", editor);
+	}
+
 	static boolean hasErrors() {
 		return ActivePart.getAnnotationSeverity("error");
 	}
 
+	static boolean hasErrors(final IEditorPart editor) {
+		return ActivePart.getAnnotationSeverity("error", editor);
+	}
+
 	private static boolean getAnnotationSeverity(final String problemSeverity) {
 		final Iterator<Annotation> iterator = ActivePart.getView().getAnnotationModel().getAnnotationIterator();
+		while (iterator.hasNext())
+			if (ActivePart.hasProblems(problemSeverity, iterator)) return true;
+		return false;
+	}
+
+	private static boolean getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
+		final Iterator<Annotation> iterator = ActivePart.getView(editor).getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
 			if (ActivePart.hasProblems(problemSeverity, iterator)) return true;
 		return false;

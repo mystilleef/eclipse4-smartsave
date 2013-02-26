@@ -42,12 +42,12 @@ public final class AutomaticSaver {
 	}
 
 	protected void stopListeningForBufferModification() {
-		AutomaticSaver.save();
+		this.save();
 		this.bufferModificationListener.stop();
 	}
 
-	private static void save() {
-		SaveJobCountDownTimer.save();
+	private void save() {
+		this.saveCountDownTimer.save();
 	}
 
 	protected void startAutomaticSaving() {
