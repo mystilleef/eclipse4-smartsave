@@ -12,7 +12,7 @@ public final class AutomaticSaver {
 	private final IEventBroker eventBroker;
 	private final Listener bufferModificationListener;
 	private final Listener partActivationListener;
-	private final CaretMovementListener caretMovementListener = new CaretMovementListener(new CaretMovementListenerHandler());
+	private final KeyListeners keylisteners = new KeyListeners(new MyKeyListenersHandler());
 	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
 	private static final String EDITOR_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
 	private final SaveJobCountDownTimer saveCountDownTimer = new SaveJobCountDownTimer("AutoSaveJob");
@@ -61,20 +61,55 @@ public final class AutomaticSaver {
 		this.stopCountDownToSaveFile();
 	}
 
-	private void startCountDownToSaveFile() {
+	protected void startCountDownToSaveFile() {
 		this.saveCountDownTimer.restart();
 	}
 
-	private void stopCountDownToSaveFile() {
+	protected void stopCountDownToSaveFile() {
 		this.saveCountDownTimer.stop();
 	}
 
 	private void startMonitoringEvents() {
-		this.caretMovementListener.start();
+		this.keylisteners.start();
 	}
 
 	private void stopMonitoringEvents() {
-		this.caretMovementListener.stop();
+		this.keylisteners.stop();
+	}
+
+	private final class MyKeyListenersHandler implements KeyListenersHandler {
+
+		public MyKeyListenersHandler() {}
+
+		@Override
+		public void keyPress() {
+			Display.getDefault().asyncExec(this.new KeyPressRunnable());
+		}
+
+		@Override
+		public void keyRelease() {
+			Display.getDefault().asyncExec(this.new KeyReleaseRunnable());
+		}
+
+		private final class KeyPressRunnable implements Runnable {
+
+			public KeyPressRunnable() {}
+
+			@Override
+			public void run() {
+				AutomaticSaver.this.stopCountDownToSaveFile();
+			}
+		}
+
+		final class KeyReleaseRunnable implements Runnable {
+
+			public KeyReleaseRunnable() {}
+
+			@Override
+			public void run() {
+				AutomaticSaver.this.startCountDownToSaveFile();
+			}
+		}
 	}
 
 	private final class BufferModificationHandler implements ListenerHandler {
@@ -127,21 +162,6 @@ public final class AutomaticSaver {
 			if (ActivePart.isNotAnEditor(activePart)) return false;
 			if (ActivePart.isNotTagged(activePart)) return false;
 			return this.editor == activePart;
-		}
-	}
-
-	private final class CaretMovementListenerHandler implements ListenerHandler, Runnable {
-
-		public CaretMovementListenerHandler() {}
-
-		@Override
-		public void run() {
-			AutomaticSaver.this.startAutomaticSaving();
-		}
-
-		@Override
-		public void handle(final Object event) {
-			Display.getDefault().asyncExec(this);
 		}
 	}
 
