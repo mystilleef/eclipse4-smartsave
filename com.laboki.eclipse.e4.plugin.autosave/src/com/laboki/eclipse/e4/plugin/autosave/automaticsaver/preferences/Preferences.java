@@ -38,8 +38,6 @@ public final class Preferences implements IPreferencesHandler {
 	public void preferencesChanged() {
 		Preferences.saveIntervalInSeconds = PreferencesStore.getSaveIntervalInSeconds();
 		Preferences.canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
-		System.out.print(Preferences.canSaveAutomatically);
-		System.out.println(" :Preferences changed event handler called in Preferences module!");
 		Preferences.canSaveIfErrors = PreferencesStore.getCanSaveIfErrors();
 		Preferences.canSaveIfWarnings = PreferencesStore.getCanSaveIfWarnings();
 	}
