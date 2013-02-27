@@ -17,6 +17,8 @@ import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferen
 
 final class ActivePart {
 
+	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
+	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static ActivePart instance;
 
 	private ActivePart() {
@@ -80,22 +82,22 @@ final class ActivePart {
 
 	static boolean hasWarnings() {
 		ActivePart.flushEvents();
-		return ActivePart.getAnnotationSeverity("warning");
+		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING);
 	}
 
 	static boolean hasWarnings(final IEditorPart editor) {
 		ActivePart.flushEvents();
-		return ActivePart.getAnnotationSeverity("warning", editor);
+		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING, editor);
 	}
 
 	static boolean hasErrors() {
 		ActivePart.flushEvents();
-		return ActivePart.getAnnotationSeverity("error");
+		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR);
 	}
 
 	static boolean hasErrors(final IEditorPart editor) {
 		ActivePart.flushEvents();
-		return ActivePart.getAnnotationSeverity("error", editor);
+		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR, editor);
 	}
 
 	private static boolean getAnnotationSeverity(final String problemSeverity) {
