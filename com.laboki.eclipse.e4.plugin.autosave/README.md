@@ -1,39 +1,29 @@
-#AUTOMATIC SAVING FOR ECLIPSE 4
+# AUTOMATIC SAVING FOR ECLIPSE 4
 
-##WARNING! 
+This Eclipse 4 plugin automatically saves your files. You have better things to do than worry about losing your files.
 
-: This plugin is for development and testing ONLY. 
-Please don't distribute it. It's not feature 
-complete or extensively tested!
-
-##AUTOSAVE
-
-This Eclipse 4 plugin automatically saves your files. 
-Why? Because you have better things to do than worry 
-about losing your files.
-
-##CURRENT FEATURES
+## CURRENT FEATURES
 
 * Automatically saves files at configured intervals when you stop typing.
 * Automatically saves files when editor loses focus.
-* Option to change save interval in preferences window.
-* Option to prevent saving if compiler warnings and/or errors are present in preferences window.
-* Option to toggle automatic saving in preferences window.
+* Option to change save interval.
+* Option to prevent saving if compiler warnings/errors are present.
+* Option to toggle automatic saving.
 
-##TODO
+## TODO
 
 * Figure out i18n.
 
-##REQUIREMENT
+## REQUIREMENT
 
 You need __Eclipse 4.2(Juno)__ or later to use this plugin.
 
-##Update Site
+## Update Site
 
 
 __[Update Site](https://raw.github.com/mystilleef/eclipse4-autosave-updatesite/master/com.laboki.eclipse.e4.autosave)__
 
-##Install
+## Install
 
 1. Launch Eclipse
 2. Go to __Help__ -> __Install New Software...__
