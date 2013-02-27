@@ -1,53 +1,47 @@
-AUTOMATIC SAVING FOR ECLIPSE 4
-==============================
+#AUTOMATIC SAVING FOR ECLIPSE 4
 
-WARNING! 
---------
-This plugin is for development and testing ONLY. 
+##WARNING! 
+
+: This plugin is for development and testing ONLY. 
 Please don't distribute it. It's not feature 
 complete or extensively tested!
 
-AUTOSAVE
---------
+##AUTOSAVE
+
 This Eclipse 4 plugin automatically saves your files. 
 Why? Because you have better things to do than worry 
 about losing your files.
 
-CURRENT FEATURES
-----------------
-* Automatically saves files every 5 seconds if there are no buffer activities.
-* Automatically saves files when editor loses focus.
+##CURRENT FEATURES
 
-TODO
-----
+* Automatically saves files at configured intervals when you stop typing.
+* Automatically saves files when editor loses focus.
 * Option to change save interval in preferences window.
 * Option to prevent saving if compiler warnings and/or errors are present in preferences window.
-* Option to disable automatic saving in menu and preferences window.
+* Option to toggle automatic saving in preferences window.
+
+##TODO
+
 * Figure out i18n.
 
-REQUIREMENT
------------
-You need Eclipse 4.2(Juno) or better to use this plugin.
+##REQUIREMENT
 
-Download
---------
-Download the plugin from here:
+You need __Eclipse 4.2(Juno)__ or later to use this plugin.
 
-https://docs.google.com/file/d/0Bw1KseIE5s6cRVladXdFaWxmdkU/edit?usp=sharing
+##Update Site
 
-File -> Download
 
-Install
--------
+__[Update Site](https://raw.github.com/mystilleef/eclipse4-autosave-updatesite/master/com.laboki.eclipse.e4.autosave)__
 
-1. Unzip the plugin on your Desktop or a preferred location on your computer.
-2. Launch Eclipse
-3. Go to Help -> Install New Software...
-4. Press the Add button on the install window
-5. Press the Local button and point to the location of com.laboki.eclipse.e4.autosave
-6. Press OK
-7. Select the Autosave plugin show in the list view under Uncategorized.
-8. Press Next.
-9. Agree to the license terms.
-10. Press finish. 
-11. Restart Eclipse.
+##Install
+
+1. Launch Eclipse
+2. Go to __Help__ -> __Install New Software...__
+3. Press the __Add__ button on the install window
+4. Paste the *[update site link](https://raw.github.com/mystilleef/eclipse4-autosave-updatesite/master/com.laboki.eclipse.e4.autosave)* to location
+5. Press __OK__
+6. Select the __Autosave__ plugin show in the list view under __Uncategorized__.
+7. Press __Next__.
+8. __Agree__ to the license terms.
+9. Press __finish__. 
+10. Restart Eclipse.
