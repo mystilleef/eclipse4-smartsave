@@ -6,14 +6,26 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 
-final class SaveJobCountDownTimer extends Job {
+final class SaveJobScheduler extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;
 	private final SaveDecider decider = new SaveDecider();
 
-	public SaveJobCountDownTimer(final String name) {
+	public SaveJobScheduler(final String name) {
 		super(name);
 		this.setPriority(Job.DECORATE);
+	}
+
+	void save() {
+		this.decider.save();
+	}
+
+	void start() {
+		this.schedule(ActivePart.getSaveIntervalInSeconds() * SaveJobScheduler.TO_MILLISECONDS);
+	}
+
+	void stop() {
+		this.cancel();
 	}
 
 	@Override
@@ -45,25 +57,7 @@ final class SaveJobCountDownTimer extends Job {
 
 		@Override
 		public void run() {
-			SaveJobCountDownTimer.this.save();
+			SaveJobScheduler.this.save();
 		}
-	}
-
-	void save() {
-		this.decider.save();
-	}
-
-	private void start() {
-		if (ActivePart.getDisplay().readAndDispatch()) return;
-		this.schedule(ActivePart.getSaveIntervalInSeconds() * SaveJobCountDownTimer.TO_MILLISECONDS);
-	}
-
-	void stop() {
-		this.cancel();
-	}
-
-	void restart() {
-		this.stop();
-		this.start();
 	}
 }

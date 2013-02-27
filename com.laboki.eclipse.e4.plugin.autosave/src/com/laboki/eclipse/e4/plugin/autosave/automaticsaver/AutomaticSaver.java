@@ -15,7 +15,7 @@ public final class AutomaticSaver {
 	private final KeyListeners keylisteners = new KeyListeners(new MyKeyListenersHandler());
 	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
 	private static final String EDITOR_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
-	private final SaveJobCountDownTimer saveCountDownTimer = new SaveJobCountDownTimer("AutoSaveJob");
+	private final SaveJobScheduler saveCountDownTimer = new SaveJobScheduler("AutoSaveJob");
 
 	public AutomaticSaver(final MPart editorPart) {
 		this.eventBroker = editorPart.getContext().get(IEventBroker.class);
@@ -62,7 +62,7 @@ public final class AutomaticSaver {
 	}
 
 	protected void startCountDownToSaveFile() {
-		this.saveCountDownTimer.restart();
+		this.saveCountDownTimer.start();
 	}
 
 	protected void stopCountDownToSaveFile() {
