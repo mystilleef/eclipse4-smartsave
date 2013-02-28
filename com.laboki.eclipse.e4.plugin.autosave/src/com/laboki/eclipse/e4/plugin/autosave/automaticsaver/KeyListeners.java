@@ -8,12 +8,12 @@ import org.eclipse.swt.widgets.Display;
 final class KeyListeners implements KeyListener {
 
 	private boolean isListening;
-	private final KeyListenersHandler handler;
+	private final IKeyListenersHandler handler;
 	private final StyledText editorBuffer = ActivePart.getBuffer();
 	private final KeyPressRunnable keyPressRunnable = new KeyPressRunnable();
 	private final KeyReleaseRunnable keyReleaseRunnable = new KeyReleaseRunnable();
 
-	public KeyListeners(final KeyListenersHandler handler) {
+	public KeyListeners(final IKeyListenersHandler handler) {
 		this.handler = handler;
 	}
 
@@ -59,7 +59,7 @@ final class KeyListeners implements KeyListener {
 		}
 	}
 
-	protected KeyListenersHandler getHandler() {
+	protected IKeyListenersHandler getHandler() {
 		return this.handler;
 	}
 }
