@@ -10,6 +10,8 @@ final class KeyListeners implements KeyListener {
 	private boolean isListening;
 	private final KeyListenersHandler handler;
 	private final StyledText editorBuffer = ActivePart.getBuffer();
+	private final KeyPressRunnable keyPressRunnable = new KeyPressRunnable();
+	private final KeyReleaseRunnable keyReleaseRunnable = new KeyReleaseRunnable();
 
 	public KeyListeners(final KeyListenersHandler handler) {
 		this.handler = handler;
@@ -29,12 +31,12 @@ final class KeyListeners implements KeyListener {
 
 	@Override
 	public void keyPressed(final KeyEvent event) {
-		Display.getDefault().asyncExec(this.new KeyPressRunnable());
+		Display.getDefault().asyncExec(this.keyPressRunnable);
 	}
 
 	@Override
 	public void keyReleased(final KeyEvent event) {
-		Display.getDefault().asyncExec(this.new KeyReleaseRunnable());
+		Display.getDefault().asyncExec(this.keyReleaseRunnable);
 	}
 
 	private final class KeyPressRunnable implements Runnable {
@@ -47,7 +49,7 @@ final class KeyListeners implements KeyListener {
 		}
 	}
 
-	final class KeyReleaseRunnable implements Runnable {
+	private final class KeyReleaseRunnable implements Runnable {
 
 		public KeyReleaseRunnable() {}
 
