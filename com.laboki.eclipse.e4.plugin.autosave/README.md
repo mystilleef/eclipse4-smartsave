@@ -1,6 +1,6 @@
 # Automatic Saving For Eclipse 4
 
-This Eclipse 4 plugin automatically saves your files. You have better things to do than worry about losing your files.
+Autosave automatically saves your files. You have better things to do than worry about losing your files.
 
 ### Features
 
