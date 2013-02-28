@@ -15,10 +15,6 @@ This Eclipse 4 plugin automatically saves your files. You have better things to 
 * __[Paypal](https://googledrive.com/host/0Bw1KseIE5s6cTXRJcWZzbTU0Q3c/index.html)__
 * __[flattr](https://flattr.com/donation/give/to/mystilleef)__
 
-### Todo
-
-* Figure out i18n.
-
 ### Requirement
 
 * You need __Eclipse 4.2(Juno)__ or later to use this plugin.
