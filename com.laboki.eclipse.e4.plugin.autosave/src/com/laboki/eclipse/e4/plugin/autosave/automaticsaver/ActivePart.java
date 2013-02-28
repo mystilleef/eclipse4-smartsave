@@ -37,7 +37,9 @@ final class ActivePart {
 	}
 
 	public static void flushEvents() {
-		while (ActivePart.getDisplay().readAndDispatch()) {}
+		final Display display = ActivePart.getDisplay();
+		while (display.readAndDispatch()) {}
+		display.update();
 	}
 
 	static IEditorPart getEditor() {
@@ -61,42 +63,38 @@ final class ActivePart {
 	}
 
 	static void save() {
+		ActivePart.flushEvents();
 		ActivePart.getEditor().doSave(null);
 		ActivePart.flushEvents();
 	}
 
 	static void save(final IEditorPart editor) {
+		ActivePart.flushEvents();
 		editor.doSave(null);
 		ActivePart.flushEvents();
 	}
 
 	static boolean isModified() {
-		ActivePart.flushEvents();
 		return ActivePart.getEditor().isDirty();
 	}
 
 	static boolean isModified(final IEditorPart editor) {
-		ActivePart.flushEvents();
 		return editor.isDirty();
 	}
 
 	static boolean hasWarnings() {
-		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING);
 	}
 
 	static boolean hasWarnings(final IEditorPart editor) {
-		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING, editor);
 	}
 
 	static boolean hasErrors() {
-		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR);
 	}
 
 	static boolean hasErrors(final IEditorPart editor) {
-		ActivePart.flushEvents();
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR, editor);
 	}
 

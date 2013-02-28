@@ -6,7 +6,6 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 
-// This class manages all the events needed to trigger automatic saving.
 public final class AutomaticSaver {
 
 	private final IEventBroker eventBroker;
@@ -15,7 +14,7 @@ public final class AutomaticSaver {
 	private final KeyListeners keylisteners = new KeyListeners(new MyKeyListenersHandler());
 	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
 	private static final String EDITOR_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
-	private final SaveJobScheduler saveCountDownTimer = new SaveJobScheduler("AutoSaveJob");
+	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
 
 	public AutomaticSaver(final MPart editorPart) {
 		this.eventBroker = editorPart.getContext().get(IEventBroker.class);
@@ -47,26 +46,28 @@ public final class AutomaticSaver {
 	}
 
 	private void save() {
-		this.saveCountDownTimer.save();
+		this.saveScheduler.save();
 	}
 
 	protected void startAutomaticSaving() {
 		if (!ActivePart.canSaveAutomatically()) return;
 		this.startMonitoringEvents();
-		this.startCountDownToSaveFile();
+		this.startSaveSchedule();
 	}
 
 	protected void stopAutomaticSaving() {
 		this.stopMonitoringEvents();
-		this.stopCountDownToSaveFile();
+		this.stopSaveSchedule();
 	}
 
-	protected void startCountDownToSaveFile() {
-		this.saveCountDownTimer.start();
+	protected void startSaveSchedule() {
+		ActivePart.flushEvents();
+		this.saveScheduler.start();
 	}
 
-	protected void stopCountDownToSaveFile() {
-		this.saveCountDownTimer.stop();
+	protected void stopSaveSchedule() {
+		this.saveScheduler.stop();
+		ActivePart.flushEvents();
 	}
 
 	private void startMonitoringEvents() {
@@ -97,7 +98,7 @@ public final class AutomaticSaver {
 
 			@Override
 			public void run() {
-				AutomaticSaver.this.stopCountDownToSaveFile();
+				AutomaticSaver.this.stopSaveSchedule();
 			}
 		}
 
@@ -107,7 +108,7 @@ public final class AutomaticSaver {
 
 			@Override
 			public void run() {
-				AutomaticSaver.this.startCountDownToSaveFile();
+				AutomaticSaver.this.startSaveSchedule();
 			}
 		}
 	}
