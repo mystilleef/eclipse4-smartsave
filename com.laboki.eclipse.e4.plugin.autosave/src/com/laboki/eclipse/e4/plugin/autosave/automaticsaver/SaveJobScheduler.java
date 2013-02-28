@@ -10,6 +10,7 @@ final class SaveJobScheduler extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;
 	private final SaveDecider decider = new SaveDecider();
+	private final SaveJobRunnable saveJobRunnable = this.new SaveJobRunnable();
 
 	public SaveJobScheduler(final String name) {
 		super(name);
@@ -47,7 +48,7 @@ final class SaveJobScheduler extends Job {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-		Display.getDefault().asyncExec(this.new SaveJobRunnable());
+		Display.getDefault().asyncExec(this.saveJobRunnable);
 		return Status.OK_STATUS;
 	}
 
