@@ -12,7 +12,7 @@ class AutomaticSaver {
 	private final IEditorPart editor = ActivePart.getEditor();
 	private final Listener bufferModificationListener;
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
-	private final KeyListeners keylisteners = new KeyListeners(this.new MyKeyListenersHandler());
+	private final KeyListeners keylisteners = new KeyListeners(this.new KeyListenersHandler());
 	private final AutosaveFocusListener focusListener = new AutosaveFocusListener(this.new AutosaveFocusListenerHandler());
 	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
 
@@ -78,12 +78,12 @@ class AutomaticSaver {
 		this.keylisteners.stop();
 	}
 
-	private final class MyKeyListenersHandler implements IKeyListenersHandler {
+	private final class KeyListenersHandler implements IKeyListenersHandler {
 
 		private final KeyPressRunnable keyPressRunnable = this.new KeyPressRunnable();
 		private final KeyReleaseRunnable keyReleaseRunnable = this.new KeyReleaseRunnable();
 
-		public MyKeyListenersHandler() {}
+		public KeyListenersHandler() {}
 
 		@Override
 		public void keyPress() {
