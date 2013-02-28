@@ -4,10 +4,12 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 
 class AutomaticSaver {
 
 	private final IEventBroker eventBroker;
+	private final IEditorPart editor = ActivePart.getEditor();
 	private final Listener bufferModificationListener;
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
 	private final KeyListeners keylisteners = new KeyListeners(this.new MyKeyListenersHandler());
@@ -78,16 +80,19 @@ class AutomaticSaver {
 
 	private final class MyKeyListenersHandler implements KeyListenersHandler {
 
+		private final KeyPressRunnable keyPressRunnable = this.new KeyPressRunnable();
+		private final KeyReleaseRunnable keyReleaseRunnable = this.new KeyReleaseRunnable();
+
 		public MyKeyListenersHandler() {}
 
 		@Override
 		public void keyPress() {
-			Display.getDefault().asyncExec(this.new KeyPressRunnable());
+			Display.getDefault().asyncExec(this.keyPressRunnable);
 		}
 
 		@Override
 		public void keyRelease() {
-			Display.getDefault().asyncExec(this.new KeyReleaseRunnable());
+			Display.getDefault().asyncExec(this.keyReleaseRunnable);
 		}
 
 		private final class KeyPressRunnable implements Runnable {
@@ -113,48 +118,78 @@ class AutomaticSaver {
 
 	private final class BufferModificationHandler implements ListenerHandler {
 
-		private final MPart editor;
+		private final MPart meditor;
+		private final BufferModificationRunnable bufferModificationRunnable = this.new BufferModificationRunnable();
 
 		public BufferModificationHandler(final MPart editorPart) {
-			this.editor = editorPart;
+			this.meditor = editorPart;
 		}
 
 		@Override
 		public void handle(final Object event) {
-			Display.getDefault().asyncExec(new Runnable() {
+			Display.getDefault().asyncExec(this.bufferModificationRunnable);
+		}
 
-				@Override
-				public void run() {
-					if (BufferModificationHandler.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving();
-					else AutomaticSaver.this.stopAutomaticSaving();
-				}
-			});
+		private final class BufferModificationRunnable implements Runnable {
+
+			public BufferModificationRunnable() {}
+
+			@Override
+			public void run() {
+				if (BufferModificationHandler.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving();
+				else AutomaticSaver.this.stopAutomaticSaving();
+			}
 		}
 
 		public MPart getEditor() {
-			return this.editor;
+			return this.meditor;
 		}
 	}
 
 	private final class AutosaveFocusListenerHandler implements IAutosaveFocusListenerHandler {
 
+		private final Runnable focusGainedRunnable = this.new FocusGainedRunnable();
+		private final Runnable focusLostRunnable = this.new FocusLostRunnable();
+
 		public AutosaveFocusListenerHandler() {}
 
 		@Override
 		public void focusGained() {
-			AutomaticSaver.this.startListeningForBufferModification();
-			System.out.print("focus gained: ");
+			Display.getDefault().asyncExec(this.focusGainedRunnable);
 		}
 
 		@Override
 		public void focusLost() {
-			AutomaticSaver.this.stopListeningForBufferModification();
-			System.out.print("focus lost: ");
+			Display.getDefault().asyncExec(this.focusLostRunnable);
+		}
+
+		private final class FocusGainedRunnable implements Runnable {
+
+			public FocusGainedRunnable() {}
+
+			@Override
+			public void run() {
+				AutomaticSaver.this.startListeningForBufferModification();
+			}
+		}
+
+		private final class FocusLostRunnable implements Runnable {
+
+			public FocusLostRunnable() {}
+
+			@Override
+			public void run() {
+				AutomaticSaver.this.stopListeningForBufferModification();
+			}
 		}
 	}
 
 	@Override
 	public String toString() {
 		return String.format("AutomaticSaver [getClass()=%s]", this.getClass());
+	}
+
+	public IEditorPart getEditor() {
+		return this.editor;
 	}
 }
