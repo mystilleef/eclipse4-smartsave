@@ -4,22 +4,19 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.swt.widgets.Display;
-import org.osgi.service.event.Event;
 
-public final class AutomaticSaver {
+class AutomaticSaver {
 
 	private final IEventBroker eventBroker;
 	private final Listener bufferModificationListener;
-	private final Listener partActivationListener;
-	private final KeyListeners keylisteners = new KeyListeners(new MyKeyListenersHandler());
-	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
-	private static final String EDITOR_IS_ACTIVE = UIEvents.UILifeCycle.ACTIVATE;
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
+	private final KeyListeners keylisteners = new KeyListeners(this.new MyKeyListenersHandler());
+	private final AutosaveFocusListener focusListener = new AutosaveFocusListener(this.new AutosaveFocusListenerHandler());
+	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
 
 	public AutomaticSaver(final MPart editorPart) {
 		this.eventBroker = editorPart.getContext().get(IEventBroker.class);
 		this.bufferModificationListener = new Listener(AutomaticSaver.EDITOR_IS_MODIFIED, new BufferModificationHandler(editorPart), this.eventBroker);
-		this.partActivationListener = new Listener(AutomaticSaver.EDITOR_IS_ACTIVE, new PartActivationHandler(editorPart), this.eventBroker);
 	}
 
 	public void init() {
@@ -28,15 +25,16 @@ public final class AutomaticSaver {
 	}
 
 	private void startListeningForPartActivation() {
-		this.partActivationListener.start();
+		this.focusListener.start();
 	}
 
 	@SuppressWarnings("unused")
 	private void stopListeningForPartActivation() {
-		this.partActivationListener.stop();
+		this.focusListener.stop();
 	}
 
 	protected void startListeningForBufferModification() {
+		this.save();
 		this.bufferModificationListener.start();
 	}
 
@@ -138,31 +136,20 @@ public final class AutomaticSaver {
 		}
 	}
 
-	private final class PartActivationHandler implements ListenerHandler {
+	private final class AutosaveFocusListenerHandler implements IAutosaveFocusListenerHandler {
 
-		private final MPart editor;
+		public AutosaveFocusListenerHandler() {}
 
-		public PartActivationHandler(final MPart editorPart) {
-			this.editor = editorPart;
+		@Override
+		public void focusGained() {
+			AutomaticSaver.this.startListeningForBufferModification();
+			System.out.print("focus gained: ");
 		}
 
 		@Override
-		public void handle(final Object event) {
-			Display.getDefault().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					final MPart activePart = (MPart) ((Event) event).getProperty(UIEvents.EventTags.ELEMENT);
-					if (PartActivationHandler.this.editorIsActive(activePart)) AutomaticSaver.this.startListeningForBufferModification();
-					else AutomaticSaver.this.stopListeningForBufferModification();
-				}
-			});
-		}
-
-		protected boolean editorIsActive(final MPart activePart) {
-			if (ActivePart.isNotAnEditor(activePart)) return false;
-			if (ActivePart.isNotTagged(activePart)) return false;
-			return this.editor == activePart;
+		public void focusLost() {
+			AutomaticSaver.this.stopListeningForBufferModification();
+			System.out.print("focus lost: ");
 		}
 	}
 
