@@ -37,9 +37,7 @@ final class ActivePart {
 	}
 
 	public static void flushEvents() {
-		final Display display = ActivePart.getDisplay();
-		while (display.readAndDispatch()) {}
-		display.update();
+		while (ActivePart.getDisplay().readAndDispatch()) {}
 	}
 
 	static IEditorPart getEditor() {
