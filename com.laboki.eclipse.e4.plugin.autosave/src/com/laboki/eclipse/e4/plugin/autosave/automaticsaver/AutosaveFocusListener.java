@@ -3,7 +3,6 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.widgets.Display;
 
 final class AutosaveFocusListener implements FocusListener {
 
@@ -31,12 +30,12 @@ final class AutosaveFocusListener implements FocusListener {
 
 	@Override
 	public void focusGained(final FocusEvent event) {
-		Display.getDefault().asyncExec(this.focusGainedRunnable);
+		ActivePart.asyncExec(this.focusGainedRunnable);
 	}
 
 	@Override
 	public void focusLost(final FocusEvent event) {
-		Display.getDefault().asyncExec(this.focusLostRunnable);
+		ActivePart.asyncExec(this.focusLostRunnable);
 	}
 
 	private final class FocusGainedRunnable implements Runnable {
