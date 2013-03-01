@@ -1,6 +1,5 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
 final class AutomaticSaver {
@@ -75,12 +74,12 @@ final class AutomaticSaver {
 
 		@Override
 		public void keyPress() {
-			Display.getDefault().asyncExec(this.keyPressRunnable);
+			ActivePart.asyncExec(this.keyPressRunnable);
 		}
 
 		@Override
 		public void keyRelease() {
-			Display.getDefault().asyncExec(this.keyReleaseRunnable);
+			ActivePart.asyncExec(this.keyReleaseRunnable);
 		}
 
 		private final class KeyPressRunnable implements Runnable {
@@ -112,7 +111,7 @@ final class AutomaticSaver {
 
 		@Override
 		public void modify() {
-			Display.getDefault().asyncExec(this.modifyRunnable);
+			ActivePart.asyncExec(this.modifyRunnable);
 		}
 
 		private final class ModifyRunnable implements Runnable {
@@ -136,12 +135,12 @@ final class AutomaticSaver {
 
 		@Override
 		public void focusGained() {
-			Display.getDefault().asyncExec(this.focusGainedRunnable);
+			ActivePart.asyncExec(this.focusGainedRunnable);
 		}
 
 		@Override
 		public void focusLost() {
-			Display.getDefault().asyncExec(this.focusLostRunnable);
+			ActivePart.asyncExec(this.focusLostRunnable);
 		}
 
 		private final class FocusGainedRunnable implements Runnable {
