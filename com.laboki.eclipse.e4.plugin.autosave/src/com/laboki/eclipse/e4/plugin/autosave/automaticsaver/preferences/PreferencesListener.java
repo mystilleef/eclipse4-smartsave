@@ -3,7 +3,8 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
-import org.eclipse.swt.widgets.Display;
+
+import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.ActivePart;
 
 public final class PreferencesListener {
 
@@ -37,7 +38,7 @@ public final class PreferencesListener {
 
 		@Override
 		public void preferenceChange(final PreferenceChangeEvent event) {
-			Display.getDefault().asyncExec(this);
+			ActivePart.asyncExec(this);
 		}
 	}
 }

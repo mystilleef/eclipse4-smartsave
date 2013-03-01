@@ -6,9 +6,9 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Spinner;
 
+import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.ActivePart;
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.IPreferencesHandler;
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesListener;
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesStore;
@@ -70,7 +70,7 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 
 		@Override
 		public void modifyText(final ModifyEvent event) {
-			Display.getDefault().asyncExec(this);
+			ActivePart.asyncExec(this);
 		}
 	}
 

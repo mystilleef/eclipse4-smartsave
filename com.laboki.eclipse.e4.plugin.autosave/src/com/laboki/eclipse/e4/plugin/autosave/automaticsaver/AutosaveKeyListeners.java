@@ -3,7 +3,6 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.widgets.Display;
 
 final class AutosaveKeyListeners implements KeyListener {
 
@@ -31,12 +30,12 @@ final class AutosaveKeyListeners implements KeyListener {
 
 	@Override
 	public void keyPressed(final KeyEvent event) {
-		Display.getDefault().asyncExec(this.keyPressRunnable);
+		ActivePart.asyncExec(this.keyPressRunnable);
 	}
 
 	@Override
 	public void keyReleased(final KeyEvent event) {
-		Display.getDefault().asyncExec(this.keyReleaseRunnable);
+		ActivePart.asyncExec(this.keyReleaseRunnable);
 	}
 
 	private final class KeyPressRunnable implements Runnable {

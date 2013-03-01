@@ -15,7 +15,7 @@ import org.eclipse.ui.PlatformUI;
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferences;
 
-final class ActivePart {
+public final class ActivePart {
 
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";

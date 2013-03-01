@@ -1,6 +1,5 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
@@ -29,7 +28,7 @@ final class AutosaveModifyListener implements IPropertyListener {
 
 	@Override
 	public void propertyChanged(final Object source, final int propID) {
-		if (propID == IEditorPart.PROP_DIRTY) Display.getDefault().asyncExec(this.modifyRunnable);
+		if (propID == IEditorPart.PROP_DIRTY) ActivePart.asyncExec(this.modifyRunnable);
 	}
 
 	public IAutosaveModifyListenerHandler getHandler() {

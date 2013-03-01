@@ -4,7 +4,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.swt.widgets.Display;
 
 final class SaveJobScheduler extends Job {
 
@@ -48,7 +47,7 @@ final class SaveJobScheduler extends Job {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-		Display.getDefault().asyncExec(this.saveJobRunnable);
+		ActivePart.asyncExec(this.saveJobRunnable);
 		return Status.OK_STATUS;
 	}
 
