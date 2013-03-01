@@ -42,7 +42,7 @@ final class ActivePart {
 	}
 
 	public static void flushEvents() {
-		while (ActivePart.getDisplay().readAndDispatch()) {}
+		while (ActivePart.DISPLAY.readAndDispatch()) {}
 	}
 
 	static IEditorPart getEditor() {
