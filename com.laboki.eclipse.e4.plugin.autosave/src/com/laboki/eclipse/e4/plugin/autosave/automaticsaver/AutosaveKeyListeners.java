@@ -5,7 +5,7 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Display;
 
-final class KeyListeners implements KeyListener {
+final class AutosaveKeyListeners implements KeyListener {
 
 	private boolean isListening;
 	private final IKeyListenersHandler handler;
@@ -13,7 +13,7 @@ final class KeyListeners implements KeyListener {
 	private final KeyPressRunnable keyPressRunnable = new KeyPressRunnable();
 	private final KeyReleaseRunnable keyReleaseRunnable = new KeyReleaseRunnable();
 
-	public KeyListeners(final IKeyListenersHandler handler) {
+	public AutosaveKeyListeners(final IKeyListenersHandler handler) {
 		this.handler = handler;
 	}
 
@@ -45,7 +45,7 @@ final class KeyListeners implements KeyListener {
 
 		@Override
 		public void run() {
-			KeyListeners.this.getHandler().keyPress();
+			AutosaveKeyListeners.this.getHandler().keyPress();
 		}
 	}
 
@@ -55,7 +55,7 @@ final class KeyListeners implements KeyListener {
 
 		@Override
 		public void run() {
-			KeyListeners.this.getHandler().keyRelease();
+			AutosaveKeyListeners.this.getHandler().keyRelease();
 		}
 	}
 

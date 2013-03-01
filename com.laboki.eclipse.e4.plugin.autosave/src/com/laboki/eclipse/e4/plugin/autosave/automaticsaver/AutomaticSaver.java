@@ -9,7 +9,7 @@ final class AutomaticSaver {
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
 	private final AutosaveFocusListener focusListener = new AutosaveFocusListener(this.new AutosaveFocusListenerHandler());
 	private final AutosaveModifyListener modifyListener = new AutosaveModifyListener(this.new AutosaveModifyListenerHandler());
-	private final KeyListeners keylisteners = new KeyListeners(this.new KeyListenersHandler());
+	private final AutosaveKeyListeners keylisteners = new AutosaveKeyListeners(this.new KeyListenersHandler());
 
 	public void init() {
 		this.startListeningForPartActivation();
