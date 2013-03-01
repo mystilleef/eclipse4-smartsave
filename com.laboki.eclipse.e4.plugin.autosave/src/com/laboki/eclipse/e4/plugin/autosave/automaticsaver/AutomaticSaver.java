@@ -68,7 +68,7 @@ final class AutomaticSaver {
 		this.keylisteners.stop();
 	}
 
-	private final class KeyListenersHandler implements IKeyListenersHandler {
+	private final class KeyListenersHandler implements IAutosaveKeyListenersHandler {
 
 		private final KeyPressRunnable keyPressRunnable = this.new KeyPressRunnable();
 		private final KeyReleaseRunnable keyReleaseRunnable = this.new KeyReleaseRunnable();
