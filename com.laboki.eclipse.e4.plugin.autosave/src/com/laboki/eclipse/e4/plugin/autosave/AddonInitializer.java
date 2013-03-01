@@ -55,7 +55,7 @@ public final class AddonInitializer {
 	}
 
 	private static Set<String> getAllContributionURIs(final MApplication application) {
-		final Set<String> contributionURIs = new HashSet<>();
+		final Set<String> contributionURIs = new HashSet<>(100);
 		for (final MAddon addon : application.getAddons())
 			if (addon.getContributionURI() != null) contributionURIs.add(addon.getContributionURI());
 		return contributionURIs;

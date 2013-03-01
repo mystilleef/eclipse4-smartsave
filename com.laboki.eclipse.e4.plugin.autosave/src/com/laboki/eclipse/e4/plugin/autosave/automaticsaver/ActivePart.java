@@ -2,6 +2,9 @@ package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
 import java.util.Iterator;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.Annotation;
@@ -11,6 +14,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferences;
@@ -65,6 +69,10 @@ public final class ActivePart {
 		return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
 	}
 
+	private static IFile getFile(final IEditorPart editor) {
+		return ((FileEditorInput) editor.getEditorInput()).getFile();
+	}
+
 	static void save() {
 		ActivePart.flushEvents();
 		ActivePart.getEditor().doSave(null);
@@ -90,6 +98,7 @@ public final class ActivePart {
 	}
 
 	static boolean hasWarnings(final IEditorPart editor) {
+		ActivePart.syncFile(editor);
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING, editor);
 	}
 
@@ -98,7 +107,16 @@ public final class ActivePart {
 	}
 
 	static boolean hasErrors(final IEditorPart editor) {
+		ActivePart.syncFile(editor);
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR, editor);
+	}
+
+	private static void syncFile(final IEditorPart editor) {
+		try {
+			ActivePart.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
+		} catch (final CoreException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static boolean getAnnotationSeverity(final String problemSeverity) {
