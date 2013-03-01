@@ -51,13 +51,11 @@ final class AutomaticSaver {
 	}
 
 	protected void startSaveSchedule() {
-		ActivePart.flushEvents();
 		this.saveScheduler.start();
 	}
 
 	protected void stopSaveSchedule() {
 		this.saveScheduler.stop();
-		ActivePart.flushEvents();
 	}
 
 	private void startMonitoringEvents() {
