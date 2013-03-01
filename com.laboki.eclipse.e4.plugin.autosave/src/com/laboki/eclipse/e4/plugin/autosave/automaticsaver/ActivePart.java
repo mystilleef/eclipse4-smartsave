@@ -156,4 +156,9 @@ public final class ActivePart {
 	static boolean isNotTagged(final MPart activePart) {
 		return !ActivePart.isTagged(activePart);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("ActivePart [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }
