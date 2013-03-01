@@ -15,7 +15,9 @@ final class SaveDecider {
 	}
 
 	private boolean hasSelection() {
-		return ActivePart.getBuffer(this.editorPart).getSelectionCount() != 0;
+		if (ActivePart.getBuffer(this.editorPart).getSelectionCount() != 0) return true;
+		if (ActivePart.getBuffer(this.editorPart).getBlockSelection()) return true;
+		return false;
 	}
 
 	private boolean canSaveFile() {
