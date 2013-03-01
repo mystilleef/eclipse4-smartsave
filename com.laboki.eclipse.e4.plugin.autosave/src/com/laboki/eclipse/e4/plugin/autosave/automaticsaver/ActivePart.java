@@ -20,6 +20,7 @@ final class ActivePart {
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static ActivePart instance;
+	private static final Display DISPLAY = ActivePart.getDisplay();
 
 	private ActivePart() {
 		Preferences.initialize();
@@ -34,6 +35,10 @@ final class ActivePart {
 		Display display = Display.getCurrent();
 		if (display == null) display = Display.getDefault();
 		return display;
+	}
+
+	public static void asyncExec(final Runnable runnable) {
+		ActivePart.DISPLAY.asyncExec(runnable);
 	}
 
 	public static void flushEvents() {
