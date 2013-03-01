@@ -1,25 +1,15 @@
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
-import org.eclipse.e4.core.services.events.IEventBroker;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
-class AutomaticSaver {
+final class AutomaticSaver {
 
-	private final IEventBroker eventBroker;
 	private final IEditorPart editor = ActivePart.getEditor();
-	private final Listener bufferModificationListener;
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
-	private final KeyListeners keylisteners = new KeyListeners(this.new KeyListenersHandler());
 	private final AutosaveFocusListener focusListener = new AutosaveFocusListener(this.new AutosaveFocusListenerHandler());
-	private static final String EDITOR_IS_MODIFIED = UIEvents.Dirtyable.TOPIC_DIRTY;
-
-	public AutomaticSaver(final MPart editorPart) {
-		this.eventBroker = editorPart.getContext().get(IEventBroker.class);
-		this.bufferModificationListener = new Listener(AutomaticSaver.EDITOR_IS_MODIFIED, new BufferModificationHandler(editorPart), this.eventBroker);
-	}
+	private final AutosaveModifyListener modifyListener = new AutosaveModifyListener(this.new AutosaveModifyListenerHandler());
+	private final KeyListeners keylisteners = new KeyListeners(this.new KeyListenersHandler());
 
 	public void init() {
 		this.startListeningForPartActivation();
@@ -37,12 +27,12 @@ class AutomaticSaver {
 
 	protected void startListeningForBufferModification() {
 		this.save();
-		this.bufferModificationListener.start();
+		this.modifyListener.start();
 	}
 
 	protected void stopListeningForBufferModification() {
 		this.save();
-		this.bufferModificationListener.stop();
+		this.modifyListener.stop();
 	}
 
 	private void save() {
@@ -116,33 +106,26 @@ class AutomaticSaver {
 		}
 	}
 
-	private final class BufferModificationHandler implements ListenerHandler {
+	private final class AutosaveModifyListenerHandler implements IAutosaveModifyListenerHandler {
 
-		private final MPart meditor;
-		private final BufferModificationRunnable bufferModificationRunnable = this.new BufferModificationRunnable();
+		private final ModifyRunnable modifyRunnable = this.new ModifyRunnable();
 
-		public BufferModificationHandler(final MPart editorPart) {
-			this.meditor = editorPart;
-		}
+		public AutosaveModifyListenerHandler() {}
 
 		@Override
-		public void handle(final Object event) {
-			Display.getDefault().asyncExec(this.bufferModificationRunnable);
+		public void modify() {
+			Display.getDefault().asyncExec(this.modifyRunnable);
 		}
 
-		private final class BufferModificationRunnable implements Runnable {
+		private final class ModifyRunnable implements Runnable {
 
-			public BufferModificationRunnable() {}
+			public ModifyRunnable() {}
 
 			@Override
 			public void run() {
-				if (BufferModificationHandler.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving();
+				if (AutomaticSaver.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving();
 				else AutomaticSaver.this.stopAutomaticSaving();
 			}
-		}
-
-		public MPart getEditor() {
-			return this.meditor;
 		}
 	}
 

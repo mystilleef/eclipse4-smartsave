@@ -25,7 +25,7 @@ public final class AutomaticSaverInitializer {
 	}
 
 	private static void enableAutomaticSaverFor(final MPart activePart) {
-		final AutomaticSaver automaticSaver = new AutomaticSaver(activePart);
+		final AutomaticSaver automaticSaver = new AutomaticSaver();
 		activePart.getContext().set(AddonMetadata.PLUGIN_NAME, automaticSaver);
 		automaticSaver.init();
 	}
