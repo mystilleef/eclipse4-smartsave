@@ -1,14 +1,18 @@
-# Automatic Saving For Eclipse 4
+# Smart Saving For Eclipse 4
 
-Autosave automatically saves your files. You have better things to do than worry about losing your files.
+__Smartsave__ intelligently saves your files after you stop editing in Eclipse4.
 
 ### Features
 
-* Automatically saves files at configured intervals when you stop typing.
-* Automatically saves files when editor loses focus.
+* Intelligently saves files when you stop editing.
+* Intelligently saves files when editor loses focus.
 * Option to change save interval.
 * Option to prevent saving if compiler warnings/errors are present.
-* Option to toggle automatic saving.
+* Option to toggle smart saving.
+
+### Screenshot
+
+![Eclipse 4 Smartsave Preferences Screenshot](https://googledrive.com/host/0Bw1KseIE5s6ca2RlQlptdnBvM2c/)
 
 ### Donate
 
@@ -22,16 +26,16 @@ Autosave automatically saves your files. You have better things to do than worry
 ### Update Site
 
 
-* __[Update Site](https://raw.github.com/mystilleef/eclipse4-autosave-updatesite/master/com.laboki.eclipse.e4.autosave)__
+* __[Update Site](https://raw.github.com/mystilleef/eclipse4-smartsave-updatesite/master/com.laboki.eclipse.updatesite.smartsave)__
 
 ### Installation Guide
 
 1. Launch Eclipse
 2. Go to __Help__ -> __Install New Software...__
 3. Press the __Add__ button on the install window
-4. Paste the *[update site link](https://raw.github.com/mystilleef/eclipse4-autosave-updatesite/master/com.laboki.eclipse.e4.autosave)* to __location__.
+4. Paste the *[update site link](https://raw.github.com/mystilleef/eclipse4-smartsave-updatesite/master/com.laboki.eclipse.updatesite.smartsave)* to __location__.
 5. Press __OK__
-6. Select the __Autosave__ plugin shown in the list view under __Uncategorized__.
+6. Select the __Smartsave__ plugin shown in the list view under __Uncategorized__.
 7. Press __Next__.
 8. __Agree__ to the license terms.
 9. Press __finish__. 
