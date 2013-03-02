@@ -1,11 +1,11 @@
 // $codepro.audit.disable debuggingCode
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
-import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
+import com.laboki.eclipse.plugin.smartsave.AddonMetadata;
 
 public final class PreferencesStore {
 

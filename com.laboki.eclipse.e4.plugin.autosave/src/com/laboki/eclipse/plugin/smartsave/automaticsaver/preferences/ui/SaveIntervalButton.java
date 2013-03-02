@@ -1,4 +1,4 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
 
 import java.text.MessageFormat;
 
@@ -8,10 +8,10 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.ActivePart;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.IPreferencesHandler;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesListener;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.ActivePart;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.IPreferencesHandler;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.PreferencesListener;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.PreferencesStore;
 
 final class SaveIntervalButton implements IPreferencesHandler {
 

@@ -1,4 +1,4 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -8,10 +8,10 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
 
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.ActivePart;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.IPreferencesHandler;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesListener;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.ActivePart;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.IPreferencesHandler;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.PreferencesListener;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.PreferencesStore;
 
 final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 

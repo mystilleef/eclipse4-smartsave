@@ -1,9 +1,9 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
 
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.PreferencesStore;
 
 final class SaveResponseComboViewer extends PreferencesResponseComboViewer {
 

@@ -1,4 +1,4 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver;
 
 import javax.inject.Inject;
 
@@ -8,7 +8,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.osgi.service.event.Event;
 
-import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
+import com.laboki.eclipse.plugin.smartsave.AddonMetadata;
 
 public final class AutomaticSaverInitializer {
 

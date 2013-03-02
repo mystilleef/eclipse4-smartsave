@@ -1,4 +1,4 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;

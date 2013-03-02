@@ -1,2 +1,2 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences;
 

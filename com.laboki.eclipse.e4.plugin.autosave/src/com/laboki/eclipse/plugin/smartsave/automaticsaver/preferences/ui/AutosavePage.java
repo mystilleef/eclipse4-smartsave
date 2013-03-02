@@ -1,4 +1,4 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.PreferencesStore;
 
 public final class AutosavePage extends PreferencePage implements IWorkbenchPreferencePage {
 

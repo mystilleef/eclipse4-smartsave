@@ -1,10 +1,10 @@
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.ActivePart;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.ActivePart;
 
 public final class PreferencesListener {
 

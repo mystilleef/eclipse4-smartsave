@@ -1,27 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Autosave
+Bundle-Name: Smartsave
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
 Bundle-Version: 20130302.1
 Bundle-Vendor: LABOKI
-Export-Package: com.laboki.eclipse.e4.plugin.autosave;uses:="org.eclipse.e4.ui.model.application",
- com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
-  uses:="org.eclipse.core.runtime,
-   org.eclipse.jface.text.source,
-   org.eclipse.core.runtime.jobs,
-   org.eclipse.e4.ui.model.application.ui.basic,
-   org.osgi.service.event,
-   org.eclipse.swt.events,
-   org.eclipse.ui,
-   org.eclipse.swt.custom,
-   org.eclipse.swt.widgets",
- com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;uses:="org.eclipse.core.runtime.preferences",
- com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.ui;
-  uses:="org.eclipse.jface.preference,
-   com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences,
-   org.eclipse.ui,
-   org.eclipse.jface.viewers,
-   org.eclipse.swt.widgets"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.e4.core.di;bundle-version="1.1.0",
@@ -34,3 +16,20 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.ui.ide;bundle-version="3.8.1",
  org.eclipse.e4.core.contexts;bundle-version="1.1.0"
 Import-Package: org.osgi.service.event;version="1.3.0"
+Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.e4.ui.model.application",
+ com.laboki.eclipse.plugin.smartsave.automaticsaver;
+  uses:="org.eclipse.core.runtime,
+   org.eclipse.jface.text.source,
+   org.eclipse.core.runtime.jobs,
+   org.eclipse.e4.ui.model.application.ui.basic,
+   org.osgi.service.event,
+   org.eclipse.swt.events,
+   org.eclipse.ui,
+   org.eclipse.swt.custom,
+   org.eclipse.swt.widgets",
+ com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences;uses:="org.eclipse.core.runtime.preferences",
+ com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
+  uses:="org.eclipse.jface.preference,
+   org.eclipse.ui,
+   org.eclipse.jface.viewers,
+   org.eclipse.swt.widgets"
