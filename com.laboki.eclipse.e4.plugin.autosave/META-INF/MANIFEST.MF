@@ -17,7 +17,7 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.e4.core.contexts;bundle-version="1.1.0"
 Import-Package: org.osgi.service.event;version="1.3.0"
 Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.e4.ui.model.application",
- com.laboki.eclipse.plugin.smartsave.automaticsaver;
+ com.laboki.eclipse.plugin.smartsave.saver;
   uses:="org.eclipse.core.runtime,
    org.eclipse.jface.text.source,
    org.eclipse.core.runtime.jobs,
@@ -27,8 +27,8 @@ Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.e4.ui.mod
    org.eclipse.ui,
    org.eclipse.swt.custom,
    org.eclipse.swt.widgets",
- com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences;uses:="org.eclipse.core.runtime.preferences",
- com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.ui;
+ com.laboki.eclipse.plugin.smartsave.saver.preferences;uses:="org.eclipse.core.runtime.preferences",
+ com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
   uses:="org.eclipse.jface.preference,
    org.eclipse.ui,
    org.eclipse.jface.viewers,

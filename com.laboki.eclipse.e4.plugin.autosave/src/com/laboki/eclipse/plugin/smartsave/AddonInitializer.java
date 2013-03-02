@@ -11,7 +11,7 @@ import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationFactory;
 
-import com.laboki.eclipse.plugin.smartsave.automaticsaver.AutomaticSaverInitializer;
+import com.laboki.eclipse.plugin.smartsave.saver.AutomaticSaverInitializer;
 
 public final class AddonInitializer {
 
