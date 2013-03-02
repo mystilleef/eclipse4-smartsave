@@ -13,18 +13,18 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
 
-public final class AutosavePage extends PreferencePage implements IWorkbenchPreferencePage {
+public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private static final int FONT_SIZE = 12;
 	private static Composite pageComposite;
 
 	@Override
 	protected Control createContents(final Composite parent) {
-		AutosavePage.pageComposite = AutosavePage.createPageComposite(parent);
-		AutosavePage.createSaveAutomaticallySection();
-		AutosavePage.createWarningErrorSection();
-		AutosavePage.createSaveIntervalSections();
-		return AutosavePage.pageComposite;
+		PreferencesPage.pageComposite = PreferencesPage.createPageComposite(parent);
+		PreferencesPage.createSaveAutomaticallySection();
+		PreferencesPage.createWarningErrorSection();
+		PreferencesPage.createSaveIntervalSections();
+		return PreferencesPage.pageComposite;
 	}
 
 	private static Composite createPageComposite(final Composite parent) {
@@ -35,37 +35,37 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 	}
 
 	private static void createSaveAutomaticallySection() {
-		AutosavePage.createSectionLabel("Toggle Automatic Saving");
-		final Composite composite = AutosavePage.createHorizontalLayoutComposite();
-		AutosavePage.createLabel(composite, "&Save files automatically: ");
+		PreferencesPage.createSectionLabel("Toggle Automatic Saving");
+		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
+		PreferencesPage.createLabel(composite, "&Save files automatically: ");
 		new SaveResponseComboViewer(composite).startListening();
-		AutosavePage.separator(AutosavePage.pageComposite);
+		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
 	private static void createWarningErrorSection() {
-		AutosavePage.separator(AutosavePage.pageComposite);
-		AutosavePage.createSectionLabel("Errors and Warnings");
-		final Composite composite = AutosavePage.createHorizontalLayoutComposite();
-		AutosavePage.createErrorComboView(composite, "Save files when &errors are present: ");
-		AutosavePage.createWarningComboView(composite, "Save files when &warnings are present: ");
-		AutosavePage.separator(AutosavePage.pageComposite);
+		PreferencesPage.separator(PreferencesPage.pageComposite);
+		PreferencesPage.createSectionLabel("Errors and Warnings");
+		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
+		PreferencesPage.createErrorComboView(composite, "Save files when &errors are present: ");
+		PreferencesPage.createWarningComboView(composite, "Save files when &warnings are present: ");
+		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
 	private static void createErrorComboView(final Composite composite, final String name) {
-		AutosavePage.createLabel(composite, name);
+		PreferencesPage.createLabel(composite, name);
 		new ErrorResponseComboViewer(composite).startListening();
 	}
 
 	private static void createWarningComboView(final Composite composite, final String name) {
-		AutosavePage.createLabel(composite, name);
+		PreferencesPage.createLabel(composite, name);
 		new WarningResponseComboViewer(composite).startListening();
 	}
 
 	private static void createSaveIntervalSections() {
-		AutosavePage.separator(AutosavePage.pageComposite);
-		AutosavePage.createSectionLabel("Save Interval");
-		final Composite composite = AutosavePage.createHorizontalLayoutComposite();
-		AutosavePage.createLabel(composite, "Save &files every: ");
+		PreferencesPage.separator(PreferencesPage.pageComposite);
+		PreferencesPage.createSectionLabel("Save Interval");
+		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
+		PreferencesPage.createLabel(composite, "Save &files every: ");
 		new SaveIntervalButton(composite).startListening();
 	}
 
@@ -75,9 +75,9 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 	}
 
 	private static Composite createHorizontalLayoutComposite() {
-		final Composite layoutComposite = new Composite(AutosavePage.pageComposite, SWT.NONE);
+		final Composite layoutComposite = new Composite(PreferencesPage.pageComposite, SWT.NONE);
 		layoutComposite.setLayout(new GridLayout(2, false)); // $codepro.audit.disable numericLiterals
-		layoutComposite.setLayoutData(AutosavePage.createHorizontalDataGrid());
+		layoutComposite.setLayoutData(PreferencesPage.createHorizontalDataGrid());
 		return layoutComposite;
 	}
 
@@ -87,16 +87,16 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 	}
 
 	private static void createSectionLabel(final String title) {
-		final Composite composite = new Composite(AutosavePage.pageComposite, SWT.NONE);
+		final Composite composite = new Composite(PreferencesPage.pageComposite, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		AutosavePage.newSectionLabel(composite, title);
+		PreferencesPage.newSectionLabel(composite, title);
 	}
 
 	private static void newSectionLabel(final Composite composite, final String title) {
 		final Label label = new Label(composite, SWT.None);
 		label.setText(title);
-		label.setFont(new Font(AutosavePage.pageComposite.getDisplay(), label.getFont().getFontData()[0].getName(), AutosavePage.FONT_SIZE, SWT.BOLD));
+		label.setFont(new Font(PreferencesPage.pageComposite.getDisplay(), label.getFont().getFontData()[0].getName(), PreferencesPage.FONT_SIZE, SWT.BOLD));
 	}
 
 	private static void separator(final Composite composite) {

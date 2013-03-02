@@ -11,7 +11,7 @@
 	<extension
       point = "org.eclipse.ui.preferencePages">
        <page id="com.laboki.eclipse.plugin.smartsave.PreferencePage"
-	    class="com.laboki.eclipse.plugin.smartsave.saver.preferences.ui.AutosavePage"
+	    class="com.laboki.eclipse.plugin.smartsave.saver.preferences.ui.PreferencesPage"
         name="Autosave">
        </page>
    </extension>
