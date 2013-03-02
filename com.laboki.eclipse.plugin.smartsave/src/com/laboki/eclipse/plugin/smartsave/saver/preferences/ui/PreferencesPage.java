@@ -35,7 +35,7 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	}
 
 	private static void createSaveAutomaticallySection() {
-		PreferencesPage.createSectionLabel("Toggle Automatic Saving");
+		PreferencesPage.createSectionLabel("Toggle Smart Saving");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		PreferencesPage.createLabel(composite, "&Save files automatically: ");
 		new SaveResponseComboViewer(composite).startListening();
@@ -65,7 +65,7 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 		PreferencesPage.separator(PreferencesPage.pageComposite);
 		PreferencesPage.createSectionLabel("Save Interval");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
-		PreferencesPage.createLabel(composite, "Save &files every: ");
+		PreferencesPage.createLabel(composite, "If possible try to save &files every: ");
 		new SaveIntervalButton(composite).startListening();
 	}
 
