@@ -21,13 +21,13 @@ import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferen
 
 public final class ActivePart {
 
+	private static ActivePart instance;
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final String ANNOTATION_LINK_MODE_EXIT = "org.eclipse.ui.internal.workbench.texteditor.link.exit";
 	private static final String ANNOTATION_LINK_MODE_TARGET = "org.eclipse.ui.internal.workbench.texteditor.link.target";
 	private static final String ANNOTATION_LINK_MODE_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
 	private static final String ANNOTATION_LINK_MODE_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
-	private static ActivePart instance;
 	private static final Display DISPLAY = ActivePart.getDisplay();
 
 	private ActivePart() {
@@ -73,10 +73,6 @@ public final class ActivePart {
 		return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
 	}
 
-	private static IFile getFile(final IEditorPart editor) {
-		return ((FileEditorInput) editor.getEditorInput()).getFile();
-	}
-
 	static void save() {
 		ActivePart.flushEvents();
 		ActivePart.getEditor().doSave(null);
@@ -99,6 +95,10 @@ public final class ActivePart {
 
 	public static boolean getLinkedMode(final IEditorPart editor) {
 		ActivePart.syncFile(editor);
+		return ActivePart.hasLinkedAnnotations(editor);
+	}
+
+	private static boolean hasLinkedAnnotations(final IEditorPart editor) {
 		final Iterator<Annotation> iterator = ActivePart.getView(editor).getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
 			if (ActivePart.isInLinkedMode(iterator)) return true;
@@ -141,6 +141,10 @@ public final class ActivePart {
 		} finally {
 			ActivePart.flushEvents();
 		}
+	}
+
+	private static IFile getFile(final IEditorPart editor) {
+		return ((FileEditorInput) editor.getEditorInput()).getFile();
 	}
 
 	private static boolean getAnnotationSeverity(final String problemSeverity) {
