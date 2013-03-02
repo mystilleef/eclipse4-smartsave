@@ -10,10 +10,6 @@ __Smartsave__ intelligently saves your files after you stop editing in Eclipse4.
 * Option to prevent saving if compiler warnings/errors are present.
 * Option to toggle smart saving.
 
-### Screenshot
-
-![Eclipse 4 Smartsave Preferences Screenshot](https://googledrive.com/host/0Bw1KseIE5s6ca2RlQlptdnBvM2c/)
-
 ### Donate
 
 * __[Paypal](https://googledrive.com/host/0Bw1KseIE5s6cTXRJcWZzbTU0Q3c/index.html)__
