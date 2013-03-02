@@ -1,4 +1,4 @@
-// $codepro.audit.disable largeNumberOfMethods
+// $codepro.audit.disable largeNumberOfMethods, com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.minimizeScopeOfLocalVariables, debuggingCode
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
 import java.util.Iterator;
@@ -18,7 +18,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preferences;
+import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preference;
 
 public final class ActivePart {
 
@@ -32,7 +32,7 @@ public final class ActivePart {
 	private static final Display DISPLAY = ActivePart.getDisplay();
 
 	private ActivePart() {
-		Preferences.initialize();
+		Preference.initialize();
 	}
 
 	public static synchronized ActivePart initialize() {
@@ -167,19 +167,19 @@ public final class ActivePart {
 	}
 
 	public static boolean canSaveIfWarnings() {
-		return Preferences.canSaveIfWarnings();
+		return Preference.canSaveIfWarnings();
 	}
 
 	public static boolean canSaveIfErrors() {
-		return Preferences.canSaveIfErrors();
+		return Preference.canSaveIfErrors();
 	}
 
 	public static boolean canSaveAutomatically() {
-		return Preferences.canSaveAutomatically();
+		return Preference.canSaveAutomatically();
 	}
 
 	public static int getSaveIntervalInSeconds() {
-		return Preferences.saveIntervalInSeconds();
+		return Preference.saveIntervalInSeconds();
 	}
 
 	public static boolean isInvalid(final MPart activePart) {

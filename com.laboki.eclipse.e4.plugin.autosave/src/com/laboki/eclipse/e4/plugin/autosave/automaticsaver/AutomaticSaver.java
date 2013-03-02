@@ -8,7 +8,7 @@ final class AutomaticSaver {
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
 	private final AutosaveFocusListener focusListener = new AutosaveFocusListener(this.new AutosaveFocusListenerHandler());
 	private final AutosaveModifyListener modifyListener = new AutosaveModifyListener(this.new AutosaveModifyListenerHandler());
-	private final AutosaveKeyListeners keylisteners = new AutosaveKeyListeners(this.new KeyListenersHandler());
+	private final AutosaveKeyListener keylisteners = new AutosaveKeyListener(this.new KeyListenersHandler());
 
 	public void init() {
 		this.startListeningForPartActivation();
@@ -20,7 +20,7 @@ final class AutomaticSaver {
 	}
 
 	@SuppressWarnings("unused")
-	private void stopListeningForPartActivation() {
+	private void stopListeningForPartActivation() { // $codepro.audit.disable unusedMethod
 		this.focusListener.stop();
 	}
 

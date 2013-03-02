@@ -16,20 +16,20 @@ class ResponseComboViewer extends ComboViewer {
 
 	public ResponseComboViewer(final Composite parent) {
 		super(parent, SWT.READ_ONLY);
-		this.setProperties();
+		this.updateProperties();
 	}
 
-	private void setProperties() {
+	private void updateProperties() {
 		this.setContentProvider(ArrayContentProvider.getInstance());
 		this.setLabelProvider(this.labelProvider);
 		this.setInput(this.responses);
 	}
 
-	void startListening() {
+	public void startListening() {
 		this.addSelectionChangedListener(this.listener);
 	}
 
-	void stopListening() {
+	public void stopListening() {
 		this.removeSelectionChangedListener(this.listener);
 	}
 

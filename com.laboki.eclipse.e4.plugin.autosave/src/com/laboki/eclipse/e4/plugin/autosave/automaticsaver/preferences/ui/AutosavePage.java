@@ -76,7 +76,7 @@ public final class AutosavePage extends PreferencePage implements IWorkbenchPref
 
 	private static Composite createHorizontalLayoutComposite() {
 		final Composite layoutComposite = new Composite(AutosavePage.pageComposite, SWT.NONE);
-		layoutComposite.setLayout(new GridLayout(2, false));
+		layoutComposite.setLayout(new GridLayout(2, false)); // $codepro.audit.disable numericLiterals
 		layoutComposite.setLayoutData(AutosavePage.createHorizontalDataGrid());
 		return layoutComposite;
 	}

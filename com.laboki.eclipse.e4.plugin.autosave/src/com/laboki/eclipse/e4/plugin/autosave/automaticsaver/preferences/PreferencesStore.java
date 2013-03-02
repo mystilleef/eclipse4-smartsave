@@ -1,3 +1,4 @@
+// $codepro.audit.disable debuggingCode
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;

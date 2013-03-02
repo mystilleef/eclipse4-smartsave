@@ -1,3 +1,4 @@
+// $codepro.audit.disable packageNamingConvention
 package com.laboki.eclipse.e4.plugin.autosave;
 
 import java.text.MessageFormat;
@@ -55,7 +56,7 @@ public final class AddonInitializer {
 	}
 
 	private static Set<String> getAllContributionURIs(final MApplication application) {
-		final Set<String> contributionURIs = new HashSet<>(100, 1);
+		final Set<String> contributionURIs = new HashSet<>();
 		for (final MAddon addon : application.getAddons())
 			if (addon.getContributionURI() != null) contributionURIs.add(addon.getContributionURI());
 		return contributionURIs;

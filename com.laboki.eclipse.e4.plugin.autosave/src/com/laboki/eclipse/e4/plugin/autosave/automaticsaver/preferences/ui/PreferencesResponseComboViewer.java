@@ -16,7 +16,7 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements IPre
 
 	public PreferencesResponseComboViewer(final Composite parent) {
 		super(parent);
-		this.setComboProperties();
+		this.updateComboProperties();
 		this.listener.start();
 	}
 
@@ -29,7 +29,7 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements IPre
 		return value;
 	}
 
-	private void setComboProperties() {
+	private void updateComboProperties() {
 		this.updateSelection();
 	}
 

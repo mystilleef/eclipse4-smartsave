@@ -17,10 +17,10 @@ final class SaveIntervalDialog {
 
 	public SaveIntervalDialog(final Composite composite) {
 		SaveIntervalDialog.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		SaveIntervalDialog.setProperties();
+		SaveIntervalDialog.updateProperties();
 	}
 
-	private static void setProperties() {
+	private static void updateProperties() {
 		SaveIntervalDialog.getDialog().setLayout(SaveIntervalDialog.createLayout());
 		SaveIntervalDialog.getDialog().setText("Save Interval");
 		SaveIntervalDialog.addLabel();

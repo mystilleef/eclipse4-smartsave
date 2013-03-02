@@ -28,10 +28,10 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 
 	public SaveIntervalDialogSpinner(final Composite composite) {
 		SaveIntervalDialogSpinner.spinner = new Spinner(composite, SWT.BORDER | SWT.RIGHT);
-		SaveIntervalDialogSpinner.setProperties();
+		SaveIntervalDialogSpinner.updateProperties();
 	}
 
-	private static void setProperties() {
+	private static void updateProperties() {
 		SaveIntervalDialogSpinner.getSpinner().setTextLimit(SaveIntervalDialogSpinner.TEXT_LIMIT);
 		SaveIntervalDialogSpinner.getSpinner().setValues(PreferencesStore.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
 		SaveIntervalDialogSpinner.getSpinner().setFocus();
