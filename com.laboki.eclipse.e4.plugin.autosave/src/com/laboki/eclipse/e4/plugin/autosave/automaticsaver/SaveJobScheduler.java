@@ -46,7 +46,6 @@ final class SaveJobScheduler extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
-		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
 		ActivePart.asyncExec(this.saveJobRunnable);
 		return Status.OK_STATUS;
 	}
