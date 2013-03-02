@@ -9,7 +9,7 @@ import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
 public final class PreferencesStore {
 
 	private static final boolean CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE = true;
-	private static final boolean CAN_SAVE_IF_ERRORS_DEFAULT_VALUE = true;
+	private static final boolean CAN_SAVE_IF_ERRORS_DEFAULT_VALUE = false;
 	private static final boolean CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE = true;
 	private static final int SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE = 5;
 	private static final String SAVE_AUTOMATICALLY_KEY = "saveAutomatically";
