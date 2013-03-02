@@ -1,4 +1,4 @@
-package com.laboki.eclipse.e4.plugin.autosave;
+package com.laboki.eclipse.plugin.smartsave;
 
 import java.text.MessageFormat;
 

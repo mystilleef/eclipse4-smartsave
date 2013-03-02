@@ -1,5 +1,5 @@
 // $codepro.audit.disable packageNamingConvention
-package com.laboki.eclipse.e4.plugin.autosave;
+package com.laboki.eclipse.plugin.smartsave;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationFactory;
 
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.AutomaticSaverInitializer;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.AutomaticSaverInitializer;
 
 public final class AddonInitializer {
 

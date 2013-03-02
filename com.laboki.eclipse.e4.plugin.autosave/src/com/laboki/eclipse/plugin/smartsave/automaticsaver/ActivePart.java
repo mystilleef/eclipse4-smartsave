@@ -1,5 +1,5 @@
 // $codepro.audit.disable largeNumberOfMethods, com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.minimizeScopeOfLocalVariables, debuggingCode
-package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
+package com.laboki.eclipse.plugin.smartsave.automaticsaver;
 
 import java.util.Iterator;
 
@@ -17,8 +17,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
-import com.laboki.eclipse.e4.plugin.autosave.AddonMetadata;
-import com.laboki.eclipse.e4.plugin.autosave.automaticsaver.preferences.Preference;
+import com.laboki.eclipse.plugin.smartsave.AddonMetadata;
+import com.laboki.eclipse.plugin.smartsave.automaticsaver.preferences.Preference;
 
 public final class ActivePart {
 
