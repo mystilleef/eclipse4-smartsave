@@ -23,6 +23,10 @@ public final class ActivePart {
 
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
+	private static final String ANNOTATION_LINK_MODE_EXIT = "org.eclipse.ui.internal.workbench.texteditor.link.exit";
+	private static final String ANNOTATION_LINK_MODE_TARGET = "org.eclipse.ui.internal.workbench.texteditor.link.target";
+	private static final String ANNOTATION_LINK_MODE_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
+	private static final String ANNOTATION_LINK_MODE_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
 	private static ActivePart instance;
 	private static final Display DISPLAY = ActivePart.getDisplay();
 
@@ -93,6 +97,23 @@ public final class ActivePart {
 		return editor.isDirty();
 	}
 
+	public static boolean getLinkedMode(final IEditorPart editor) {
+		ActivePart.syncFile(editor);
+		final Iterator<Annotation> iterator = ActivePart.getView(editor).getAnnotationModel().getAnnotationIterator();
+		while (iterator.hasNext())
+			if (ActivePart.isInLinkedMode(iterator)) return true;
+		return false;
+	}
+
+	private static boolean isInLinkedMode(final Iterator<Annotation> iterator) {
+		final String annotationType = iterator.next().getType();
+		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_EXIT)) return true;
+		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_MASTER)) return true;
+		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_SLAVE)) return true;
+		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_TARGET)) return true;
+		return false;
+	}
+
 	static boolean hasWarnings() {
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING);
 	}
@@ -113,9 +134,12 @@ public final class ActivePart {
 
 	private static void syncFile(final IEditorPart editor) {
 		try {
+			ActivePart.flushEvents();
 			ActivePart.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
 			e.printStackTrace();
+		} finally {
+			ActivePart.flushEvents();
 		}
 	}
 

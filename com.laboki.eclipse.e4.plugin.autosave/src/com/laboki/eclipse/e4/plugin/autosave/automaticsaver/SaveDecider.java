@@ -9,9 +9,21 @@ final class SaveDecider {
 	SaveDecider() {}
 
 	void save() {
-		if (this.hasSelection()) return;
 		if (!ActivePart.canSaveAutomatically() || !this.canSaveFile()) return;
 		ActivePart.save(this.editorPart);
+	}
+
+	private boolean canSaveFile() {
+		if (this.bufferIsNotModified()) return false;
+		if (this.hasSelection()) return false;
+		if (this.isInLinkedMode()) return false;
+		if (this.hasErrors()) return false;
+		if (this.hasWarnings()) return false;
+		return true;
+	}
+
+	private boolean bufferIsNotModified() {
+		return !ActivePart.isModified(this.editorPart);
 	}
 
 	private boolean hasSelection() {
@@ -20,24 +32,17 @@ final class SaveDecider {
 		return false;
 	}
 
-	private boolean canSaveFile() {
-		if (this.bufferIsNotModified()) return false;
-		if (this.hasWarnings()) return false;
-		if (this.hasErrors()) return false;
-		return true;
-	}
-
-	private boolean bufferIsNotModified() {
-		return !ActivePart.isModified(this.editorPart);
-	}
-
-	private boolean hasWarnings() {
-		if (ActivePart.canSaveIfWarnings()) return false;
-		return ActivePart.hasWarnings(this.editorPart);
+	private boolean isInLinkedMode() {
+		return ActivePart.getLinkedMode(this.editorPart);
 	}
 
 	private boolean hasErrors() {
 		if (ActivePart.canSaveIfErrors()) return false;
 		return ActivePart.hasErrors(this.editorPart);
+	}
+
+	private boolean hasWarnings() {
+		if (ActivePart.canSaveIfWarnings()) return false;
+		return ActivePart.hasWarnings(this.editorPart);
 	}
 }
