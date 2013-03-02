@@ -41,17 +41,17 @@ final class SaveDecider {
 	}
 
 	private boolean bufferHasProblems() {
-		if (this.bufferHasCompilerErrors()) return true;
-		if (this.bufferHasCompilerWarnings()) return true;
+		if (this.bufferHasErrors()) return true;
+		if (this.bufferHasWarnings()) return true;
 		return false;
 	}
 
-	private boolean bufferHasCompilerErrors() {
+	private boolean bufferHasErrors() {
 		if (ActivePart.canSaveIfErrors()) return false;
 		return ActivePart.hasErrors(this.editorPart);
 	}
 
-	private boolean bufferHasCompilerWarnings() {
+	private boolean bufferHasWarnings() {
 		if (ActivePart.canSaveIfWarnings()) return false;
 		return ActivePart.hasWarnings(this.editorPart);
 	}
