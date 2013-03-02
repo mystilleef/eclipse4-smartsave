@@ -51,7 +51,9 @@ public final class ActivePart {
 	}
 
 	public static void flushEvents() {
-		while (ActivePart.DISPLAY.readAndDispatch()) {}
+		while (ActivePart.DISPLAY.readAndDispatch())
+			ActivePart.DISPLAY.update();
+		ActivePart.DISPLAY.update();
 	}
 
 	public static IEditorPart getEditor() {
