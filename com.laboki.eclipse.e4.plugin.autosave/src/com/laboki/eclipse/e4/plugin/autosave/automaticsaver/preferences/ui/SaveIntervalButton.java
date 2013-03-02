@@ -91,4 +91,9 @@ final class SaveIntervalButton implements IPreferencesHandler {
 			ActivePart.asyncExec(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.format("SaveIntervalButton [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

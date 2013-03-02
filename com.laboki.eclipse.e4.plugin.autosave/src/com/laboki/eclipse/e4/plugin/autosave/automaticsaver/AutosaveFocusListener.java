@@ -16,13 +16,13 @@ final class AutosaveFocusListener implements FocusListener {
 		this.handler = handler;
 	}
 
-	void start() {
+	public void start() {
 		if (this.isListening) return;
 		this.editorBuffer.addFocusListener(this);
 		this.isListening = true;
 	}
 
-	void stop() {
+	public void stop() {
 		if (!this.isListening) return;
 		this.editorBuffer.removeFocusListener(this);
 		this.isListening = false;
@@ -60,5 +60,10 @@ final class AutosaveFocusListener implements FocusListener {
 
 	public IAutosaveFocusListenerHandler getHandler() {
 		return this.handler;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("AutosaveFocusListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

@@ -21,4 +21,9 @@ final class WarningResponseComboViewer extends PreferencesResponseComboViewer {
 		if (PreferencesStore.getCanSaveIfWarnings()) this.setSelection(PreferencesResponseComboViewer.YES);
 		else this.setSelection(PreferencesResponseComboViewer.NO);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("WarningResponseComboViewer [toString()=%s, getClass()=%s]", super.toString(), this.getClass());
+	}
 }

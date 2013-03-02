@@ -83,4 +83,9 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 			if (event.detail == SWT.TRAVERSE_RETURN) SaveIntervalDialogSpinner.getSpinner().getShell().close();
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.format("SaveIntervalDialogSpinner [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

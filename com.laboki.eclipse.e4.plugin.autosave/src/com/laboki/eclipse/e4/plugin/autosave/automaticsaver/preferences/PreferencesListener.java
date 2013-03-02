@@ -41,4 +41,9 @@ public final class PreferencesListener {
 			ActivePart.asyncExec(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.format("PreferencesListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

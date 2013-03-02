@@ -78,4 +78,9 @@ class ResponseComboViewer extends ComboViewer {
 			return "No";
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.format("ResponseComboViewer [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

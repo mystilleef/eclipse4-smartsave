@@ -6,9 +6,9 @@ final class SaveDecider {
 
 	private final IEditorPart editorPart = ActivePart.getEditor();
 
-	SaveDecider() {}
+	public SaveDecider() {}
 
-	void save() {
+	public void save() {
 		if (!ActivePart.canSaveAutomatically() || !this.canSaveFile()) return;
 		ActivePart.save(this.editorPart);
 	}
@@ -44,5 +44,10 @@ final class SaveDecider {
 	private boolean hasWarnings() {
 		if (ActivePart.canSaveIfWarnings()) return false;
 		return ActivePart.hasWarnings(this.editorPart);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("SaveDecider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

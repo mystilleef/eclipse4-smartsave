@@ -1,3 +1,4 @@
+// $codepro.audit.disable largeNumberOfMethods
 package com.laboki.eclipse.e4.plugin.autosave.automaticsaver;
 
 import java.util.Iterator;
@@ -53,43 +54,43 @@ public final class ActivePart {
 		while (ActivePart.DISPLAY.readAndDispatch()) {}
 	}
 
-	static IEditorPart getEditor() {
+	public static IEditorPart getEditor() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	}
 
-	static StyledText getBuffer() {
+	public static StyledText getBuffer() {
 		return (StyledText) ActivePart.getEditor().getAdapter(Control.class);
 	}
 
-	static StyledText getBuffer(final IEditorPart editor) {
+	public static StyledText getBuffer(final IEditorPart editor) {
 		return (StyledText) editor.getAdapter(Control.class);
 	}
 
-	static SourceViewer getView() {
+	public static SourceViewer getView() {
 		return (SourceViewer) ActivePart.getEditor().getAdapter(ITextOperationTarget.class);
 	}
 
-	static SourceViewer getView(final IEditorPart editor) {
+	public static SourceViewer getView(final IEditorPart editor) {
 		return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
 	}
 
-	static void save() {
+	public static void save() {
 		ActivePart.flushEvents();
 		ActivePart.getEditor().doSave(null);
 		ActivePart.flushEvents();
 	}
 
-	static void save(final IEditorPart editor) {
+	public static void save(final IEditorPart editor) {
 		ActivePart.flushEvents();
 		editor.doSave(null);
 		ActivePart.flushEvents();
 	}
 
-	static boolean isModified() {
+	public static boolean isModified() {
 		return ActivePart.getEditor().isDirty();
 	}
 
-	static boolean isModified(final IEditorPart editor) {
+	public static boolean isModified(final IEditorPart editor) {
 		return editor.isDirty();
 	}
 
@@ -114,20 +115,20 @@ public final class ActivePart {
 		return false;
 	}
 
-	static boolean hasWarnings() {
+	public static boolean hasWarnings() {
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING);
 	}
 
-	static boolean hasWarnings(final IEditorPart editor) {
+	public static boolean hasWarnings(final IEditorPart editor) {
 		ActivePart.syncFile(editor);
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING, editor);
 	}
 
-	static boolean hasErrors() {
+	public static boolean hasErrors() {
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR);
 	}
 
-	static boolean hasErrors(final IEditorPart editor) {
+	public static boolean hasErrors(final IEditorPart editor) {
 		ActivePart.syncFile(editor);
 		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR, editor);
 	}
@@ -165,41 +166,41 @@ public final class ActivePart {
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
-	static boolean canSaveIfWarnings() {
+	public static boolean canSaveIfWarnings() {
 		return Preferences.canSaveIfWarnings();
 	}
 
-	static boolean canSaveIfErrors() {
+	public static boolean canSaveIfErrors() {
 		return Preferences.canSaveIfErrors();
 	}
 
-	static boolean canSaveAutomatically() {
+	public static boolean canSaveAutomatically() {
 		return Preferences.canSaveAutomatically();
 	}
 
-	static int getSaveIntervalInSeconds() {
+	public static int getSaveIntervalInSeconds() {
 		return Preferences.saveIntervalInSeconds();
 	}
 
-	static boolean isInvalid(final MPart activePart) {
+	public static boolean isInvalid(final MPart activePart) {
 		if (ActivePart.isNotAnEditor(activePart)) return true;
 		if (ActivePart.isTagged(activePart)) return true;
 		return false;
 	}
 
-	static boolean isNotAnEditor(final MPart activePart) {
+	public static boolean isNotAnEditor(final MPart activePart) {
 		if (activePart == null) return true;
 		if (activePart.getTags().contains("Editor")) return false;
 		return true;
 	}
 
-	static boolean isTagged(final MPart activePart) {
+	public static boolean isTagged(final MPart activePart) {
 		if (activePart == null) return true;
 		if (activePart.getContext().containsKey(AddonMetadata.PLUGIN_NAME)) return true;
 		return false;
 	}
 
-	static boolean isNotTagged(final MPart activePart) {
+	public static boolean isNotTagged(final MPart activePart) {
 		return !ActivePart.isTagged(activePart);
 	}
 

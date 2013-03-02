@@ -21,4 +21,9 @@ final class SaveResponseComboViewer extends PreferencesResponseComboViewer {
 		if (PreferencesStore.getCanSaveAutomatically()) this.setSelection(0);
 		else this.setSelection(1);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("SaveResponseComboViewer [toString()=%s, getClass()=%s]", super.toString(), this.getClass());
+	}
 }

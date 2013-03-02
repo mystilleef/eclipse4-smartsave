@@ -16,13 +16,13 @@ final class AutosaveKeyListeners implements KeyListener {
 		this.handler = handler;
 	}
 
-	void start() {
+	public void start() {
 		if (this.isListening) return;
 		this.editorBuffer.addKeyListener(this);
 		this.isListening = true;
 	}
 
-	void stop() {
+	public void stop() {
 		if (!this.isListening) return;
 		this.editorBuffer.removeKeyListener(this);
 		this.isListening = false;
@@ -60,5 +60,10 @@ final class AutosaveKeyListeners implements KeyListener {
 
 	protected IAutosaveKeyListenersHandler getHandler() {
 		return this.handler;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("AutosaveKeyListeners [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

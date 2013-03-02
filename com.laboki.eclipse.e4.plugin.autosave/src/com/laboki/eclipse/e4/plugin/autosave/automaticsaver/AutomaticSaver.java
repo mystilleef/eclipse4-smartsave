@@ -92,7 +92,7 @@ final class AutomaticSaver {
 			}
 		}
 
-		final class KeyReleaseRunnable implements Runnable {
+		private final class KeyReleaseRunnable implements Runnable {
 
 			public KeyReleaseRunnable() {}
 

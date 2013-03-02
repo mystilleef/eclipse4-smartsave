@@ -41,4 +41,9 @@ public final class Preferences implements IPreferencesHandler {
 		Preferences.canSaveIfErrors = PreferencesStore.getCanSaveIfErrors();
 		Preferences.canSaveIfWarnings = PreferencesStore.getCanSaveIfWarnings();
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Preferences [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

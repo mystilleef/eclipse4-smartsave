@@ -45,4 +45,9 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements IPre
 	public void preferencesChanged() {
 		this.updateSelection();
 	}
+
+	@Override
+	public String toString() {
+		return String.format("PreferencesResponseComboViewer [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

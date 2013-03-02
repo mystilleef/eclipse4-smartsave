@@ -21,4 +21,9 @@ final class ErrorResponseComboViewer extends PreferencesResponseComboViewer {
 		if (PreferencesStore.getCanSaveIfErrors()) this.setSelection(PreferencesResponseComboViewer.YES);
 		else this.setSelection(PreferencesResponseComboViewer.NO);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("ErrorResponseComboViewer [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
 }

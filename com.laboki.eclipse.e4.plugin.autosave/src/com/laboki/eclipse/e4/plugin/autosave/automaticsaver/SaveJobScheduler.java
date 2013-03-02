@@ -16,15 +16,15 @@ final class SaveJobScheduler extends Job {
 		this.setPriority(Job.DECORATE);
 	}
 
-	void save() {
+	public void save() {
 		this.decider.save();
 	}
 
-	void start() {
+	public void start() {
 		this.schedule(ActivePart.getSaveIntervalInSeconds() * SaveJobScheduler.TO_MILLISECONDS);
 	}
 
-	void stop() {
+	public void stop() {
 		this.cancel();
 	}
 

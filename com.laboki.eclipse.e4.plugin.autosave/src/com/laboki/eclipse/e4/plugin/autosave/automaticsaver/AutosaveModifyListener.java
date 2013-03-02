@@ -14,13 +14,13 @@ final class AutosaveModifyListener implements IPropertyListener {
 		this.handler = handler;
 	}
 
-	void start() {
+	public void start() {
 		if (this.isListening) return;
 		this.editorBuffer.addPropertyListener(this);
 		this.isListening = true;
 	}
 
-	void stop() {
+	public void stop() {
 		if (!this.isListening) return;
 		this.editorBuffer.removePropertyListener(this);
 		this.isListening = false;
@@ -43,5 +43,10 @@ final class AutosaveModifyListener implements IPropertyListener {
 		public void run() {
 			AutosaveModifyListener.this.getHandler().modify();
 		}
+	}
+
+	@Override
+	public String toString() {
+		return String.format("AutosaveModifyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }
