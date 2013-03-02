@@ -15,10 +15,8 @@ final class SaveDecider {
 
 	private boolean canSaveFile() {
 		if (this.bufferIsNotModified()) return false;
-		if (this.hasSelection()) return false;
-		if (this.isInLinkedMode()) return false;
-		if (this.hasErrors()) return false;
-		if (this.hasWarnings()) return false;
+		if (this.bufferIsInEditingMode()) return false;
+		if (this.bufferHasProblems()) return false;
 		return true;
 	}
 
@@ -26,22 +24,34 @@ final class SaveDecider {
 		return !ActivePart.isModified(this.editorPart);
 	}
 
-	private boolean hasSelection() {
+	private boolean bufferIsInEditingMode() {
+		if (this.bufferHasSelection()) return true;
+		if (this.bufferIsInLinkedMode()) return true;
+		return false;
+	}
+
+	private boolean bufferHasSelection() {
 		if (ActivePart.getBuffer(this.editorPart).getSelectionCount() != 0) return true;
 		if (ActivePart.getBuffer(this.editorPart).getBlockSelection()) return true;
 		return false;
 	}
 
-	private boolean isInLinkedMode() {
+	private boolean bufferIsInLinkedMode() {
 		return ActivePart.getLinkedMode(this.editorPart);
 	}
 
-	private boolean hasErrors() {
+	private boolean bufferHasProblems() {
+		if (this.bufferHasCompilerErrors()) return true;
+		if (this.bufferHasCompilerWarnings()) return true;
+		return false;
+	}
+
+	private boolean bufferHasCompilerErrors() {
 		if (ActivePart.canSaveIfErrors()) return false;
 		return ActivePart.hasErrors(this.editorPart);
 	}
 
-	private boolean hasWarnings() {
+	private boolean bufferHasCompilerWarnings() {
 		if (ActivePart.canSaveIfWarnings()) return false;
 		return ActivePart.hasWarnings(this.editorPart);
 	}
