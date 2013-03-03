@@ -1,10 +1,10 @@
 # Smart Saving For Eclipse 4
 
-__Smartsave__ intelligently saves your files after you stop editing in Eclipse4.
+__Smartsave__ intelligently saves files after edits.
 
 ### Features
 
-* Intelligently saves files when you stop editing.
+* Intelligently saves files after edits.
 * Intelligently saves files when editor loses focus.
 * Option to change save interval.
 * Option to prevent saving if compiler warnings/errors are present.
