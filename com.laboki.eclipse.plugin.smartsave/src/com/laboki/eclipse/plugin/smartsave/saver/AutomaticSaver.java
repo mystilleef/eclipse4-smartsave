@@ -5,7 +5,7 @@ import org.eclipse.ui.IEditorPart;
 final class AutomaticSaver {
 
 	private final IEditorPart editor = EditorContext.getEditor();
-	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
+	private final JobScheduler saveScheduler = new JobScheduler("AutoSaveJob");
 	private final SaverFocusListener focusListener = new SaverFocusListener(this.new AutosaveFocusListenerHandler());
 	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new AutosaveModifyListenerHandler());
 	private final SaverKeyListener keylisteners = new SaverKeyListener(this.new KeyListenersHandler());
