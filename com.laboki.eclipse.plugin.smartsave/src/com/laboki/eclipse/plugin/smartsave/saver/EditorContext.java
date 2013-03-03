@@ -94,19 +94,19 @@ public final class EditorContext {
 		return editor.isDirty();
 	}
 
-	public static boolean getLinkedMode(final IEditorPart editor) {
+	public static boolean isInLinkMode(final IEditorPart editor) {
 		EditorContext.syncFile(editor);
-		return EditorContext.hasLinkedAnnotations(editor);
+		return EditorContext.hasLinkAnnotations(editor);
 	}
 
-	private static boolean hasLinkedAnnotations(final IEditorPart editor) {
+	private static boolean hasLinkAnnotations(final IEditorPart editor) {
 		final Iterator<Annotation> iterator = EditorContext.getView(editor).getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
-			if (EditorContext.isInLinkedMode(iterator)) return true;
+			if (EditorContext.isLinkModeAnnotation(iterator)) return true;
 		return false;
 	}
 
-	private static boolean isInLinkedMode(final Iterator<Annotation> iterator) {
+	private static boolean isLinkModeAnnotation(final Iterator<Annotation> iterator) {
 		final String annotationType = iterator.next().getType();
 		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_EXIT)) return true;
 		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_MASTER)) return true;

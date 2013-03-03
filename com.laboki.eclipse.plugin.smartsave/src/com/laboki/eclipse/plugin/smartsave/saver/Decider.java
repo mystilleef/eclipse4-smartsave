@@ -26,7 +26,7 @@ final class Decider {
 
 	private boolean bufferIsInEditingMode() {
 		if (this.bufferHasSelection()) return true;
-		if (this.bufferIsInLinkedMode()) return true;
+		if (this.bufferIsInLinkMode()) return true;
 		return false;
 	}
 
@@ -36,8 +36,8 @@ final class Decider {
 		return false;
 	}
 
-	private boolean bufferIsInLinkedMode() {
-		return EditorContext.getLinkedMode(this.editor);
+	private boolean bufferIsInLinkMode() {
+		return EditorContext.isInLinkMode(this.editor);
 	}
 
 	private boolean bufferHasProblems() {
