@@ -3,7 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
 final class SaveResponseComboViewer extends PreferencesResponseComboViewer {
 
@@ -13,12 +13,12 @@ final class SaveResponseComboViewer extends PreferencesResponseComboViewer {
 
 	@Override
 	protected void handleResponseSelection(final SelectionChangedEvent event) {
-		PreferencesStore.setCanSaveAutomatically(this.getSelectionValue(event));
+		PreferenceStore.setCanSaveAutomatically(this.getSelectionValue(event));
 	}
 
 	@Override
 	protected void updateSelection() {
-		if (PreferencesStore.getCanSaveAutomatically()) this.setSelection(0);
+		if (PreferenceStore.getCanSaveAutomatically()) this.setSelection(0);
 		else this.setSelection(1);
 	}
 

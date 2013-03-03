@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -109,6 +109,6 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 
 	@Override
 	protected void performDefaults() {
-		PreferencesStore.clear();
+		PreferenceStore.clear();
 	}
 }

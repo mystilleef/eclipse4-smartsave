@@ -5,12 +5,12 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferencesHandler;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesListener;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
 
-class PreferencesResponseComboViewer extends ResponseComboViewer implements IPreferencesHandler {
+class PreferencesResponseComboViewer extends ResponseComboViewer implements IPreferenceHandler {
 
-	private final PreferencesListener listener = new PreferencesListener(this);
+	private final PreferenceListener listener = new PreferenceListener(this);
 	public static final int YES = 0;
 	public static final int NO = 1;
 

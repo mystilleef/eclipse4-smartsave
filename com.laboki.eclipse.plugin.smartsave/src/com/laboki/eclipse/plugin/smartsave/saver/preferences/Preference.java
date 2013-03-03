@@ -1,13 +1,13 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences;
 
-public final class Preference implements IPreferencesHandler {
+public final class Preference implements IPreferenceHandler {
 
 	private static Preference instance;
-	private static int saveIntervalInSeconds = PreferencesStore.getSaveIntervalInSeconds();
-	private static boolean canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
-	private static boolean canSaveIfErrors = PreferencesStore.getCanSaveIfErrors();
-	private static boolean canSaveIfWarnings = PreferencesStore.getCanSaveIfWarnings();
-	private final PreferencesListener listener = new PreferencesListener(this);
+	private static int saveIntervalInSeconds = PreferenceStore.getSaveIntervalInSeconds();
+	private static boolean canSaveAutomatically = PreferenceStore.getCanSaveAutomatically();
+	private static boolean canSaveIfErrors = PreferenceStore.getCanSaveIfErrors();
+	private static boolean canSaveIfWarnings = PreferenceStore.getCanSaveIfWarnings();
+	private final PreferenceListener listener = new PreferenceListener(this);
 
 	private Preference() {
 		this.listener.start();
@@ -36,10 +36,10 @@ public final class Preference implements IPreferencesHandler {
 
 	@Override
 	public void preferencesChanged() {
-		Preference.saveIntervalInSeconds = PreferencesStore.getSaveIntervalInSeconds();
-		Preference.canSaveAutomatically = PreferencesStore.getCanSaveAutomatically();
-		Preference.canSaveIfErrors = PreferencesStore.getCanSaveIfErrors();
-		Preference.canSaveIfWarnings = PreferencesStore.getCanSaveIfWarnings();
+		Preference.saveIntervalInSeconds = PreferenceStore.getSaveIntervalInSeconds();
+		Preference.canSaveAutomatically = PreferenceStore.getCanSaveAutomatically();
+		Preference.canSaveIfErrors = PreferenceStore.getCanSaveIfErrors();
+		Preference.canSaveIfWarnings = PreferenceStore.getCanSaveIfWarnings();
 	}
 
 	@Override

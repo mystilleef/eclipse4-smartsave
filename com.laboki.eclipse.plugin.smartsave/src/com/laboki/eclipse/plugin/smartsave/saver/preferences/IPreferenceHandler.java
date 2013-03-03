@@ -1,6 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences;
 
-public interface IPreferencesHandler {
+public interface IPreferenceHandler {
 
 	void preferencesChanged();
 }

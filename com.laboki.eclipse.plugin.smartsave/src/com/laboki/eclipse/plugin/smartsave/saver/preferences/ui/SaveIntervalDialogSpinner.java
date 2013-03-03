@@ -9,11 +9,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferencesHandler;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesListener;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
-final class SaveIntervalDialogSpinner implements IPreferencesHandler {
+final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 
 	private static final int TEXT_LIMIT = 3;
 	private static final int SPINNER_PAGE_INCREMENTS = 10;
@@ -21,7 +21,7 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 	private static final int SPINNER_DIGITS = 0;
 	private static final int SPINNER_MAXIMUM = 600;
 	private static final int SPINNER_MINIMUM = 1;
-	private final PreferencesListener preferencesListener = new PreferencesListener(this);
+	private final PreferenceListener preferenceListener = new PreferenceListener(this);
 	private final ModifyListener modifyListener = new SpinnerModifyListener();
 	private final SpinnerTraverseListener traverseListener = new SpinnerTraverseListener();
 	private static Spinner spinner;
@@ -33,12 +33,12 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 
 	private static void updateProperties() {
 		SaveIntervalDialogSpinner.getSpinner().setTextLimit(SaveIntervalDialogSpinner.TEXT_LIMIT);
-		SaveIntervalDialogSpinner.getSpinner().setValues(PreferencesStore.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
+		SaveIntervalDialogSpinner.getSpinner().setValues(PreferenceStore.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
 		SaveIntervalDialogSpinner.getSpinner().setFocus();
 	}
 
 	public void startListening() {
-		this.preferencesListener.start();
+		this.preferenceListener.start();
 		SaveIntervalDialogSpinner.spinner.addModifyListener(this.modifyListener);
 		SaveIntervalDialogSpinner.spinner.addTraverseListener(this.traverseListener);
 	}
@@ -49,9 +49,9 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 	}
 
 	private void updateSelection() {
-		if (SaveIntervalDialogSpinner.spinner.getSelection() == PreferencesStore.getSaveIntervalInSeconds()) return;
+		if (SaveIntervalDialogSpinner.spinner.getSelection() == PreferenceStore.getSaveIntervalInSeconds()) return;
 		SaveIntervalDialogSpinner.spinner.removeModifyListener(this.modifyListener);
-		SaveIntervalDialogSpinner.spinner.setSelection(PreferencesStore.getSaveIntervalInSeconds());
+		SaveIntervalDialogSpinner.spinner.setSelection(PreferenceStore.getSaveIntervalInSeconds());
 		SaveIntervalDialogSpinner.spinner.addModifyListener(this.modifyListener);
 	}
 
@@ -65,7 +65,7 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 
 		@Override
 		public void run() {
-			PreferencesStore.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.getSpinner().getSelection());
+			PreferenceStore.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.getSpinner().getSelection());
 		}
 
 		@Override

@@ -7,7 +7,7 @@ import org.osgi.service.prefs.BackingStoreException;
 
 import com.laboki.eclipse.plugin.smartsave.Metadata;
 
-public final class PreferencesStore {
+public final class PreferenceStore {
 
 	private static final boolean CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE = true;
 	private static final boolean CAN_SAVE_IF_ERRORS_DEFAULT_VALUE = false;
@@ -18,45 +18,45 @@ public final class PreferencesStore {
 	private static final String ERRORS_KEY = "saveIfErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
 
-	private PreferencesStore() {}
+	private PreferenceStore() {}
 
 	public static void setCanSaveAutomatically(final boolean saveAutomatically) {
-		PreferencesStore.setBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
+		PreferenceStore.setBoolean(PreferenceStore.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
 	}
 
 	public static boolean getCanSaveAutomatically() {
-		return PreferencesStore.getBoolean(PreferencesStore.SAVE_AUTOMATICALLY_KEY, PreferencesStore.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
+		return PreferenceStore.getBoolean(PreferenceStore.SAVE_AUTOMATICALLY_KEY, PreferenceStore.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
 	}
 
 	public static void setCanSaveIfWarnings(final boolean checkWarnings) {
-		PreferencesStore.setBoolean(PreferencesStore.WARNINGS_KEY, checkWarnings);
+		PreferenceStore.setBoolean(PreferenceStore.WARNINGS_KEY, checkWarnings);
 	}
 
 	public static boolean getCanSaveIfWarnings() {
-		return PreferencesStore.getBoolean(PreferencesStore.WARNINGS_KEY, PreferencesStore.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
+		return PreferenceStore.getBoolean(PreferenceStore.WARNINGS_KEY, PreferenceStore.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
 	}
 
 	public static void setCanSaveIfErrors(final boolean checkErrors) {
-		PreferencesStore.setBoolean(PreferencesStore.ERRORS_KEY, checkErrors);
+		PreferenceStore.setBoolean(PreferenceStore.ERRORS_KEY, checkErrors);
 	}
 
 	public static boolean getCanSaveIfErrors() {
-		return PreferencesStore.getBoolean(PreferencesStore.ERRORS_KEY, PreferencesStore.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
+		return PreferenceStore.getBoolean(PreferenceStore.ERRORS_KEY, PreferenceStore.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
 	}
 
 	public static void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
-		PreferencesStore.setInt(PreferencesStore.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
+		PreferenceStore.setInt(PreferenceStore.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
 	}
 
 	public static int getSaveIntervalInSeconds() {
-		return PreferencesStore.getInt(PreferencesStore.SAVE_INTERVAL_KEY, PreferencesStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
+		return PreferenceStore.getInt(PreferenceStore.SAVE_INTERVAL_KEY, PreferenceStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
 	}
 
 	public static void clear() {
 		try {
-			final IEclipsePreferences pref = PreferencesStore.getPreferences();
+			final IEclipsePreferences pref = PreferenceStore.getPreferences();
 			pref.clear();
-			PreferencesStore.sync(pref);
+			PreferenceStore.sync(pref);
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}
@@ -67,26 +67,26 @@ public final class PreferencesStore {
 	}
 
 	private static void setBoolean(final String key, final boolean value) {
-		final IEclipsePreferences pref = PreferencesStore.getPreferences();
+		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putBoolean(key, value);
-		PreferencesStore.sync(pref);
+		PreferenceStore.sync(pref);
 	}
 
 	private static boolean getBoolean(final String key, final boolean defaultValue) {
-		final IEclipsePreferences pref = PreferencesStore.getPreferences();
-		PreferencesStore.sync(pref);
+		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		PreferenceStore.sync(pref);
 		return pref.getBoolean(key, defaultValue);
 	}
 
 	private static void setInt(final String key, final int value) {
-		final IEclipsePreferences pref = PreferencesStore.getPreferences();
+		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putInt(key, value);
-		PreferencesStore.sync(pref);
+		PreferenceStore.sync(pref);
 	}
 
 	private static int getInt(final String key, final int defaultValue) {
-		final IEclipsePreferences pref = PreferencesStore.getPreferences();
-		PreferencesStore.sync(pref);
+		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		PreferenceStore.sync(pref);
 		return pref.getInt(key, defaultValue);
 	}
 

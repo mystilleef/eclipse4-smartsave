@@ -9,16 +9,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferencesHandler;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesListener;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
+import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
-final class SaveIntervalButton implements IPreferencesHandler {
+final class SaveIntervalButton implements IPreferenceHandler {
 
 	private static Button button;
 	private static SaveIntervalDialog dialog;
 	private static final int SIXTY_SECONDS = 60;
-	private final PreferencesListener preferencesListener = new PreferencesListener(this);
+	private final PreferenceListener preferenceListener = new PreferenceListener(this);
 	private final SelectionListener buttonListener = new ButtonListener();
 	private final Composite composite;
 
@@ -29,7 +29,7 @@ final class SaveIntervalButton implements IPreferencesHandler {
 	}
 
 	private static void updateText() {
-		SaveIntervalButton.button.setText(SaveIntervalButton.minutesAndSeconds(PreferencesStore.getSaveIntervalInSeconds()));
+		SaveIntervalButton.button.setText(SaveIntervalButton.minutesAndSeconds(PreferenceStore.getSaveIntervalInSeconds()));
 		SaveIntervalButton.button.pack();
 		SaveIntervalButton.button.update();
 	}
@@ -55,7 +55,7 @@ final class SaveIntervalButton implements IPreferencesHandler {
 	}
 
 	public void startListening() {
-		this.preferencesListener.start();
+		this.preferenceListener.start();
 		SaveIntervalButton.button.addSelectionListener(this.buttonListener);
 	}
 

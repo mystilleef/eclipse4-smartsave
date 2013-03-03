@@ -6,12 +6,12 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-public final class PreferencesListener {
+public final class PreferenceListener {
 
 	private final IPreferenceChangeListener listener;
-	private final IEclipsePreferences preferences = PreferencesStore.getPreferences();
+	private final IEclipsePreferences preferences = PreferenceStore.getPreferences();
 
-	public PreferencesListener(final IPreferencesHandler handler) {
+	public PreferenceListener(final IPreferenceHandler handler) {
 		this.listener = new ChangeListener(handler);
 	}
 
@@ -25,9 +25,9 @@ public final class PreferencesListener {
 
 	private final class ChangeListener implements IPreferenceChangeListener, Runnable {
 
-		private final IPreferencesHandler handler;
+		private final IPreferenceHandler handler;
 
-		public ChangeListener(final IPreferencesHandler handler) {
+		public ChangeListener(final IPreferenceHandler handler) {
 			this.handler = handler;
 		}
 
@@ -44,6 +44,6 @@ public final class PreferencesListener {
 
 	@Override
 	public String toString() {
-		return String.format("PreferencesListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("PreferenceListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }
