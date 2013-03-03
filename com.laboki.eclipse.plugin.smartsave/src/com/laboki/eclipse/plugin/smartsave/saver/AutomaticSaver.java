@@ -4,7 +4,7 @@ import org.eclipse.ui.IEditorPart;
 
 final class AutomaticSaver {
 
-	private final IEditorPart editor = ActivePart.getEditor();
+	private final IEditorPart editor = EditorContext.getEditor();
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
 	private final AutosaveFocusListener focusListener = new AutosaveFocusListener(this.new AutosaveFocusListenerHandler());
 	private final AutosaveModifyListener modifyListener = new AutosaveModifyListener(this.new AutosaveModifyListenerHandler());
@@ -39,7 +39,7 @@ final class AutomaticSaver {
 	}
 
 	protected void startAutomaticSaving() {
-		if (!ActivePart.canSaveAutomatically()) return;
+		if (!EditorContext.canSaveAutomatically()) return;
 		this.startMonitoringEvents();
 		this.startSaveSchedule();
 	}
@@ -74,12 +74,12 @@ final class AutomaticSaver {
 
 		@Override
 		public void keyPress() {
-			ActivePart.asyncExec(this.keyPressRunnable);
+			EditorContext.asyncExec(this.keyPressRunnable);
 		}
 
 		@Override
 		public void keyRelease() {
-			ActivePart.asyncExec(this.keyReleaseRunnable);
+			EditorContext.asyncExec(this.keyReleaseRunnable);
 		}
 
 		private final class KeyPressRunnable implements Runnable {
@@ -111,7 +111,7 @@ final class AutomaticSaver {
 
 		@Override
 		public void modify() {
-			ActivePart.asyncExec(this.modifyRunnable);
+			EditorContext.asyncExec(this.modifyRunnable);
 		}
 
 		private final class ModifyRunnable implements Runnable {
@@ -135,12 +135,12 @@ final class AutomaticSaver {
 
 		@Override
 		public void focusGained() {
-			ActivePart.asyncExec(this.focusGainedRunnable);
+			EditorContext.asyncExec(this.focusGainedRunnable);
 		}
 
 		@Override
 		public void focusLost() {
-			ActivePart.asyncExec(this.focusLostRunnable);
+			EditorContext.asyncExec(this.focusLostRunnable);
 		}
 
 		private final class FocusGainedRunnable implements Runnable {

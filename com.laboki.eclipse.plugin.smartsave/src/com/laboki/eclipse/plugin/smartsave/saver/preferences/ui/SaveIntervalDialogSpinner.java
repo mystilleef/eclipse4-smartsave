@@ -8,7 +8,7 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
 
-import com.laboki.eclipse.plugin.smartsave.saver.ActivePart;
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferencesHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesListener;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
@@ -70,7 +70,7 @@ final class SaveIntervalDialogSpinner implements IPreferencesHandler {
 
 		@Override
 		public void modifyText(final ModifyEvent event) {
-			ActivePart.asyncExec(this);
+			EditorContext.asyncExec(this);
 		}
 	}
 

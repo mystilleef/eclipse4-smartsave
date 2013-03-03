@@ -4,13 +4,13 @@ import org.eclipse.ui.IEditorPart;
 
 final class Decider {
 
-	private final IEditorPart editorPart = ActivePart.getEditor();
+	private final IEditorPart editorPart = EditorContext.getEditor();
 
 	public Decider() {}
 
 	public void save() {
-		if (!ActivePart.canSaveAutomatically() || !this.canSaveFile()) return;
-		ActivePart.save(this.editorPart);
+		if (!EditorContext.canSaveAutomatically() || !this.canSaveFile()) return;
+		EditorContext.save(this.editorPart);
 	}
 
 	private boolean canSaveFile() {
@@ -21,7 +21,7 @@ final class Decider {
 	}
 
 	private boolean bufferIsNotModified() {
-		return !ActivePart.isModified(this.editorPart);
+		return !EditorContext.isModified(this.editorPart);
 	}
 
 	private boolean bufferIsInEditingMode() {
@@ -31,13 +31,13 @@ final class Decider {
 	}
 
 	private boolean bufferHasSelection() {
-		if (ActivePart.getBuffer(this.editorPart).getSelectionCount() != 0) return true;
-		if (ActivePart.getBuffer(this.editorPart).getBlockSelection()) return true;
+		if (EditorContext.getBuffer(this.editorPart).getSelectionCount() != 0) return true;
+		if (EditorContext.getBuffer(this.editorPart).getBlockSelection()) return true;
 		return false;
 	}
 
 	private boolean bufferIsInLinkedMode() {
-		return ActivePart.getLinkedMode(this.editorPart);
+		return EditorContext.getLinkedMode(this.editorPart);
 	}
 
 	private boolean bufferHasProblems() {
@@ -47,13 +47,13 @@ final class Decider {
 	}
 
 	private boolean bufferHasErrors() {
-		if (ActivePart.canSaveIfErrors()) return false;
-		return ActivePart.hasErrors(this.editorPart);
+		if (EditorContext.canSaveIfErrors()) return false;
+		return EditorContext.hasErrors(this.editorPart);
 	}
 
 	private boolean bufferHasWarnings() {
-		if (ActivePart.canSaveIfWarnings()) return false;
-		return ActivePart.hasWarnings(this.editorPart);
+		if (EditorContext.canSaveIfWarnings()) return false;
+		return EditorContext.hasWarnings(this.editorPart);
 	}
 
 	@Override

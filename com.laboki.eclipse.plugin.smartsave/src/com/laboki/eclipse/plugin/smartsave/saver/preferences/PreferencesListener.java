@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 
-import com.laboki.eclipse.plugin.smartsave.saver.ActivePart;
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 public final class PreferencesListener {
 
@@ -38,7 +38,7 @@ public final class PreferencesListener {
 
 		@Override
 		public void preferenceChange(final PreferenceChangeEvent event) {
-			ActivePart.asyncExec(this);
+			EditorContext.asyncExec(this);
 		}
 	}
 

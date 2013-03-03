@@ -10,7 +10,7 @@ final class AutosaveFocusListener implements FocusListener {
 	private final IAutosaveFocusListenerHandler handler;
 	private final FocusGainedRunnable focusGainedRunnable = new FocusGainedRunnable();
 	private final FocusLostRunnable focusLostRunnable = new FocusLostRunnable();
-	private final StyledText editorBuffer = ActivePart.getBuffer();
+	private final StyledText editorBuffer = EditorContext.getBuffer();
 
 	public AutosaveFocusListener(final IAutosaveFocusListenerHandler handler) {
 		this.handler = handler;
@@ -30,12 +30,12 @@ final class AutosaveFocusListener implements FocusListener {
 
 	@Override
 	public void focusGained(final FocusEvent event) {
-		ActivePart.asyncExec(this.focusGainedRunnable);
+		EditorContext.asyncExec(this.focusGainedRunnable);
 	}
 
 	@Override
 	public void focusLost(final FocusEvent event) {
-		ActivePart.asyncExec(this.focusLostRunnable);
+		EditorContext.asyncExec(this.focusLostRunnable);
 	}
 
 	private final class FocusGainedRunnable implements Runnable {

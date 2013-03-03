@@ -8,7 +8,7 @@ final class AutosaveKeyListener implements KeyListener {
 
 	private boolean isListening;
 	private final IAutosaveKeyListenersHandler handler;
-	private final StyledText editorBuffer = ActivePart.getBuffer();
+	private final StyledText editorBuffer = EditorContext.getBuffer();
 	private final KeyPressRunnable keyPressRunnable = new KeyPressRunnable();
 	private final KeyReleaseRunnable keyReleaseRunnable = new KeyReleaseRunnable();
 
@@ -30,12 +30,12 @@ final class AutosaveKeyListener implements KeyListener {
 
 	@Override
 	public void keyPressed(final KeyEvent event) {
-		ActivePart.asyncExec(this.keyPressRunnable);
+		EditorContext.asyncExec(this.keyPressRunnable);
 	}
 
 	@Override
 	public void keyReleased(final KeyEvent event) {
-		ActivePart.asyncExec(this.keyReleaseRunnable);
+		EditorContext.asyncExec(this.keyReleaseRunnable);
 	}
 
 	private final class KeyPressRunnable implements Runnable {

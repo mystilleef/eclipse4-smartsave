@@ -8,7 +8,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.plugin.smartsave.saver.ActivePart;
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferencesHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesListener;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferencesStore;
@@ -88,7 +88,7 @@ final class SaveIntervalButton implements IPreferencesHandler {
 
 		@Override
 		public void widgetSelected(final SelectionEvent event) {
-			ActivePart.asyncExec(this);
+			EditorContext.asyncExec(this);
 		}
 	}
 

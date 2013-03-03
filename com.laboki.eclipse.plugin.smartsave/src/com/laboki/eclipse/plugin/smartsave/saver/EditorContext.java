@@ -20,24 +20,24 @@ import org.eclipse.ui.part.FileEditorInput;
 import com.laboki.eclipse.plugin.smartsave.Metadata;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
-public final class ActivePart {
+public final class EditorContext {
 
-	private static ActivePart instance;
+	private static EditorContext instance;
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final String ANNOTATION_LINK_MODE_EXIT = "org.eclipse.ui.internal.workbench.texteditor.link.exit";
 	private static final String ANNOTATION_LINK_MODE_TARGET = "org.eclipse.ui.internal.workbench.texteditor.link.target";
 	private static final String ANNOTATION_LINK_MODE_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
 	private static final String ANNOTATION_LINK_MODE_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
-	private static final Display DISPLAY = ActivePart.getDisplay();
+	private static final Display DISPLAY = EditorContext.getDisplay();
 
-	private ActivePart() {
+	private EditorContext() {
 		Preference.initialize();
 	}
 
-	public static synchronized ActivePart initialize() {
-		if (ActivePart.instance == null) ActivePart.instance = new ActivePart();
-		return ActivePart.instance;
+	public static synchronized EditorContext initialize() {
+		if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
+		return EditorContext.instance;
 	}
 
 	public static Display getDisplay() {
@@ -47,13 +47,13 @@ public final class ActivePart {
 	}
 
 	public static void asyncExec(final Runnable runnable) {
-		ActivePart.DISPLAY.asyncExec(runnable);
+		EditorContext.DISPLAY.asyncExec(runnable);
 	}
 
 	public static void flushEvents() {
-		while (ActivePart.DISPLAY.readAndDispatch())
-			ActivePart.DISPLAY.update();
-		ActivePart.DISPLAY.update();
+		while (EditorContext.DISPLAY.readAndDispatch())
+			EditorContext.DISPLAY.update();
+		EditorContext.DISPLAY.update();
 	}
 
 	public static IEditorPart getEditor() {
@@ -61,7 +61,7 @@ public final class ActivePart {
 	}
 
 	public static StyledText getBuffer() {
-		return (StyledText) ActivePart.getEditor().getAdapter(Control.class);
+		return (StyledText) EditorContext.getEditor().getAdapter(Control.class);
 	}
 
 	public static StyledText getBuffer(final IEditorPart editor) {
@@ -69,7 +69,7 @@ public final class ActivePart {
 	}
 
 	public static SourceViewer getView() {
-		return (SourceViewer) ActivePart.getEditor().getAdapter(ITextOperationTarget.class);
+		return (SourceViewer) EditorContext.getEditor().getAdapter(ITextOperationTarget.class);
 	}
 
 	public static SourceViewer getView(final IEditorPart editor) {
@@ -77,19 +77,19 @@ public final class ActivePart {
 	}
 
 	public static void save() {
-		ActivePart.flushEvents();
-		ActivePart.getEditor().doSave(null);
-		ActivePart.flushEvents();
+		EditorContext.flushEvents();
+		EditorContext.getEditor().doSave(null);
+		EditorContext.flushEvents();
 	}
 
 	public static void save(final IEditorPart editor) {
-		ActivePart.flushEvents();
+		EditorContext.flushEvents();
 		editor.doSave(null);
-		ActivePart.flushEvents();
+		EditorContext.flushEvents();
 	}
 
 	public static boolean isModified() {
-		return ActivePart.getEditor().isDirty();
+		return EditorContext.getEditor().isDirty();
 	}
 
 	public static boolean isModified(final IEditorPart editor) {
@@ -97,52 +97,52 @@ public final class ActivePart {
 	}
 
 	public static boolean getLinkedMode(final IEditorPart editor) {
-		ActivePart.syncFile(editor);
-		return ActivePart.hasLinkedAnnotations(editor);
+		EditorContext.syncFile(editor);
+		return EditorContext.hasLinkedAnnotations(editor);
 	}
 
 	private static boolean hasLinkedAnnotations(final IEditorPart editor) {
-		final Iterator<Annotation> iterator = ActivePart.getView(editor).getAnnotationModel().getAnnotationIterator();
+		final Iterator<Annotation> iterator = EditorContext.getView(editor).getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
-			if (ActivePart.isInLinkedMode(iterator)) return true;
+			if (EditorContext.isInLinkedMode(iterator)) return true;
 		return false;
 	}
 
 	private static boolean isInLinkedMode(final Iterator<Annotation> iterator) {
 		final String annotationType = iterator.next().getType();
-		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_EXIT)) return true;
-		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_MASTER)) return true;
-		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_SLAVE)) return true;
-		if (annotationType.equals(ActivePart.ANNOTATION_LINK_MODE_TARGET)) return true;
+		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_EXIT)) return true;
+		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_MASTER)) return true;
+		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_SLAVE)) return true;
+		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_TARGET)) return true;
 		return false;
 	}
 
 	public static boolean hasWarnings() {
-		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING);
+		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_WARNING);
 	}
 
 	public static boolean hasWarnings(final IEditorPart editor) {
-		ActivePart.syncFile(editor);
-		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_WARNING, editor);
+		EditorContext.syncFile(editor);
+		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_WARNING, editor);
 	}
 
 	public static boolean hasErrors() {
-		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR);
+		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_ERROR);
 	}
 
 	public static boolean hasErrors(final IEditorPart editor) {
-		ActivePart.syncFile(editor);
-		return ActivePart.getAnnotationSeverity(ActivePart.ANNOTATION_SEVERITY_ERROR, editor);
+		EditorContext.syncFile(editor);
+		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_ERROR, editor);
 	}
 
 	private static void syncFile(final IEditorPart editor) {
 		try {
-			ActivePart.flushEvents();
-			ActivePart.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
+			EditorContext.flushEvents();
+			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
 			e.printStackTrace();
 		} finally {
-			ActivePart.flushEvents();
+			EditorContext.flushEvents();
 		}
 	}
 
@@ -151,16 +151,16 @@ public final class ActivePart {
 	}
 
 	private static boolean getAnnotationSeverity(final String problemSeverity) {
-		final Iterator<Annotation> iterator = ActivePart.getView().getAnnotationModel().getAnnotationIterator();
+		final Iterator<Annotation> iterator = EditorContext.getView().getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
-			if (ActivePart.hasProblems(problemSeverity, iterator)) return true;
+			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
 		return false;
 	}
 
 	private static boolean getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
-		final Iterator<Annotation> iterator = ActivePart.getView(editor).getAnnotationModel().getAnnotationIterator();
+		final Iterator<Annotation> iterator = EditorContext.getView(editor).getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
-			if (ActivePart.hasProblems(problemSeverity, iterator)) return true;
+			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
 		return false;
 	}
 
@@ -185,8 +185,8 @@ public final class ActivePart {
 	}
 
 	public static boolean isInvalid(final MPart activePart) {
-		if (ActivePart.isNotAnEditor(activePart)) return true;
-		if (ActivePart.isTagged(activePart)) return true;
+		if (EditorContext.isNotAnEditor(activePart)) return true;
+		if (EditorContext.isTagged(activePart)) return true;
 		return false;
 	}
 
@@ -203,11 +203,11 @@ public final class ActivePart {
 	}
 
 	public static boolean isNotTagged(final MPart activePart) {
-		return !ActivePart.isTagged(activePart);
+		return !EditorContext.isTagged(activePart);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("ActivePart [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("EditorContext [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

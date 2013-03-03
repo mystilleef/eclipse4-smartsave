@@ -8,7 +8,7 @@ final class AutosaveModifyListener implements IPropertyListener {
 	private boolean isListening;
 	private final IAutosaveModifyListenerHandler handler;
 	private final ModifyRunnable modifyRunnable = new ModifyRunnable();
-	private final IEditorPart editorBuffer = ActivePart.getEditor();
+	private final IEditorPart editorBuffer = EditorContext.getEditor();
 
 	public AutosaveModifyListener(final IAutosaveModifyListenerHandler handler) {
 		this.handler = handler;
@@ -28,7 +28,7 @@ final class AutosaveModifyListener implements IPropertyListener {
 
 	@Override
 	public void propertyChanged(final Object source, final int propID) {
-		if (propID == IEditorPart.PROP_DIRTY) ActivePart.asyncExec(this.modifyRunnable);
+		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(this.modifyRunnable);
 	}
 
 	public IAutosaveModifyListenerHandler getHandler() {

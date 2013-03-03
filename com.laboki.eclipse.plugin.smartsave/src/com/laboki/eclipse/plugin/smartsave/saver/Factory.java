@@ -13,14 +13,14 @@ import com.laboki.eclipse.plugin.smartsave.Metadata;
 public final class Factory {
 
 	public Factory() {
-		ActivePart.initialize();
+		EditorContext.initialize();
 	}
 
 	@Inject
 	@Optional
 	public static void activateHandler(@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) final Event event) {
 		final MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
-		if (ActivePart.isInvalid(activePart)) return;
+		if (EditorContext.isInvalid(activePart)) return;
 		Factory.enableAutomaticSaverFor(activePart);
 	}
 
