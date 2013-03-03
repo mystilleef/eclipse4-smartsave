@@ -8,7 +8,7 @@ import org.eclipse.core.runtime.jobs.Job;
 final class SaveJobScheduler extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;
-	private final SaveDecider decider = new SaveDecider();
+	private final Decider decider = new Decider();
 	private final SaveJobRunnable saveJobRunnable = this.new SaveJobRunnable();
 
 	public SaveJobScheduler(final String name) {
