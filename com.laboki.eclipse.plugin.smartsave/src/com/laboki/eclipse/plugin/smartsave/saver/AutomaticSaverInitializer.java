@@ -8,7 +8,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.osgi.service.event.Event;
 
-import com.laboki.eclipse.plugin.smartsave.AddonMetadata;
+import com.laboki.eclipse.plugin.smartsave.Metadata;
 
 public final class AutomaticSaverInitializer {
 
@@ -26,7 +26,7 @@ public final class AutomaticSaverInitializer {
 
 	private static void enableAutomaticSaverFor(final MPart activePart) {
 		final AutomaticSaver automaticSaver = new AutomaticSaver();
-		activePart.getContext().set(AddonMetadata.PLUGIN_NAME, automaticSaver);
+		activePart.getContext().set(Metadata.PLUGIN_NAME, automaticSaver);
 		automaticSaver.init();
 	}
 

@@ -17,7 +17,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
-import com.laboki.eclipse.plugin.smartsave.AddonMetadata;
+import com.laboki.eclipse.plugin.smartsave.Metadata;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
 public final class ActivePart {
@@ -198,7 +198,7 @@ public final class ActivePart {
 
 	public static boolean isTagged(final MPart activePart) {
 		if (activePart == null) return true;
-		if (activePart.getContext().containsKey(AddonMetadata.PLUGIN_NAME)) return true;
+		if (activePart.getContext().containsKey(Metadata.PLUGIN_NAME)) return true;
 		return false;
 	}
 

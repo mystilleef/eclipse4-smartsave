@@ -48,7 +48,7 @@ public final class Main {
 	}
 
 	private static String getAddonContributionURI(final Class<?> addonClass) {
-		return MessageFormat.format(AddonMetadata.CONTRIBUTION_URI, AddonMetadata.PLUGIN_NAME, addonClass.getCanonicalName());
+		return MessageFormat.format(Metadata.CONTRIBUTION_URI, Metadata.PLUGIN_NAME, addonClass.getCanonicalName());
 	}
 
 	private static boolean addonIsInstalled(final MApplication application, final Class<?> addonClass) {
@@ -66,7 +66,7 @@ public final class Main {
 		final MAddon addon = MApplicationFactory.INSTANCE.createAddon();
 		addon.setElementId(addonClass.getCanonicalName());
 		addon.setContributionURI(Main.getAddonContributionURI(addonClass));
-		addon.setContributorURI(AddonMetadata.CONTRIBUTOR_URI);
+		addon.setContributorURI(Metadata.CONTRIBUTOR_URI);
 		return addon;
 	}
 
