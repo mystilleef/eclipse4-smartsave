@@ -10,9 +10,9 @@ import org.osgi.service.event.Event;
 
 import com.laboki.eclipse.plugin.smartsave.Metadata;
 
-public final class AutomaticSaverInitializer {
+public final class Factory {
 
-	public AutomaticSaverInitializer() {
+	public Factory() {
 		ActivePart.initialize();
 	}
 
@@ -21,7 +21,7 @@ public final class AutomaticSaverInitializer {
 	public static void activateHandler(@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) final Event event) {
 		final MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (ActivePart.isInvalid(activePart)) return;
-		AutomaticSaverInitializer.enableAutomaticSaverFor(activePart);
+		Factory.enableAutomaticSaverFor(activePart);
 	}
 
 	private static void enableAutomaticSaverFor(final MPart activePart) {
