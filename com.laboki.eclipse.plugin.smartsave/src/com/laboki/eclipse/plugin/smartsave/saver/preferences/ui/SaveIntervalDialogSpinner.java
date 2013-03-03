@@ -32,9 +32,9 @@ final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 	}
 
 	private static void updateProperties() {
-		SaveIntervalDialogSpinner.getSpinner().setTextLimit(SaveIntervalDialogSpinner.TEXT_LIMIT);
-		SaveIntervalDialogSpinner.getSpinner().setValues(PreferenceStore.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
-		SaveIntervalDialogSpinner.getSpinner().setFocus();
+		SaveIntervalDialogSpinner.spinner.setTextLimit(SaveIntervalDialogSpinner.TEXT_LIMIT);
+		SaveIntervalDialogSpinner.spinner.setValues(PreferenceStore.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
+		SaveIntervalDialogSpinner.spinner.setFocus();
 	}
 
 	public void startListening() {
