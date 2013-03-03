@@ -24,26 +24,22 @@ public final class Factory {
 		Factory.enableAutomaticSaverFor(activePart);
 	}
 
-	public static boolean isInvalid(final MPart activePart) {
+	private static boolean isInvalid(final MPart activePart) {
 		if (Factory.isNotAnEditor(activePart)) return true;
 		if (Factory.isTagged(activePart)) return true;
 		return false;
 	}
 
-	public static boolean isNotAnEditor(final MPart activePart) {
+	private static boolean isNotAnEditor(final MPart activePart) {
 		if (activePart == null) return true;
 		if (activePart.getTags().contains("Editor")) return false;
 		return true;
 	}
 
-	public static boolean isTagged(final MPart activePart) {
+	private static boolean isTagged(final MPart activePart) {
 		if (activePart == null) return true;
 		if (activePart.getContext().containsKey(Metadata.PLUGIN_NAME)) return true;
 		return false;
-	}
-
-	public static boolean isNotTagged(final MPart activePart) {
-		return !Factory.isTagged(activePart);
 	}
 
 	private static void enableAutomaticSaverFor(final MPart activePart) {
