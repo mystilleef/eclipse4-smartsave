@@ -6,7 +6,6 @@ import java.util.Iterator;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.SourceViewer;
@@ -17,7 +16,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
-import com.laboki.eclipse.plugin.smartsave.Metadata;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
 public final class EditorContext {
@@ -182,28 +180,6 @@ public final class EditorContext {
 
 	public static int getSaveIntervalInSeconds() {
 		return Preference.saveIntervalInSeconds();
-	}
-
-	public static boolean isInvalid(final MPart activePart) {
-		if (EditorContext.isNotAnEditor(activePart)) return true;
-		if (EditorContext.isTagged(activePart)) return true;
-		return false;
-	}
-
-	public static boolean isNotAnEditor(final MPart activePart) {
-		if (activePart == null) return true;
-		if (activePart.getTags().contains("Editor")) return false;
-		return true;
-	}
-
-	public static boolean isTagged(final MPart activePart) {
-		if (activePart == null) return true;
-		if (activePart.getContext().containsKey(Metadata.PLUGIN_NAME)) return true;
-		return false;
-	}
-
-	public static boolean isNotTagged(final MPart activePart) {
-		return !EditorContext.isTagged(activePart);
 	}
 
 	@Override
