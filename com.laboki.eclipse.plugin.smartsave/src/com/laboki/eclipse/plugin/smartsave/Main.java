@@ -13,38 +13,38 @@ import org.eclipse.e4.ui.model.application.MApplicationFactory;
 
 import com.laboki.eclipse.plugin.smartsave.saver.AutomaticSaverInitializer;
 
-public final class AddonInitializer {
+public final class Main {
 
 	@Execute
 	public static void execute(final MApplication application) {
-		AddonInitializer.installAddons(application, AutomaticSaverInitializer.class);
+		Main.installAddons(application, AutomaticSaverInitializer.class);
 	}
 
 	private static void installAddons(final MApplication application, final Class<?>... addonClasses) {
 		for (final Class<?> addonClass : addonClasses)
-			AddonInitializer.installAddon(application, addonClass);
+			Main.installAddon(application, addonClass);
 	}
 
 	private static void installAddon(final MApplication application, final Class<?> addonClass) {
-		AddonInitializer.removeAddon(application, addonClass);
-		if (AddonInitializer.addonIsInstalled(application, addonClass)) return;
-		application.getAddons().add(AddonInitializer.createAddon(addonClass));
+		Main.removeAddon(application, addonClass);
+		if (Main.addonIsInstalled(application, addonClass)) return;
+		application.getAddons().add(Main.createAddon(addonClass));
 	}
 
 	private static void removeAddon(final MApplication application, final Class<?> addonClass) {
 		final List<MAddon> addons = application.getAddons();
-		final MAddon addon = AddonInitializer.findAddon(addonClass, addons);
+		final MAddon addon = Main.findAddon(addonClass, addons);
 		if (addon != null) addons.remove(addon);
 	}
 
 	private static MAddon findAddon(final Class<?> addonClass, final List<MAddon> addons) {
 		for (final MAddon mAddon : addons)
-			if (AddonInitializer.hasFoundAddon(addonClass, mAddon)) return mAddon;
+			if (Main.hasFoundAddon(addonClass, mAddon)) return mAddon;
 		return null;
 	}
 
 	private static boolean hasFoundAddon(final Class<?> addonClass, final MAddon mAddon) {
-		return mAddon.getContributionURI().equals(AddonInitializer.getAddonContributionURI(addonClass));
+		return mAddon.getContributionURI().equals(Main.getAddonContributionURI(addonClass));
 	}
 
 	private static String getAddonContributionURI(final Class<?> addonClass) {
@@ -52,7 +52,7 @@ public final class AddonInitializer {
 	}
 
 	private static boolean addonIsInstalled(final MApplication application, final Class<?> addonClass) {
-		return AddonInitializer.getAllContributionURIs(application).contains(AddonInitializer.getAddonContributionURI(addonClass));
+		return Main.getAllContributionURIs(application).contains(Main.getAddonContributionURI(addonClass));
 	}
 
 	private static Set<String> getAllContributionURIs(final MApplication application) {
@@ -65,7 +65,7 @@ public final class AddonInitializer {
 	private static MAddon createAddon(final Class<?> addonClass) {
 		final MAddon addon = MApplicationFactory.INSTANCE.createAddon();
 		addon.setElementId(addonClass.getCanonicalName());
-		addon.setContributionURI(AddonInitializer.getAddonContributionURI(addonClass));
+		addon.setContributionURI(Main.getAddonContributionURI(addonClass));
 		addon.setContributorURI(AddonMetadata.CONTRIBUTOR_URI);
 		return addon;
 	}

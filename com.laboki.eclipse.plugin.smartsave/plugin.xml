@@ -5,7 +5,7 @@
 		point="org.eclipse.e4.workbench.model">
 		<processor
 			beforefragment="true"
-			class="com.laboki.eclipse.plugin.smartsave.AddonInitializer">
+			class="com.laboki.eclipse.plugin.smartsave.Main">
 		</processor>
 	</extension>
 	<extension
