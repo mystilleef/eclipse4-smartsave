@@ -1,6 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
-interface IAutosaveModifyListenerHandler {
+interface ISaverModifyListenerHandler {
 
 	void modify();
 }

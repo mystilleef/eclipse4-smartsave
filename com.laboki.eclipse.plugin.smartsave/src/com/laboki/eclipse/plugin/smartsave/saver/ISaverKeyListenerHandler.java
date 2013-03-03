@@ -1,6 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
-interface IAutosaveKeyListenersHandler {
+interface ISaverKeyListenerHandler {
 
 	void keyPress();
 

@@ -4,15 +4,15 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 
-final class AutosaveFocusListener implements FocusListener {
+final class SaverFocusListener implements FocusListener {
 
 	private boolean isListening;
-	private final IAutosaveFocusListenerHandler handler;
+	private final ISaverFocusListenerHandler handler;
 	private final FocusGainedRunnable focusGainedRunnable = new FocusGainedRunnable();
 	private final FocusLostRunnable focusLostRunnable = new FocusLostRunnable();
 	private final StyledText editorBuffer = EditorContext.getBuffer();
 
-	public AutosaveFocusListener(final IAutosaveFocusListenerHandler handler) {
+	public SaverFocusListener(final ISaverFocusListenerHandler handler) {
 		this.handler = handler;
 	}
 
@@ -44,7 +44,7 @@ final class AutosaveFocusListener implements FocusListener {
 
 		@Override
 		public void run() {
-			AutosaveFocusListener.this.getHandler().focusGained();
+			SaverFocusListener.this.getHandler().focusGained();
 		}
 	}
 
@@ -54,16 +54,16 @@ final class AutosaveFocusListener implements FocusListener {
 
 		@Override
 		public void run() {
-			AutosaveFocusListener.this.getHandler().focusLost();
+			SaverFocusListener.this.getHandler().focusLost();
 		}
 	}
 
-	public IAutosaveFocusListenerHandler getHandler() {
+	public ISaverFocusListenerHandler getHandler() {
 		return this.handler;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("AutosaveFocusListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("SaverFocusListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

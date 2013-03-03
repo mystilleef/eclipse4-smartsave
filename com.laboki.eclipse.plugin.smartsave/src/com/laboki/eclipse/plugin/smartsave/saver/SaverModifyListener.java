@@ -3,14 +3,14 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
-final class AutosaveModifyListener implements IPropertyListener {
+final class SaverModifyListener implements IPropertyListener {
 
 	private boolean isListening;
-	private final IAutosaveModifyListenerHandler handler;
+	private final ISaverModifyListenerHandler handler;
 	private final ModifyRunnable modifyRunnable = new ModifyRunnable();
 	private final IEditorPart editorBuffer = EditorContext.getEditor();
 
-	public AutosaveModifyListener(final IAutosaveModifyListenerHandler handler) {
+	public SaverModifyListener(final ISaverModifyListenerHandler handler) {
 		this.handler = handler;
 	}
 
@@ -31,7 +31,7 @@ final class AutosaveModifyListener implements IPropertyListener {
 		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(this.modifyRunnable);
 	}
 
-	public IAutosaveModifyListenerHandler getHandler() {
+	public ISaverModifyListenerHandler getHandler() {
 		return this.handler;
 	}
 
@@ -41,12 +41,12 @@ final class AutosaveModifyListener implements IPropertyListener {
 
 		@Override
 		public void run() {
-			AutosaveModifyListener.this.getHandler().modify();
+			SaverModifyListener.this.getHandler().modify();
 		}
 	}
 
 	@Override
 	public String toString() {
-		return String.format("AutosaveModifyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("SaverModifyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

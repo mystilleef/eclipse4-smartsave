@@ -4,15 +4,15 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 
-final class AutosaveKeyListener implements KeyListener {
+final class SaverKeyListener implements KeyListener {
 
 	private boolean isListening;
-	private final IAutosaveKeyListenersHandler handler;
+	private final ISaverKeyListenerHandler handler;
 	private final StyledText editorBuffer = EditorContext.getBuffer();
 	private final KeyPressRunnable keyPressRunnable = new KeyPressRunnable();
 	private final KeyReleaseRunnable keyReleaseRunnable = new KeyReleaseRunnable();
 
-	public AutosaveKeyListener(final IAutosaveKeyListenersHandler handler) {
+	public SaverKeyListener(final ISaverKeyListenerHandler handler) {
 		this.handler = handler;
 	}
 
@@ -44,7 +44,7 @@ final class AutosaveKeyListener implements KeyListener {
 
 		@Override
 		public void run() {
-			AutosaveKeyListener.this.getHandler().keyPress();
+			SaverKeyListener.this.getHandler().keyPress();
 		}
 	}
 
@@ -54,16 +54,16 @@ final class AutosaveKeyListener implements KeyListener {
 
 		@Override
 		public void run() {
-			AutosaveKeyListener.this.getHandler().keyRelease();
+			SaverKeyListener.this.getHandler().keyRelease();
 		}
 	}
 
-	protected IAutosaveKeyListenersHandler getHandler() {
+	protected ISaverKeyListenerHandler getHandler() {
 		return this.handler;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("AutosaveKeyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("SaverKeyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }
