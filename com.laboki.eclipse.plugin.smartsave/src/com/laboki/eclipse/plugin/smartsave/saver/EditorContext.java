@@ -30,7 +30,7 @@ public final class EditorContext {
 	private static final Display DISPLAY = EditorContext.getDisplay();
 
 	private EditorContext() {
-		Preference.initialize();
+		Preference.instance();
 	}
 
 	public static synchronized EditorContext initialize() {

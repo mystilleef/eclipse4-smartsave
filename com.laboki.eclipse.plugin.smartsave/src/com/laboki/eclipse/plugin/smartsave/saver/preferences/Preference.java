@@ -7,14 +7,16 @@ public final class Preference implements IPreferenceHandler {
 	private static boolean canSaveAutomatically = PreferenceStore.getCanSaveAutomatically();
 	private static boolean canSaveIfErrors = PreferenceStore.getCanSaveIfErrors();
 	private static boolean canSaveIfWarnings = PreferenceStore.getCanSaveIfWarnings();
-	private final PreferenceListener listener = new PreferenceListener(this);
+	private final PreferenceListener listener = PreferenceListener.instance(this);
 
 	private Preference() {
 		this.listener.start();
 	}
 
-	public static synchronized Preference initialize() {
-		if (Preference.instance == null) Preference.instance = new Preference();
+	public static Preference instance() {
+		synchronized (Preference.instance) {
+			if (Preference.instance == null) Preference.instance = new Preference();
+		}
 		return Preference.instance;
 	}
 

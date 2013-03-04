@@ -8,11 +8,19 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 public final class PreferenceListener {
 
+	private static PreferenceListener instance;
 	private final IPreferenceChangeListener listener;
 	private final IEclipsePreferences preferences = PreferenceStore.getPreferences();
 
-	public PreferenceListener(final IPreferenceHandler handler) {
+	private PreferenceListener(final IPreferenceHandler handler) {
 		this.listener = new ChangeListener(handler);
+	}
+
+	public static PreferenceListener instance(final IPreferenceHandler handler) {
+		synchronized (PreferenceListener.instance) {
+			if (PreferenceListener.instance == null) PreferenceListener.instance = new PreferenceListener(handler);
+		}
+		return PreferenceListener.instance;
 	}
 
 	public void start() {

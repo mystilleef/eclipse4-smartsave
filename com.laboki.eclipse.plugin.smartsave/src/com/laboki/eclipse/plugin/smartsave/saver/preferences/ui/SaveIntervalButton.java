@@ -15,10 +15,11 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
 final class SaveIntervalButton implements IPreferenceHandler {
 
+	private static final int ZERO = 0;
 	private static Button button;
 	private static SaveIntervalDialog dialog;
 	private static final int SIXTY_SECONDS = 60;
-	private final PreferenceListener preferenceListener = new PreferenceListener(this);
+	private final PreferenceListener preferenceListener = PreferenceListener.instance(this);
 	private final SelectionListener buttonListener = new ButtonListener();
 	private final Composite composite;
 
@@ -49,8 +50,8 @@ final class SaveIntervalButton implements IPreferenceHandler {
 	}
 
 	private static String formatMinutesAndSeconds(final int minutes, final int seconds) {
-		if (minutes == 0) return MessageFormat.format(" {0} sec ", String.valueOf(seconds));
-		if (seconds == 0) return MessageFormat.format(" {0} min ", String.valueOf(minutes));
+		if (minutes == SaveIntervalButton.ZERO) return MessageFormat.format(" {0} sec ", String.valueOf(seconds));
+		if (seconds == SaveIntervalButton.ZERO) return MessageFormat.format(" {0} min ", String.valueOf(minutes));
 		return MessageFormat.format(" {0} min {1} sec ", String.valueOf(minutes), String.valueOf(seconds));
 	}
 
