@@ -1,7 +1,10 @@
 // $codepro.audit.disable largeNumberOfMethods, com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.minimizeScopeOfLocalVariables, debuggingCode
 package com.laboki.eclipse.plugin.smartsave.saver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -23,18 +26,16 @@ public final class EditorContext {
 	private static EditorContext instance;
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
-	private static final String ANNOTATION_LINK_MODE_EXIT = "org.eclipse.ui.internal.workbench.texteditor.link.exit";
-	private static final String ANNOTATION_LINK_MODE_TARGET = "org.eclipse.ui.internal.workbench.texteditor.link.target";
-	private static final String ANNOTATION_LINK_MODE_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
-	private static final String ANNOTATION_LINK_MODE_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
+	private static final List<String> LINK_ANNOTATIONS = new ArrayList<>(Arrays.asList("org.eclipse.ui.internal.workbench.texteditor.link.exit", "org.eclipse.ui.internal.workbench.texteditor.link.target", "org.eclipse.ui.internal.workbench.texteditor.link.master", "org.eclipse.ui.internal.workbench.texteditor.link.slave"));
 	private static final Display DISPLAY = EditorContext.getDisplay();
+	private static final Preference PREFERENCE = Preference.instance();
 
-	private EditorContext() {
-		Preference.instance();
-	}
+	private EditorContext() {}
 
-	public static synchronized EditorContext initialize() {
-		if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
+	public static EditorContext instance() {
+		synchronized (EditorContext.instance) {
+			if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
+		}
 		return EditorContext.instance;
 	}
 
@@ -107,11 +108,7 @@ public final class EditorContext {
 	}
 
 	private static boolean isLinkModeAnnotation(final Iterator<Annotation> iterator) {
-		final String annotationType = iterator.next().getType();
-		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_EXIT)) return true;
-		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_MASTER)) return true;
-		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_SLAVE)) return true;
-		if (annotationType.equals(EditorContext.ANNOTATION_LINK_MODE_TARGET)) return true;
+		if (EditorContext.LINK_ANNOTATIONS.contains(iterator.next().getType())) return true;
 		return false;
 	}
 
@@ -167,19 +164,19 @@ public final class EditorContext {
 	}
 
 	public static boolean canSaveIfWarnings() {
-		return Preference.canSaveIfWarnings();
+		return EditorContext.PREFERENCE.canSaveIfWarnings();
 	}
 
 	public static boolean canSaveIfErrors() {
-		return Preference.canSaveIfErrors();
+		return EditorContext.PREFERENCE.canSaveIfErrors();
 	}
 
 	public static boolean canSaveAutomatically() {
-		return Preference.canSaveAutomatically();
+		return EditorContext.PREFERENCE.canSaveAutomatically();
 	}
 
 	public static int getSaveIntervalInSeconds() {
-		return Preference.saveIntervalInSeconds();
+		return EditorContext.PREFERENCE.saveIntervalInSeconds();
 	}
 
 	@Override

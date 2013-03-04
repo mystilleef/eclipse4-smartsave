@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.Metadata;
 public final class Factory {
 
 	public Factory() {
-		EditorContext.initialize();
+		EditorContext.instance();
 	}
 
 	@Inject

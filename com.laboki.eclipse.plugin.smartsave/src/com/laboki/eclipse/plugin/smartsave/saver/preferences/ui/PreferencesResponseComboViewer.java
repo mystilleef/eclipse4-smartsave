@@ -25,8 +25,7 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements IPre
 
 	protected boolean getSelectionValue(final SelectionChangedEvent event) {
 		super.handleResponseSelection(event);
-		final boolean value = ((Response) ((IStructuredSelection) event.getSelection()).getFirstElement()).value();
-		return value;
+		return ((Response) ((IStructuredSelection) event.getSelection()).getFirstElement()).value();
 	}
 
 	private void updateComboProperties() {
