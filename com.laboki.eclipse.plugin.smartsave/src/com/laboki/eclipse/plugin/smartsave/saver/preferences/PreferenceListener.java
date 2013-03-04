@@ -8,7 +8,6 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 public final class PreferenceListener {
 
-	// private static PreferenceListener instance;
 	private final IPreferenceChangeListener listener;
 	private static final IEclipsePreferences PREFERENCES = PreferenceStore.getPreferences();
 
@@ -16,10 +15,6 @@ public final class PreferenceListener {
 		this.listener = new ChangeListener(handler);
 	}
 
-	// public static synchronized PreferenceListener instance(final IPreferenceHandler handler) {
-	// if (PreferenceListener.instance == null) PreferenceListener.instance = new PreferenceListener(handler);
-	// return PreferenceListener.instance;
-	// }
 	public void start() {
 		PreferenceListener.PREFERENCES.addPreferenceChangeListener(this.listener);
 	}
