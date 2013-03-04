@@ -10,7 +10,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
 
 class PreferencesResponseComboViewer extends ResponseComboViewer implements IPreferenceHandler {
 
-	private final PreferenceListener listener = PreferenceListener.instance(this);
+	private final PreferenceListener listener = new PreferenceListener(this);
 	public static final int YES = 0;
 	public static final int NO = 1;
 

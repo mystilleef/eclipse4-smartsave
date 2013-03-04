@@ -21,7 +21,7 @@ final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 	private static final int SPINNER_DIGITS = 0;
 	private static final int SPINNER_MAXIMUM = 600;
 	private static final int SPINNER_MINIMUM = 1;
-	private final PreferenceListener preferenceListener = PreferenceListener.instance(this);
+	private final PreferenceListener preferenceListener = new PreferenceListener(this);
 	private final ModifyListener modifyListener = new SpinnerModifyListener();
 	private final SpinnerTraverseListener traverseListener = new SpinnerTraverseListener();
 	private static Spinner spinner;

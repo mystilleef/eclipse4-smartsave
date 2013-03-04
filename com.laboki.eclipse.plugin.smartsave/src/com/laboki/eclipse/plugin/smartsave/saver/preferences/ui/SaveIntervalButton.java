@@ -19,7 +19,7 @@ final class SaveIntervalButton implements IPreferenceHandler {
 	private static Button button;
 	private static SaveIntervalDialog dialog;
 	private static final int SIXTY_SECONDS = 60;
-	private final PreferenceListener preferenceListener = PreferenceListener.instance(this);
+	private final PreferenceListener preferenceListener = new PreferenceListener(this);
 	private final SelectionListener buttonListener = new ButtonListener();
 	private final Composite composite;
 

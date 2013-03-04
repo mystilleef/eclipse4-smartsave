@@ -7,7 +7,7 @@ public final class Preference implements IPreferenceHandler {
 	private boolean canSaveAutomatically = PreferenceStore.getCanSaveAutomatically();
 	private boolean canSaveIfErrors = PreferenceStore.getCanSaveIfErrors();
 	private boolean canSaveIfWarnings = PreferenceStore.getCanSaveIfWarnings();
-	private final PreferenceListener listener = PreferenceListener.instance(this);
+	private final PreferenceListener listener = new PreferenceListener(this);
 
 	private Preference() {
 		this.listener.start();
