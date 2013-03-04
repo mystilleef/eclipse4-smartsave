@@ -13,10 +13,8 @@ public final class Preference implements IPreferenceHandler {
 		this.listener.start();
 	}
 
-	public static Preference instance() {
-		synchronized (Preference.instance) {
-			if (Preference.instance == null) Preference.instance = new Preference();
-		}
+	public static synchronized Preference instance() {
+		if (Preference.instance == null) Preference.instance = new Preference();
 		return Preference.instance;
 	}
 

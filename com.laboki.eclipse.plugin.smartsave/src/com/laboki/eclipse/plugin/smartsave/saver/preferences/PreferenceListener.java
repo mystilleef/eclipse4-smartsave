@@ -16,10 +16,8 @@ public final class PreferenceListener {
 		this.listener = new ChangeListener(handler);
 	}
 
-	public static PreferenceListener instance(final IPreferenceHandler handler) {
-		synchronized (PreferenceListener.instance) {
-			if (PreferenceListener.instance == null) PreferenceListener.instance = new PreferenceListener(handler);
-		}
+	public static synchronized PreferenceListener instance(final IPreferenceHandler handler) {
+		if (PreferenceListener.instance == null) PreferenceListener.instance = new PreferenceListener(handler);
 		return PreferenceListener.instance;
 	}
 

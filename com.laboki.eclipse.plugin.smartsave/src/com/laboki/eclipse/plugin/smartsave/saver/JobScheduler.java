@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.jobs.Job;
 
 final class JobScheduler extends Job {
 
+	private static final EditorContext EDITOR = EditorContext.instance();
 	private static final int TO_MILLISECONDS = 1000;
 	private final Decider decider = new Decider();
 	private final SaveJobRunnable saveJobRunnable = this.new SaveJobRunnable();
@@ -21,7 +22,7 @@ final class JobScheduler extends Job {
 	}
 
 	public void start() {
-		this.schedule(EditorContext.getSaveIntervalInSeconds() * JobScheduler.TO_MILLISECONDS);
+		this.schedule(JobScheduler.EDITOR.getSaveIntervalInSeconds() * JobScheduler.TO_MILLISECONDS);
 	}
 
 	public void stop() {

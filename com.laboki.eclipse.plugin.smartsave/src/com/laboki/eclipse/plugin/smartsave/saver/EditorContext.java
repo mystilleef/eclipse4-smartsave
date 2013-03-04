@@ -28,14 +28,14 @@ public final class EditorContext {
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = new ArrayList<>(Arrays.asList("org.eclipse.ui.internal.workbench.texteditor.link.exit", "org.eclipse.ui.internal.workbench.texteditor.link.target", "org.eclipse.ui.internal.workbench.texteditor.link.master", "org.eclipse.ui.internal.workbench.texteditor.link.slave"));
 	private static final Display DISPLAY = EditorContext.getDisplay();
-	private static final Preference PREFERENCE = Preference.instance();
+	private final Preference preferences;
 
-	private EditorContext() {}
+	private EditorContext() {
+		this.preferences = Preference.instance();
+	}
 
-	public static EditorContext instance() {
-		synchronized (EditorContext.instance) {
-			if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
-		}
+	public static synchronized EditorContext instance() {
+		if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
 		return EditorContext.instance;
 	}
 
@@ -163,20 +163,20 @@ public final class EditorContext {
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
-	public static boolean canSaveIfWarnings() {
-		return EditorContext.PREFERENCE.canSaveIfWarnings();
+	public boolean canSaveIfWarnings() {
+		return this.preferences.canSaveIfWarnings();
 	}
 
-	public static boolean canSaveIfErrors() {
-		return EditorContext.PREFERENCE.canSaveIfErrors();
+	public boolean canSaveIfErrors() {
+		return this.preferences.canSaveIfErrors();
 	}
 
-	public static boolean canSaveAutomatically() {
-		return EditorContext.PREFERENCE.canSaveAutomatically();
+	public boolean canSaveAutomatically() {
+		return this.preferences.canSaveAutomatically();
 	}
 
-	public static int getSaveIntervalInSeconds() {
-		return EditorContext.PREFERENCE.saveIntervalInSeconds();
+	public int getSaveIntervalInSeconds() {
+		return this.preferences.saveIntervalInSeconds();
 	}
 
 	@Override
