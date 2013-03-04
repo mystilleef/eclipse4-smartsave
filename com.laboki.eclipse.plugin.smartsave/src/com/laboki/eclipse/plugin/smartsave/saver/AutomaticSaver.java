@@ -9,7 +9,6 @@ final class AutomaticSaver {
 	private final SaverFocusListener focusListener = new SaverFocusListener(this.new AutosaveFocusListenerHandler());
 	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new AutosaveModifyListenerHandler());
 	private final SaverKeyListener keylisteners = new SaverKeyListener(this.new KeyListenersHandler());
-	private static final EditorContext EDITOR = EditorContext.instance();
 
 	public void init() {
 		this.startListeningForPartActivation();
@@ -40,7 +39,7 @@ final class AutomaticSaver {
 	}
 
 	protected void startAutomaticSaving() {
-		if (!AutomaticSaver.EDITOR.canSaveAutomatically()) return;
+		if (!EditorContext.canSaveAutomatically()) return;
 		this.startMonitoringEvents();
 		this.startSaveSchedule();
 	}

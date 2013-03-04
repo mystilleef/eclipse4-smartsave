@@ -4,13 +4,12 @@ import org.eclipse.ui.IEditorPart;
 
 final class Decider {
 
-	private static final EditorContext EDITOR = EditorContext.instance();
 	private final IEditorPart editor = EditorContext.getEditor();
 
 	public Decider() {}
 
 	public void save() {
-		if (!Decider.EDITOR.canSaveAutomatically() || !this.canSaveFile()) return;
+		if (!EditorContext.canSaveAutomatically() || !this.canSaveFile()) return;
 		EditorContext.save(this.editor);
 	}
 
@@ -48,12 +47,12 @@ final class Decider {
 	}
 
 	private boolean bufferHasErrors() {
-		if (Decider.EDITOR.canSaveIfErrors()) return false;
+		if (EditorContext.canSaveIfErrors()) return false;
 		return EditorContext.hasErrors(this.editor);
 	}
 
 	private boolean bufferHasWarnings() {
-		if (Decider.EDITOR.canSaveIfWarnings()) return false;
+		if (EditorContext.canSaveIfWarnings()) return false;
 		return EditorContext.hasWarnings(this.editor);
 	}
 
