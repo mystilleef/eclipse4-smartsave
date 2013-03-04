@@ -10,7 +10,7 @@ public final class PreferenceListener {
 
 	private static PreferenceListener instance;
 	private final IPreferenceChangeListener listener;
-	private final IEclipsePreferences preferences = PreferenceStore.getPreferences();
+	private static final IEclipsePreferences PREFERENCES = PreferenceStore.getPreferences();
 
 	private PreferenceListener(final IPreferenceHandler handler) {
 		this.listener = new ChangeListener(handler);
@@ -24,11 +24,11 @@ public final class PreferenceListener {
 	}
 
 	public void start() {
-		this.preferences.addPreferenceChangeListener(this.listener);
+		PreferenceListener.PREFERENCES.addPreferenceChangeListener(this.listener);
 	}
 
 	public void stop() {
-		this.preferences.removePreferenceChangeListener(this.listener);
+		PreferenceListener.PREFERENCES.removePreferenceChangeListener(this.listener);
 	}
 
 	private final class ChangeListener implements IPreferenceChangeListener, Runnable {
