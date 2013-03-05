@@ -169,6 +169,12 @@ public final class EditorContext {
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
+	public static boolean hoversHaveFocus(final IEditorPart editor) {
+		if (EditorContext.getView(editor).getCurrentTextHover() != null) return true;
+		if (EditorContext.getView(editor).getCurrentAnnotationHover() != null) return true;
+		return false;
+	}
+
 	public static boolean canSaveIfWarnings() {
 		return EditorContext.PREFERENCE.canSaveIfWarnings();
 	}

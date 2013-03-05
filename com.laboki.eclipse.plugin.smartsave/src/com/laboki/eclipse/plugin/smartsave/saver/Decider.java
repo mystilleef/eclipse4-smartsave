@@ -7,17 +7,20 @@ final class Decider {
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistant contentAssistant = new ContentAssistant();
 
-	public Decider() {}
-
 	public void save() {
-		if (EditorContext.canSaveAutomatically() || this.canSaveFile()) EditorContext.save(this.editor);
+		if (EditorContext.canSaveAutomatically() && this.canSaveFile()) EditorContext.save(this.editor);
 	}
 
 	private boolean canSaveFile() {
 		if (this.bufferIsNotModified()) return false;
 		if (this.bufferIsInEditingMode()) return false;
+		if (this.bufferHoversHaveFocus()) return false;
 		if (this.bufferHasProblems()) return false;
 		return true;
+	}
+
+	private boolean bufferHoversHaveFocus() {
+		return EditorContext.hoversHaveFocus(this.editor);
 	}
 
 	private boolean bufferIsNotModified() {
@@ -26,9 +29,13 @@ final class Decider {
 
 	private boolean bufferIsInEditingMode() {
 		if (this.bufferHasSelection()) return true;
-		if (this.contentAssistant.isVisible()) return true;
 		if (this.bufferIsInLinkMode()) return true;
+		if (this.bufferContentAssistantIsVisible()) return true;
 		return false;
+	}
+
+	private boolean bufferContentAssistantIsVisible() {
+		return this.contentAssistant.isVisible();
 	}
 
 	private boolean bufferHasSelection() {

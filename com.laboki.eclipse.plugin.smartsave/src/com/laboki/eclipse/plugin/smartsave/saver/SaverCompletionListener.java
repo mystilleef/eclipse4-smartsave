@@ -3,6 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
 import org.eclipse.jface.text.source.ContentAssistantFacade;
 
 final class SaverCompletionListener implements ICompletionListener {
@@ -10,6 +11,7 @@ final class SaverCompletionListener implements ICompletionListener {
 	private boolean isListening;
 	private final ISaverCompletionListener handler;
 	private final ContentAssistantFacade contentAssistantFacade = EditorContext.getView().getContentAssistantFacade();
+	private final IQuickAssistAssistant quickAssistAssistant = EditorContext.getView().getQuickAssistAssistant();
 	private final EndedRunnable endedRunnable = new EndedRunnable();
 	private final StartedRunnable startedRunnable = new StartedRunnable();
 
@@ -20,12 +22,14 @@ final class SaverCompletionListener implements ICompletionListener {
 	public void start() {
 		if (this.isListening) return;
 		this.contentAssistantFacade.addCompletionListener(this);
+		this.quickAssistAssistant.addCompletionListener(this);
 		this.isListening = true;
 	}
 
 	public void stop() {
 		if (!this.isListening) return;
 		this.contentAssistantFacade.removeCompletionListener(this);
+		this.quickAssistAssistant.removeCompletionListener(this);
 		this.isListening = false;
 	}
 
