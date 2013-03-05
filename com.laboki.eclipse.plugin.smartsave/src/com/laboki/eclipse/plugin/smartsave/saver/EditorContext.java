@@ -65,6 +65,14 @@ public final class EditorContext {
 		return (StyledText) editor.getAdapter(Control.class);
 	}
 
+	public static boolean hasSelection(final IEditorPart editor) {
+		return EditorContext.getBuffer(editor).getSelectionCount() > 0;
+	}
+
+	public static boolean hasBlockSelection(final IEditorPart editor) {
+		return EditorContext.getBuffer(editor).getBlockSelection();
+	}
+
 	public static SourceViewer getView() {
 		return (SourceViewer) EditorContext.getEditor().getAdapter(ITextOperationTarget.class);
 	}

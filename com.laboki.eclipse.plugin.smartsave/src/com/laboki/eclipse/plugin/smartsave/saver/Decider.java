@@ -5,12 +5,12 @@ import org.eclipse.ui.IEditorPart;
 final class Decider {
 
 	private final IEditorPart editor = EditorContext.getEditor();
+	private final ContentAssistant contentAssistant = new ContentAssistant();
 
 	public Decider() {}
 
 	public void save() {
-		if (!EditorContext.canSaveAutomatically() || !this.canSaveFile()) return;
-		EditorContext.save(this.editor);
+		if (EditorContext.canSaveAutomatically() || this.canSaveFile()) EditorContext.save(this.editor);
 	}
 
 	private boolean canSaveFile() {
@@ -26,13 +26,14 @@ final class Decider {
 
 	private boolean bufferIsInEditingMode() {
 		if (this.bufferHasSelection()) return true;
+		if (this.contentAssistant.isVisible()) return true;
 		if (this.bufferIsInLinkMode()) return true;
 		return false;
 	}
 
 	private boolean bufferHasSelection() {
-		if (EditorContext.getBuffer(this.editor).getSelectionCount() != 0) return true;
-		if (EditorContext.getBuffer(this.editor).getBlockSelection()) return true;
+		if (EditorContext.hasSelection(this.editor)) return true;
+		if (EditorContext.hasBlockSelection(this.editor)) return true;
 		return false;
 	}
 
