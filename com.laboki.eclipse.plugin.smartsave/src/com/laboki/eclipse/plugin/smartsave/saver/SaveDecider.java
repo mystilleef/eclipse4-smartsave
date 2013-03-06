@@ -2,6 +2,9 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 
 import org.eclipse.ui.IEditorPart;
 
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverCompletionListener;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverCompletionListener;
+
 final class SaveDecider {
 
 	private final IEditorPart editor = EditorContext.getEditor();
@@ -62,5 +65,29 @@ final class SaveDecider {
 	@Override
 	public String toString() {
 		return String.format("SaveDecider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
+
+	private final class ContentAssistant implements ISaverCompletionListener {
+
+		private boolean isVisible;
+		private final SaverCompletionListener listener = new SaverCompletionListener(this);
+
+		public ContentAssistant() {
+			this.listener.start();
+		}
+
+		@Override
+		public void assistSessionStarted() {
+			this.isVisible = true;
+		}
+
+		@Override
+		public void assistSessionEnded() {
+			this.isVisible = false;
+		}
+
+		public boolean isVisible() {
+			return this.isVisible;
+		}
 	}
 }
