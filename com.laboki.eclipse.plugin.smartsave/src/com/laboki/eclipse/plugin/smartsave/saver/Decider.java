@@ -29,14 +29,14 @@ final class Decider {
 		return false;
 	}
 
-	private boolean bufferContentAssistantIsVisible() {
-		return this.contentAssistant.isVisible();
-	}
-
 	private boolean bufferHasSelection() {
 		if (EditorContext.hasSelection(this.editor)) return true;
 		if (EditorContext.hasBlockSelection(this.editor)) return true;
 		return false;
+	}
+
+	private boolean bufferContentAssistantIsVisible() {
+		return this.contentAssistant.isVisible();
 	}
 
 	private boolean bufferIsInLinkMode() {
