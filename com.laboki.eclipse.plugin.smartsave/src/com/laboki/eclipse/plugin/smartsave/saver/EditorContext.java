@@ -1,4 +1,4 @@
-// $codepro.audit.disable largeNumberOfMethods, com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.minimizeScopeOfLocalVariables, debuggingCode
+// $codepro.audit.disable methodChainLength
 package com.laboki.eclipse.plugin.smartsave.saver;
 
 import java.util.ArrayList;
@@ -137,8 +137,12 @@ public final class EditorContext {
 	}
 
 	private static void syncFile(final IEditorPart editor) {
+		EditorContext.flushEvents();
+		EditorContext.tryToSyncFile(editor);
+	}
+
+	private static void tryToSyncFile(final IEditorPart editor) {
 		try {
-			EditorContext.flushEvents();
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
 			e.printStackTrace();
