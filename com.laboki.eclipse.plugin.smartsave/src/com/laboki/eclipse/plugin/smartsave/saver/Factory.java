@@ -1,3 +1,4 @@
+// $codepro.audit.disable methodChainLength
 package com.laboki.eclipse.plugin.smartsave.saver;
 
 import javax.inject.Inject;
