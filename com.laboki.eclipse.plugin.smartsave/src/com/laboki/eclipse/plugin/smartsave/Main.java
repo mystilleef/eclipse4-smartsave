@@ -11,13 +11,13 @@ import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationFactory;
 
-import com.laboki.eclipse.plugin.smartsave.saver.Factory;
+import com.laboki.eclipse.plugin.smartsave.saver.SaverFactory;
 
 public final class Main {
 
 	@Execute
 	public static void execute(final MApplication application) {
-		Main.installAddons(application, Factory.class);
+		Main.installAddons(application, SaverFactory.class);
 	}
 
 	private static void installAddons(final MApplication application, final Class<?>... addonClasses) {

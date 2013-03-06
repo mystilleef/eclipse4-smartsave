@@ -11,9 +11,9 @@ import org.osgi.service.event.Event;
 
 import com.laboki.eclipse.plugin.smartsave.Metadata;
 
-public final class Factory {
+public final class SaverFactory {
 
-	public Factory() {
+	public SaverFactory() {
 		EditorContext.instance();
 	}
 
@@ -21,13 +21,13 @@ public final class Factory {
 	@Optional
 	public static void activateHandler(@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) final Event event) {
 		final MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
-		if (Factory.isInvalid(activePart)) return;
-		Factory.enableAutomaticSaverFor(activePart);
+		if (SaverFactory.isInvalid(activePart)) return;
+		SaverFactory.enableAutomaticSaverFor(activePart);
 	}
 
 	private static boolean isInvalid(final MPart activePart) {
-		if (Factory.isNotAnEditor(activePart)) return true;
-		if (Factory.isTagged(activePart)) return true;
+		if (SaverFactory.isNotAnEditor(activePart)) return true;
+		if (SaverFactory.isTagged(activePart)) return true;
 		return false;
 	}
 
