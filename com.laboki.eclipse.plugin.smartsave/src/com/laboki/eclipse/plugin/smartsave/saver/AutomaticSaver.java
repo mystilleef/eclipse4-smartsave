@@ -120,7 +120,7 @@ final class AutomaticSaver {
 
 			@Override
 			public void run() {
-				if (AutomaticSaver.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving();
+				if (AutomaticSaver.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving(); // $codepro.audit.disable methodChainLength
 				else AutomaticSaver.this.stopAutomaticSaving();
 			}
 		}
