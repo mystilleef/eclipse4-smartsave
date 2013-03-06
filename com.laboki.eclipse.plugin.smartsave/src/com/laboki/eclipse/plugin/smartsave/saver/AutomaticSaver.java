@@ -2,6 +2,13 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 
 import org.eclipse.ui.IEditorPart;
 
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverFocusListenerHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverKeyListenerHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverModifyListenerHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverFocusListener;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverKeyListener;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverModifyListener;
+
 final class AutomaticSaver {
 
 	private final IEditorPart editor = EditorContext.getEditor();

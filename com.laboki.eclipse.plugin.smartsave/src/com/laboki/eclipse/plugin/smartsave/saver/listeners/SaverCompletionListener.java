@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
@@ -6,7 +6,9 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
 import org.eclipse.jface.text.source.ContentAssistantFacade;
 
-final class SaverCompletionListener implements ICompletionListener {
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+
+public final class SaverCompletionListener implements ICompletionListener {
 
 	private boolean isListening;
 	private final ISaverCompletionListener handler;

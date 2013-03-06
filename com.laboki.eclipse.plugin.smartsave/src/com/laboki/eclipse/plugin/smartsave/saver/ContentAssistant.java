@@ -1,5 +1,8 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverCompletionListener;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverCompletionListener;
+
 final class ContentAssistant implements ISaverCompletionListener {
 
 	private boolean isVisible;

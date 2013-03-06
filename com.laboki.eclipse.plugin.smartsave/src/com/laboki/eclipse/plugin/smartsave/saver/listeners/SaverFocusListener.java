@@ -1,10 +1,12 @@
-package com.laboki.eclipse.plugin.smartsave.saver;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 
-final class SaverFocusListener implements FocusListener {
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+
+public final class SaverFocusListener implements FocusListener {
 
 	private boolean isListening;
 	private final ISaverFocusListenerHandler handler;

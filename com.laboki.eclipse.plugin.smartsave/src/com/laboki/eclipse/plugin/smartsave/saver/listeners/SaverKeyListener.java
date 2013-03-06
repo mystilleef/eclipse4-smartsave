@@ -1,10 +1,12 @@
-package com.laboki.eclipse.plugin.smartsave.saver;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 
-final class SaverKeyListener implements KeyListener {
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+
+public final class SaverKeyListener implements KeyListener {
 
 	private boolean isListening;
 	private final ISaverKeyListenerHandler handler;

@@ -1,9 +1,11 @@
-package com.laboki.eclipse.plugin.smartsave.saver;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
-final class SaverModifyListener implements IPropertyListener {
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+
+public final class SaverModifyListener implements IPropertyListener {
 
 	private boolean isListening;
 	private final ISaverModifyListenerHandler handler;
