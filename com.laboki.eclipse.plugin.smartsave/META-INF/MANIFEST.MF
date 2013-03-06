@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Smartsave
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
-Bundle-Version: 20130305.4
+Bundle-Version: 20130306
 Bundle-Vendor: LABOKI
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: javax.inject;bundle-version="1.0.0",
@@ -18,18 +18,19 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
 Import-Package: org.osgi.service.event;version="1.3.0"
 Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.e4.ui.model.application",
  com.laboki.eclipse.plugin.smartsave.saver;
-  uses:="org.eclipse.core.runtime,
-   org.eclipse.jface.text.source,
+  uses:="org.eclipse.jface.text.source,
+   org.eclipse.core.runtime,
    org.eclipse.core.runtime.jobs,
-   org.eclipse.e4.ui.model.application.ui.basic,
    org.osgi.service.event,
    org.eclipse.swt.events,
    org.eclipse.ui,
    org.eclipse.swt.custom,
-   org.eclipse.swt.widgets",
+   org.eclipse.swt.widgets,
+   org.eclipse.jface.text.contentassist",
  com.laboki.eclipse.plugin.smartsave.saver.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
   uses:="org.eclipse.jface.preference,
+   com.laboki.eclipse.plugin.smartsave.saver.preferences,
    org.eclipse.ui,
    org.eclipse.jface.viewers,
    org.eclipse.swt.widgets"
