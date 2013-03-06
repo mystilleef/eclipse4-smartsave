@@ -13,9 +13,9 @@ final class AutomaticSaver {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final SaveJobScheduler saveScheduler = new SaveJobScheduler("AutoSaveJob");
-	private final SaverFocusListener focusListener = new SaverFocusListener(this.new AutosaveFocusListenerHandler());
-	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new AutosaveModifyListenerHandler());
-	private final SaverKeyListener keylisteners = new SaverKeyListener(this.new KeyListenersHandler());
+	private final SaverFocusListener focusListener = new SaverFocusListener(this.new SaverFocusListenerHandler());
+	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new SaverModifyListenerHandler());
+	private final SaverKeyListener keylisteners = new SaverKeyListener(this.new SaverKeyListenerHandler());
 
 	public void init() {
 		this.startListeningForPartActivation();
@@ -72,12 +72,12 @@ final class AutomaticSaver {
 		this.keylisteners.stop();
 	}
 
-	private final class KeyListenersHandler implements ISaverKeyListenerHandler {
+	private final class SaverKeyListenerHandler implements ISaverKeyListenerHandler {
 
 		private final KeyPressRunnable keyPressRunnable = this.new KeyPressRunnable();
 		private final KeyReleaseRunnable keyReleaseRunnable = this.new KeyReleaseRunnable();
 
-		public KeyListenersHandler() {}
+		public SaverKeyListenerHandler() {}
 
 		@Override
 		public void keyPress() {
@@ -110,11 +110,11 @@ final class AutomaticSaver {
 		}
 	}
 
-	private final class AutosaveModifyListenerHandler implements ISaverModifyListenerHandler {
+	private final class SaverModifyListenerHandler implements ISaverModifyListenerHandler {
 
 		private final ModifyRunnable modifyRunnable = this.new ModifyRunnable();
 
-		public AutosaveModifyListenerHandler() {}
+		public SaverModifyListenerHandler() {}
 
 		@Override
 		public void modify() {
@@ -133,12 +133,12 @@ final class AutomaticSaver {
 		}
 	}
 
-	private final class AutosaveFocusListenerHandler implements ISaverFocusListenerHandler {
+	private final class SaverFocusListenerHandler implements ISaverFocusListenerHandler {
 
 		private final Runnable focusGainedRunnable = this.new FocusGainedRunnable();
 		private final Runnable focusLostRunnable = this.new FocusLostRunnable();
 
-		public AutosaveFocusListenerHandler() {}
+		public SaverFocusListenerHandler() {}
 
 		@Override
 		public void focusGained() {
