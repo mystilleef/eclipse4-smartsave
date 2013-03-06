@@ -14,13 +14,8 @@ final class Decider {
 	private boolean canSaveFile() {
 		if (this.bufferIsNotModified()) return false;
 		if (this.bufferIsInEditingMode()) return false;
-		if (this.bufferHoversHaveFocus()) return false;
 		if (this.bufferHasProblems()) return false;
 		return true;
-	}
-
-	private boolean bufferHoversHaveFocus() {
-		return EditorContext.hoversHaveFocus(this.editor);
 	}
 
 	private boolean bufferIsNotModified() {
@@ -29,8 +24,8 @@ final class Decider {
 
 	private boolean bufferIsInEditingMode() {
 		if (this.bufferHasSelection()) return true;
-		if (this.bufferIsInLinkMode()) return true;
 		if (this.bufferContentAssistantIsVisible()) return true;
+		if (this.bufferIsInLinkMode()) return true;
 		return false;
 	}
 
