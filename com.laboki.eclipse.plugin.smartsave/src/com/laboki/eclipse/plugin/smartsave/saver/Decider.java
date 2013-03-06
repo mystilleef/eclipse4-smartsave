@@ -5,7 +5,7 @@ import org.eclipse.ui.IEditorPart;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverCompletionListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverCompletionListener;
 
-final class SaveDecider {
+final class Decider {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistant contentAssistant = new ContentAssistant();
@@ -64,7 +64,7 @@ final class SaveDecider {
 
 	@Override
 	public String toString() {
-		return String.format("SaveDecider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("Decider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 
 	private final class ContentAssistant implements ISaverCompletionListener {
