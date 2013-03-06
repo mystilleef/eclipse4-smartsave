@@ -2,7 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 
 import org.eclipse.ui.IEditorPart;
 
-final class Decider {
+final class SaveDecider {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistant contentAssistant = new ContentAssistant();
@@ -61,6 +61,6 @@ final class Decider {
 
 	@Override
 	public String toString() {
-		return String.format("Decider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+		return String.format("SaveDecider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

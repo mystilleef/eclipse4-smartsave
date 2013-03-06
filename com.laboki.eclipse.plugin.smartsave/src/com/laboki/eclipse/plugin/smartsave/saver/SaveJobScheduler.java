@@ -5,23 +5,23 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
-final class JobScheduler extends Job {
+final class SaveJobScheduler extends Job {
 
 	private static final int TO_MILLISECONDS = 1000;
-	private final Decider decider = new Decider();
+	private final SaveDecider saveDecider = new SaveDecider();
 	private final SaveJobRunnable saveJobRunnable = this.new SaveJobRunnable();
 
-	public JobScheduler(final String name) {
+	public SaveJobScheduler(final String name) {
 		super(name);
 		this.setPriority(Job.DECORATE);
 	}
 
 	public void save() {
-		this.decider.save();
+		this.saveDecider.save();
 	}
 
 	public void start() {
-		this.schedule(EditorContext.getSaveIntervalInSeconds() * JobScheduler.TO_MILLISECONDS);
+		this.schedule(EditorContext.getSaveIntervalInSeconds() * SaveJobScheduler.TO_MILLISECONDS);
 	}
 
 	public void stop() {
@@ -56,7 +56,7 @@ final class JobScheduler extends Job {
 
 		@Override
 		public void run() {
-			JobScheduler.this.save();
+			SaveJobScheduler.this.save();
 		}
 	}
 }
