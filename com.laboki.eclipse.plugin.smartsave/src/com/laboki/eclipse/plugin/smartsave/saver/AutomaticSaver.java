@@ -9,7 +9,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverFocusListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverKeyListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverModifyListener;
 
-final class AutomaticSaver {
+final class AutomaticSaver implements Runnable {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final JobScheduler saveScheduler = new JobScheduler("AutoSaveJob");
@@ -17,7 +17,8 @@ final class AutomaticSaver {
 	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new SaverModifyListenerHandler());
 	private final SaverKeyListener keylisteners = new SaverKeyListener(this.new SaverKeyListenerHandler());
 
-	public void init() {
+	@Override
+	public void run() {
 		this.startListeningForPartActivation();
 		this.startListeningForBufferModification();
 	}

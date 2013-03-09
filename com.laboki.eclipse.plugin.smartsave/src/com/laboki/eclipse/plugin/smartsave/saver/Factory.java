@@ -23,11 +23,11 @@ public final class Factory implements Runnable {
 	public void enableAutomaticSaverFor(final IWorkbenchPart part) {
 		if (this.isInvalidPart(part)) return;
 		this.editorParts.add((IEditorPart) part);
-		new AutomaticSaver().init();
+		EditorContext.asyncExec(new AutomaticSaver());
 	}
 
 	private boolean isInvalidPart(final IWorkbenchPart part) {
-		return this.getEditorParts().contains(part) || !(part instanceof IEditorPart);
+		return (part == null) || this.getEditorParts().contains(part) || !(part instanceof IEditorPart);
 	}
 
 	@Override
