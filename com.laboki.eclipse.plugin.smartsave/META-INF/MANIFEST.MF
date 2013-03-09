@@ -2,31 +2,23 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Smartsave
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
-Bundle-Version: 20130306
+Bundle-Version: 20130308
 Bundle-Vendor: LABOKI
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: javax.inject;bundle-version="1.0.0",
- org.eclipse.e4.core.di;bundle-version="1.1.0",
- org.eclipse.e4.ui.di;bundle-version="0.10.1",
- org.eclipse.e4.ui.workbench;bundle-version="0.10.3",
- org.eclipse.ui;bundle-version="3.103.0",
+Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
  org.eclipse.jface.text;bundle-version="3.8.1",
  org.eclipse.core.runtime.compatibility;bundle-version="3.2.200",
  org.eclipse.core.resources;bundle-version="3.8.1",
- org.eclipse.ui.ide;bundle-version="3.8.1",
- org.eclipse.e4.core.contexts;bundle-version="1.1.0"
-Import-Package: org.osgi.service.event;version="1.3.0"
-Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.e4.ui.model.application",
+ org.eclipse.ui.ide;bundle-version="3.8.1"
+Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
  com.laboki.eclipse.plugin.smartsave.saver;
   uses:="org.eclipse.jface.text.source,
    org.eclipse.core.runtime,
    org.eclipse.core.runtime.jobs,
-   org.osgi.service.event,
-   org.eclipse.swt.events,
    org.eclipse.ui,
    org.eclipse.swt.custom,
-   org.eclipse.swt.widgets,
-   org.eclipse.jface.text.contentassist",
+   org.eclipse.swt.widgets",
+ com.laboki.eclipse.plugin.smartsave.saver.listeners;uses:="org.eclipse.ui,org.eclipse.swt.events,org.eclipse.jface.text.contentassist",
  com.laboki.eclipse.plugin.smartsave.saver.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
   uses:="org.eclipse.jface.preference,
@@ -34,3 +26,4 @@ Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.e4.ui.mod
    org.eclipse.ui,
    org.eclipse.jface.viewers,
    org.eclipse.swt.widgets"
+Plugin-Class: com.laboki.eclipse.plugin.smartsave.Startup
