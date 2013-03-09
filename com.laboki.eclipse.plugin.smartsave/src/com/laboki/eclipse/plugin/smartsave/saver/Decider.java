@@ -11,7 +11,9 @@ final class Decider {
 	private final ContentAssistant contentAssistant = new ContentAssistant();
 
 	public void save() {
-		if (EditorContext.canSaveAutomatically() && this.canSaveFile()) EditorContext.save(this.editor);
+		if (!EditorContext.canSaveAutomatically()) return;
+		if (!this.canSaveFile()) return;
+		EditorContext.save(this.editor);
 	}
 
 	private boolean canSaveFile() {
@@ -34,7 +36,7 @@ final class Decider {
 
 	private boolean bufferHasSelection() {
 		if (EditorContext.hasSelection(this.editor)) return true;
-		if (EditorContext.hasBlockSelection(this.editor)) return true;
+		// if (EditorContext.hasBlockSelection(this.editor)) return true;
 		return false;
 	}
 
