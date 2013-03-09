@@ -12,8 +12,8 @@ public final class SaverCompletionListener implements ICompletionListener {
 
 	private boolean isListening;
 	private final ISaverCompletionListener handler;
-	private final ContentAssistantFacade contentAssistantFacade = EditorContext.getView().getContentAssistantFacade();
-	private final IQuickAssistAssistant quickAssistAssistant = EditorContext.getView().getQuickAssistAssistant();
+	private final ContentAssistantFacade contentAssistantFacade = SaverCompletionListener.getContentAssistantFacade();
+	private final IQuickAssistAssistant quickAssistAssistant = SaverCompletionListener.getQuickAssistAssistant();
 	private final EndedRunnable endedRunnable = new EndedRunnable();
 	private final StartedRunnable startedRunnable = new StartedRunnable();
 
@@ -23,6 +23,7 @@ public final class SaverCompletionListener implements ICompletionListener {
 
 	public void start() {
 		if (this.isListening) return;
+		if (this.contentAssistantFacade == null) return;
 		this.contentAssistantFacade.addCompletionListener(this);
 		this.quickAssistAssistant.addCompletionListener(this);
 		this.isListening = true;
@@ -33,6 +34,22 @@ public final class SaverCompletionListener implements ICompletionListener {
 		this.contentAssistantFacade.removeCompletionListener(this);
 		this.quickAssistAssistant.removeCompletionListener(this);
 		this.isListening = false;
+	}
+
+	private static ContentAssistantFacade getContentAssistantFacade() {
+		try {
+			return EditorContext.getView().getContentAssistantFacade();
+		} catch (final NullPointerException e) {
+			return null;
+		}
+	}
+
+	private static IQuickAssistAssistant getQuickAssistAssistant() {
+		try {
+			return EditorContext.getView().getQuickAssistAssistant();
+		} catch (final NullPointerException e) {
+			return null;
+		}
 	}
 
 	@Override
