@@ -16,7 +16,6 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPartService;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -32,10 +31,6 @@ public final class EditorContext {
 	private static final Preference PREFERENCE = Preference.instance();
 
 	private EditorContext() {}
-
-	public static IPartService getIPartService() {
-		return (IPartService) PlatformUI.getWorkbench().getService(IPartService.class);
-	}
 
 	public static synchronized EditorContext instance() {
 		if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
