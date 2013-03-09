@@ -8,7 +8,7 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 
-public final class Factory {
+public final class Factory implements Runnable {
 
 	private final IPartService partService;
 	private final PartListener partListener = new PartListener();
@@ -16,7 +16,6 @@ public final class Factory {
 
 	public Factory(final IPartService partService) {
 		EditorContext.instance();
-		this.enableAutomaticSaverFor(partService.getActivePart());
 		this.partService = partService;
 		this.partService.addPartListener(this.partListener);
 	}
@@ -29,6 +28,11 @@ public final class Factory {
 
 	private boolean isInvalidPart(final IWorkbenchPart part) {
 		return this.getEditorParts().contains(part) || !(part instanceof IEditorPart);
+	}
+
+	@Override
+	public void run() {
+		this.enableAutomaticSaverFor(this.partService.getActivePart());
 	}
 
 	public List<IEditorPart> getEditorParts() {

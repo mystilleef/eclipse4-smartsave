@@ -21,8 +21,7 @@ public final class Startup implements IStartup, Runnable {
 		Startup.start();
 	}
 
-	@SuppressWarnings("unused")
 	private static void start() {
-		new Factory((IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class));
+		EditorContext.asyncExec(new Factory((IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class)));
 	}
 }
