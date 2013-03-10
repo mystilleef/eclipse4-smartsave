@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lombok.Synchronized;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -35,7 +37,8 @@ public final class EditorContext {
 
 	private EditorContext() {}
 
-	public static synchronized EditorContext instance() {
+	@Synchronized
+	public static EditorContext instance() {
 		if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
 		return EditorContext.instance;
 	}
