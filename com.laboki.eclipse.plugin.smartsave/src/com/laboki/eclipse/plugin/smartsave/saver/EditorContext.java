@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -29,6 +31,7 @@ public final class EditorContext {
 	private static final List<String> LINK_ANNOTATIONS = new ArrayList<>(Arrays.asList("org.eclipse.ui.internal.workbench.texteditor.link.exit", "org.eclipse.ui.internal.workbench.texteditor.link.target", "org.eclipse.ui.internal.workbench.texteditor.link.master", "org.eclipse.ui.internal.workbench.texteditor.link.slave"));
 	private static final Display DISPLAY = EditorContext.getDisplay();
 	private static final Preference PREFERENCE = Preference.instance();
+	private static final Logger LOGGER = Logger.getLogger(EditorContext.class.getName());
 
 	private EditorContext() {}
 
@@ -145,7 +148,7 @@ public final class EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
-			e.printStackTrace();
+			EditorContext.LOGGER.log(Level.FINEST, "Failed to sync IFile resource", e);
 		} finally {
 			EditorContext.flushEvents();
 		}
