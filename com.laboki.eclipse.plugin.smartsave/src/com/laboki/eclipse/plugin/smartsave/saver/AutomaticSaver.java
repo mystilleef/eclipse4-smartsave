@@ -1,5 +1,8 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
+import lombok.Getter;
+import lombok.ToString;
+
 import org.eclipse.ui.IEditorPart;
 
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverFocusListenerHandler;
@@ -9,9 +12,10 @@ import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverFocusListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverKeyListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverModifyListener;
 
+@ToString
 final class AutomaticSaver implements Runnable {
 
-	private final IEditorPart editor = EditorContext.getEditor();
+	@Getter private final IEditorPart editor = EditorContext.getEditor();
 	private final JobScheduler saveScheduler = new JobScheduler("AutoSaveJob");
 	private final SaverFocusListener focusListener = new SaverFocusListener(this.new SaverFocusListenerHandler());
 	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new SaverModifyListenerHandler());
@@ -28,22 +32,28 @@ final class AutomaticSaver implements Runnable {
 	}
 
 	@SuppressWarnings("unused")
-	private void stopListeningForPartActivation() { // $codepro.audit.disable unusedMethod
+	private void stopListeningForPartActivation() {
 		this.focusListener.stop();
 	}
 
 	protected void startListeningForBufferModification() {
-		this.save();
+		this.toggleAutomaticSaving();
 		this.modifyListener.start();
 	}
 
 	protected void stopListeningForBufferModification() {
-		this.save();
 		this.modifyListener.stop();
+		this.save();
+		this.stopAutomaticSaving();
 	}
 
 	private void save() {
 		this.saveScheduler.save();
+	}
+
+	protected void toggleAutomaticSaving() {
+		if (this.editor.isDirty()) this.startAutomaticSaving();
+		else this.stopAutomaticSaving();
 	}
 
 	protected void startAutomaticSaving() {
@@ -128,8 +138,7 @@ final class AutomaticSaver implements Runnable {
 
 			@Override
 			public void run() {
-				if (AutomaticSaver.this.getEditor().isDirty()) AutomaticSaver.this.startAutomaticSaving(); // $codepro.audit.disable methodChainLength
-				else AutomaticSaver.this.stopAutomaticSaving();
+				AutomaticSaver.this.toggleAutomaticSaving();
 			}
 		}
 	}
@@ -170,14 +179,5 @@ final class AutomaticSaver implements Runnable {
 				AutomaticSaver.this.stopListeningForBufferModification();
 			}
 		}
-	}
-
-	@Override
-	public String toString() {
-		return String.format("AutomaticSaver [getClass()=%s]", this.getClass());
-	}
-
-	public IEditorPart getEditor() {
-		return this.editor;
 	}
 }
