@@ -3,6 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import org.eclipse.ui.IEditorPart;
@@ -15,7 +16,7 @@ public final class Factory implements Runnable {
 
 	private final IPartService partService;
 	private final PartListener partListener = new PartListener();
-	private final List<IEditorPart> editorParts = new ArrayList<>();
+	@Getter private final List<IEditorPart> editorParts = new ArrayList<>();
 
 	public Factory(final IPartService partService) {
 		this.partService = partService;
@@ -36,10 +37,6 @@ public final class Factory implements Runnable {
 	public void run() {
 		EditorContext.instance();
 		this.enableAutomaticSaverFor(this.partService.getActivePart());
-	}
-
-	public List<IEditorPart> getEditorParts() {
-		return this.editorParts;
 	}
 
 	private final class PartListener implements IPartListener {
