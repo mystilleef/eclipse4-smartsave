@@ -1,12 +1,15 @@
 // $codepro.audit.disable debuggingCode
 package com.laboki.eclipse.plugin.smartsave.saver.preferences;
 
+import lombok.ToString;
+
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.laboki.eclipse.plugin.smartsave.Metadata;
 
+@ToString
 public final class PreferenceStore {
 
 	private static final boolean CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE = true;

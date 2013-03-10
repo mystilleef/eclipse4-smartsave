@@ -1,10 +1,13 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
+import lombok.ToString;
+
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
+@ToString
 public final class SaverModifyListener implements IPropertyListener {
 
 	private boolean isListening;
@@ -45,10 +48,5 @@ public final class SaverModifyListener implements IPropertyListener {
 		public void run() {
 			SaverModifyListener.this.getHandler().modify();
 		}
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SaverModifyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

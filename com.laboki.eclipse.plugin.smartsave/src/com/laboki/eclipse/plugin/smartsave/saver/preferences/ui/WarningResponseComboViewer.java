@@ -1,10 +1,13 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
+import lombok.ToString;
+
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
+@ToString
 final class WarningResponseComboViewer extends PreferencesResponseComboViewer {
 
 	public WarningResponseComboViewer(final Composite parent) {
@@ -20,10 +23,5 @@ final class WarningResponseComboViewer extends PreferencesResponseComboViewer {
 	protected void updateSelection() {
 		if (PreferenceStore.getCanSaveIfWarnings()) this.setSelection(PreferencesResponseComboViewer.YES);
 		else this.setSelection(PreferencesResponseComboViewer.NO);
-	}
-
-	@Override
-	public String toString() {
-		return String.format("WarningResponseComboViewer [toString()=%s, getClass()=%s]", super.toString(), this.getClass());
 	}
 }

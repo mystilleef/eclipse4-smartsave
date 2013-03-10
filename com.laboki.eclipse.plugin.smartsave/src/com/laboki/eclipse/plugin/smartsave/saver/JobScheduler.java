@@ -1,10 +1,13 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
+import lombok.ToString;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
+@ToString
 final class JobScheduler extends Job {
 
 	private static final int IN_MILLISECONDS = 1000;
@@ -58,10 +61,5 @@ final class JobScheduler extends Job {
 		public void run() {
 			JobScheduler.this.save();
 		}
-	}
-
-	@Override
-	public String toString() {
-		return String.format("JobScheduler [toString()=%s, getClass()=%s]", super.toString(), this.getClass());
 	}
 }

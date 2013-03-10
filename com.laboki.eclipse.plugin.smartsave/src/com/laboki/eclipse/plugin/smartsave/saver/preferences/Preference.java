@@ -1,5 +1,8 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences;
 
+import lombok.ToString;
+
+@ToString
 public final class Preference implements IPreferenceHandler {
 
 	private static Preference instance;
@@ -40,10 +43,5 @@ public final class Preference implements IPreferenceHandler {
 		this.canSaveAutomatically = PreferenceStore.getCanSaveAutomatically();
 		this.canSaveIfErrors = PreferenceStore.getCanSaveIfErrors();
 		this.canSaveIfWarnings = PreferenceStore.getCanSaveIfWarnings();
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Preference [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

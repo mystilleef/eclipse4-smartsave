@@ -1,5 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
+import lombok.ToString;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -9,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+@ToString
 final class SaveIntervalDialog {
 
 	private static final int SPINNER_GRID_LAYOUT_COLUMNS = 3;
@@ -85,10 +88,5 @@ final class SaveIntervalDialog {
 
 	public static Shell getDialog() {
 		return SaveIntervalDialog.dialog;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SaveIntervalDialog [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

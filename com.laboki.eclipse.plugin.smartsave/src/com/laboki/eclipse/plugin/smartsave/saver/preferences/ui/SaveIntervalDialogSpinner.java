@@ -1,5 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
+import lombok.ToString;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -13,6 +15,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
+@ToString
 final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 
 	private static final int TEXT_LIMIT = 3;
@@ -82,10 +85,5 @@ final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 		public void keyTraversed(final TraverseEvent event) {
 			if (event.detail == SWT.TRAVERSE_RETURN) SaveIntervalDialogSpinner.getSpinner().getShell().close();
 		}
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SaveIntervalDialogSpinner [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

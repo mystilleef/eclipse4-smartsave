@@ -4,6 +4,7 @@ package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 import java.util.logging.Level;
 
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.java.Log;
 
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
@@ -15,6 +16,7 @@ import org.eclipse.jface.text.source.ContentAssistantFacade;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 @Log
+@ToString
 public final class SaverCompletionListener implements ICompletionListener {
 
 	private boolean isListening;
@@ -40,11 +42,6 @@ public final class SaverCompletionListener implements ICompletionListener {
 		this.contentAssistantFacade.removeCompletionListener(this);
 		this.quickAssistAssistant.removeCompletionListener(this);
 		this.isListening = false;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SaverCompletionListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 
 	private static ContentAssistantFacade getContentAssistantFacade() {

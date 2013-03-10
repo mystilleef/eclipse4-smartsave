@@ -1,11 +1,14 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
+import lombok.ToString;
+
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
+@ToString
 public final class SaverKeyListener implements KeyListener {
 
 	private boolean isListening;
@@ -62,10 +65,5 @@ public final class SaverKeyListener implements KeyListener {
 
 	protected ISaverKeyListenerHandler getHandler() {
 		return this.handler;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SaverKeyListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }

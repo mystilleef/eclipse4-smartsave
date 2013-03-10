@@ -1,11 +1,14 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
+import lombok.ToString;
+
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
+@ToString
 public final class SaverFocusListener implements FocusListener {
 
 	private boolean isListening;
@@ -62,10 +65,5 @@ public final class SaverFocusListener implements FocusListener {
 
 	public ISaverFocusListenerHandler getHandler() {
 		return this.handler;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SaverFocusListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 }
