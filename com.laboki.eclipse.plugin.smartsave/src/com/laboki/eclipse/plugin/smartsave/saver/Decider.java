@@ -15,6 +15,7 @@ final class Decider {
 
 	public void save() {
 		if (!EditorContext.canSaveAutomatically()) return;
+		EditorContext.syncFile(this.editor);
 		if (!this.canSaveFile()) return;
 		EditorContext.save(this.editor);
 	}
