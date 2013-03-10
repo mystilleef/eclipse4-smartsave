@@ -2,7 +2,9 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
@@ -12,6 +14,7 @@ import org.eclipse.jface.text.source.ContentAssistantFacade;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
+@Log
 public final class SaverCompletionListener implements ICompletionListener {
 
 	private boolean isListening;
@@ -20,7 +23,6 @@ public final class SaverCompletionListener implements ICompletionListener {
 	private final IQuickAssistAssistant quickAssistAssistant = SaverCompletionListener.getQuickAssistAssistant();
 	private final EndedRunnable endedRunnable = new EndedRunnable();
 	private final StartedRunnable startedRunnable = new StartedRunnable();
-	private static final Logger LOGGER = Logger.getLogger(SaverCompletionListener.class.getName());
 
 	public SaverCompletionListener(final ISaverCompletionListener handler) {
 		this.handler = handler;
@@ -49,7 +51,7 @@ public final class SaverCompletionListener implements ICompletionListener {
 		try {
 			return EditorContext.getView().getContentAssistantFacade();
 		} catch (final NullPointerException e) {
-			SaverCompletionListener.LOGGER.log(Level.FINEST, "No content assistant found", e);
+			SaverCompletionListener.log.log(Level.FINEST, "No content assistant found", e);
 			return null;
 		}
 	}
@@ -58,7 +60,7 @@ public final class SaverCompletionListener implements ICompletionListener {
 		try {
 			return EditorContext.getView().getQuickAssistAssistant();
 		} catch (final NullPointerException e) {
-			SaverCompletionListener.LOGGER.log(Level.FINEST, "No quick assistant found", e);
+			SaverCompletionListener.log.log(Level.FINEST, "No quick assistant found", e);
 			return null;
 		}
 	}
@@ -76,9 +78,8 @@ public final class SaverCompletionListener implements ICompletionListener {
 	@Override
 	public void selectionChanged(final ICompletionProposal event, final boolean changed) {}
 
+	@NoArgsConstructor
 	private final class EndedRunnable implements Runnable {
-
-		public EndedRunnable() {}
 
 		@Override
 		public void run() {
@@ -86,9 +87,8 @@ public final class SaverCompletionListener implements ICompletionListener {
 		}
 	}
 
+	@NoArgsConstructor
 	private final class StartedRunnable implements Runnable {
-
-		public StartedRunnable() {}
 
 		@Override
 		public void run() {
