@@ -1,5 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave;
 
+import lombok.ToString;
+
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
@@ -7,6 +9,7 @@ import org.eclipse.ui.PlatformUI;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.Factory;
 
+@ToString
 public final class Startup implements IStartup, Runnable {
 
 	public Startup() {}
