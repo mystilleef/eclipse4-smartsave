@@ -1,4 +1,8 @@
+// $codepro.audit.disable methodChainLength
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
@@ -16,14 +20,14 @@ public final class SaverCompletionListener implements ICompletionListener {
 	private final IQuickAssistAssistant quickAssistAssistant = SaverCompletionListener.getQuickAssistAssistant();
 	private final EndedRunnable endedRunnable = new EndedRunnable();
 	private final StartedRunnable startedRunnable = new StartedRunnable();
+	private static final Logger LOGGER = Logger.getLogger(SaverCompletionListener.class.getName());
 
 	public SaverCompletionListener(final ISaverCompletionListener handler) {
 		this.handler = handler;
 	}
 
 	public void start() {
-		if (this.isListening) return;
-		if (this.contentAssistantFacade == null) return;
+		if (this.isListening || (this.contentAssistantFacade == null)) return;
 		this.contentAssistantFacade.addCompletionListener(this);
 		this.quickAssistAssistant.addCompletionListener(this);
 		this.isListening = true;
@@ -36,10 +40,16 @@ public final class SaverCompletionListener implements ICompletionListener {
 		this.isListening = false;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("SaverCompletionListener [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
+
 	private static ContentAssistantFacade getContentAssistantFacade() {
 		try {
 			return EditorContext.getView().getContentAssistantFacade();
 		} catch (final NullPointerException e) {
+			SaverCompletionListener.LOGGER.log(Level.FINEST, "No content assistant found", e);
 			return null;
 		}
 	}
@@ -48,6 +58,7 @@ public final class SaverCompletionListener implements ICompletionListener {
 		try {
 			return EditorContext.getView().getQuickAssistAssistant();
 		} catch (final NullPointerException e) {
+			SaverCompletionListener.LOGGER.log(Level.FINEST, "No quick assistant found", e);
 			return null;
 		}
 	}
