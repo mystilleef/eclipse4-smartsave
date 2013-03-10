@@ -86,13 +86,13 @@ public final class EditorContext {
 
 	public static void save() {
 		EditorContext.flushEvents();
-		EditorContext.getEditor().doSave(null);
+		EditorContext.getEditor().getSite().getPage().saveEditor(EditorContext.getEditor(), false);
 		EditorContext.flushEvents();
 	}
 
 	public static void save(final IEditorPart editor) {
 		EditorContext.flushEvents();
-		editor.doSave(null);
+		editor.getSite().getPage().saveEditor(editor, false);
 		EditorContext.flushEvents();
 	}
 
