@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Smartsave
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
-Bundle-Version: 20130309.4
+Bundle-Version: 20130310
 Bundle-Vendor: LABOKI
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
