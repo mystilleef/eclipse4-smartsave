@@ -42,9 +42,9 @@ final class AutomaticSaver implements Runnable {
 	}
 
 	protected void stopListeningForBufferModification() {
+		this.stopAutomaticSaving();
 		this.modifyListener.stop();
 		this.save();
-		this.stopAutomaticSaving();
 	}
 
 	private void save() {
