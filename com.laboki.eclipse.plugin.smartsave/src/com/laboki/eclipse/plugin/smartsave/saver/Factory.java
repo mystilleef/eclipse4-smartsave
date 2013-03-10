@@ -3,11 +3,14 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.ToString;
+
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 
+@ToString
 public final class Factory implements Runnable {
 
 	private final IPartService partService;
