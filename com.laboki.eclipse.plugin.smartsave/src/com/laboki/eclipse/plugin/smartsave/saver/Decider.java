@@ -1,10 +1,13 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
+import lombok.ToString;
+
 import org.eclipse.ui.IEditorPart;
 
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverCompletionListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverCompletionListener;
 
+@ToString
 final class Decider {
 
 	private final IEditorPart editor = EditorContext.getEditor();
@@ -62,11 +65,6 @@ final class Decider {
 	private boolean bufferHasWarnings() {
 		if (EditorContext.canSaveIfWarnings()) return false;
 		return EditorContext.hasWarnings(this.editor);
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Decider [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
 	}
 
 	private final class ContentAssistant implements ISaverCompletionListener {
