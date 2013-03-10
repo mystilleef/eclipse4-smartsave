@@ -15,7 +15,6 @@ public final class Factory implements Runnable {
 	private final List<IEditorPart> editorParts = new ArrayList<>();
 
 	public Factory(final IPartService partService) {
-		EditorContext.instance();
 		this.partService = partService;
 		this.partService.addPartListener(this.partListener);
 	}
@@ -32,6 +31,7 @@ public final class Factory implements Runnable {
 
 	@Override
 	public void run() {
+		EditorContext.instance();
 		this.enableAutomaticSaverFor(this.partService.getActivePart());
 	}
 
@@ -49,12 +49,12 @@ public final class Factory implements Runnable {
 		}
 
 		@Override
-		public void partBroughtToTop(final IWorkbenchPart part) {}
-
-		@Override
 		public void partClosed(final IWorkbenchPart part) {
 			if (Factory.this.getEditorParts().contains(part)) Factory.this.getEditorParts().remove(part);
 		}
+
+		@Override
+		public void partBroughtToTop(final IWorkbenchPart part) {}
 
 		@Override
 		public void partDeactivated(final IWorkbenchPart part) {}
