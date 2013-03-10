@@ -142,7 +142,7 @@ public final class EditorContext {
 		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_ERROR, editor);
 	}
 
-	private static void syncFile(final IEditorPart editor) {
+	static void syncFile(final IEditorPart editor) {
 		EditorContext.flushEvents();
 		EditorContext.tryToSyncFile(editor);
 	}
