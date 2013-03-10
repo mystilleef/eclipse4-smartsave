@@ -24,6 +24,7 @@ final class JobScheduler extends Job {
 	}
 
 	public void start() {
+		this.stop();
 		this.schedule(EditorContext.getSaveIntervalInSeconds() * JobScheduler.IN_MILLISECONDS);
 	}
 
@@ -49,6 +50,7 @@ final class JobScheduler extends Job {
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
+		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
 		EditorContext.asyncExec(this.saveJobRunnable);
 		return Status.OK_STATUS;
 	}
