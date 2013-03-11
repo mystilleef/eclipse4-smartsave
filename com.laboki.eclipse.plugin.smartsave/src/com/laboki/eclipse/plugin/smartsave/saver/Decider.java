@@ -40,7 +40,7 @@ final class Decider {
 
 	private boolean bufferHasSelection() {
 		if (EditorContext.hasSelection(this.editor)) return true;
-		// if (EditorContext.hasBlockSelection(this.editor)) return true;
+		if (EditorContext.hasBlockSelection(this.editor)) return true;
 		return false;
 	}
 
