@@ -23,8 +23,11 @@ __Smartsave__ intelligently saves files after edits.
 
 * You need __Eclipse 4.2(Juno)__ or later to use this plugin.
 
-### Update Site
+### Eclipse Market Place
 
+* __[Eclipse Market Place](http://marketplace.eclipse.org/content/smart-save#.UT-KI2ZDtSw)__
+
+### Update Site
 
 * __[Update Site](https://raw.github.com/mystilleef/eclipse4-smartsave-updatesite/master/com.laboki.eclipse.updatesite.smartsave)__
 
