@@ -31,7 +31,6 @@ final class AutomaticSaver implements Runnable {
 		this.focusListener.start();
 	}
 
-	@SuppressWarnings("unused")
 	private void stopListeningForPartActivation() {
 		this.focusListener.stop();
 	}
@@ -81,6 +80,12 @@ final class AutomaticSaver implements Runnable {
 
 	private void stopMonitoringEvents() {
 		this.keylisteners.stop();
+	}
+
+	protected void stopAll() {
+		this.stopAutomaticSaving();
+		this.stopListeningForPartActivation();
+		this.stopListeningForBufferModification();
 	}
 
 	private final class SaverKeyListenerHandler implements ISaverKeyListenerHandler {

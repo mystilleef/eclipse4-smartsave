@@ -6,6 +6,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
@@ -14,7 +15,7 @@ public final class SaverClosePartListener implements IPartListener {
 	private boolean isListening;
 	@Getter private final ISaverClosePartListenerHandler handler;
 	private final IEditorPart editor = EditorContext.getEditor();
-	private final IPartService partService = (IPartService) this.editor.getEditorSite().getService(IPartService.class);
+	private final IPartService partService = (IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class);
 	private final ClosePartRunnable closePartRunnable = new ClosePartRunnable();
 
 	public SaverClosePartListener(final ISaverClosePartListenerHandler handler) {
