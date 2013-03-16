@@ -1,5 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import org.eclipse.ui.IEditorPart;
@@ -8,10 +9,9 @@ import org.eclipse.ui.IPropertyListener;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 @ToString
-public final class SaverModifyListener implements IPropertyListener {
+public final class SaverModifyListener extends AbstractSaverListener implements IPropertyListener {
 
-	private boolean isListening;
-	private final ISaverModifyListenerHandler handler;
+	@Getter private final ISaverModifyListenerHandler handler;
 	private final ModifyRunnable modifyRunnable = new ModifyRunnable();
 	private final IEditorPart editorBuffer = EditorContext.getEditor();
 
@@ -19,25 +19,19 @@ public final class SaverModifyListener implements IPropertyListener {
 		this.handler = handler;
 	}
 
-	public void start() {
-		if (this.isListening) return;
+	@Override
+	public void add() {
 		this.editorBuffer.addPropertyListener(this);
-		this.isListening = true;
 	}
 
-	public void stop() {
-		if (!this.isListening) return;
+	@Override
+	public void remove() {
 		this.editorBuffer.removePropertyListener(this);
-		this.isListening = false;
 	}
 
 	@Override
 	public void propertyChanged(final Object source, final int propID) {
 		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(this.modifyRunnable);
-	}
-
-	public ISaverModifyListenerHandler getHandler() {
-		return this.handler;
 	}
 
 	private final class ModifyRunnable implements Runnable {
