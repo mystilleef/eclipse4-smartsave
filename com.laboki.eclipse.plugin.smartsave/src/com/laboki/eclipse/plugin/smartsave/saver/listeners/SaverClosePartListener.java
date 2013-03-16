@@ -9,9 +9,8 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-public final class SaverClosePartListener implements IPartListener {
+public final class SaverClosePartListener extends AbstractSaverListener implements IPartListener {
 
-	private boolean isListening;
 	@Getter private final ISaverClosePartListenerHandler handler;
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final IPartService partService = (IPartService) this.editor.getSite().getService(IPartService.class);
@@ -21,16 +20,14 @@ public final class SaverClosePartListener implements IPartListener {
 		this.handler = handler;
 	}
 
-	public void start() {
-		if (this.isListening) return;
+	@Override
+	public void add() {
 		this.partService.addPartListener(this);
-		this.isListening = true;
 	}
 
-	public void stop() {
-		if (!this.isListening) return;
+	@Override
+	public void remove() {
 		this.partService.removePartListener(this);
-		this.isListening = false;
 	}
 
 	@Override

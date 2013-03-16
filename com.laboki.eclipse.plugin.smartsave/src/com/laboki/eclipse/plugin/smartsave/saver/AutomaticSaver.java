@@ -7,6 +7,7 @@ import org.eclipse.ui.IEditorPart;
 
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverFocusListenerHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverKeyListenerHandler;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.ISaverModifyListenerHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverFocusListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverKeyListener;
@@ -17,9 +18,9 @@ final class AutomaticSaver implements Runnable {
 
 	@Getter private final IEditorPart editor = EditorContext.getEditor();
 	private final JobScheduler saveScheduler = new JobScheduler("AutoSaveJob");
-	private final SaverFocusListener focusListener = new SaverFocusListener(this.new SaverFocusListenerHandler());
-	private final SaverModifyListener modifyListener = new SaverModifyListener(this.new SaverModifyListenerHandler());
-	private final SaverKeyListener keylisteners = new SaverKeyListener(this.new SaverKeyListenerHandler());
+	private final ISaverListener focusListener = new SaverFocusListener(this.new SaverFocusListenerHandler());
+	private final ISaverListener modifyListener = new SaverModifyListener(this.new SaverModifyListenerHandler());
+	private final ISaverListener keylisteners = new SaverKeyListener(this.new SaverKeyListenerHandler());
 
 	@Override
 	public void run() {

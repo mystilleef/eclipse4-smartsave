@@ -1,6 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
-interface ISaverListener {
+public interface ISaverListener {
 
 	void start();
 

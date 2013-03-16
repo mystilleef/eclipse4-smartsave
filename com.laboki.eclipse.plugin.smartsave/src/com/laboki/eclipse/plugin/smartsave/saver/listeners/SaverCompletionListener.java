@@ -17,9 +17,8 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 @Log
 @ToString
-public final class SaverCompletionListener implements ICompletionListener {
+public final class SaverCompletionListener extends AbstractSaverListener implements ICompletionListener {
 
-	private boolean isListening;
 	private final ISaverCompletionListener handler;
 	private final ContentAssistantFacade contentAssistantFacade = SaverCompletionListener.getContentAssistantFacade();
 	private final IQuickAssistAssistant quickAssistAssistant = SaverCompletionListener.getQuickAssistAssistant();
@@ -30,18 +29,16 @@ public final class SaverCompletionListener implements ICompletionListener {
 		this.handler = handler;
 	}
 
-	public void start() {
-		if (this.isListening || (this.contentAssistantFacade == null)) return;
+	@Override
+	public void add() {
 		this.contentAssistantFacade.addCompletionListener(this);
 		this.quickAssistAssistant.addCompletionListener(this);
-		this.isListening = true;
 	}
 
-	public void stop() {
-		if (!this.isListening) return;
+	@Override
+	public void remove() {
 		this.contentAssistantFacade.removeCompletionListener(this);
 		this.quickAssistAssistant.removeCompletionListener(this);
-		this.isListening = false;
 	}
 
 	private static ContentAssistantFacade getContentAssistantFacade() {
