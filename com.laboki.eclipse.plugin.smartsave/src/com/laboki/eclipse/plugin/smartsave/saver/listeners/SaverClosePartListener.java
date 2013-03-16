@@ -14,7 +14,7 @@ public final class SaverClosePartListener extends AbstractSaverListener implemen
 	@Getter private final ISaverClosePartListenerHandler handler;
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final IPartService partService = (IPartService) this.editor.getSite().getService(IPartService.class);
-	private final ClosePartRunnable closePartRunnable = new ClosePartRunnable();
+	private final Runnable closePartRunnable = new ClosePartRunnable();
 
 	public SaverClosePartListener(final ISaverClosePartListenerHandler handler) {
 		this.handler = handler;
