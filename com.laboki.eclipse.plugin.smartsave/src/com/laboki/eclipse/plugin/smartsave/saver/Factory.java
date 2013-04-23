@@ -1,9 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
-import lombok.Getter;
 import lombok.ToString;
 
 import org.eclipse.ui.IEditorPart;
@@ -11,55 +9,96 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 
+import com.google.common.collect.Maps;
+import com.laboki.eclipse.plugin.smartsave.Instance;
+
 @ToString
-public final class Factory implements Runnable {
+public enum Factory implements Instance {
+	INSTANCE;
 
-	private final IPartService partService;
-	private final PartListener partListener = new PartListener();
-	@Getter private final List<IEditorPart> editorParts = new ArrayList<>();
+	private static final Map<IEditorPart, Instance> SERVICES_MAP = Maps.newHashMap();
+	private static final IPartService PART_SERVICE = EditorContext.getPartService();
+	private static final PartListener PART_LISTENER = new PartListener();
 
-	public Factory(final IPartService partService) {
-		this.partService = partService;
-		this.partService.addPartListener(this.partListener);
-	}
-
-	public void enableAutomaticSaverFor(final IWorkbenchPart part) {
-		if (this.isInvalidPart(part)) return;
-		this.editorParts.add((IEditorPart) part);
-		EditorContext.asyncExec(new AutomaticSaver());
-	}
-
-	private boolean isInvalidPart(final IWorkbenchPart part) {
-		return (part == null) || this.getEditorParts().contains(part) || !(part instanceof IEditorPart);
-	}
-
-	@Override
-	public void run() {
-		EditorContext.instance();
-		this.enableAutomaticSaverFor(this.partService.getActivePart());
-	}
-
-	private final class PartListener implements IPartListener {
+	private static final class PartListener implements IPartListener {
 
 		public PartListener() {}
 
 		@Override
 		public void partActivated(final IWorkbenchPart part) {
-			Factory.this.enableAutomaticSaverFor(part);
+			Factory.enableAutomaticSaverFor(part);
 		}
 
 		@Override
 		public void partClosed(final IWorkbenchPart part) {
-			if (Factory.this.getEditorParts().contains(part)) Factory.this.getEditorParts().remove(part);
+			Factory.stopSaverServiceFor(part);
 		}
 
 		@Override
 		public void partBroughtToTop(final IWorkbenchPart part) {}
 
 		@Override
-		public void partDeactivated(final IWorkbenchPart part) {}
+		public void partDeactivated(final IWorkbenchPart part) {
+			Factory.stopSaverServiceFor(part);
+		}
 
 		@Override
 		public void partOpened(final IWorkbenchPart part) {}
+	}
+
+	private static void enableAutomaticSaverFor(final IWorkbenchPart part) {
+		if (Factory.isInvalidPart(part)) return;
+		Factory.startSaverServiceFor(part);
+	}
+
+	private static boolean isInvalidPart(final IWorkbenchPart part) {
+		return !Factory.isValidPart(part);
+	}
+
+	private static boolean isValidPart(final IWorkbenchPart part) {
+		if (Factory.isNotEditorPart(part)) return false;
+		return true;
+	}
+
+	private static boolean isNotEditorPart(final IWorkbenchPart part) {
+		return !Factory.isEditorPart(part);
+	}
+
+	private static boolean isEditorPart(final IWorkbenchPart part) {
+		return part instanceof IEditorPart;
+	}
+
+	private static void startSaverServiceFor(final IWorkbenchPart part) {
+		Factory.stopAllSaverServices();
+		Factory.SERVICES_MAP.put((IEditorPart) part, new SaverServices().begin());
+	}
+
+	private static void stopAllSaverServices() {
+		for (final IEditorPart part : Factory.SERVICES_MAP.keySet())
+			Factory.stopSaverServiceFor(part);
+	}
+
+	private static void stopSaverServiceFor(final IWorkbenchPart part) {
+		if (Factory.servicesMapDoesNotContain(part)) return;
+		Factory.SERVICES_MAP.get(part).end();
+		Factory.SERVICES_MAP.remove(part);
+	}
+
+	private static boolean servicesMapDoesNotContain(final IWorkbenchPart part) {
+		return !Factory.SERVICES_MAP.containsKey(part);
+	}
+
+	@Override
+	public Instance begin() {
+		Factory.enableAutomaticSaverFor(Factory.PART_SERVICE.getActivePart());
+		Factory.PART_SERVICE.addPartListener(Factory.PART_LISTENER);
+		return this;
+	}
+
+	@Override
+	public Instance end() {
+		Factory.PART_SERVICE.removePartListener(Factory.PART_LISTENER);
+		Factory.stopAllSaverServices();
+		return this;
 	}
 }
