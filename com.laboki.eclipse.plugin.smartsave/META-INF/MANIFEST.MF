@@ -27,5 +27,6 @@ Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
    org.eclipse.jface.viewers,
    org.eclipse.swt.widgets"
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Startup
-Bundle-ClassPath: lombok.jar,
- .
+Bundle-ClassPath: .,
+ lombok.jar,
+ guava-14.0.1.jar

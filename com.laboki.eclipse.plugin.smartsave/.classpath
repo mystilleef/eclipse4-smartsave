@@ -13,5 +13,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lombok.jar"/>
+	<classpathentry kind="lib" path="guava-14.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
