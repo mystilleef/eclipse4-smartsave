@@ -54,7 +54,13 @@ public final class EditorContext {
 	}
 
 	public static void flushEvents() {
-		// while (EditorContext.DISPLAY.readAndDispatch());
+		// EditorContext.asyncExec(new Task("") {
+		//
+		// @Override
+		// public void execute() {
+		// // while (EditorContext.DISPLAY.readAndDispatch());
+		// }
+		// });
 	}
 
 	public static IEditorPart getEditor() {
@@ -141,13 +147,19 @@ public final class EditorContext {
 	}
 
 	static void syncFile(@SuppressWarnings("unused") final IEditorPart editor) {
-		// EditorContext.flushEvents();
-		// EditorContext.tryToSyncFile(editor);
+		// EditorContext.asyncExec(new Task("") {
+		//
+		// @Override
+		// public void execute() {
+		// // EditorContext.tryToSyncFile(editor);
+		// }
+		// });
 	}
 
 	@SuppressWarnings("unused")
 	private static void tryToSyncFile(final IEditorPart editor) {
 		try {
+			// This massively slows down the Eclipse.
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
 			EditorContext.log.log(Level.FINEST, "Failed to sync IFile resource", e);
