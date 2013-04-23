@@ -15,7 +15,7 @@ public final class SaverFocusListener extends AbstractSaverListener implements F
 	@Getter private final ISaverFocusListenerHandler handler;
 	private final FocusGainedRunnable focusGainedRunnable = new FocusGainedRunnable();
 	private final FocusLostRunnable focusLostRunnable = new FocusLostRunnable();
-	private final StyledText editorBuffer = EditorContext.getBuffer();
+	private final StyledText editorBuffer = EditorContext.getBuffer(EditorContext.getEditor());
 
 	public SaverFocusListener(final ISaverFocusListenerHandler handler) {
 		this.handler = handler;

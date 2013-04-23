@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 public final class SaverKeyListener extends AbstractSaverListener implements KeyListener {
 
 	@Getter private final ISaverKeyListenerHandler handler;
-	private final StyledText editorBuffer = EditorContext.getBuffer();
+	private final StyledText editorBuffer = EditorContext.getBuffer(EditorContext.getEditor());
 	private final KeyPressRunnable keyPressRunnable = new KeyPressRunnable();
 	private final KeyReleaseRunnable keyReleaseRunnable = new KeyReleaseRunnable();
 

@@ -43,7 +43,7 @@ public final class SaverCompletionListener extends AbstractSaverListener impleme
 
 	private static ContentAssistantFacade getContentAssistantFacade() {
 		try {
-			return EditorContext.getView().getContentAssistantFacade();
+			return EditorContext.getView(EditorContext.getEditor()).getContentAssistantFacade();
 		} catch (final NullPointerException e) {
 			SaverCompletionListener.log.log(Level.FINEST, "No content assistant found", e);
 			return null;
@@ -52,7 +52,7 @@ public final class SaverCompletionListener extends AbstractSaverListener impleme
 
 	private static IQuickAssistAssistant getQuickAssistAssistant() {
 		try {
-			return EditorContext.getView().getQuickAssistAssistant();
+			return EditorContext.getView(EditorContext.getEditor()).getQuickAssistAssistant();
 		} catch (final NullPointerException e) {
 			SaverCompletionListener.log.log(Level.FINEST, "No quick assistant found", e);
 			return null;
