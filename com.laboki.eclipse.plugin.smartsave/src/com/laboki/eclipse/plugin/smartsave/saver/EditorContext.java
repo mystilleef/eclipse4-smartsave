@@ -11,7 +11,6 @@ import lombok.extern.java.Log;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.SourceViewer;
@@ -151,15 +150,12 @@ public enum EditorContext {
 		// });
 	}
 
-	@SuppressWarnings("unused")
-	private static void tryToSyncFile(final IEditorPart editor) {
+	public static void tryToSyncFile(final IEditorPart editor) {
 		try {
-			// This massively slows down the Eclipse.
+			// This massively slows down Eclipse.
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (final CoreException e) {
-			EditorContext.log.log(Level.FINEST, "Failed to sync IFile resource", e);
-		} finally {
-			EditorContext.flushEvents();
+		} catch (final Exception e) {
+			EditorContext.log.log(Level.INFO, "Failed to sync IFile resource", e);
 		}
 	}
 
