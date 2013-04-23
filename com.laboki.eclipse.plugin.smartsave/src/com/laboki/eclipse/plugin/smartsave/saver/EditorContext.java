@@ -54,9 +54,7 @@ public final class EditorContext {
 	}
 
 	public static void flushEvents() {
-		while (EditorContext.DISPLAY.readAndDispatch())
-			EditorContext.DISPLAY.update();
-		EditorContext.DISPLAY.update();
+		// while (EditorContext.DISPLAY.readAndDispatch());
 	}
 
 	public static IEditorPart getEditor() {
@@ -88,15 +86,15 @@ public final class EditorContext {
 	}
 
 	public static void save() {
-		EditorContext.flushEvents();
+		// EditorContext.flushEvents();
 		EditorContext.getEditor().getSite().getPage().saveEditor(EditorContext.getEditor(), false);
-		EditorContext.flushEvents();
+		// EditorContext.flushEvents();
 	}
 
 	public static void save(final IEditorPart editor) {
-		EditorContext.flushEvents();
+		// EditorContext.flushEvents();
 		editor.getSite().getPage().saveEditor(editor, false);
-		EditorContext.flushEvents();
+		// EditorContext.flushEvents();
 	}
 
 	public static boolean isModified() {
@@ -142,11 +140,12 @@ public final class EditorContext {
 		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_ERROR, editor);
 	}
 
-	static void syncFile(final IEditorPart editor) {
-		EditorContext.flushEvents();
-		EditorContext.tryToSyncFile(editor);
+	static void syncFile(@SuppressWarnings("unused") final IEditorPart editor) {
+		// EditorContext.flushEvents();
+		// EditorContext.tryToSyncFile(editor);
 	}
 
+	@SuppressWarnings("unused")
 	private static void tryToSyncFile(final IEditorPart editor) {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
