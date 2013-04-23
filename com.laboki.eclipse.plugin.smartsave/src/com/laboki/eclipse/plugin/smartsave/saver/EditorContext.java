@@ -139,15 +139,7 @@ public enum EditorContext {
 		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_ERROR, editor);
 	}
 
-	static void syncFile(@SuppressWarnings("unused") final IEditorPart editor) {
-		// EditorContext.asyncExec(new Task("") {
-		//
-		// @Override
-		// public void execute() {
-		// // EditorContext.tryToSyncFile(editor);
-		// }
-		// });
-	}
+	static void syncFile(@SuppressWarnings("unused") final IEditorPart editor) {}
 
 	public static void tryToSyncFile(final IEditorPart editor) {
 		try {
