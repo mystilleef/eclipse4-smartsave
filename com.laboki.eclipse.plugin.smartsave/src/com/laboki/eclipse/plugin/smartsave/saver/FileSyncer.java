@@ -21,7 +21,7 @@ final class FileSyncer implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK) {
 
 			@Override
 			public void execute() {
