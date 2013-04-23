@@ -18,6 +18,7 @@ public final class SaverServices implements Instance {
 	}
 
 	private void startServices() {
+		this.startService(new Saver(this.eventBus));
 		this.startService(new FileSyncer(this.eventBus));
 	}
 
