@@ -61,7 +61,7 @@ public enum EditorContext {
 	}
 
 	public static boolean hasSelection(final IEditorPart editor) {
-		return EditorContext.getBuffer(editor).getSelectionCount() > 0;
+		return (EditorContext.getBuffer(editor).getSelectionCount() > 0) || EditorContext.getBuffer(editor).getBlockSelection();
 	}
 
 	public static boolean hasBlockSelection(final IEditorPart editor) {
@@ -78,6 +78,10 @@ public enum EditorContext {
 
 	public static boolean isModified(final IEditorPart editor) {
 		return editor.isDirty();
+	}
+
+	public static boolean isNotModified(final IEditorPart editor) {
+		return !EditorContext.isModified(editor);
 	}
 
 	public static boolean isInLinkMode(final IEditorPart editor) {
@@ -147,6 +151,10 @@ public enum EditorContext {
 		return EditorContext.PREFERENCE.canSaveIfErrors();
 	}
 
+	public static boolean canNotSaveAutomatically() {
+		return !EditorContext.canSaveAutomatically();
+	}
+
 	public static boolean canSaveAutomatically() {
 		return EditorContext.PREFERENCE.canSaveAutomatically();
 	}
@@ -192,5 +200,24 @@ public enum EditorContext {
 		return EditorContext.DISPLAY.readAndDispatch();
 	}
 
-	public static void tryToSave(@SuppressWarnings("unused") final IEditorPart editor) {}
+	public static void tryToSave(final IEditorPart editor) {
+		if (EditorContext.canSaveFile(editor)) EditorContext.save(editor);
+	}
+
+	private static boolean canSaveFile(final IEditorPart editor) {
+		if (EditorContext.canNotSaveAutomatically() || EditorContext.isNotModified(editor)) return false;
+		if (EditorContext.hasSelection(editor) || EditorContext.isInLinkMode(editor)) return false;
+		if (EditorContext.bufferHasErrors(editor) || EditorContext.bufferHasWarnings(editor)) return false;
+		return true;
+	}
+
+	private static boolean bufferHasErrors(final IEditorPart editor) {
+		if (EditorContext.canSaveIfErrors()) return false;
+		return EditorContext.hasErrors(editor);
+	}
+
+	private static boolean bufferHasWarnings(final IEditorPart editor) {
+		if (EditorContext.canSaveIfWarnings()) return false;
+		return EditorContext.hasWarnings(editor);
+	}
 }
