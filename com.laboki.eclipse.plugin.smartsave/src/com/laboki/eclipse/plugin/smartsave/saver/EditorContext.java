@@ -27,15 +27,16 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 public enum EditorContext {
 	INSTANCE;
 
+	public static final int SHORT_DELAY_TIME = 250;
+	public static final int MEDIUM_SHORT_DELAY_TIME = 500;
+	public static final int MEDIUM_LONG_DELAY_TIME = 750;
+	public static final int LONG_DELAY_TIME = 1000;
+	public static final String AUTOMATIC_SAVER_TASK = "Automatic saver task";
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = new ArrayList<>(Arrays.asList("org.eclipse.ui.internal.workbench.texteditor.link.exit", "org.eclipse.ui.internal.workbench.texteditor.link.target", "org.eclipse.ui.internal.workbench.texteditor.link.master", "org.eclipse.ui.internal.workbench.texteditor.link.slave"));
 	private static final Preference PREFERENCE = Preference.instance();
 	public static final Display DISPLAY = PlatformUI.getWorkbench().getDisplay();
-	public static final int SHORT_DELAY_TIME = 250;
-	public static final int MEDIUM_SHORT_DELAY_TIME = 500;
-	public static final int MEDIUM_LONG_DELAY_TIME = 750;
-	public static final int LONG_DELAY_TIME = 1000;
 
 	public static Display getDisplay() {
 		return EditorContext.DISPLAY;
