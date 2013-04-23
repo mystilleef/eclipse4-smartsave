@@ -1,5 +1,4 @@
 cacheClassData=true
-disableProjectProps=true
 dontRemindAboutFullBuild=true
 eclipse.preferences.version=1
 edu.umd.cs.findbugs.plugin.eclipse.findbugsMarkerOfConcern=Info

@@ -1,5 +1,5 @@
 #FindBugs User Preferences
-#Wed Mar 06 12:01:15 EST 2013
+#Tue Apr 23 14:34:39 EDT 2013
 cloud_id=edu.umd.cs.findbugs.cloud.appengine.findbugs-cloud
 detectorAppendingToAnObjectOutputStream=AppendingToAnObjectOutputStream|true
 detectorAtomicityProblem=AtomicityProblem|true
@@ -157,7 +157,7 @@ detectorWaitInLoop=WaitInLoop|true
 detectorWrongMapIterator=WrongMapIterator|true
 detectorXMLFactoryBypass=XMLFactoryBypass|true
 detector_threshold=1
-effort=max
+effort=min
 filter_settings=High|BAD_PRACTICE,CORRECTNESS,EXPERIMENTAL,MALICIOUS_CODE,MT_CORRECTNESS,PERFORMANCE,SECURITY,STYLE|false|20
 filter_settings_neg=NOISE,I18N|
 run_at_full_build=true
