@@ -10,6 +10,8 @@ import lombok.extern.java.Log;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.SourceViewer;
@@ -32,11 +34,13 @@ public enum EditorContext {
 	public static final int MEDIUM_LONG_DELAY_TIME = 750;
 	public static final int LONG_DELAY_TIME = 1000;
 	public static final String AUTOMATIC_SAVER_TASK = "Automatic saver task";
+	public static final String SCHEDULED_SAVER_TASK = "Scheduled saver task";
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = new ArrayList<>(Arrays.asList("org.eclipse.ui.internal.workbench.texteditor.link.exit", "org.eclipse.ui.internal.workbench.texteditor.link.target", "org.eclipse.ui.internal.workbench.texteditor.link.master", "org.eclipse.ui.internal.workbench.texteditor.link.slave"));
 	private static final Preference PREFERENCE = Preference.instance();
 	public static final Display DISPLAY = PlatformUI.getWorkbench().getDisplay();
+	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 
 	public static Display getDisplay() {
 		return EditorContext.DISPLAY;
@@ -46,23 +50,10 @@ public enum EditorContext {
 		EditorContext.DISPLAY.asyncExec(runnable);
 	}
 
-	public static void flushEvents() {
-		// EditorContext.asyncExec(new Task("") {
-		//
-		// @Override
-		// public void execute() {
-		// // while
-		// (EditorContext.DISPLAY.readAndDispatch());
-		// }
-		// });
-	}
+	public static void flushEvents() {}
 
 	public static IEditorPart getEditor() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-	}
-
-	public static StyledText getBuffer() {
-		return (StyledText) EditorContext.getEditor().getAdapter(Control.class);
 	}
 
 	public static StyledText getBuffer(final IEditorPart editor) {
@@ -77,28 +68,12 @@ public enum EditorContext {
 		return EditorContext.getBuffer(editor).getBlockSelection();
 	}
 
-	public static SourceViewer getView() {
-		return (SourceViewer) EditorContext.getEditor().getAdapter(ITextOperationTarget.class);
-	}
-
 	public static SourceViewer getView(final IEditorPart editor) {
 		return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
 	}
 
-	public static void save() {
-		// EditorContext.flushEvents();
-		EditorContext.getEditor().getSite().getPage().saveEditor(EditorContext.getEditor(), false);
-		// EditorContext.flushEvents();
-	}
-
 	public static void save(final IEditorPart editor) {
-		// EditorContext.flushEvents();
 		editor.getSite().getPage().saveEditor(editor, false);
-		// EditorContext.flushEvents();
-	}
-
-	public static boolean isModified() {
-		return EditorContext.getEditor().isDirty();
 	}
 
 	public static boolean isModified(final IEditorPart editor) {
@@ -122,17 +97,9 @@ public enum EditorContext {
 		return false;
 	}
 
-	public static boolean hasWarnings() {
-		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_WARNING);
-	}
-
 	public static boolean hasWarnings(final IEditorPart editor) {
 		EditorContext.syncFile(editor);
 		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_WARNING, editor);
-	}
-
-	public static boolean hasErrors() {
-		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_SEVERITY_ERROR);
 	}
 
 	public static boolean hasErrors(final IEditorPart editor) {
@@ -153,13 +120,6 @@ public enum EditorContext {
 
 	private static IFile getFile(final IEditorPart editor) {
 		return ((FileEditorInput) editor.getEditorInput()).getFile();
-	}
-
-	private static boolean getAnnotationSeverity(final String problemSeverity) {
-		final Iterator<Annotation> iterator = EditorContext.getView().getAnnotationModel().getAnnotationIterator();
-		while (iterator.hasNext())
-			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
-		return false;
 	}
 
 	private static boolean getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
@@ -195,12 +155,42 @@ public enum EditorContext {
 		return EditorContext.PREFERENCE.saveIntervalInSeconds();
 	}
 
-	@Override
-	public String toString() {
-		return String.format("EditorContext [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
-	}
-
 	public static IPartService getPartService() {
 		return (IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class);
 	}
+
+	public static void cancelAllJobs() {
+		EditorContext.cancelSaveJobs();
+		EditorContext.cancelScheduledSaveJobs();
+	}
+
+	public static void cancelSaveJobs() {
+		EditorContext.cancelJobsBelongingTo(EditorContext.AUTOMATIC_SAVER_TASK);
+	}
+
+	public static void cancelScheduledSaveJobs() {
+		EditorContext.cancelJobsBelongingTo(EditorContext.SCHEDULED_SAVER_TASK);
+	}
+
+	public static void cancelJobsBelongingTo(final String jobName) {
+		EditorContext.JOB_MANAGER.cancel(jobName);
+	}
+
+	public static boolean isBusy() {
+		return EditorContext.jobManagerIsBusy() || EditorContext.uiThreadIsBusy();
+	}
+
+	public static boolean jobManagerIsBusy() {
+		return !EditorContext.jobManagerIsIdle();
+	}
+
+	public static boolean jobManagerIsIdle() {
+		return EditorContext.JOB_MANAGER.isIdle();
+	}
+
+	public static boolean uiThreadIsBusy() {
+		return EditorContext.DISPLAY.readAndDispatch();
+	}
+
+	public static void tryToSave(@SuppressWarnings("unused") final IEditorPart editor) {}
 }
