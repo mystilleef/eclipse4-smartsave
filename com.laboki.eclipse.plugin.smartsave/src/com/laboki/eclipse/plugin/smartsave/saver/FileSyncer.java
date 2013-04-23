@@ -38,14 +38,12 @@ final class FileSyncer implements Instance {
 	@Override
 	public Instance begin() {
 		this.eventBus.register(this);
-		System.out.println("Starting file syncer service");
 		return this;
 	}
 
 	@Override
 	public Instance end() {
 		this.eventBus.unregister(this);
-		System.out.println("Stoping file syncer services");
 		return this;
 	}
 }
