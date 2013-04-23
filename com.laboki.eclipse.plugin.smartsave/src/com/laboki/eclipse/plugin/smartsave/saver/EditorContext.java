@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
-import lombok.Synchronized;
 import lombok.extern.java.Log;
 
 import org.eclipse.core.resources.IFile;
@@ -20,33 +19,28 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartService;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
 @Log
-public final class EditorContext {
+public enum EditorContext {
+	INSTANCE;
 
-	private static EditorContext instance;
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = new ArrayList<>(Arrays.asList("org.eclipse.ui.internal.workbench.texteditor.link.exit", "org.eclipse.ui.internal.workbench.texteditor.link.target", "org.eclipse.ui.internal.workbench.texteditor.link.master", "org.eclipse.ui.internal.workbench.texteditor.link.slave"));
-	private static final Display DISPLAY = EditorContext.getDisplay();
 	private static final Preference PREFERENCE = Preference.instance();
-
-	private EditorContext() {}
-
-	@Synchronized
-	public static EditorContext instance() {
-		if (EditorContext.instance == null) EditorContext.instance = new EditorContext();
-		return EditorContext.instance;
-	}
+	public static final Display DISPLAY = PlatformUI.getWorkbench().getDisplay();
+	public static final int SHORT_DELAY_TIME = 250;
+	public static final int MEDIUM_SHORT_DELAY_TIME = 500;
+	public static final int MEDIUM_LONG_DELAY_TIME = 750;
+	public static final int LONG_DELAY_TIME = 1000;
 
 	public static Display getDisplay() {
-		Display display = Display.getCurrent();
-		if (display == null) display = Display.getDefault();
-		return display;
+		return EditorContext.DISPLAY;
 	}
 
 	public static void asyncExec(final Runnable runnable) {
@@ -58,7 +52,8 @@ public final class EditorContext {
 		//
 		// @Override
 		// public void execute() {
-		// // while (EditorContext.DISPLAY.readAndDispatch());
+		// // while
+		// (EditorContext.DISPLAY.readAndDispatch());
 		// }
 		// });
 	}
@@ -215,5 +210,9 @@ public final class EditorContext {
 	@Override
 	public String toString() {
 		return String.format("EditorContext [getClass()=%s, toString()=%s]", this.getClass(), super.toString());
+	}
+
+	public static IPartService getPartService() {
+		return (IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class);
 	}
 }
