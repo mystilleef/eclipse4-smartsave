@@ -5,6 +5,9 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.Instance;
+import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverAnnotationsListener;
+import com.laboki.eclipse.plugin.smartsave.saver.monitors.DirtyPartMonitor;
+import com.laboki.eclipse.plugin.smartsave.saver.monitors.SaverVerifyListener;
 
 public final class SaverServices implements Instance {
 
@@ -20,6 +23,12 @@ public final class SaverServices implements Instance {
 	private void startServices() {
 		this.startService(new Saver(this.eventBus));
 		this.startService(new FileSyncer(this.eventBus));
+		this.startService(new BusyDetector(this.eventBus));
+		this.startService(new SaveScheduler(this.eventBus));
+		this.startService(new SaverVerifyListener(this.eventBus));
+		this.startService(new SaverAnnotationsListener(this.eventBus));
+		this.startService(new SaverKeyEventListener(this.eventBus));
+		this.startService(new DirtyPartMonitor(this.eventBus));
 	}
 
 	private void startService(final Instance instance) {
