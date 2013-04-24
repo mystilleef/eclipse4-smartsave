@@ -25,6 +25,7 @@ public final class Scheduler implements Instance {
 
 			@Override
 			public void execute() {
+				Scheduler.cancelAllJobs();
 				Scheduler.this.eventBus.post(new ScheduleSaveOnIdleEvent());
 			}
 		});
@@ -37,7 +38,8 @@ public final class Scheduler implements Instance {
 
 			@Override
 			public void execute() {
-				EditorContext.scheduleSave(Scheduler.this.eventBus);
+				Scheduler.cancelAllJobs();
+				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.getSaveIntervalInSeconds());
 			}
 		});
 	}
@@ -45,6 +47,10 @@ public final class Scheduler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public static void cancelSaveJobs(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+		Scheduler.cancelAllJobs();
+	}
+
+	private static void cancelAllJobs() {
 		EditorContext.cancelAllJobs();
 	}
 
