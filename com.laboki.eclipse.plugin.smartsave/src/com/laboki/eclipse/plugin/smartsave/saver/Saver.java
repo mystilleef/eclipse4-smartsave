@@ -30,8 +30,9 @@ public final class Saver implements Instance {
 	}
 
 	private void save() {
-		EditorContext.cancelSaveJobs();
+		EditorContext.cancelAllJobs();
 		EditorContext.tryToSave(this.editor);
+		if (!this.editor.isDirty()) EditorContext.cancelAllJobs();
 	}
 
 	@Override
