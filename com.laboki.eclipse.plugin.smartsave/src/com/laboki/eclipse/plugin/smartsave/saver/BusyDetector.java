@@ -69,7 +69,7 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 
 			@Override
 			public void asyncExec() {
-				EditorContext.JOB_MANAGER.addJobChangeListener(BusyDetector.this);
+				// EditorContext.JOB_MANAGER.addJobChangeListener(BusyDetector.this);
 			}
 		});
 	}
@@ -81,7 +81,7 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 
 			@Override
 			public void asyncExec() {
-				EditorContext.JOB_MANAGER.removeJobChangeListener(BusyDetector.this);
+				// EditorContext.JOB_MANAGER.removeJobChangeListener(BusyDetector.this);
 				BusyDetector.this.isBusy = false;
 			}
 		});
