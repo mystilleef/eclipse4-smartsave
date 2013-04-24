@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.Instance;
-import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverAnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.saver.monitors.DirtyPartMonitor;
+import com.laboki.eclipse.plugin.smartsave.saver.monitors.SaverAnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.saver.monitors.SaverVerifyListener;
 
 public final class SaverServices implements Instance {
