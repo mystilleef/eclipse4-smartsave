@@ -13,12 +13,12 @@ import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEven
 import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
 
 @ToString
-public final class DirtyPartMonitor implements IPropertyListener, Instance {
+public final class DirtyPartListener implements IPropertyListener, Instance {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final EventBus eventBus;
 
-	public DirtyPartMonitor(final EventBus eventBus) {
+	public DirtyPartListener(final EventBus eventBus) {
 		this.eventBus = eventBus;
 	}
 
@@ -36,8 +36,8 @@ public final class DirtyPartMonitor implements IPropertyListener, Instance {
 
 			@Override
 			public void execute() {
-				if (DirtyPartMonitor.this.editor.isDirty()) DirtyPartMonitor.this.eventBus.post(new EnableSaveListenersEvent());
-				else DirtyPartMonitor.this.eventBus.post(new DisableSaveListenersEvent());
+				if (DirtyPartListener.this.editor.isDirty()) DirtyPartListener.this.eventBus.post(new EnableSaveListenersEvent());
+				else DirtyPartListener.this.eventBus.post(new DisableSaveListenersEvent());
 			}
 		});
 	}
