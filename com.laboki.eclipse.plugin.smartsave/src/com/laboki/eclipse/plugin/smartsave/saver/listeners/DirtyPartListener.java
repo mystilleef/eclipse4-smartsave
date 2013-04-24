@@ -6,7 +6,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
 import com.laboki.eclipse.plugin.smartsave.Instance;
-import com.laboki.eclipse.plugin.smartsave.Task;
+import com.laboki.eclipse.plugin.smartsave.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
@@ -32,7 +32,7 @@ public final class DirtyPartListener implements IPropertyListener, Instance {
 
 	@Override
 	public void propertyChanged(final Object source, final int propID) {
-		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(new AsyncTask(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
 			public void execute() {

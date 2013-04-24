@@ -7,37 +7,41 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-public abstract class DelayedTask extends Job implements Runnable {
+public abstract class AsyncTask extends Job implements Runnable {
 
-	private final int timeInMilliSeconds;
 	private final String name;
 
-	public DelayedTask(final String name, final int timeInMilliSeconds) {
+	public AsyncTask(final String name) {
 		super(name);
 		this.name = name;
-		this.timeInMilliSeconds = timeInMilliSeconds;
-	}
-
-	@Override
-	public void run() {
-		this.schedule(this.timeInMilliSeconds);
-	}
-
-	@Override
-	protected IStatus run(final IProgressMonitor arg0) {
-		EditorContext.asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				DelayedTask.this.execute();
-			}
-		});
-		return Status.OK_STATUS;
+		this.setPriority(Job.INTERACTIVE);
 	}
 
 	@Override
 	public boolean belongsTo(final Object family) {
 		return this.name.equals(family);
+	}
+
+	@Override
+	public void run() {
+		this.schedule();
+	}
+
+	@Override
+	protected IStatus run(final IProgressMonitor monitor) {
+		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+		this.asyncExec();
+		return Status.OK_STATUS;
+	}
+
+	private void asyncExec() {
+		EditorContext.asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				AsyncTask.this.execute();
+			}
+		});
 	}
 
 	protected void execute() {}

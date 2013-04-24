@@ -23,7 +23,7 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
-import com.laboki.eclipse.plugin.smartsave.DelayedTask;
+import com.laboki.eclipse.plugin.smartsave.AsyncDelayedTask;
 import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
@@ -233,7 +233,7 @@ public enum EditorContext {
 	}
 
 	public static void scheduleSave(final EventBus eventBus) {
-		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+		EditorContext.asyncExec(new AsyncDelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			public void execute() {
@@ -244,7 +244,7 @@ public enum EditorContext {
 	}
 
 	public static void scheduleSave(final EventBus eventBus, final int delayTime) {
-		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, delayTime) {
+		EditorContext.asyncExec(new AsyncDelayedTask(EditorContext.SCHEDULED_SAVER_TASK, delayTime) {
 
 			@Override
 			public void execute() {
