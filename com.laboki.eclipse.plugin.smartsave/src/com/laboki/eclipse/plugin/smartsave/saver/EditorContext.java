@@ -23,6 +23,8 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+import com.laboki.eclipse.plugin.smartsave.DelayedTask;
+import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
 @Log
@@ -47,6 +49,7 @@ public enum EditorContext {
 	}
 
 	public static void asyncExec(final Runnable runnable) {
+		if ((EditorContext.DISPLAY == null) || EditorContext.DISPLAY.isDisposed()) return;
 		EditorContext.DISPLAY.asyncExec(runnable);
 	}
 
@@ -219,5 +222,16 @@ public enum EditorContext {
 	private static boolean bufferHasWarnings(final IEditorPart editor) {
 		if (EditorContext.canSaveIfWarnings()) return false;
 		return EditorContext.hasWarnings(editor);
+	}
+
+	public static void scheduleSave(final EventBus eventBus) {
+		EditorContext.cancelAllJobs();
+		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+
+			@Override
+			public void execute() {
+				eventBus.post(new ScheduleSaveEvent());
+			}
+		});
 	}
 }
