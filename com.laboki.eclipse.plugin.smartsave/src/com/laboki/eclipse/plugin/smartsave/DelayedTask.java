@@ -5,6 +5,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+
 public abstract class DelayedTask extends Job implements Runnable {
 
 	private final int timeInMilliSeconds;
@@ -25,8 +27,31 @@ public abstract class DelayedTask extends Job implements Runnable {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-		DelayedTask.this.execute();
+		this.execute();
+		this.runAsyncExec();
+		this.runSyncExec();
+		this.postExecute();
 		return Status.OK_STATUS;
+	}
+
+	private void runAsyncExec() {
+		EditorContext.asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				DelayedTask.this.asyncExec();
+			}
+		});
+	}
+
+	private void runSyncExec() {
+		EditorContext.syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				DelayedTask.this.syncExec();
+			}
+		});
 	}
 
 	@Override
@@ -35,4 +60,10 @@ public abstract class DelayedTask extends Job implements Runnable {
 	}
 
 	protected void execute() {}
+
+	protected void asyncExec() {}
+
+	protected void syncExec() {}
+
+	protected void postExecute() {}
 }

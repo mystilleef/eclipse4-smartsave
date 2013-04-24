@@ -5,6 +5,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+
 public abstract class Task extends Job implements Runnable {
 
 	private final String name;
@@ -23,8 +25,31 @@ public abstract class Task extends Job implements Runnable {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-		Task.this.execute();
+		this.execute();
+		this.runAsyncExec();
+		this.runSyncExec();
+		this.postExecute();
 		return Status.OK_STATUS;
+	}
+
+	private void runAsyncExec() {
+		EditorContext.asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				Task.this.asyncExec();
+			}
+		});
+	}
+
+	private void runSyncExec() {
+		EditorContext.syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				Task.this.syncExec();
+			}
+		});
 	}
 
 	@Override
@@ -33,4 +58,10 @@ public abstract class Task extends Job implements Runnable {
 	}
 
 	protected void execute() {}
+
+	protected void asyncExec() {}
+
+	protected void syncExec() {}
+
+	protected void postExecute() {}
 }

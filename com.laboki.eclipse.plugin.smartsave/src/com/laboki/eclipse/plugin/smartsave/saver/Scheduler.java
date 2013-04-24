@@ -2,9 +2,9 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-import com.laboki.eclipse.plugin.smartsave.AsyncDelayedTask;
+import com.laboki.eclipse.plugin.smartsave.DelayedTask;
 import com.laboki.eclipse.plugin.smartsave.Instance;
-import com.laboki.eclipse.plugin.smartsave.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
@@ -21,7 +21,7 @@ public final class Scheduler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final ScheduleSaveEvent event) {
-		EditorContext.asyncExec(new AsyncDelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			public void execute() {
@@ -34,7 +34,7 @@ public final class Scheduler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		EditorContext.asyncExec(new AsyncTask(EditorContext.SCHEDULED_SAVER_TASK) {
+		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
 			public void execute() {
@@ -47,7 +47,13 @@ public final class Scheduler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public static void cancelSaveJobs(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-		Scheduler.cancelAllJobs();
+		EditorContext.asyncExec(new Task("") {
+
+			@Override
+			public void execute() {
+				Scheduler.cancelAllJobs();
+			}
+		});
 	}
 
 	private static void cancelAllJobs() {

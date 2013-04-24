@@ -5,7 +5,7 @@ import org.eclipse.ui.IEditorPart;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Instance;
-import com.laboki.eclipse.plugin.smartsave.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.events.FinishedSyncFilesEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
 
@@ -21,10 +21,15 @@ final class FileSyncer implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
-		EditorContext.asyncExec(new AsyncTask(EditorContext.AUTOMATIC_SAVER_TASK) {
+		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK) {
 
 			@Override
-			public void execute() {
+			protected void execute() {
+				EditorContext.cancelAllJobs();
+			}
+
+			@Override
+			public void asyncExec() {
 				EditorContext.tryToSyncFile(FileSyncer.this.editor);
 				this.postEvent();
 			}
