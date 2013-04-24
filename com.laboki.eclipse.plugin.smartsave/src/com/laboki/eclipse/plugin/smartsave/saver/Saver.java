@@ -23,14 +23,13 @@ public final class Saver implements Instance {
 		EditorContext.asyncExec(new DelayedTask(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.getSaveIntervalInSeconds() * 1000) {
 
 			@Override
-			public void execute() {
-				EditorContext.cancelAllJobs();
+			protected void execute() {
+				EditorContext.cancelSaveJobs();
 			}
 
 			@Override
 			protected void asyncExec() {
 				Saver.this.save();
-				if (!Saver.this.editor.isDirty()) EditorContext.cancelAllJobs();
 			}
 		});
 	}

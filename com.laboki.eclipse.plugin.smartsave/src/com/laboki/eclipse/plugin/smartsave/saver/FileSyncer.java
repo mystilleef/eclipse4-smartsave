@@ -24,11 +24,6 @@ final class FileSyncer implements Instance {
 		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK) {
 
 			@Override
-			protected void execute() {
-				EditorContext.cancelAllJobs();
-			}
-
-			@Override
 			public void asyncExec() {
 				EditorContext.tryToSyncFile(FileSyncer.this.editor);
 				this.postEvent();
