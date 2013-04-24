@@ -175,6 +175,10 @@ public enum EditorContext {
 		return EditorContext.PREFERENCE.saveIntervalInSeconds();
 	}
 
+	public static int getSaveIntervalInMilliSeconds() {
+		return EditorContext.getSaveIntervalInSeconds() * 1000;
+	}
+
 	public static IPartService getPartService() {
 		return (IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class);
 	}
@@ -242,7 +246,6 @@ public enum EditorContext {
 
 			@Override
 			public void execute() {
-				EditorContext.cancelAllJobs();
 				eventBus.post(new ScheduleSaveEvent());
 			}
 		});
@@ -253,7 +256,6 @@ public enum EditorContext {
 
 			@Override
 			public void execute() {
-				EditorContext.cancelAllJobs();
 				eventBus.post(new ScheduleSaveEvent());
 			}
 		});
