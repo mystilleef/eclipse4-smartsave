@@ -233,11 +233,22 @@ public enum EditorContext {
 	}
 
 	public static void scheduleSave(final EventBus eventBus) {
-		EditorContext.cancelAllJobs();
 		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			public void execute() {
+				EditorContext.cancelAllJobs();
+				eventBus.post(new ScheduleSaveEvent());
+			}
+		});
+	}
+
+	public static void scheduleSave(final EventBus eventBus, final int delayTime) {
+		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, delayTime) {
+
+			@Override
+			public void execute() {
+				EditorContext.cancelAllJobs();
 				eventBus.post(new ScheduleSaveEvent());
 			}
 		});
