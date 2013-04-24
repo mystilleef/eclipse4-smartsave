@@ -10,11 +10,11 @@ import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent
 import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveOnIdleEvent;
 
-public final class SaveScheduler implements Instance {
+public final class Scheduler implements Instance {
 
 	private final EventBus eventBus;
 
-	public SaveScheduler(final EventBus eventBus) {
+	public Scheduler(final EventBus eventBus) {
 		this.eventBus = eventBus;
 	}
 
@@ -25,7 +25,7 @@ public final class SaveScheduler implements Instance {
 
 			@Override
 			public void execute() {
-				SaveScheduler.this.eventBus.post(new ScheduleSaveOnIdleEvent());
+				Scheduler.this.eventBus.post(new ScheduleSaveOnIdleEvent());
 			}
 		});
 	}
@@ -37,7 +37,7 @@ public final class SaveScheduler implements Instance {
 
 			@Override
 			public void execute() {
-				EditorContext.scheduleSave(SaveScheduler.this.eventBus);
+				EditorContext.scheduleSave(Scheduler.this.eventBus);
 			}
 		});
 	}

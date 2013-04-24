@@ -10,7 +10,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverAnnotationsListe
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverKeyEventListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverVerifyListener;
 
-public final class SaverServices implements Instance {
+public final class Services implements Instance {
 
 	private final List<Instance> instances = Lists.newArrayList();
 	private final EventBus eventBus = new EventBus();
@@ -25,7 +25,7 @@ public final class SaverServices implements Instance {
 		this.startService(new Saver(this.eventBus));
 		this.startService(new FileSyncer(this.eventBus));
 		this.startService(new BusyDetector(this.eventBus));
-		this.startService(new SaveScheduler(this.eventBus));
+		this.startService(new Scheduler(this.eventBus));
 		this.startService(new SaverVerifyListener(this.eventBus));
 		this.startService(new SaverAnnotationsListener(this.eventBus));
 		this.startService(new SaverKeyEventListener(this.eventBus));

@@ -70,7 +70,7 @@ public enum Factory implements Instance {
 
 	private static void startSaverServiceFor(final IWorkbenchPart part) {
 		Factory.stopAllSaverServices();
-		Factory.SERVICES_MAP.put((IEditorPart) part, new SaverServices().begin());
+		Factory.SERVICES_MAP.put((IEditorPart) part, new Services().begin());
 	}
 
 	private static void stopAllSaverServices() {
