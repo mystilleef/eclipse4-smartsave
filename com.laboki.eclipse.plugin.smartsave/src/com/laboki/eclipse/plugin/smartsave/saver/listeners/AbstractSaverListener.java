@@ -24,9 +24,17 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 
 			@Override
 			public void execute() {
-				AbstractSaverListener.this.add();
+				AbstractSaverListener.this.tryToAdd();
 			}
 		});
+	}
+
+	private void tryToAdd() {
+		try {
+			this.add();
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Subscribe
@@ -36,7 +44,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 
 			@Override
 			public void execute() {
-				AbstractSaverListener.this.remove();
+				AbstractSaverListener.this.tryToRemove();
 			}
 		});
 	}
@@ -56,8 +64,16 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 	@Override
 	public Instance end() {
 		this.eventBus.unregister(this);
-		this.remove();
+		this.tryToRemove();
 		return this;
+	}
+
+	private void tryToRemove() {
+		try {
+			this.remove();
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void scheduleSave() {
