@@ -31,7 +31,7 @@ public final class Saver implements Instance {
 
 	private void save() {
 		EditorContext.cancelSaveJobs();
-		EditorContext.tryToSave(Saver.this.editor);
+		EditorContext.tryToSave(this.editor);
 	}
 
 	@Override
