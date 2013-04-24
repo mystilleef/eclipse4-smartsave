@@ -1,6 +1,9 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
 import java.util.List;
+import java.util.logging.Level;
+
+import lombok.extern.java.Log;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -10,6 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverAnnotationsListe
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverKeyEventListener;
 import com.laboki.eclipse.plugin.smartsave.saver.listeners.SaverVerifyListener;
 
+@Log
 public final class SaverServices implements Instance {
 
 	private final List<Instance> instances = Lists.newArrayList();
@@ -22,14 +26,22 @@ public final class SaverServices implements Instance {
 	}
 
 	private void startServices() {
-		this.startService(new Saver(this.eventBus));
-		this.startService(new FileSyncer(this.eventBus));
-		this.startService(new BusyDetector(this.eventBus));
-		this.startService(new SaveScheduler(this.eventBus));
-		this.startService(new SaverVerifyListener(this.eventBus));
-		this.startService(new SaverAnnotationsListener(this.eventBus));
-		this.startService(new SaverKeyEventListener(this.eventBus));
-		this.startService(new DirtyPartMonitor(this.eventBus));
+		this.tryToStartService(new Saver(this.eventBus));
+		this.tryToStartService(new FileSyncer(this.eventBus));
+		this.tryToStartService(new BusyDetector(this.eventBus));
+		this.tryToStartService(new SaveScheduler(this.eventBus));
+		this.tryToStartService(new SaverVerifyListener(this.eventBus));
+		this.tryToStartService(new SaverAnnotationsListener(this.eventBus));
+		this.tryToStartService(new SaverKeyEventListener(this.eventBus));
+		this.tryToStartService(new DirtyPartMonitor(this.eventBus));
+	}
+
+	private void tryToStartService(final Instance instance) {
+		try {
+			this.startService(instance);
+		} catch (final Exception e) {
+			SaverServices.log.log(Level.FINEST, "failed to start service");
+		}
 	}
 
 	private void startService(final Instance instance) {
