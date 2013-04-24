@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.monitors;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.VerifyEvent;

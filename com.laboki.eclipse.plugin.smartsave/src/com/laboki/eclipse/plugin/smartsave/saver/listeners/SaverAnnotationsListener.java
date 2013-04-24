@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.monitors;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelListener;

@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.monitors;
+package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
