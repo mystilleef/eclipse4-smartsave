@@ -21,6 +21,8 @@ public abstract class DelayedTask extends Job implements Runnable {
 
 	@Override
 	public void run() {
+		this.setUser(false);
+		this.setSystem(true);
 		this.schedule(this.timeInMilliSeconds);
 	}
 

@@ -19,6 +19,8 @@ public abstract class Task extends Job implements Runnable {
 
 	@Override
 	public void run() {
+		this.setUser(false);
+		this.setSystem(true);
 		this.schedule();
 	}
 
