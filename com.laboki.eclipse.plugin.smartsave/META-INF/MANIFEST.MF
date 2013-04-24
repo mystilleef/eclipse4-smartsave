@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
-Bundle-Version: 20130423.2
+Bundle-Version: 20130424.3
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
@@ -10,7 +10,20 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
  org.eclipse.core.runtime.compatibility;bundle-version="3.2.200",
  org.eclipse.core.resources;bundle-version="3.8.1",
  org.eclipse.ui.ide;bundle-version="3.8.1"
-Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
+Export-Package: com.google.common.annotations,
+ com.google.common.base,
+ com.google.common.base.internal;x-internal:=true,
+ com.google.common.cache,
+ com.google.common.collect,
+ com.google.common.eventbus,
+ com.google.common.hash,
+ com.google.common.io,
+ com.google.common.math,
+ com.google.common.net,
+ com.google.common.primitives,
+ com.google.common.reflect,
+ com.google.common.util.concurrent,
+ com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
  com.laboki.eclipse.plugin.smartsave.saver;
   uses:="org.eclipse.jface.text.source,
    org.eclipse.core.runtime,
@@ -26,9 +39,46 @@ Export-Package: com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
    com.laboki.eclipse.plugin.smartsave.saver.preferences,
    org.eclipse.ui,
    org.eclipse.jface.viewers,
-   org.eclipse.swt.widgets"
+   org.eclipse.swt.widgets",
+ com.sun.jna,
+ com.sun.jna.darwin,
+ com.sun.jna.ptr,
+ com.sun.jna.win32,
+ lombok,
+ lombok.bytecode,
+ lombok.core,
+ lombok.core.debug,
+ lombok.core.handlers,
+ lombok.core.runtimeDependencies,
+ lombok.delombok,
+ lombok.delombok.ant,
+ lombok.eclipse,
+ lombok.eclipse.agent,
+ lombok.eclipse.handlers,
+ lombok.experimental,
+ lombok.extern.apachecommons,
+ lombok.extern.java,
+ lombok.extern.log4j,
+ lombok.extern.slf4j,
+ lombok.installer,
+ lombok.installer.eclipse,
+ lombok.javac,
+ lombok.javac.apt,
+ lombok.javac.handlers,
+ lombok.javac.java6,
+ lombok.javac.java7,
+ lombok.libs.com.zwitserloot.cmdreader,
+ lombok.libs.org.objectweb.asm,
+ lombok.libs.org.objectweb.asm.commons,
+ lombok.libs.org.objectweb.asm.signature,
+ lombok.libs.org.objectweb.asm.tree,
+ lombok.libs.org.objectweb.asm.util,
+ lombok.patcher,
+ lombok.patcher.equinox,
+ lombok.patcher.inject,
+ lombok.patcher.scripts
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Startup
 Bundle-ClassPath: .,
  lombok.jar,
  guava-14.0.1.jar
-Import-Package: com.google.common.collect
+Bundle-ActivationPolicy: lazy
