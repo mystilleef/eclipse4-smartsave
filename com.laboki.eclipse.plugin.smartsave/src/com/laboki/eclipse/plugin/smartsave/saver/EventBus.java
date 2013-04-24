@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import com.google.common.eventbus.AsyncEventBus;
 import com.laboki.eclipse.plugin.smartsave.Task;
 
-final class EventBus {
+public final class EventBus {
 
 	private static final Executor EXECUTOR = Executors.newCachedThreadPool();
 	private final AsyncEventBus bus = new AsyncEventBus(EventBus.EXECUTOR);
