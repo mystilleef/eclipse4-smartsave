@@ -39,7 +39,7 @@ public final class Scheduler implements Instance {
 			@Override
 			public void execute() {
 				Scheduler.cancelAllJobs();
-				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.getSaveIntervalInSeconds());
+				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.getSaveIntervalInSeconds() * 1000);
 			}
 		});
 	}

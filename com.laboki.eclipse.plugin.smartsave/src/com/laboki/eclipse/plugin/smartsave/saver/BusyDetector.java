@@ -18,7 +18,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
 public final class BusyDetector implements Instance, IJobChangeListener {
 
 	private final EventBus eventBus;
-	private boolean isBusy;
+	@SuppressWarnings("unused") private boolean isBusy;
 
 	public BusyDetector(final EventBus eventBus) {
 		this.eventBus = eventBus;
@@ -30,13 +30,21 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
-			public void asyncExec() {
-				if (this.isBusy()) EditorContext.scheduleSave(BusyDetector.this.eventBus, EditorContext.getSaveIntervalInSeconds());
-				else BusyDetector.this.eventBus.post(new SyncFilesEvent());
+			protected void execute() {
+				this.postEvent();
 			}
 
-			private boolean isBusy() {
-				return BusyDetector.this.isBusy || EditorContext.uiThreadIsBusy();
+			@Override
+			public void asyncExec() {
+				// if (this.isBusy())
+				// EditorContext.scheduleSave(BusyDetector.this.eventBus,
+				// EditorContext.getSaveIntervalInSeconds()
+				// * 1000);
+				// else postEvent();
+			}
+
+			private void postEvent() {
+				BusyDetector.this.eventBus.post(new SyncFilesEvent());
 			}
 		});
 	}
@@ -53,16 +61,30 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 		});
 	}
 
+	@SuppressWarnings("static-method")
 	@Subscribe
 	@AllowConcurrentEvents
 	public void startListening(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		EditorContext.JOB_MANAGER.addJobChangeListener(this);
+		EditorContext.asyncExec(new Task("") {
+
+			@Override
+			public void asyncExec() {
+				EditorContext.JOB_MANAGER.addJobChangeListener(BusyDetector.this);
+			}
+		});
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void stopListening(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-		EditorContext.JOB_MANAGER.removeJobChangeListener(this);
+		EditorContext.asyncExec(new Task("") {
+
+			@Override
+			public void asyncExec() {
+				EditorContext.JOB_MANAGER.removeJobChangeListener(BusyDetector.this);
+				BusyDetector.this.isBusy = false;
+			}
+		});
 	}
 
 	@Override
@@ -81,7 +103,7 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 
 	@Override
 	public void aboutToRun(final IJobChangeEvent arg0) {
-		this.isBusy = true;
+		// this.isBusy = true;
 	}
 
 	@Override
@@ -89,12 +111,12 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 
 	@Override
 	public void done(final IJobChangeEvent arg0) {
-		this.isBusy = false;
+		// this.isBusy = false;
 	}
 
 	@Override
 	public void running(final IJobChangeEvent arg0) {
-		this.isBusy = true;
+		// this.isBusy = true;
 	}
 
 	@Override
