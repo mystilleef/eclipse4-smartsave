@@ -63,6 +63,10 @@ public enum EditorContext {
 		return (StyledText) editor.getAdapter(Control.class);
 	}
 
+	public static Control getControl(final IEditorPart editor) {
+		return (Control) editor.getAdapter(Control.class);
+	}
+
 	public static boolean hasSelection(final IEditorPart editor) {
 		return (EditorContext.getBuffer(editor).getSelectionCount() > 0) || EditorContext.getBuffer(editor).getBlockSelection();
 	}
@@ -204,11 +208,15 @@ public enum EditorContext {
 	}
 
 	public static void tryToSave(final IEditorPart editor) {
-		if (EditorContext.canSaveFile(editor)) EditorContext.save(editor);
+		try {
+			if (EditorContext.canSaveAutomatically() && EditorContext.canSaveFile(editor)) EditorContext.save(editor);
+		} catch (final Exception e) {
+			EditorContext.save(editor);
+		}
 	}
 
 	private static boolean canSaveFile(final IEditorPart editor) {
-		if (EditorContext.canNotSaveAutomatically() || EditorContext.isNotModified(editor)) return false;
+		if (EditorContext.isNotModified(editor)) return false;
 		if (EditorContext.hasSelection(editor) || EditorContext.isInLinkMode(editor)) return false;
 		if (EditorContext.bufferHasErrors(editor) || EditorContext.bufferHasWarnings(editor)) return false;
 		return true;
