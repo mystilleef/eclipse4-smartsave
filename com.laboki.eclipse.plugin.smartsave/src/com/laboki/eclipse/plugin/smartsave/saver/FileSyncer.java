@@ -26,10 +26,10 @@ final class FileSyncer implements Instance {
 			@Override
 			public void asyncExec() {
 				EditorContext.syncFile(FileSyncer.this.editor);
-				this.postEvent();
+				this.postSaveEvent();
 			}
 
-			private void postEvent() {
+			private void postSaveEvent() {
 				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
 			}
 		});
