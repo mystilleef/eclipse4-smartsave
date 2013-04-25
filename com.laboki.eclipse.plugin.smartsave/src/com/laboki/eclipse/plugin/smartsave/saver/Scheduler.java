@@ -25,6 +25,10 @@ public final class Scheduler implements Instance {
 			@Override
 			public void execute() {
 				Scheduler.cancelAllJobs();
+			}
+
+			@Override
+			protected void postExecute() {
 				Scheduler.this.eventBus.post(new SyncFilesEvent());
 			}
 		});
