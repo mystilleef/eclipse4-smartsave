@@ -46,6 +46,11 @@ public abstract class Task extends Job implements Runnable {
 	}
 
 	@Override
+	public boolean belongsTo(final Object family) {
+		return this.name.equals(family);
+	}
+
+	@Override
 	public void run() {
 		this.setUser(false);
 		this.setSystem(true);
@@ -62,6 +67,8 @@ public abstract class Task extends Job implements Runnable {
 		return Status.OK_STATUS;
 	}
 
+	protected void execute() {}
+
 	private void runAsyncExec() {
 		EditorContext.asyncExec(new Runnable() {
 
@@ -72,6 +79,8 @@ public abstract class Task extends Job implements Runnable {
 		});
 	}
 
+	protected void asyncExec() {}
+
 	private void runSyncExec() {
 		EditorContext.syncExec(new Runnable() {
 
@@ -81,15 +90,6 @@ public abstract class Task extends Job implements Runnable {
 			}
 		});
 	}
-
-	@Override
-	public boolean belongsTo(final Object family) {
-		return this.name.equals(family);
-	}
-
-	protected void execute() {}
-
-	protected void asyncExec() {}
 
 	protected void syncExec() {}
 
