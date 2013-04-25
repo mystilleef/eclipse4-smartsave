@@ -25,7 +25,6 @@ public final class Services implements Instance {
 	private void startServices() {
 		this.startService(new Saver(this.eventBus));
 		this.startService(new FileSyncer(this.eventBus));
-		this.startService(new BusyDetector(this.eventBus));
 		this.startService(new Scheduler(this.eventBus));
 		this.startService(new SaverVerifyListener(this.eventBus));
 		this.startService(new SaverAnnotationsListener(this.eventBus));

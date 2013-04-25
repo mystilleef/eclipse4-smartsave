@@ -7,7 +7,7 @@ import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveOnIdleEvent;
+import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
 
 public final class Scheduler implements Instance {
 
@@ -25,7 +25,7 @@ public final class Scheduler implements Instance {
 			@Override
 			public void execute() {
 				Scheduler.cancelAllJobs();
-				Scheduler.this.eventBus.post(new ScheduleSaveOnIdleEvent());
+				Scheduler.this.eventBus.post(new SyncFilesEvent());
 			}
 		});
 	}

@@ -6,7 +6,7 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
-import com.laboki.eclipse.plugin.smartsave.saver.events.FinishedSyncFilesEvent;
+import com.laboki.eclipse.plugin.smartsave.saver.events.StartSaveScheduleEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
 
 final class FileSyncer implements Instance {
@@ -21,7 +21,7 @@ final class FileSyncer implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK) {
+		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			public void asyncExec() {
@@ -30,7 +30,7 @@ final class FileSyncer implements Instance {
 			}
 
 			private void postEvent() {
-				FileSyncer.this.eventBus.post(new FinishedSyncFilesEvent());
+				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
 			}
 		});
 	}

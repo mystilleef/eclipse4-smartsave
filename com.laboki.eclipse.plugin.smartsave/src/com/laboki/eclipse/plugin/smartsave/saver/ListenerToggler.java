@@ -61,10 +61,12 @@ public final class ListenerToggler implements Instance {
 	}
 
 	private void postDisableListenersEvent() {
+		EditorContext.cancelAllJobs();
 		this.eventBus.post(new DisableSaveListenersEvent());
 	}
 
 	private void postEnableListenersEvent() {
+		EditorContext.cancelAllJobs();
 		this.eventBus.post(new EnableSaveListenersEvent());
 	}
 

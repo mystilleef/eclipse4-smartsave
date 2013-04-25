@@ -36,6 +36,7 @@ public enum EditorContext {
 	private static final String LINK_TARGET = "org.eclipse.ui.internal.workbench.texteditor.link.target";
 	private static final String LINK_EXIT = "org.eclipse.ui.internal.workbench.texteditor.link.exit";
 	public static final String AUTOMATIC_SAVER_TASK = "smartsave automatic saver task";
+	public static final String LISTENER_SAVER_TASK = "smartsave listener saver task";
 	public static final String SCHEDULED_SAVER_TASK = "smartsave scheduled saver task";
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
@@ -189,6 +190,7 @@ public enum EditorContext {
 	public static void cancelAllJobs() {
 		EditorContext.cancelSaveJobs();
 		EditorContext.cancelScheduledSaveJobs();
+		EditorContext.cancelListenerJobs();
 	}
 
 	public static void cancelSaveJobs() {
@@ -197,6 +199,10 @@ public enum EditorContext {
 
 	public static void cancelScheduledSaveJobs() {
 		EditorContext.cancelJobsBelongingTo(EditorContext.SCHEDULED_SAVER_TASK);
+	}
+
+	public static void cancelListenerJobs() {
+		EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_SAVER_TASK);
 	}
 
 	public static void cancelJobsBelongingTo(final String jobName) {
