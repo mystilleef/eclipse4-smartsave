@@ -9,8 +9,7 @@ import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
-import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.saver.events.PartChangedEvent;
 
 @ToString
 public final class DirtyPartListener implements IPropertyListener, Instance {
@@ -35,9 +34,8 @@ public final class DirtyPartListener implements IPropertyListener, Instance {
 		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
-			public void asyncExec() {
-				if (DirtyPartListener.this.editor.isDirty()) DirtyPartListener.this.eventBus.post(new EnableSaveListenersEvent());
-				else DirtyPartListener.this.eventBus.post(new DisableSaveListenersEvent());
+			public void execute() {
+				DirtyPartListener.this.eventBus.post(new PartChangedEvent());
 			}
 		});
 	}
