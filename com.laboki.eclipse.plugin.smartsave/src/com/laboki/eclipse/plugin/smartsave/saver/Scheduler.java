@@ -46,6 +46,10 @@ public final class Scheduler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public static void cancelSaveJobs(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+		Scheduler.asyncCancelAllJobs();
+	}
+
+	private static void asyncCancelAllJobs() {
 		EditorContext.asyncExec(new Task("") {
 
 			@Override
