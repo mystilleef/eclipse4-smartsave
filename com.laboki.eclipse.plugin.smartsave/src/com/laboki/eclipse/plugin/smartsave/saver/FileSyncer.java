@@ -25,7 +25,7 @@ final class FileSyncer implements Instance {
 
 			@Override
 			public void asyncExec() {
-				EditorContext.tryToSyncFile(FileSyncer.this.editor);
+				EditorContext.syncFile(FileSyncer.this.editor);
 				this.postEvent();
 			}
 

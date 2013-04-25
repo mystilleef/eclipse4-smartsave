@@ -166,9 +166,8 @@ public enum EditorContext {
 		editor.getSite().getPage().saveEditor(editor, false);
 	}
 
-	public static void tryToSyncFile(final IEditorPart editor) {
+	public static void syncFile(final IEditorPart editor) {
 		try {
-			// This massively slows down Eclipse.
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
 			EditorContext.log.log(Level.INFO, "Failed to sync IFile resource", e);
