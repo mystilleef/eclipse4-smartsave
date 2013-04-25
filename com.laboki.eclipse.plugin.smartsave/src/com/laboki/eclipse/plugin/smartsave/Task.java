@@ -60,11 +60,19 @@ public abstract class Task extends Job implements Runnable {
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+		this.runTask();
+		return Status.OK_STATUS;
+	}
+
+	private void runTask() {
 		this.execute();
+		this.runExec();
+		this.postExecute();
+	}
+
+	private void runExec() {
 		this.runAsyncExec();
 		this.runSyncExec();
-		this.postExecute();
-		return Status.OK_STATUS;
 	}
 
 	protected void execute() {}
