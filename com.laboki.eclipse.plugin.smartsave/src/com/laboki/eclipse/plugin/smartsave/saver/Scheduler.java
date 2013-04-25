@@ -41,7 +41,7 @@ public final class Scheduler implements Instance {
 
 			@Override
 			public void execute() {
-				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.getSaveIntervalInMilliSeconds());
+				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.SHORT_DELAY_TIME);
 			}
 		});
 	}
