@@ -24,12 +24,12 @@ final class FileSyncer implements Instance {
 		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
-			public void asyncExec() {
+			protected void execute() {
 				EditorContext.syncFile(FileSyncer.this.editor);
-				this.postSaveEvent();
 			}
 
-			private void postSaveEvent() {
+			@Override
+			protected void postExecute() {
 				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
 			}
 		});
