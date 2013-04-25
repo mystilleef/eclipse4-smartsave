@@ -20,22 +20,13 @@ public final class Saver implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void save(@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.getSaveIntervalInSeconds() * 1000) {
-
-			@Override
-			protected void execute() {
-				EditorContext.cancelSaveJobs();
-			}
+		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
 
 			@Override
 			protected void asyncExec() {
 				Saver.this.save();
 			}
 		});
-	}
-
-	private void save() {
-		EditorContext.tryToSave(this.editor);
 	}
 
 	@Override
@@ -49,5 +40,9 @@ public final class Saver implements Instance {
 		this.eventBus.unregister(this);
 		this.save();
 		return this;
+	}
+
+	private void save() {
+		EditorContext.tryToSave(this.editor);
 	}
 }
