@@ -21,7 +21,7 @@ public class SaverAnnotationsListener extends AbstractSaverListener implements I
 
 	@Override
 	public void remove() {
-		this.annotationModel.addAnnotationModelListener(this);
+		this.annotationModel.removeAnnotationModelListener(this);
 	}
 
 	@Override
