@@ -5,7 +5,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeListener;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-import com.laboki.eclipse.plugin.smartsave.DelayedTask;
 import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
@@ -27,7 +26,7 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final ScheduleSaveOnIdleEvent event) {
-		EditorContext.asyncExec(new DelayedTask(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			protected void execute() {
@@ -65,7 +64,7 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void startListening(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task() {
 
 			@Override
 			public void asyncExec() {
@@ -77,7 +76,7 @@ public final class BusyDetector implements Instance, IJobChangeListener {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void stopListening(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task() {
 
 			@Override
 			public void asyncExec() {

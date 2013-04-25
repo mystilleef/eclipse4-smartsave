@@ -4,8 +4,8 @@ import org.eclipse.ui.IEditorPart;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-import com.laboki.eclipse.plugin.smartsave.DelayedTask;
 import com.laboki.eclipse.plugin.smartsave.Instance;
+import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.events.StartSaveScheduleEvent;
 
 public final class Saver implements Instance {
@@ -20,7 +20,7 @@ public final class Saver implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void save(@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-		EditorContext.asyncExec(new DelayedTask(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.getSaveIntervalInSeconds() * 1000) {
+		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.getSaveIntervalInSeconds() * 1000) {
 
 			@Override
 			protected void execute() {

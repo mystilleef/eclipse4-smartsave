@@ -33,7 +33,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 
 	@Override
 	public void assistSessionEnded(final ContentAssistEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task() {
 
 			@Override
 			public void execute() {
@@ -44,7 +44,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 
 	@Override
 	public void assistSessionStarted(final ContentAssistEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task() {
 
 			@Override
 			public void execute() {

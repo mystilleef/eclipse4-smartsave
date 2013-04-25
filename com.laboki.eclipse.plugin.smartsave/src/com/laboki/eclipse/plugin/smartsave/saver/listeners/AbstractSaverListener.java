@@ -26,7 +26,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void addListener(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task() {
 
 			@Override
 			public void asyncExec() {
@@ -46,7 +46,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void removeListener(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-		EditorContext.asyncExec(new Task("") {
+		EditorContext.asyncExec(new Task() {
 
 			@Override
 			public void asyncExec() {
