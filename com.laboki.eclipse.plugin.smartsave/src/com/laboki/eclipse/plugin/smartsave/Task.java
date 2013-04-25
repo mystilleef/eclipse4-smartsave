@@ -9,19 +9,47 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 public abstract class Task extends Job implements Runnable {
 
+	public static final int TASK_INTERACTIVE = Job.INTERACTIVE;
+	public static final int TASK_SHORT = Job.SHORT;
+	public static final int TASK_LONG = Job.LONG;
+	public static final int TASK_BUILD = Job.BUILD;
+	public static final int TASK_DECORATE = Job.DECORATE;
+	private final int delayTime;
 	private final String name;
+
+	public Task() {
+		super("");
+		this.name = "";
+		this.delayTime = 0;
+		this.setPriority(Task.TASK_INTERACTIVE);
+	}
 
 	public Task(final String name) {
 		super(name);
 		this.name = name;
-		this.setPriority(Job.INTERACTIVE);
+		this.delayTime = 0;
+		this.setPriority(Task.TASK_INTERACTIVE);
+	}
+
+	public Task(final String name, final int delayTime) {
+		super(name);
+		this.name = name;
+		this.delayTime = delayTime;
+		this.setPriority(Task.TASK_DECORATE);
+	}
+
+	public Task(final String name, final int delayTime, final int priority) {
+		super(name);
+		this.name = name;
+		this.delayTime = delayTime;
+		this.setPriority(priority);
 	}
 
 	@Override
 	public void run() {
 		this.setUser(false);
 		this.setSystem(true);
-		this.schedule();
+		this.schedule(this.delayTime);
 	}
 
 	@Override
