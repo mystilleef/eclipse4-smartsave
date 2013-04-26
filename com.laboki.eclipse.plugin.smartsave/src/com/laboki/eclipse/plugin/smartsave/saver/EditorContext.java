@@ -171,7 +171,7 @@ public enum EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
-			EditorContext.log.log(Level.WARNING, "Failed to refresh, or synchronize, local resource file.", e);
+			EditorContext.log.log(Level.FINEST, "Failed to refresh, or synchronize, local resource file.", e);
 		}
 	}
 
