@@ -160,9 +160,10 @@ public enum EditorContext {
 
 	private static boolean getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
 		final Iterator<Annotation> iterator = EditorContext.getView(editor).getAnnotationModel().getAnnotationIterator();
-		while (iterator.hasNext())
+		while (iterator.hasNext()) {
 			EditorContext.flushEvents();
-		if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
+			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
+		}
 		return false;
 	}
 
