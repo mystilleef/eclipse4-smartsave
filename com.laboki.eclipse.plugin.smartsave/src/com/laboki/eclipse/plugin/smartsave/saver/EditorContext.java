@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartService;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -30,6 +31,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 public enum EditorContext {
 	INSTANCE;
 
+	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final int SHORT_DELAY_TIME = 250;
 	private static final String LINK_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
 	private static final String LINK_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
@@ -42,7 +44,7 @@ public enum EditorContext {
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(EditorContext.LINK_EXIT, EditorContext.LINK_TARGET, EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
 	private static final Preference PREFERENCE = Preference.instance();
-	public static final Display DISPLAY = PlatformUI.getWorkbench().getDisplay();
+	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 
 	public static Display getDisplay() {
@@ -64,11 +66,11 @@ public enum EditorContext {
 	}
 
 	public static IPartService getPartService() {
-		return (IPartService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IPartService.class);
+		return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow().getService(IPartService.class);
 	}
 
 	public static IEditorPart getEditor() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		return EditorContext.WORKBENCH.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	}
 
 	public static Control getControl(final IEditorPart editor) {
@@ -159,7 +161,8 @@ public enum EditorContext {
 	private static boolean getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
 		final Iterator<Annotation> iterator = EditorContext.getView(editor).getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
-			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
+			EditorContext.flushEvents();
+		if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
 		return false;
 	}
 
@@ -168,6 +171,7 @@ public enum EditorContext {
 	}
 
 	public static void save(final IEditorPart editor) {
+		EditorContext.flushEvents();
 		editor.getSite().getPage().saveEditor(editor, false);
 	}
 
