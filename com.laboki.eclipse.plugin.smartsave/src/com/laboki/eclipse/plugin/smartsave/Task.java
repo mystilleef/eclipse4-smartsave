@@ -71,7 +71,6 @@ public abstract class Task extends Job implements Runnable {
 	}
 
 	private void runExec() {
-		EditorContext.flushEvents();
 		this.runAsyncExec();
 		this.runSyncExec();
 	}
@@ -83,6 +82,7 @@ public abstract class Task extends Job implements Runnable {
 
 			@Override
 			public void run() {
+				EditorContext.flushEvents();
 				Task.this.asyncExec();
 			}
 		});
@@ -95,6 +95,7 @@ public abstract class Task extends Job implements Runnable {
 
 			@Override
 			public void run() {
+				EditorContext.flushEvents();
 				Task.this.syncExec();
 			}
 		});
