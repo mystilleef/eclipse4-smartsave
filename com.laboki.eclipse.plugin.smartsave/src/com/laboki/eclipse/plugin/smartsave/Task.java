@@ -71,6 +71,7 @@ public abstract class Task extends Job implements Runnable {
 	}
 
 	private void runExec() {
+		EditorContext.flushEvents();
 		this.runAsyncExec();
 		this.runSyncExec();
 	}

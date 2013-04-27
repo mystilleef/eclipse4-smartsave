@@ -49,6 +49,10 @@ public enum EditorContext {
 		return EditorContext.DISPLAY;
 	}
 
+	public static void flushEvents() {
+		while (EditorContext.DISPLAY.readAndDispatch());
+	}
+
 	public static void asyncExec(final Runnable runnable) {
 		if ((EditorContext.DISPLAY == null) || EditorContext.DISPLAY.isDisposed()) return;
 		EditorContext.DISPLAY.asyncExec(runnable);
