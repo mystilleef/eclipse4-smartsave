@@ -31,7 +31,6 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 public enum EditorContext {
 	INSTANCE;
 
-	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final int SHORT_DELAY_TIME = 250;
 	private static final String LINK_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
 	private static final String LINK_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
@@ -44,6 +43,7 @@ public enum EditorContext {
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(EditorContext.LINK_EXIT, EditorContext.LINK_TARGET, EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
 	private static final Preference PREFERENCE = Preference.instance();
+	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 
@@ -128,6 +128,7 @@ public enum EditorContext {
 	}
 
 	private static boolean isLinkModeAnnotation(final Iterator<Annotation> iterator) {
+		EditorContext.flushEvents();
 		if (EditorContext.LINK_ANNOTATIONS.contains(iterator.next().getType())) return true;
 		return false;
 	}
@@ -160,14 +161,13 @@ public enum EditorContext {
 
 	private static boolean getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
 		final Iterator<Annotation> iterator = EditorContext.getView(editor).getAnnotationModel().getAnnotationIterator();
-		while (iterator.hasNext()) {
-			EditorContext.flushEvents();
+		while (iterator.hasNext())
 			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
-		}
 		return false;
 	}
 
 	private static boolean hasProblems(final String problemSeverity, final Iterator<Annotation> iterator) {
+		EditorContext.flushEvents();
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
