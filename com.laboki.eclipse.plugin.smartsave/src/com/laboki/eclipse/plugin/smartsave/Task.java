@@ -72,7 +72,6 @@ public abstract class Task extends Job implements Runnable {
 
 	private void runExec() {
 		this.runAsyncExec();
-		this.runSyncExec();
 	}
 
 	protected void execute() {}
@@ -90,6 +89,7 @@ public abstract class Task extends Job implements Runnable {
 
 	protected void asyncExec() {}
 
+	@SuppressWarnings("unused")
 	private void runSyncExec() {
 		EditorContext.syncExec(new Runnable() {
 
