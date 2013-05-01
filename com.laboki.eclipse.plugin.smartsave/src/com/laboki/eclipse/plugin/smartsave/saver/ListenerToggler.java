@@ -36,23 +36,23 @@ public final class ListenerToggler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void disableListeners(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		new Task(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
 			public void execute() {
 				ListenerToggler.this.postDisableListenersEvent();
 			}
-		});
+		}.begin();
 	}
 
 	private void asyncToggleSaverListeners() {
-		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		new Task(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
 			public void asyncExec() {
 				ListenerToggler.this.toggleSaverListeners();
 			}
-		});
+		}.begin();
 	}
 
 	private void toggleSaverListeners() {

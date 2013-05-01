@@ -226,12 +226,12 @@ public enum EditorContext {
 	}
 
 	private static void asyncScheduleSave(final EventBus eventBus, final String taskName, final int delayTime) {
-		EditorContext.asyncExec(new Task(taskName, delayTime) {
+		new Task(taskName, delayTime) {
 
 			@Override
 			public void execute() {
 				eventBus.post(new ScheduleSaveEvent());
 			}
-		});
+		}.begin();
 	}
 }

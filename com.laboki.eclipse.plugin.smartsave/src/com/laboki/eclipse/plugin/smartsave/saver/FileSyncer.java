@@ -21,7 +21,7 @@ final class FileSyncer implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
+		new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
 
 			@Override
 			public void execute() {
@@ -32,7 +32,7 @@ final class FileSyncer implements Instance {
 			public void postExecute() {
 				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
 			}
-		});
+		}.begin();
 	}
 
 	@Override

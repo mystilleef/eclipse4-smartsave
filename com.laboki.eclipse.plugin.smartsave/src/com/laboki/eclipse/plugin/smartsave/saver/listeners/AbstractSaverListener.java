@@ -77,6 +77,12 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 	}
 
 	protected void scheduleSave() {
-		EditorContext.scheduleSave(this.eventBus);
+		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK, 1000) {
+
+			@Override
+			public void execute() {
+				EditorContext.scheduleSave(AbstractSaverListener.this.eventBus);
+			}
+		});
 	}
 }

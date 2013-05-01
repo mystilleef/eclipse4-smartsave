@@ -20,13 +20,13 @@ public final class Saver implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void save(@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+		new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			public void asyncExec() {
 				Saver.this.save();
 			}
-		});
+		}.begin();
 	}
 
 	@Override

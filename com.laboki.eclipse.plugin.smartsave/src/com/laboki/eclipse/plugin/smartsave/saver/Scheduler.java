@@ -20,7 +20,7 @@ public final class Scheduler implements Instance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final ScheduleSaveEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+		new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
 			public void execute() {
@@ -31,19 +31,19 @@ public final class Scheduler implements Instance {
 			public void postExecute() {
 				Scheduler.this.eventBus.post(new SyncFilesEvent());
 			}
-		});
+		}.begin();
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		new Task(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
 			public void execute() {
 				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.SHORT_DELAY_TIME);
 			}
-		});
+		}.begin();
 	}
 
 	@Subscribe
@@ -53,13 +53,13 @@ public final class Scheduler implements Instance {
 	}
 
 	private static void asyncCancelAllJobs() {
-		EditorContext.asyncExec(new Task() {
+		new Task() {
 
 			@Override
 			public void execute() {
 				Scheduler.cancelAllJobs();
 			}
-		});
+		}.begin();
 	}
 
 	private static void cancelAllJobs() {
