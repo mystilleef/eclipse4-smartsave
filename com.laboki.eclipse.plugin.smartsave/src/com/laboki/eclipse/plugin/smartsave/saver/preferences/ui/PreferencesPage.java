@@ -1,7 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
-import lombok.ToString;
-
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -15,7 +13,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
-@ToString
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private static final int FONT_SIZE = 12;

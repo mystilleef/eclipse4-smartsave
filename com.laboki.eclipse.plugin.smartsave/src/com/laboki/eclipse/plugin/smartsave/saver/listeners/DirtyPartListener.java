@@ -1,7 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
-import lombok.ToString;
-
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
@@ -11,7 +9,6 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.saver.events.PartChangedEvent;
 
-@ToString
 public final class DirtyPartListener implements IPropertyListener, Instance {
 
 	private final IEditorPart editor = EditorContext.getEditor();

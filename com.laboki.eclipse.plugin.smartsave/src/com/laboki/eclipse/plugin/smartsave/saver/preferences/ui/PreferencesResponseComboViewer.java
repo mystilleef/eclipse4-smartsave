@@ -1,7 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
-import lombok.ToString;
-
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -10,7 +8,6 @@ import org.eclipse.swt.widgets.Composite;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
 
-@ToString
 class PreferencesResponseComboViewer extends ResponseComboViewer implements IPreferenceHandler {
 
 	private final PreferenceListener listener = new PreferenceListener(this);

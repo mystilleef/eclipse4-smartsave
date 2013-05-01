@@ -1,8 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences;
 
-import lombok.ToString;
-
-@ToString
 public final class Preference implements IPreferenceHandler {
 
 	private static Preference instance;

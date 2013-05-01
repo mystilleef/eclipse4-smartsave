@@ -1,14 +1,11 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences;
 
-import lombok.ToString;
-
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-@ToString
 public final class PreferenceListener {
 
 	private final IPreferenceChangeListener listener;

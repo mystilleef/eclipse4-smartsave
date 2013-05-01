@@ -1,7 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
-import lombok.ToString;
-
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -10,12 +8,13 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-@ToString
 class ResponseComboViewer extends ComboViewer {
 
 	private final LabelProvider labelProvider = new ResponseLabelProvider();
 	private final ISelectionChangedListener listener = new ResponseSelectionListener();
-	private final Response[] responses = new Response[] { this.new Response(Response.YES), this.new Response(Response.NO) };
+	private final Response[] responses = new Response[] {
+		this.new Response(Response.YES),
+		this.new Response(Response.NO) };
 
 	public ResponseComboViewer(final Composite parent) {
 		super(parent, SWT.READ_ONLY);

@@ -2,9 +2,6 @@ package com.laboki.eclipse.plugin.smartsave;
 
 import java.text.MessageFormat;
 
-import lombok.ToString;
-
-@ToString
 public final class Metadata {
 
 	public static final String PLUGIN_NAME = "com.laboki.eclipse.plugin.smartsave";

@@ -1,9 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
-import java.util.logging.Level;
-
-import lombok.extern.java.Log;
-
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Instance;
@@ -13,10 +9,8 @@ import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
 
-@Log
 public abstract class AbstractSaverListener implements ISaverListener, Instance {
 
-	private static final Level FINEST = Level.FINEST;
 	private final EventBus eventBus;
 
 	public AbstractSaverListener(final EventBus eventbus) {
@@ -39,7 +33,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 		try {
 			this.add();
 		} catch (final Exception e) {
-			AbstractSaverListener.log.log(AbstractSaverListener.FINEST, "failed to add listener");
+			// AbstractSaverListener.log.log(AbstractSaverListener.FINEST, "failed to add listener");
 		}
 	}
 
@@ -78,7 +72,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 		try {
 			this.remove();
 		} catch (final Exception e) {
-			AbstractSaverListener.log.log(AbstractSaverListener.FINEST, "failed to remove listener");
+			// AbstractSaverListener.log.log(AbstractSaverListener.FINEST, "failed to remove listener");
 		}
 	}
 

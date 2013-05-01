@@ -1,9 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.saver.listeners;
 
-import java.util.logging.Level;
-
-import lombok.extern.java.Log;
-
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -18,11 +14,9 @@ import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.saver.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.events.AssistSessionStartedEvent;
 
-@Log
 public final class SaverCompletionListener implements Instance, ICompletionListener {
 
 	private final EventBus eventBus;
-	private static final Level FINEST = Level.FINEST;
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistantFacade contentAssistantFacade = this.getContentAssistantFacade();
 	private final IQuickAssistAssistant quickAssistAssistant = this.getQuickAssistAssistant();
@@ -67,7 +61,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 		try {
 			this.add();
 		} catch (final Exception e) {
-			SaverCompletionListener.log.log(SaverCompletionListener.FINEST, "failed to add listener");
+			// SaverCompletionListener.log.log(SaverCompletionListener.FINEST, "failed to add listener");
 		}
 	}
 
@@ -87,7 +81,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 		try {
 			this.remove();
 		} catch (final Exception e) {
-			SaverCompletionListener.log.log(SaverCompletionListener.FINEST, "failed to remove listener");
+			// SaverCompletionListener.log.log(SaverCompletionListener.FINEST, "failed to remove listener");
 		}
 	}
 

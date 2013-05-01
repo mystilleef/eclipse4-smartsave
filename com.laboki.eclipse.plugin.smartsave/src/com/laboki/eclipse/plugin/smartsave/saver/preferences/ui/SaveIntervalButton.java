@@ -2,8 +2,6 @@ package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
 
 import java.text.MessageFormat;
 
-import lombok.ToString;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -15,7 +13,6 @@ import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
-@ToString
 final class SaveIntervalButton implements IPreferenceHandler {
 
 	private static final int ZERO = 0;

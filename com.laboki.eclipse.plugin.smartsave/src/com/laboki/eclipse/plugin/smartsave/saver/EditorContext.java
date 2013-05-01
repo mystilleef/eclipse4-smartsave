@@ -2,9 +2,6 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-
-import lombok.extern.java.Log;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -27,7 +24,6 @@ import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
-@Log
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidPackageScopeAuditRule
 public enum EditorContext {
 	INSTANCE;
@@ -183,7 +179,7 @@ public enum EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
-			EditorContext.log.log(Level.FINEST, "Failed to refresh, or synchronize, local resource file.", e);
+			// EditorContext.log.log(Level.FINEST, "Failed to refresh, or synchronize, local resource file.", e);
 		}
 	}
 
