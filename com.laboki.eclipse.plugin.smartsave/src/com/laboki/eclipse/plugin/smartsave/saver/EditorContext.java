@@ -54,11 +54,7 @@ public enum EditorContext {
 	}
 
 	public static void flushEvents() {
-		try {
-			while (EditorContext.DISPLAY.readAndDispatch());
-		} catch (final Exception e) {
-			EditorContext.log.log(Level.INFO, "flush event failed");
-		}
+		while (EditorContext.DISPLAY.readAndDispatch());
 	}
 
 	public static void asyncExec(final Runnable runnable) {
