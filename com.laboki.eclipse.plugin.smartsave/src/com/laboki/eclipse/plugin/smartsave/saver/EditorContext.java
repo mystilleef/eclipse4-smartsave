@@ -28,9 +28,11 @@ import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
 
 @Log
+// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidPackageScopeAuditRule
 public enum EditorContext {
 	INSTANCE;
 
+	private static final int MILLI_SECONDS_UNIT = 1000;
 	public static final int SHORT_DELAY_TIME = 250;
 	private static final String LINK_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
 	private static final String LINK_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
@@ -52,7 +54,11 @@ public enum EditorContext {
 	}
 
 	public static void flushEvents() {
-		while (EditorContext.DISPLAY.readAndDispatch());
+		try {
+			while (EditorContext.DISPLAY.readAndDispatch());
+		} catch (final Exception e) {
+			EditorContext.log.log(Level.INFO, "flush event failed");
+		}
 	}
 
 	public static void asyncExec(final Runnable runnable) {
@@ -189,7 +195,7 @@ public enum EditorContext {
 	}
 
 	public static int getSaveIntervalInMilliSeconds() {
-		return EditorContext.getSaveIntervalInSeconds() * 1000;
+		return EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT;
 	}
 
 	public static int getSaveIntervalInSeconds() {

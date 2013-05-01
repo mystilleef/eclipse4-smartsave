@@ -17,28 +17,28 @@ public abstract class Task extends Job implements Runnable {
 	private final int delayTime;
 	private final String name;
 
-	public Task() {
+	protected Task() {
 		super("");
 		this.name = "";
 		this.delayTime = 0;
 		this.setPriority(Task.TASK_INTERACTIVE);
 	}
 
-	public Task(final String name) {
+	protected Task(final String name) {
 		super(name);
 		this.name = name;
 		this.delayTime = 0;
 		this.setPriority(Task.TASK_INTERACTIVE);
 	}
 
-	public Task(final String name, final int delayTime) {
+	protected Task(final String name, final int delayTime) {
 		super(name);
 		this.name = name;
 		this.delayTime = delayTime;
 		this.setPriority(Task.TASK_DECORATE);
 	}
 
-	public Task(final String name, final int delayTime, final int priority) {
+	protected Task(final String name, final int delayTime, final int priority) {
 		super(name);
 		this.name = name;
 		this.delayTime = delayTime;
@@ -88,18 +88,6 @@ public abstract class Task extends Job implements Runnable {
 	}
 
 	protected void asyncExec() {}
-
-	@SuppressWarnings("unused")
-	private void runSyncExec() {
-		EditorContext.syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				EditorContext.flushEvents();
-				Task.this.syncExec();
-			}
-		});
-	}
 
 	protected void syncExec() {}
 
