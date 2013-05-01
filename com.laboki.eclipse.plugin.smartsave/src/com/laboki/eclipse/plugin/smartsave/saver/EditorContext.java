@@ -54,17 +54,22 @@ public enum EditorContext {
 	}
 
 	public static void flushEvents() {
+		if (EditorContext.displayIsDisposed()) return;
 		while (EditorContext.DISPLAY.readAndDispatch());
 	}
 
 	public static void asyncExec(final Runnable runnable) {
-		if ((EditorContext.DISPLAY == null) || EditorContext.DISPLAY.isDisposed()) return;
+		if (EditorContext.displayIsDisposed()) return;
 		EditorContext.DISPLAY.asyncExec(runnable);
 	}
 
 	public static void syncExec(final Runnable runnable) {
-		if ((EditorContext.DISPLAY == null) || EditorContext.DISPLAY.isDisposed()) return;
+		if (EditorContext.displayIsDisposed()) return;
 		EditorContext.DISPLAY.syncExec(runnable);
+	}
+
+	private static boolean displayIsDisposed() {
+		return (EditorContext.DISPLAY == null) || EditorContext.DISPLAY.isDisposed();
 	}
 
 	public static IPartService getPartService() {
