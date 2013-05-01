@@ -49,10 +49,6 @@ public enum EditorContext {
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 
-	public static Display getDisplay() {
-		return EditorContext.DISPLAY;
-	}
-
 	public static void flushEvents() {
 		if (EditorContext.displayIsDisposed()) return;
 		while (EditorContext.DISPLAY.readAndDispatch());
