@@ -23,7 +23,7 @@ public final class Saver implements Instance {
 		EditorContext.asyncExec(new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
-			protected void asyncExec() {
+			public void asyncExec() {
 				Saver.this.save();
 			}
 		});
