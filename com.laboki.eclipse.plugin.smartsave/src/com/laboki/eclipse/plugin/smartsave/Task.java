@@ -10,6 +10,10 @@ public class Task extends AbstractTask implements Instance {
 		super(name, 0, AbstractTask.TASK_INTERACTIVE);
 	}
 
+	public Task(final int delayTime) {
+		super("", delayTime, AbstractTask.TASK_DECORATE);
+	}
+
 	public Task(final String name, final int delayTime) {
 		super(name, delayTime, AbstractTask.TASK_DECORATE);
 	}
