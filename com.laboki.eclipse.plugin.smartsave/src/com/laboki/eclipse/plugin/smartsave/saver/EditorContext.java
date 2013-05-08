@@ -46,8 +46,16 @@ public enum EditorContext {
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 
 	public static void flushEvents() {
-		if (EditorContext.displayIsDisposed()) return;
-		while (EditorContext.DISPLAY.readAndDispatch());
+		try {
+			EditorContext.tryToFlushEvents();
+		} catch (final Exception e) {
+			// e.printStackTrace();
+		}
+	}
+
+	private static void tryToFlushEvents() {
+		while (EditorContext.DISPLAY.readAndDispatch())
+			EditorContext.DISPLAY.update();
 	}
 
 	public static void asyncExec(final Runnable runnable) {
