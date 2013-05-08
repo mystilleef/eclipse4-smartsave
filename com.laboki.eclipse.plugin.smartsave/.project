@@ -35,11 +35,6 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>edu.umd.cs.findbugs.plugin.eclipse.findbugsBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.pde.PluginNature</nature>
@@ -47,6 +42,5 @@
 		<nature>org.eclipse.pde.api.tools.apiAnalysisNature</nature>
 		<nature>net.sourceforge.pmd.eclipse.plugin.pmdNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
-		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
 	</natures>
 </projectDescription>
