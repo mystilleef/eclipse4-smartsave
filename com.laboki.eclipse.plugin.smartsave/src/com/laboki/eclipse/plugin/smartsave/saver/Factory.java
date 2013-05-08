@@ -28,7 +28,7 @@ public enum Factory implements Instance {
 
 		@Override
 		public void partClosed(final IWorkbenchPart part) {
-			Factory.stopSaverServiceFor(part);
+			Factory.stopSaverServiceFor((IEditorPart) part);
 		}
 
 		@Override
@@ -36,7 +36,7 @@ public enum Factory implements Instance {
 
 		@Override
 		public void partDeactivated(final IWorkbenchPart part) {
-			Factory.stopSaverServiceFor(part);
+			Factory.stopSaverServiceFor((IEditorPart) part);
 		}
 
 		@Override
@@ -75,7 +75,7 @@ public enum Factory implements Instance {
 			Factory.stopSaverServiceFor(part);
 	}
 
-	private static void stopSaverServiceFor(final IWorkbenchPart part) {
+	private static void stopSaverServiceFor(final IEditorPart part) {
 		if (Factory.servicesMapDoesNotContain(part)) return;
 		Factory.SERVICES_MAP.get(part).end();
 		Factory.SERVICES_MAP.remove(part);
