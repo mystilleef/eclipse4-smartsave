@@ -12,6 +12,7 @@ import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
 final class FileSyncer implements Instance {
 
 	private final EventBus eventBus;
+	private final IEditorPart editor = EditorContext.getEditor();
 
 	public FileSyncer(final EventBus eventBus) {
 		this.eventBus = eventBus;
@@ -22,11 +23,9 @@ final class FileSyncer implements Instance {
 	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
 		new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
 
-			private final IEditorPart editor = EditorContext.getEditor();
-
 			@Override
 			public void execute() {
-				EditorContext.syncFile(this.editor);
+				EditorContext.syncFile(FileSyncer.this.editor);
 			}
 
 			@Override
