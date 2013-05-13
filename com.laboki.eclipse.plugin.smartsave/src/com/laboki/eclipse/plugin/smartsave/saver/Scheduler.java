@@ -21,6 +21,16 @@ public final class Scheduler extends AbstractEventBusInstance {
 		new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
+			public boolean shouldSchedule() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+			}
+
+			@Override
 			public void execute() {
 				Scheduler.cancelAllJobs();
 				Scheduler.this.eventBus.post(new SyncFilesEvent());

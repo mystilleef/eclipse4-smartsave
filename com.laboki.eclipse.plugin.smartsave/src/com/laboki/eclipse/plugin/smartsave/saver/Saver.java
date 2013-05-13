@@ -23,6 +23,16 @@ public final class Saver extends AbstractEventBusInstance {
 		new AsyncTask(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
+			public boolean shouldSchedule() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
+			}
+
+			@Override
 			public void asyncExecute() {
 				Saver.this.save();
 			}

@@ -23,6 +23,16 @@ final class FileSyncer extends AbstractEventBusInstance {
 		new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
 
 			@Override
+			public boolean shouldSchedule() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+			}
+
+			@Override
 			public void execute() {
 				EditorContext.syncFile(FileSyncer.this.editor);
 				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
