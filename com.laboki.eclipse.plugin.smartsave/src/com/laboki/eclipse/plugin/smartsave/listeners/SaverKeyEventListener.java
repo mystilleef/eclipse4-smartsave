@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.listeners;
+package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;

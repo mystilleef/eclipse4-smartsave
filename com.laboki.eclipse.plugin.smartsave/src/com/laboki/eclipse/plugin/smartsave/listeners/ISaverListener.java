@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.listeners;
+package com.laboki.eclipse.plugin.smartsave.listeners;
 
 public interface ISaverListener {
 
