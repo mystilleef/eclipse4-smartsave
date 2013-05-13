@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;

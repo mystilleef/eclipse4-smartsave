@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.preferences;
+package com.laboki.eclipse.plugin.smartsave.preferences;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;

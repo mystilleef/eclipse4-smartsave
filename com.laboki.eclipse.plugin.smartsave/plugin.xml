@@ -6,7 +6,7 @@
 	<extension
 		point = "org.eclipse.ui.preferencePages">
 			<page id="com.laboki.eclipse.plugin.smartsave.PreferencePage"
-				class="com.laboki.eclipse.plugin.smartsave.saver.preferences.ui.PreferencesPage"
+				class="com.laboki.eclipse.plugin.smartsave.preferences.ui.PreferencesPage"
 				name="Smart Save">
 			</page>
 	</extension>

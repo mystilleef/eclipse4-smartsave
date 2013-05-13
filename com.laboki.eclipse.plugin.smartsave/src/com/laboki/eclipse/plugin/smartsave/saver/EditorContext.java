@@ -22,7 +22,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.Preference;
+import com.laboki.eclipse.plugin.smartsave.preferences.Preference;
 
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidPackageScopeAuditRule
 public enum EditorContext {

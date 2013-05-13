@@ -1,12 +1,12 @@
-package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
+import com.laboki.eclipse.plugin.smartsave.preferences.IPreferenceHandler;
+import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceListener;
 
 class PreferencesResponseComboViewer extends ResponseComboViewer implements IPreferenceHandler {
 

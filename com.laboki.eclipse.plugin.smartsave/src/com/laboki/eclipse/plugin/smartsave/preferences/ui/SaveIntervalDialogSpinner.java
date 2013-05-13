@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.preferences.ui;
+package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -8,10 +8,10 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
 
+import com.laboki.eclipse.plugin.smartsave.preferences.IPreferenceHandler;
+import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceListener;
+import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.IPreferenceHandler;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceListener;
-import com.laboki.eclipse.plugin.smartsave.saver.preferences.PreferenceStore;
 
 final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 

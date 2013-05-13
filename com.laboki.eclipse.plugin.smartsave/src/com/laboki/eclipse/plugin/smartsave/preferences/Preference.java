@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.saver.preferences;
+package com.laboki.eclipse.plugin.smartsave.preferences;
 
 public final class Preference implements IPreferenceHandler {
 
