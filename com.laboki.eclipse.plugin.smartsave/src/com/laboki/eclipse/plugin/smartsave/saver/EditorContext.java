@@ -1,5 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.saver;
 
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,10 +25,12 @@ import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Preference;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidPackageScopeAuditRule
 public enum EditorContext {
 	INSTANCE;
 
+	public static final String PLUGIN_NAME = "com.laboki.eclipse.plugin.smartsave";
+	public static final String CONTRIBUTOR_URI = MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
+	public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
 	private static final int MILLI_SECONDS_UNIT = 1000;
 	public static final int SHORT_DELAY_TIME = 250;
 	private static final String LINK_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";

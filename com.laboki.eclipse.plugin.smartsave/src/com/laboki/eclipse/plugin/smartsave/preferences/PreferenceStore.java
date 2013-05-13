@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
-import com.laboki.eclipse.plugin.smartsave.Metadata;
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
 public final class PreferenceStore {
 
@@ -63,7 +63,7 @@ public final class PreferenceStore {
 	}
 
 	public static IEclipsePreferences getPreferences() {
-		return ConfigurationScope.INSTANCE.getNode(Metadata.PLUGIN_NAME);
+		return ConfigurationScope.INSTANCE.getNode(EditorContext.PLUGIN_NAME);
 	}
 
 	private static void setBoolean(final String key, final boolean value) {
