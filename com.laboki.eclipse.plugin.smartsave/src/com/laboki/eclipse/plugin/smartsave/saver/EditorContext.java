@@ -138,7 +138,6 @@ public enum EditorContext {
 	}
 
 	private static boolean isLinkModeAnnotation(final Iterator<Annotation> iterator) {
-		EditorContext.flushEvents();
 		if (EditorContext.LINK_ANNOTATIONS.contains(iterator.next().getType())) return true;
 		return false;
 	}
@@ -177,12 +176,10 @@ public enum EditorContext {
 	}
 
 	private static boolean hasProblems(final String problemSeverity, final Iterator<Annotation> iterator) {
-		EditorContext.flushEvents();
 		return iterator.next().getType().endsWith(problemSeverity);
 	}
 
 	public static void save(final IEditorPart editor) {
-		EditorContext.flushEvents();
 		editor.getSite().getPage().saveEditor(editor, false);
 	}
 
