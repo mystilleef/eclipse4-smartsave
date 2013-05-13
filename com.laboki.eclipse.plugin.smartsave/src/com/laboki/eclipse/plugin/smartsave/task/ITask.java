@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave;
+package com.laboki.eclipse.plugin.smartsave.task;
 
 interface ITask {
 

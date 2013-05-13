@@ -8,11 +8,11 @@ import org.eclipse.jface.text.source.ContentAssistantFacade;
 import org.eclipse.ui.IEditorPart;
 
 import com.laboki.eclipse.plugin.smartsave.Instance;
-import com.laboki.eclipse.plugin.smartsave.Task;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class SaverCompletionListener implements Instance, ICompletionListener {
 

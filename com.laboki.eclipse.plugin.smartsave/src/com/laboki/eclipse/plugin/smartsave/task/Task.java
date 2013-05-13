@@ -1,4 +1,6 @@
-package com.laboki.eclipse.plugin.smartsave;
+package com.laboki.eclipse.plugin.smartsave.task;
+
+import com.laboki.eclipse.plugin.smartsave.Instance;
 
 public class Task extends AbstractTask implements Instance {
 

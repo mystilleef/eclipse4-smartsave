@@ -1,6 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave;
 
 import com.laboki.eclipse.plugin.smartsave.saver.Factory;
+import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public enum Plugin implements Instance {
 	INSTANCE;

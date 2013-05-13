@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave;
+package com.laboki.eclipse.plugin.smartsave.task;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
