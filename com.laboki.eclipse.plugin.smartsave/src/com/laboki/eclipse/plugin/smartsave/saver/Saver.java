@@ -24,12 +24,12 @@ public final class Saver extends AbstractEventBusInstance {
 
 			@Override
 			public boolean shouldSchedule() {
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK, EditorContext.FILE_SYNCER_TASK);
 			}
 
 			@Override
 			public boolean shouldRun() {
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK, EditorContext.FILE_SYNCER_TASK);
 			}
 
 			@Override
