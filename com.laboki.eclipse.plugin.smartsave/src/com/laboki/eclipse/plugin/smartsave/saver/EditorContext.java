@@ -253,7 +253,9 @@ public enum EditorContext {
 		}.begin();
 	}
 
-	public static boolean taskDoesNotExist(final String name) {
-		return EditorContext.JOB_MANAGER.find(name).length == 0;
+	public static boolean taskDoesNotExist(final String... names) {
+		for (final String name : names)
+			if (EditorContext.JOB_MANAGER.find(name).length > 0) return false;
+		return true;
 	}
 }
