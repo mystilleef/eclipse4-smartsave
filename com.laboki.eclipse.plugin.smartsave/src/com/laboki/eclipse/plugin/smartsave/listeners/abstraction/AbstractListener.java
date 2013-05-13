@@ -66,12 +66,22 @@ public abstract class AbstractListener extends AbstractEventBusInstance implemen
 	}
 
 	protected void scheduleSave() {
-		EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK, 1000) {
+		new Task(EditorContext.LISTENER_TASK, 1000) {
+
+			@Override
+			public boolean shouldSchedule() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return EditorContext.taskDoesNotExist(EditorContext.SCHEDULED_SAVER_TASK);
+			}
 
 			@Override
 			public void execute() {
 				EditorContext.scheduleSave(AbstractListener.this.eventBus);
 			}
-		});
+		}.begin();
 	}
 }

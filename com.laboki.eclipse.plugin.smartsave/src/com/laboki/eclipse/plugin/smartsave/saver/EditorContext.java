@@ -28,6 +28,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EditorContext {
 	INSTANCE;
 
+	public static final String LISTENER_TASK = "Listener Task";
 	public static final String PLUGIN_NAME = "com.laboki.eclipse.plugin.smartsave";
 	public static final String CONTRIBUTOR_URI = MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
 	public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
@@ -236,9 +237,23 @@ public enum EditorContext {
 		new Task(taskName, delayTime) {
 
 			@Override
+			public boolean shouldSchedule() {
+				return EditorContext.taskDoesNotExist(EditorContext.SCHEDULED_SAVER_TASK);
+			}
+
+			@Override
+			public boolean shouldRun() {
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+			}
+
+			@Override
 			public void execute() {
 				eventBus.post(new ScheduleSaveEvent());
 			}
 		}.begin();
+	}
+
+	public static boolean taskDoesNotExist(final String name) {
+		return EditorContext.JOB_MANAGER.find(name).length == 0;
 	}
 }
