@@ -1,21 +1,20 @@
-package com.laboki.eclipse.plugin.smartsave.listeners;
+package com.laboki.eclipse.plugin.smartsave.listeners.abstraction;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public abstract class AbstractSaverListener implements ISaverListener, Instance {
+public abstract class AbstractListener extends AbstractEventBusInstance implements IListener {
 
-	private final EventBus eventBus;
-
-	public AbstractSaverListener(final EventBus eventbus) {
-		this.eventBus = eventbus;
+	public AbstractListener(final EventBus eventbus) {
+		super(eventbus);
 	}
 
 	@Subscribe
@@ -25,7 +24,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 
 			@Override
 			public void asyncExecute() {
-				AbstractSaverListener.this.tryToAdd();
+				AbstractListener.this.tryToAdd();
 			}
 		}.begin();
 	}
@@ -43,7 +42,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 
 			@Override
 			public void asyncExecute() {
-				AbstractSaverListener.this.tryToRemove();
+				AbstractListener.this.tryToRemove();
 			}
 		}.begin();
 	}
@@ -55,16 +54,9 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 	public void remove() {}
 
 	@Override
-	public Instance begin() {
-		this.eventBus.register(this);
-		return this;
-	}
-
-	@Override
 	public Instance end() {
-		this.eventBus.unregister(this);
 		this.tryToRemove();
-		return this;
+		return super.end();
 	}
 
 	private void tryToRemove() {
@@ -78,7 +70,7 @@ public abstract class AbstractSaverListener implements ISaverListener, Instance 
 
 			@Override
 			public void execute() {
-				EditorContext.scheduleSave(AbstractSaverListener.this.eventBus);
+				EditorContext.scheduleSave(AbstractListener.this.eventBus);
 			}
 		});
 	}

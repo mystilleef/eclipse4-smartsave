@@ -14,14 +14,14 @@ import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class SaverCompletionListener implements Instance, ICompletionListener {
+public final class CompletionListener implements Instance, ICompletionListener {
 
 	private final EventBus eventBus;
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistantFacade contentAssistantFacade = this.getContentAssistantFacade();
 	private final IQuickAssistAssistant quickAssistAssistant = this.getQuickAssistAssistant();
 
-	public SaverCompletionListener(final EventBus eventbus) {
+	public CompletionListener(final EventBus eventbus) {
 		this.eventBus = eventbus;
 	}
 
@@ -31,7 +31,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 
 			@Override
 			public void execute() {
-				SaverCompletionListener.this.eventBus.post(new AssistSessionEndedEvent());
+				CompletionListener.this.eventBus.post(new AssistSessionEndedEvent());
 			}
 		});
 	}
@@ -42,7 +42,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 
 			@Override
 			public void execute() {
-				SaverCompletionListener.this.eventBus.post(new AssistSessionStartedEvent());
+				CompletionListener.this.eventBus.post(new AssistSessionStartedEvent());
 			}
 		});
 	}
@@ -61,7 +61,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 		try {
 			this.add();
 		} catch (final Exception e) {
-			// SaverCompletionListener.log.log(SaverCompletionListener.FINEST, "failed to add listener");
+			// CompletionListener.log.log(CompletionListener.FINEST, "failed to add listener");
 		}
 	}
 
@@ -81,7 +81,7 @@ public final class SaverCompletionListener implements Instance, ICompletionListe
 		try {
 			this.remove();
 		} catch (final Exception e) {
-			// SaverCompletionListener.log.log(SaverCompletionListener.FINEST, "failed to remove listener");
+			// CompletionListener.log.log(CompletionListener.FINEST, "failed to remove listener");
 		}
 	}
 

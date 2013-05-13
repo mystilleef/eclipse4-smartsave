@@ -3,14 +3,15 @@ package com.laboki.eclipse.plugin.smartsave.listeners;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelListener;
 
+import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
-public class SaverAnnotationsListener extends AbstractSaverListener implements IAnnotationModelListener {
+public class AnnotationsListener extends AbstractListener implements IAnnotationModelListener {
 
-	private final IAnnotationModel annotationModel = SaverAnnotationsListener.getAnnotationModel();
+	private final IAnnotationModel annotationModel = AnnotationsListener.getAnnotationModel();
 
-	public SaverAnnotationsListener(final EventBus eventbus) {
+	public AnnotationsListener(final EventBus eventbus) {
 		super(eventbus);
 	}
 
