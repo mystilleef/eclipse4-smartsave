@@ -4,6 +4,8 @@ import org.eclipse.ui.IEditorPart;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
@@ -12,9 +14,22 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 public final class Saver extends AbstractEventBusInstance {
 
 	private final IEditorPart editor = EditorContext.getEditor();
+	private boolean completionAssistantIsActive;
 
 	public Saver(final EventBus eventBus) {
 		super(eventBus);
+	}
+
+	@Subscribe
+	@AllowConcurrentEvents
+	public void save(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+		this.completionAssistantIsActive = true;
+	}
+
+	@Subscribe
+	@AllowConcurrentEvents
+	public void save(@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
@@ -46,6 +61,7 @@ public final class Saver extends AbstractEventBusInstance {
 	}
 
 	private void save() {
+		if (this.completionAssistantIsActive) return;
 		EditorContext.tryToSave(this.editor);
 	}
 }

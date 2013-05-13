@@ -2,6 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
@@ -53,6 +54,12 @@ public final class Scheduler extends AbstractEventBusInstance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public static void cancelSaveJobs(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+		Scheduler.asyncCancelAllJobs();
+	}
+
+	@Subscribe
+	@AllowConcurrentEvents
+	public static void cancelSaveJobs(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
 		Scheduler.asyncCancelAllJobs();
 	}
 

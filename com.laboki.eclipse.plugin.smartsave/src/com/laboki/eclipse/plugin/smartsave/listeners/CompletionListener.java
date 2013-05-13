@@ -9,42 +9,42 @@ import org.eclipse.ui.IEditorPart;
 
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class CompletionListener implements Instance, ICompletionListener {
+public final class CompletionListener extends AbstractEventBusInstance implements ICompletionListener {
 
-	private final EventBus eventBus;
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistantFacade contentAssistantFacade = this.getContentAssistantFacade();
 	private final IQuickAssistAssistant quickAssistAssistant = this.getQuickAssistAssistant();
 
 	public CompletionListener(final EventBus eventbus) {
-		this.eventBus = eventbus;
+		super(eventbus);
 	}
 
 	@Override
 	public void assistSessionEnded(final ContentAssistEvent event) {
-		EditorContext.asyncExec(new Task() {
+		new Task() {
 
 			@Override
 			public void execute() {
 				CompletionListener.this.eventBus.post(new AssistSessionEndedEvent());
 			}
-		});
+		}.begin();
 	}
 
 	@Override
 	public void assistSessionStarted(final ContentAssistEvent event) {
-		EditorContext.asyncExec(new Task() {
+		new Task() {
 
 			@Override
 			public void execute() {
 				CompletionListener.this.eventBus.post(new AssistSessionStartedEvent());
 			}
-		});
+		}.begin();
 	}
 
 	@Override
@@ -52,17 +52,14 @@ public final class CompletionListener implements Instance, ICompletionListener {
 
 	@Override
 	public Instance begin() {
-		this.eventBus.register(this);
 		this.tryToAdd();
-		return this;
+		return super.begin();
 	}
 
 	private void tryToAdd() {
 		try {
 			this.add();
-		} catch (final Exception e) {
-			// CompletionListener.log.log(CompletionListener.FINEST, "failed to add listener");
-		}
+		} catch (final Exception e) {}
 	}
 
 	private void add() {
@@ -72,17 +69,14 @@ public final class CompletionListener implements Instance, ICompletionListener {
 
 	@Override
 	public Instance end() {
-		this.eventBus.unregister(this);
 		this.tryToRemove();
-		return this;
+		return super.end();
 	}
 
 	private void tryToRemove() {
 		try {
 			this.remove();
-		} catch (final Exception e) {
-			// CompletionListener.log.log(CompletionListener.FINEST, "failed to remove listener");
-		}
+		} catch (final Exception e) {}
 	}
 
 	private void remove() {
