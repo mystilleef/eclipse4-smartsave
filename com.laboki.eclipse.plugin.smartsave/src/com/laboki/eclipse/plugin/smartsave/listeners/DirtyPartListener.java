@@ -4,18 +4,18 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class DirtyPartListener implements IPropertyListener, Instance {
+public final class DirtyPartListener extends AbstractEventBusInstance implements IPropertyListener {
 
 	private final IEditorPart editor = EditorContext.getEditor();
-	private final EventBus eventBus;
 
 	public DirtyPartListener(final EventBus eventBus) {
-		this.eventBus = eventBus;
+		super(eventBus);
 	}
 
 	public void add() {
@@ -28,26 +28,24 @@ public final class DirtyPartListener implements IPropertyListener, Instance {
 
 	@Override
 	public void propertyChanged(final Object source, final int propID) {
-		if (propID == IEditorPart.PROP_DIRTY) EditorContext.asyncExec(new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		if (propID == IEditorPart.PROP_DIRTY) new Task() {
 
 			@Override
 			public void execute() {
 				DirtyPartListener.this.eventBus.post(new PartChangedEvent());
 			}
-		});
+		}.begin();
 	}
 
 	@Override
 	public Instance begin() {
-		this.eventBus.register(this);
 		this.add();
-		return this;
+		return super.begin();
 	}
 
 	@Override
 	public Instance end() {
-		this.eventBus.unregister(this);
 		this.remove();
-		return this;
+		return super.end();
 	}
 }
