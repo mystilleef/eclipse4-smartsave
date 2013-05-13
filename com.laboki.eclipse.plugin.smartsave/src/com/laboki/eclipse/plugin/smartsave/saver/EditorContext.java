@@ -51,9 +51,7 @@ public enum EditorContext {
 	public static void flushEvents() {
 		try {
 			EditorContext.tryToFlushEvents();
-		} catch (final Exception e) {
-			// e.printStackTrace();
-		}
+		} catch (final Exception e) {}
 	}
 
 	private static void tryToFlushEvents() {
@@ -189,9 +187,7 @@ public enum EditorContext {
 	public static void syncFile(final IEditorPart editor) {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (final Exception e) {
-			// EditorContext.log.log(Level.FINEST, "Failed to refresh, or synchronize, local resource file.", e);
-		}
+		} catch (final Exception e) {}
 	}
 
 	private static IFile getFile(final IEditorPart editor) {
