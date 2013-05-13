@@ -36,7 +36,7 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void disableListeners(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		new Task() {
 
 			@Override
 			public void execute() {
@@ -46,7 +46,7 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 	}
 
 	private void asyncToggleSaverListeners() {
-		new AsyncTask(EditorContext.SCHEDULED_SAVER_TASK) {
+		new AsyncTask() {
 
 			@Override
 			public void asyncExecute() {
