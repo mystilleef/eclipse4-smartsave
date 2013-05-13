@@ -28,6 +28,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EditorContext {
 	INSTANCE;
 
+	static final String FILE_SYNCER_TASK = "file syncer task";
 	public static final String LISTENER_TASK = "Listener Task";
 	public static final String PLUGIN_NAME = "com.laboki.eclipse.plugin.smartsave";
 	public static final String CONTRIBUTOR_URI = MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
@@ -207,6 +208,8 @@ public enum EditorContext {
 		EditorContext.cancelSaveJobs();
 		EditorContext.cancelScheduledSaveJobs();
 		EditorContext.cancelListenerJobs();
+		EditorContext.cancelJobsBelongingTo(EditorContext.FILE_SYNCER_TASK);
+		EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_TASK);
 	}
 
 	public static void cancelSaveJobs() {
