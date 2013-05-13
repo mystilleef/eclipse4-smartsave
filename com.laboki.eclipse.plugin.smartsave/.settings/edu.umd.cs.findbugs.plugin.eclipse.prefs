@@ -1,6 +1,0 @@
-cacheClassData=true
-dontRemindAboutFullBuild=true
-eclipse.preferences.version=1
-edu.umd.cs.findbugs.plugin.eclipse.findbugsMarkerOfConcern=Info
-edu.umd.cs.findbugs.plugin.eclipse.findbugsMarkerScariest=Error
-runAnalysisAsExtraJob=true
