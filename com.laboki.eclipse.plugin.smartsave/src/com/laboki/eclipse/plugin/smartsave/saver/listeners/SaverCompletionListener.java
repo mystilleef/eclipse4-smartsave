@@ -9,10 +9,10 @@ import org.eclipse.ui.IEditorPart;
 
 import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
-import com.laboki.eclipse.plugin.smartsave.saver.events.AssistSessionEndedEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.AssistSessionStartedEvent;
 
 public final class SaverCompletionListener implements Instance, ICompletionListener {
 

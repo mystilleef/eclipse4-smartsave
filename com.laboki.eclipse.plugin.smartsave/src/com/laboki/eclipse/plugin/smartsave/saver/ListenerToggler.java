@@ -6,11 +6,11 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
-import com.laboki.eclipse.plugin.smartsave.saver.events.AssistSessionEndedEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.AssistSessionStartedEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.PartChangedEvent;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
+import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
+import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 
 public final class ListenerToggler implements Instance {
 

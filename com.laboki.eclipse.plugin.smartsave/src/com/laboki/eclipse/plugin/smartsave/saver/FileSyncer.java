@@ -6,8 +6,8 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
-import com.laboki.eclipse.plugin.smartsave.saver.events.StartSaveScheduleEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
+import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
+import com.laboki.eclipse.plugin.smartsave.events.SyncFilesEvent;
 
 final class FileSyncer implements Instance {
 

@@ -4,10 +4,10 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.Task;
-import com.laboki.eclipse.plugin.smartsave.saver.events.DisableSaveListenersEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.EnableSaveListenersEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.ScheduleSaveEvent;
-import com.laboki.eclipse.plugin.smartsave.saver.events.SyncFilesEvent;
+import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
+import com.laboki.eclipse.plugin.smartsave.events.SyncFilesEvent;
 
 public final class Scheduler implements Instance {
 
