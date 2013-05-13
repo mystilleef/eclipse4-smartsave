@@ -24,12 +24,12 @@ final class FileSyncer extends AbstractEventBusInstance {
 
 			@Override
 			public boolean shouldSchedule() {
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.AUTOMATIC_SAVER_TASK);
 			}
 
 			@Override
 			public boolean shouldRun() {
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.AUTOMATIC_SAVER_TASK);
 			}
 
 			@Override
