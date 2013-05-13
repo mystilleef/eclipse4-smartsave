@@ -4,9 +4,9 @@ import org.eclipse.ui.IEditorPart;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-import com.laboki.eclipse.plugin.smartsave.Instance;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
 import com.laboki.eclipse.plugin.smartsave.events.SyncFilesEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 final class FileSyncer implements Instance {

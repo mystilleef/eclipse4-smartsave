@@ -1,5 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave;
 
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.Factory;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 

@@ -8,7 +8,7 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 
 import com.google.common.collect.Maps;
-import com.laboki.eclipse.plugin.smartsave.Instance;
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 
 public enum Factory implements Instance {
 	INSTANCE;

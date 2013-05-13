@@ -25,6 +25,7 @@ Export-Package: com.google.common.annotations,
  com.google.common.util.concurrent,
  com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
  com.laboki.eclipse.plugin.smartsave.events,
+ com.laboki.eclipse.plugin.smartsave.instance,
  com.laboki.eclipse.plugin.smartsave.listeners,
  com.laboki.eclipse.plugin.smartsave.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.preferences.ui;
@@ -39,7 +40,8 @@ Export-Package: com.google.common.annotations,
    org.eclipse.core.runtime.jobs,
    org.eclipse.ui,
    org.eclipse.swt.custom,
-   org.eclipse.swt.widgets"
+   org.eclipse.swt.widgets",
+ com.laboki.eclipse.plugin.smartsave.task
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator
 Bundle-ClassPath: .,
  guava-14.0.1.jar

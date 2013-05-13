@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.laboki.eclipse.plugin.smartsave.Instance;
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.SaverAnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.SaverCompletionListener;
