@@ -32,7 +32,7 @@ public final class DirtyPartListener extends AbstractEventBusInstance implements
 
 			@Override
 			public void execute() {
-				DirtyPartListener.this.eventBus.post(new PartChangedEvent());
+				DirtyPartListener.this.postEvent();
 			}
 		}.begin();
 	}
@@ -40,7 +40,12 @@ public final class DirtyPartListener extends AbstractEventBusInstance implements
 	@Override
 	public Instance begin() {
 		this.add();
+		this.postEvent();
 		return super.begin();
+	}
+
+	private void postEvent() {
+		DirtyPartListener.this.eventBus.post(new PartChangedEvent());
 	}
 
 	@Override
