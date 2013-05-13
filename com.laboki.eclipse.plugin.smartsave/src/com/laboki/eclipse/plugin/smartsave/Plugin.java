@@ -2,17 +2,17 @@ package com.laboki.eclipse.plugin.smartsave;
 
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.Factory;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public enum Plugin implements Instance {
 	INSTANCE;
 
 	@Override
 	public Instance begin() {
-		new Task() {
+		new AsyncTask() {
 
 			@Override
-			public void asyncExec() {
+			public void asyncExecute() {
 				Factory.INSTANCE.begin();
 			}
 		}.begin();
@@ -21,10 +21,10 @@ public enum Plugin implements Instance {
 
 	@Override
 	public Instance end() {
-		new Task() {
+		new AsyncTask() {
 
 			@Override
-			public void asyncExec() {
+			public void asyncExecute() {
 				Factory.INSTANCE.end();
 			}
 		}.begin();

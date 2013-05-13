@@ -5,15 +5,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-abstract class AbstractTask extends Job implements Runnable, ITask {
+abstract class AbstractTask extends Job implements Runnable, Instance {
 
-	public static final int TASK_INTERACTIVE = Job.INTERACTIVE;
-	public static final int TASK_SHORT = Job.SHORT;
-	public static final int TASK_LONG = Job.LONG;
-	public static final int TASK_BUILD = Job.BUILD;
-	public static final int TASK_DECORATE = Job.DECORATE;
 	private final int delayTime;
 	private final String name;
 
@@ -30,10 +26,22 @@ abstract class AbstractTask extends Job implements Runnable, ITask {
 	}
 
 	@Override
-	public void run() {
+	public Instance end() {
+		this.cancel();
+		return this;
+	}
+
+	@Override
+	public Instance begin() {
 		this.setUser(false);
 		this.setSystem(true);
 		this.schedule(this.delayTime);
+		return this;
+	}
+
+	@Override
+	public void run() {
+		this.begin();
 	}
 
 	@Override
@@ -43,29 +51,39 @@ abstract class AbstractTask extends Job implements Runnable, ITask {
 		return Status.OK_STATUS;
 	}
 
-	private void runTask() {
+	protected void runTask() {}
+
+	protected void runExecute() {
 		this.execute();
-		this.runAsyncExec();
-		this.postExecute();
 	}
 
-	@Override
-	public void execute() {}
+	protected void execute() {}
 
-	private void runAsyncExec() {
+	protected void runAsyncExecute() {
 		EditorContext.asyncExec(new Runnable() {
 
 			@Override
 			public void run() {
 				EditorContext.flushEvents();
-				AbstractTask.this.asyncExec();
+				AbstractTask.this.asyncExecute();
+				EditorContext.flushEvents();
 			}
 		});
 	}
 
-	@Override
-	public void asyncExec() {}
+	protected void asyncExecute() {}
 
-	@Override
-	public void postExecute() {}
+	protected void runSyncExecute() {
+		EditorContext.syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				EditorContext.flushEvents();
+				AbstractTask.this.syncExecute();
+				EditorContext.flushEvents();
+			}
+		});
+	}
+
+	protected void syncExecute() {}
 }

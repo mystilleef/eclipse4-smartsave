@@ -9,16 +9,16 @@ import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class ListenerToggler implements Instance {
+public final class ListenerToggler extends AbstractEventBusInstance {
 
-	private final EventBus eventBus;
 	private final IEditorPart editor = EditorContext.getEditor();
 
 	public ListenerToggler(final EventBus eventBus) {
-		this.eventBus = eventBus;
+		super(eventBus);
 	}
 
 	@Subscribe
@@ -46,10 +46,10 @@ public final class ListenerToggler implements Instance {
 	}
 
 	private void asyncToggleSaverListeners() {
-		new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		new AsyncTask(EditorContext.SCHEDULED_SAVER_TASK) {
 
 			@Override
-			public void asyncExec() {
+			public void asyncExecute() {
 				ListenerToggler.this.toggleSaverListeners();
 			}
 		}.begin();
@@ -68,17 +68,5 @@ public final class ListenerToggler implements Instance {
 	private void postEnableListenersEvent() {
 		EditorContext.cancelAllJobs();
 		this.eventBus.post(new EnableSaveListenersEvent());
-	}
-
-	@Override
-	public Instance begin() {
-		this.eventBus.register(this);
-		return this;
-	}
-
-	@Override
-	public Instance end() {
-		this.eventBus.unregister(this);
-		return this;
 	}
 }

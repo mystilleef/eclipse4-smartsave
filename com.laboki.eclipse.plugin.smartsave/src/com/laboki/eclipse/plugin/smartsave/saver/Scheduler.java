@@ -6,15 +6,13 @@ import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.events.SyncFilesEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class Scheduler implements Instance {
-
-	private final EventBus eventBus;
+public final class Scheduler extends AbstractEventBusInstance {
 
 	public Scheduler(final EventBus eventBus) {
-		this.eventBus = eventBus;
+		super(eventBus);
 	}
 
 	@Subscribe
@@ -25,10 +23,6 @@ public final class Scheduler implements Instance {
 			@Override
 			public void execute() {
 				Scheduler.cancelAllJobs();
-			}
-
-			@Override
-			public void postExecute() {
 				Scheduler.this.eventBus.post(new SyncFilesEvent());
 			}
 		}.begin();
@@ -64,17 +58,5 @@ public final class Scheduler implements Instance {
 
 	private static void cancelAllJobs() {
 		EditorContext.cancelAllJobs();
-	}
-
-	@Override
-	public Instance begin() {
-		this.eventBus.register(this);
-		return this;
-	}
-
-	@Override
-	public Instance end() {
-		this.eventBus.unregister(this);
-		return this;
 	}
 }

@@ -5,41 +5,34 @@ import org.eclipse.ui.IEditorPart;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
-public final class Saver implements Instance {
+public final class Saver extends AbstractEventBusInstance {
 
-	private final EventBus eventBus;
 	private final IEditorPart editor = EditorContext.getEditor();
 
 	public Saver(final EventBus eventBus) {
-		this.eventBus = eventBus;
+		super(eventBus);
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void save(@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-		new Task(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+		new AsyncTask(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
 			@Override
-			public void asyncExec() {
+			public void asyncExecute() {
 				Saver.this.save();
 			}
 		}.begin();
 	}
 
 	@Override
-	public Instance begin() {
-		this.eventBus.register(this);
-		return this;
-	}
-
-	@Override
 	public Instance end() {
-		this.eventBus.unregister(this);
 		this.save();
-		return this;
+		return super.end();
 	}
 
 	private void save() {

@@ -6,16 +6,15 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
 import com.laboki.eclipse.plugin.smartsave.events.SyncFilesEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-final class FileSyncer implements Instance {
+final class FileSyncer extends AbstractEventBusInstance {
 
-	private final EventBus eventBus;
 	private final IEditorPart editor = EditorContext.getEditor();
 
 	public FileSyncer(final EventBus eventBus) {
-		this.eventBus = eventBus;
+		super(eventBus);
 	}
 
 	@Subscribe
@@ -26,24 +25,8 @@ final class FileSyncer implements Instance {
 			@Override
 			public void execute() {
 				EditorContext.syncFile(FileSyncer.this.editor);
-			}
-
-			@Override
-			public void postExecute() {
 				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
 			}
 		}.begin();
-	}
-
-	@Override
-	public Instance begin() {
-		this.eventBus.register(this);
-		return this;
-	}
-
-	@Override
-	public Instance end() {
-		this.eventBus.unregister(this);
-		return this;
 	}
 }
