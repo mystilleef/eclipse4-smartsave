@@ -42,7 +42,7 @@ public final class Scheduler extends AbstractEventBusInstance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		new Task(EditorContext.SCHEDULED_SAVER_TASK) {
+		new Task(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK) {
 
 			@Override
 			public void execute() {
