@@ -33,7 +33,6 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 	public SaveIntervalDialogSpinner(final Composite composite, final EventBus eventBus) {
 		super(eventBus);
 		SaveIntervalDialogSpinner.spinner = new Spinner(composite, SWT.BORDER | SWT.RIGHT);
-		// SaveIntervalDialogSpinner.updateProperties();
 	}
 
 	private static void updateProperties() {
