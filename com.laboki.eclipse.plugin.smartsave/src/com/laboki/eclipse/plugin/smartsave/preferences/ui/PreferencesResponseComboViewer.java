@@ -12,13 +12,13 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
-class PreferencesResponseComboViewer extends ResponseComboViewer implements Instance {
+abstract class PreferencesResponseComboViewer extends ResponseComboViewer implements Instance {
 
-	public static final int YES = 0;
-	public static final int NO = 1;
+	protected static final int YES = 0;
+	protected static final int NO = 1;
 	private final EventBus eventBus;
 
-	public PreferencesResponseComboViewer(final Composite parent, final EventBus eventBus) {
+	protected PreferencesResponseComboViewer(final Composite parent, final EventBus eventBus) {
 		super(parent);
 		this.eventBus = eventBus;
 	}
@@ -58,6 +58,7 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements Inst
 	@Override
 	public Instance begin() {
 		this.eventBus.register(this);
+		this.startListening();
 		this.updateComboProperties();
 		return this;
 	}
@@ -65,6 +66,7 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements Inst
 	@Override
 	public Instance end() {
 		this.eventBus.unregister(this);
+		this.stopListening();
 		return this;
 	}
 }
