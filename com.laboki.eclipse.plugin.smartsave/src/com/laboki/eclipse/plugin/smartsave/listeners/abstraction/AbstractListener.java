@@ -74,11 +74,6 @@ public abstract class AbstractListener extends AbstractEventBusInstance implemen
 			}
 
 			@Override
-			public boolean shouldRun() {
-				return EditorContext.taskDoesNotExist(EditorContext.SCHEDULED_SAVER_TASK);
-			}
-
-			@Override
 			public void execute() {
 				EditorContext.scheduleSave(AbstractListener.this.eventBus);
 			}
