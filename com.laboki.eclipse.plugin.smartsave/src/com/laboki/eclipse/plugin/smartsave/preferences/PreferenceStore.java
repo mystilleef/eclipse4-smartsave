@@ -52,12 +52,16 @@ public enum PreferenceStore {
 
 	public static void clear() {
 		try {
-			final IEclipsePreferences pref = PreferenceStore.getPreferences();
-			pref.clear();
-			PreferenceStore.tryToUpdate(pref);
+			PreferenceStore.tryToClear();
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void tryToClear() throws BackingStoreException {
+		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		pref.clear();
+		PreferenceStore.tryToUpdate(pref);
 	}
 
 	public static IEclipsePreferences getPreferences() {
