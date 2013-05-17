@@ -74,10 +74,10 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	}
 
 	private static Composite createHorizontalLayoutComposite() {
-		final Composite layoutComposite = new Composite(PreferencesPage.pageComposite, SWT.NONE);
-		layoutComposite.setLayout(new GridLayout(2, false));
-		layoutComposite.setLayoutData(PreferencesPage.createHorizontalDataGrid());
-		return layoutComposite;
+		final Composite composite = new Composite(PreferencesPage.pageComposite, SWT.NONE);
+		composite.setLayout(new GridLayout(2, false));
+		composite.setLayoutData(PreferencesPage.createHorizontalDataGrid());
+		return composite;
 	}
 
 	private static GridData createHorizontalDataGrid() {
