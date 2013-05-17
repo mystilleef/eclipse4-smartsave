@@ -3,6 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -17,7 +18,6 @@ import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
-	private static final int FONT_SIZE = 12;
 	private static Composite pageComposite;
 	private final EventBus eventBus = EditorContext.EVENT_BUS;
 
@@ -42,16 +42,13 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		PreferencesPage.createLabel(composite, "&Save files automatically: ");
 		new SaveResponseComboViewer(composite, this.eventBus).begin();
-		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
 	private void createWarningErrorSection() {
-		PreferencesPage.separator(PreferencesPage.pageComposite);
 		PreferencesPage.createSectionLabel("Errors and Warnings");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		this.createErrorComboView(composite, "Save files when &errors are present: ");
 		this.createWarningComboView(composite, "Save files when &warnings are present: ");
-		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
 	private void createErrorComboView(final Composite composite, final String name) {
@@ -65,7 +62,6 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	}
 
 	private void createSaveIntervalSections() {
-		PreferencesPage.separator(PreferencesPage.pageComposite);
 		PreferencesPage.createSectionLabel("Save Interval");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		PreferencesPage.createLabel(composite, "If possible try to save &files every: ");
@@ -99,12 +95,7 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	private static void newSectionLabel(final Composite composite, final String title) {
 		final Label label = new Label(composite, SWT.None);
 		label.setText(title);
-		label.setFont(new Font(PreferencesPage.pageComposite.getDisplay(), label.getFont().getFontData()[0].getName(), PreferencesPage.FONT_SIZE, SWT.BOLD));
-	}
-
-	private static void separator(final Composite composite) {
-		final Label separator = new Label(composite, SWT.HORIZONTAL | SWT.SEPARATOR);
-		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		label.setFont(FONT.LARGE_BOLD_FONT);
 	}
 
 	@Override
@@ -113,5 +104,18 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	@Override
 	protected void performDefaults() {
 		Store.clear();
+	}
+
+	private enum FONT {
+		FONT;
+
+		private static final FontData[] FONT_DATAS = EditorContext.getShell().getFont().getFontData();
+		private static final String DEFAULT_FONT_NAME = FONT.FONT_DATAS[0].getName();
+		private static final int DEFAULT_FONT_HEIGHT = FONT.FONT_DATAS[0].getHeight();
+		public static final Font LARGE_BOLD_FONT = FONT.makeLargeBoldFont();
+
+		private static Font makeLargeBoldFont() {
+			return new Font(EditorContext.DISPLAY, FONT.DEFAULT_FONT_NAME, FONT.DEFAULT_FONT_HEIGHT + 2, SWT.BOLD);
+		}
 	}
 }

@@ -14,6 +14,7 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
@@ -79,6 +80,10 @@ public enum EditorContext {
 
 	public static IPartService getPartService() {
 		return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow().getService(IPartService.class);
+	}
+
+	public static Shell getShell() {
+		return EditorContext.WORKBENCH.getModalDialogShellProvider().getShell();
 	}
 
 	public static IEditorPart getEditor() {
