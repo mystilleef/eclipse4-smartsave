@@ -3,33 +3,41 @@ package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import com.laboki.eclipse.plugin.smartsave.events.FocusSaveIntervalDialogSpinnerEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 final class SaveIntervalDialog extends AbstractEventBusInstance {
 
 	private static final int SPINNER_GRID_LAYOUT_COLUMNS = 3;
 	private static final int MARGIN_SIZE = 10;
-	private static Shell dialog;
+	private final Shell dialog;
 
 	public SaveIntervalDialog(final Composite composite, final EventBus eventBus) {
 		super(eventBus);
-		SaveIntervalDialog.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		this.updateProperties();
+		this.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 	}
 
-	private void updateProperties() {
-		SaveIntervalDialog.getDialog().setLayout(SaveIntervalDialog.createLayout());
-		SaveIntervalDialog.getDialog().setText("Save Interval");
-		SaveIntervalDialog.addLabel();
-		this.addSpinnerSection();
-		SaveIntervalDialog.getDialog().pack();
+	@Override
+	public Instance begin() {
+		this.setupDialog();
+		this.arrangeWidgets();
+		return super.begin();
+	}
+
+	private void setupDialog() {
+		this.dialog.setLayout(SaveIntervalDialog.createLayout());
+		this.dialog.setText("Save Interval");
+		this.dialog.addShellListener(new DialogShellListener());
 	}
 
 	private static GridLayout createLayout() {
@@ -41,18 +49,24 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 		return layout;
 	}
 
-	private static void addLabel() {
+	private void arrangeWidgets() {
+		this.addLabel();
+		this.addSpinnerSection();
+		this.dialog.pack();
+	}
+
+	private void addLabel() {
 		final String text = "Press ESC or ENTER to close window.";
-		final StyledText fieldText = new StyledText(SaveIntervalDialog.getDialog(), SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
-		SaveIntervalDialog.setLabelProperties(text, fieldText);
+		final StyledText fieldText = new StyledText(this.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
+		this.setLabelProperties(text, fieldText);
 		SaveIntervalDialog.setLabelStyle(text, fieldText);
 	}
 
-	private static void setLabelProperties(final String text, final StyledText fieldText) {
+	private void setLabelProperties(final String text, final StyledText fieldText) {
 		fieldText.setText(text);
 		fieldText.setEditable(false);
 		fieldText.setCaret(null);
-		fieldText.setBackground(SaveIntervalDialog.getDialog().getBackground());
+		fieldText.setBackground(this.dialog.getBackground());
 		fieldText.setLayoutData(new GridData());
 	}
 
@@ -65,7 +79,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 	}
 
 	private void addSpinnerSection() {
-		final Composite composite = SaveIntervalDialog.createSpinnerComposite();
+		final Composite composite = this.createSpinnerComposite();
 		SaveIntervalDialog.createLabel(composite, "Save files every ");
 		new SaveIntervalDialogSpinner(composite, this.eventBus).begin();
 		SaveIntervalDialog.createLabel(composite, " seconds");
@@ -76,18 +90,45 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 		label.setText(name);
 	}
 
-	private static Composite createSpinnerComposite() {
-		final Composite composite = new Composite(SaveIntervalDialog.getDialog(), SWT.NONE);
+	private Composite createSpinnerComposite() {
+		final Composite composite = new Composite(this.dialog, SWT.NONE);
 		composite.setLayout(new GridLayout(SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS, false));
 		composite.setLayoutData(new GridData());
 		return composite;
 	}
 
-	public static void show() {
-		SaveIntervalDialog.getDialog().open();
+	public void show() {
+		this.dialog.open();
 	}
 
-	public static Shell getDialog() {
-		return SaveIntervalDialog.dialog;
+	@Override
+	public Instance end() {
+		this.dialog.dispose();
+		return super.end();
+	}
+
+	private final class DialogShellListener implements ShellListener {
+
+		public DialogShellListener() {}
+
+		@Override
+		public void shellActivated(final ShellEvent arg0) {
+			SaveIntervalDialog.this.eventBus.post(new FocusSaveIntervalDialogSpinnerEvent());
+		}
+
+		@Override
+		public void shellClosed(final ShellEvent event) {
+			event.doit = false;
+			SaveIntervalDialog.this.dialog.setVisible(false);
+		}
+
+		@Override
+		public void shellDeactivated(final ShellEvent arg0) {}
+
+		@Override
+		public void shellDeiconified(final ShellEvent arg0) {}
+
+		@Override
+		public void shellIconified(final ShellEvent arg0) {}
 	}
 }
