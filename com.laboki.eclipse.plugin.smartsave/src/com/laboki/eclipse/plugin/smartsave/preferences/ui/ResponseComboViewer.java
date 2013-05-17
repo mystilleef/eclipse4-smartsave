@@ -12,7 +12,9 @@ abstract class ResponseComboViewer extends ComboViewer {
 
 	private final LabelProvider labelProvider = new ResponseLabelProvider();
 	private final ISelectionChangedListener listener = new ResponseSelectionListener();
-	private final Response[] responses = new Response[] { this.new Response(Response.YES), this.new Response(Response.NO), };
+	private final Response[] responses = new Response[] {
+			this.new Response(Response.YES),
+			this.new Response(Response.NO), };
 
 	protected ResponseComboViewer(final Composite parent) {
 		super(parent, SWT.READ_ONLY);
