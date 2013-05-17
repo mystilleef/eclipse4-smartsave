@@ -20,7 +20,7 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance imp
 	}
 
 	@Override
-	public void preferenceChange(final PreferenceChangeEvent arg0) {
+	public void preferenceChange(final PreferenceChangeEvent event) {
 		new Task() {
 
 			@Override

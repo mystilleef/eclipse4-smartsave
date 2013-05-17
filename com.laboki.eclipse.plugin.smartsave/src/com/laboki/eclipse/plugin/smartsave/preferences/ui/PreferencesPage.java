@@ -14,13 +14,14 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
+import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private static final int FONT_SIZE = 12;
 	private static Composite pageComposite;
-	private final EventBus eventBus = new EventBus();
+	private final EventBus eventBus = EditorContext.EVENT_BUS;
 	private final Instance preferenceChangeListener = new PreferenceChangeListener(this.eventBus);
 
 	@Override

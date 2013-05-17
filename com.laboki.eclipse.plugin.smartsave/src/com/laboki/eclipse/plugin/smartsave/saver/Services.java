@@ -16,7 +16,6 @@ import com.laboki.eclipse.plugin.smartsave.preferences.Updater;
 public final class Services implements Instance {
 
 	private final List<Instance> instances = Lists.newArrayList();
-	private final EventBus eventBus = new EventBus();
 
 	@Override
 	public Instance begin() {
@@ -25,17 +24,17 @@ public final class Services implements Instance {
 	}
 
 	private void startServices() {
-		this.startService(new Saver(this.eventBus));
-		this.startService(new FileSyncer(this.eventBus));
-		this.startService(new Scheduler(this.eventBus));
-		this.startService(new VerifyEventListener(this.eventBus));
-		this.startService(new AnnotationsListener(this.eventBus));
-		this.startService(new KeyEventListener(this.eventBus));
-		this.startService(new ListenerToggler(this.eventBus));
-		this.startService(new CompletionListener(this.eventBus));
-		this.startService(new DirtyPartListener(this.eventBus));
-		this.startService(new PreferenceChangeListener(this.eventBus));
-		this.startService(new Updater(this.eventBus));
+		this.startService(new Saver(EditorContext.EVENT_BUS));
+		this.startService(new FileSyncer(EditorContext.EVENT_BUS));
+		this.startService(new Scheduler(EditorContext.EVENT_BUS));
+		this.startService(new VerifyEventListener(EditorContext.EVENT_BUS));
+		this.startService(new AnnotationsListener(EditorContext.EVENT_BUS));
+		this.startService(new KeyEventListener(EditorContext.EVENT_BUS));
+		this.startService(new ListenerToggler(EditorContext.EVENT_BUS));
+		this.startService(new CompletionListener(EditorContext.EVENT_BUS));
+		this.startService(new DirtyPartListener(EditorContext.EVENT_BUS));
+		this.startService(new Updater(EditorContext.EVENT_BUS));
+		this.startService(new PreferenceChangeListener(EditorContext.EVENT_BUS));
 	}
 
 	private void startService(final Instance instance) {

@@ -35,7 +35,7 @@ final class FileSyncer extends AbstractEventBusInstance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
-		new Task(EditorContext.FILE_SYNCER_TASK, EditorContext.getSaveIntervalInMilliSeconds() - 1000) {
+		new Task(EditorContext.FILE_SYNCER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
 
 			@Override
 			public boolean shouldSchedule() {

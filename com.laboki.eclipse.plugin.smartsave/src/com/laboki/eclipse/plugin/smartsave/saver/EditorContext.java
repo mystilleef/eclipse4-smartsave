@@ -28,6 +28,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EditorContext {
 	INSTANCE;
 
+	public static final EventBus EVENT_BUS = new EventBus();
 	static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK = "smartsave scheduler enable save listeners event task";
 	static final String FILE_SYNCER_TASK = "file syncer task";
 	public static final String LISTENER_TASK = "Listener Task";
@@ -195,7 +196,7 @@ public enum EditorContext {
 	}
 
 	public static int getSaveIntervalInMilliSeconds() {
-		return EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT;
+		return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT) - 1000;
 	}
 
 	public static int getSaveIntervalInSeconds() {
