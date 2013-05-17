@@ -81,8 +81,7 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	}
 
 	private static GridData createHorizontalDataGrid() {
-		final GridData data = new GridData(SWT.FILL, SWT.NONE, true, false);
-		return data;
+		return new GridData(SWT.FILL, SWT.NONE, true, false);
 	}
 
 	private static void createSectionLabel(final String title) {
