@@ -22,7 +22,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 
 	private static final int ZERO = 0;
 	private static Button button;
-	private static SaveIntervalDialog dialog;
+	private SaveIntervalDialog dialog;
 	private static final int SIXTY_SECONDS = 60;
 	private final SelectionListener buttonListener = new ButtonListener();
 	private final Composite composite;
@@ -31,7 +31,6 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 		super(eventBus);
 		this.composite = composite;
 		SaveIntervalButton.button = new Button(composite, SWT.FLAT);
-		// SaveIntervalButton.updateText();
 	}
 
 	private static void updateText() {
@@ -55,9 +54,13 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 	}
 
 	private static String formatMinutesAndSeconds(final int minutes, final int seconds) {
-		if (minutes == SaveIntervalButton.ZERO) return MessageFormat.format(" {0} sec ", String.valueOf(seconds));
-		if (seconds == SaveIntervalButton.ZERO) return MessageFormat.format(" {0} min ", String.valueOf(minutes));
+		if (SaveIntervalButton.zero(minutes)) return MessageFormat.format(" {0} sec ", String.valueOf(seconds));
+		if (SaveIntervalButton.zero(seconds)) return MessageFormat.format(" {0} min ", String.valueOf(minutes));
 		return MessageFormat.format(" {0} min {1} sec ", String.valueOf(minutes), String.valueOf(seconds));
+	}
+
+	private static boolean zero(final int minutes) {
+		return minutes == SaveIntervalButton.ZERO;
 	}
 
 	@Override
@@ -83,12 +86,15 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 		}.begin();
 	}
 
-	@SuppressWarnings("unused")
 	public void showSaveIntervalDialog() {
-		if (SaveIntervalButton.dialog == null) {
-			new SaveIntervalDialog(this.composite, this.eventBus);
-			SaveIntervalDialog.show();
-		} else SaveIntervalDialog.show();
+		if (this.dialog == null) this.showNewDialog();
+		else this.dialog.show();
+	}
+
+	private void showNewDialog() {
+		this.dialog = new SaveIntervalDialog(this.composite, this.eventBus);
+		this.dialog.begin();
+		this.dialog.show();
 	}
 
 	private final class ButtonListener implements SelectionListener, Runnable {
