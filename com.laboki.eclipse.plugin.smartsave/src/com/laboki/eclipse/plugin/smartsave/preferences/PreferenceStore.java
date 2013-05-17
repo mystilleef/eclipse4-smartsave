@@ -54,7 +54,7 @@ public enum PreferenceStore {
 		try {
 			final IEclipsePreferences pref = PreferenceStore.getPreferences();
 			pref.clear();
-			PreferenceStore.update(pref);
+			PreferenceStore.tryToUpdate(pref);
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}
@@ -67,33 +67,37 @@ public enum PreferenceStore {
 	private static void setBoolean(final String key, final boolean value) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putBoolean(key, value);
-		PreferenceStore.update(pref);
+		PreferenceStore.tryToUpdate(pref);
 	}
 
 	private static boolean getBoolean(final String key, final boolean defaultValue) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.update(pref);
+		PreferenceStore.tryToUpdate(pref);
 		return pref.getBoolean(key, defaultValue);
 	}
 
 	private static void setInt(final String key, final int value) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putInt(key, value);
-		PreferenceStore.update(pref);
+		PreferenceStore.tryToUpdate(pref);
 	}
 
 	private static int getInt(final String key, final int defaultValue) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.update(pref);
+		PreferenceStore.tryToUpdate(pref);
 		return pref.getInt(key, defaultValue);
 	}
 
-	private static void update(final IEclipsePreferences preferences) {
+	private static void tryToUpdate(final IEclipsePreferences preferences) {
 		try {
-			preferences.flush();
-			preferences.sync();
+			PreferenceStore.update(preferences);
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void update(final IEclipsePreferences preferences) throws BackingStoreException {
+		preferences.flush();
+		preferences.sync();
 	}
 }
