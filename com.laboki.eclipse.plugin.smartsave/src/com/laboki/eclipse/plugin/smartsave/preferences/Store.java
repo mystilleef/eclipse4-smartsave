@@ -6,7 +6,7 @@ import org.osgi.service.prefs.BackingStoreException;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-public enum PreferenceStore {
+public enum Store {
 	INSTANCE;
 
 	private static final boolean CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE = true;
@@ -19,71 +19,71 @@ public enum PreferenceStore {
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
 
 	public static void setCanSaveAutomatically(final boolean saveAutomatically) {
-		PreferenceStore.setBoolean(PreferenceStore.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
+		Store.setBoolean(Store.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
 	}
 
 	public static boolean getCanSaveAutomatically() {
-		return PreferenceStore.getBoolean(PreferenceStore.SAVE_AUTOMATICALLY_KEY, PreferenceStore.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
+		return Store.getBoolean(Store.SAVE_AUTOMATICALLY_KEY, Store.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
 	}
 
 	public static void setCanSaveIfWarnings(final boolean checkWarnings) {
-		PreferenceStore.setBoolean(PreferenceStore.WARNINGS_KEY, checkWarnings);
+		Store.setBoolean(Store.WARNINGS_KEY, checkWarnings);
 	}
 
 	public static boolean getCanSaveIfWarnings() {
-		return PreferenceStore.getBoolean(PreferenceStore.WARNINGS_KEY, PreferenceStore.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
+		return Store.getBoolean(Store.WARNINGS_KEY, Store.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
 	}
 
 	public static void setCanSaveIfErrors(final boolean checkErrors) {
-		PreferenceStore.setBoolean(PreferenceStore.ERRORS_KEY, checkErrors);
+		Store.setBoolean(Store.ERRORS_KEY, checkErrors);
 	}
 
 	public static boolean getCanSaveIfErrors() {
-		return PreferenceStore.getBoolean(PreferenceStore.ERRORS_KEY, PreferenceStore.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
+		return Store.getBoolean(Store.ERRORS_KEY, Store.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
 	}
 
 	public static void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
-		PreferenceStore.setInt(PreferenceStore.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
+		Store.setInt(Store.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
 	}
 
 	public static int getSaveIntervalInSeconds() {
-		return PreferenceStore.getInt(PreferenceStore.SAVE_INTERVAL_KEY, PreferenceStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
+		return Store.getInt(Store.SAVE_INTERVAL_KEY, Store.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
 	}
 
 	private static void setBoolean(final String key, final boolean value) {
-		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		final IEclipsePreferences pref = Store.getPreferences();
 		pref.putBoolean(key, value);
-		PreferenceStore.update(pref);
+		Store.update(pref);
 	}
 
 	private static boolean getBoolean(final String key, final boolean defaultValue) {
-		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.update(pref);
+		final IEclipsePreferences pref = Store.getPreferences();
+		Store.update(pref);
 		return pref.getBoolean(key, defaultValue);
 	}
 
 	private static void setInt(final String key, final int value) {
-		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		final IEclipsePreferences pref = Store.getPreferences();
 		pref.putInt(key, value);
-		PreferenceStore.update(pref);
+		Store.update(pref);
 	}
 
 	private static int getInt(final String key, final int defaultValue) {
-		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.update(pref);
+		final IEclipsePreferences pref = Store.getPreferences();
+		Store.update(pref);
 		return pref.getInt(key, defaultValue);
 	}
 
 	public static void clear() {
 		try {
-			PreferenceStore.tryToClear();
+			Store.tryToClear();
 		} catch (final BackingStoreException e) {}
 	}
 
 	private static void tryToClear() throws BackingStoreException {
-		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		final IEclipsePreferences pref = Store.getPreferences();
 		pref.clear();
-		PreferenceStore.update(pref);
+		Store.update(pref);
 	}
 
 	public static IEclipsePreferences getPreferences() {
@@ -92,7 +92,7 @@ public enum PreferenceStore {
 
 	private static void update(final IEclipsePreferences preferences) {
 		try {
-			PreferenceStore.tryToUpdate(preferences);
+			Store.tryToUpdate(preferences);
 		} catch (final BackingStoreException e) {}
 	}
 

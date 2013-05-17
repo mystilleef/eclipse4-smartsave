@@ -13,7 +13,7 @@ import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
@@ -38,7 +38,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 
 	private static void updateProperties() {
 		SaveIntervalDialogSpinner.spinner.setTextLimit(SaveIntervalDialogSpinner.TEXT_LIMIT);
-		SaveIntervalDialogSpinner.spinner.setValues(PreferenceStore.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
+		SaveIntervalDialogSpinner.spinner.setValues(Store.getSaveIntervalInSeconds(), SaveIntervalDialogSpinner.SPINNER_MINIMUM, SaveIntervalDialogSpinner.SPINNER_MAXIMUM, SaveIntervalDialogSpinner.SPINNER_DIGITS, SaveIntervalDialogSpinner.SPINNER_INCREMENTS, SaveIntervalDialogSpinner.SPINNER_PAGE_INCREMENTS);
 		SaveIntervalDialogSpinner.spinner.setFocus();
 	}
 
@@ -60,9 +60,9 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 	}
 
 	private synchronized void updateSelection() {
-		if (SaveIntervalDialogSpinner.spinner.getSelection() == PreferenceStore.getSaveIntervalInSeconds()) return;
+		if (SaveIntervalDialogSpinner.spinner.getSelection() == Store.getSaveIntervalInSeconds()) return;
 		SaveIntervalDialogSpinner.spinner.removeModifyListener(this.modifyListener);
-		SaveIntervalDialogSpinner.spinner.setSelection(PreferenceStore.getSaveIntervalInSeconds());
+		SaveIntervalDialogSpinner.spinner.setSelection(Store.getSaveIntervalInSeconds());
 		SaveIntervalDialogSpinner.spinner.addModifyListener(this.modifyListener);
 	}
 
@@ -88,7 +88,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 
 		@Override
 		public void run() {
-			PreferenceStore.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.getSpinner().getSelection());
+			Store.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.getSpinner().getSelection());
 		}
 
 		@Override

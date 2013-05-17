@@ -19,7 +19,7 @@ public final class Updater extends AbstractEventBusInstance {
 
 			@Override
 			public void execute() {
-				Preference.INSTANCE.update();
+				Cache.INSTANCE.update();
 			}
 		}.begin();
 	}

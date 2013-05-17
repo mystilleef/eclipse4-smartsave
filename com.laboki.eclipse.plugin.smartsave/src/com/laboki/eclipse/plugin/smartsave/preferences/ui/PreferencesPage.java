@@ -13,7 +13,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
-import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
@@ -115,6 +115,6 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 
 	@Override
 	protected void performDefaults() {
-		PreferenceStore.clear();
+		Store.clear();
 	}
 }

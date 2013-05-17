@@ -7,13 +7,13 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class PreferenceChangeListener extends AbstractEventBusInstance implements IPreferenceChangeListener {
 
-	private static final IEclipsePreferences PREFERENCES = PreferenceStore.getPreferences();
+	private static final IEclipsePreferences PREFERENCES = Store.getPreferences();
 
 	public PreferenceChangeListener(final EventBus eventBus) {
 		super(eventBus);

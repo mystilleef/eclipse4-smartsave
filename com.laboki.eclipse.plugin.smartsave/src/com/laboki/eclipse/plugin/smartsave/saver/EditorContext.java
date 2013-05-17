@@ -22,7 +22,7 @@ import org.eclipse.ui.part.FileEditorInput;
 
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
-import com.laboki.eclipse.plugin.smartsave.preferences.Preference;
+import com.laboki.eclipse.plugin.smartsave.preferences.Cache;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public enum EditorContext {
@@ -46,7 +46,7 @@ public enum EditorContext {
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(EditorContext.LINK_EXIT, EditorContext.LINK_TARGET, EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
-	private static final Preference PREFERENCE = Preference.INSTANCE;
+	private static final Cache PREFERENCE = Cache.INSTANCE;
 	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();

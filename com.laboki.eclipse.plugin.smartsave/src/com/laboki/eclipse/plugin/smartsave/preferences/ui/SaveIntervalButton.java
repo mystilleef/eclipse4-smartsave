@@ -13,7 +13,7 @@ import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
@@ -35,7 +35,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 	}
 
 	private static void updateText() {
-		SaveIntervalButton.button.setText(SaveIntervalButton.minutesAndSeconds(PreferenceStore.getSaveIntervalInSeconds()));
+		SaveIntervalButton.button.setText(SaveIntervalButton.minutesAndSeconds(Store.getSaveIntervalInSeconds()));
 		SaveIntervalButton.button.pack();
 		SaveIntervalButton.button.update();
 	}
