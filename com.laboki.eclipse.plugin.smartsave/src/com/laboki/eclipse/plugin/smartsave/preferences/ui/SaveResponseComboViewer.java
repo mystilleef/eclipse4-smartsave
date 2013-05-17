@@ -19,7 +19,7 @@ final class SaveResponseComboViewer extends PreferencesResponseComboViewer {
 
 	@Override
 	protected void updateSelection() {
-		if (Store.getCanSaveAutomatically()) this.setSelection(0);
-		else this.setSelection(1);
+		if (Store.getCanSaveAutomatically()) this.setSelection(PreferencesResponseComboViewer.YES);
+		else this.setSelection(PreferencesResponseComboViewer.NO);
 	}
 }
