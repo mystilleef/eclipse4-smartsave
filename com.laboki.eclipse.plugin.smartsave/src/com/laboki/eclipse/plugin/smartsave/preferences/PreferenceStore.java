@@ -1,4 +1,3 @@
-// $codepro.audit.disable debuggingCode
 package com.laboki.eclipse.plugin.smartsave.preferences;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
@@ -7,7 +6,8 @@ import org.osgi.service.prefs.BackingStoreException;
 
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 
-public final class PreferenceStore {
+public enum PreferenceStore {
+	INSTANCE;
 
 	private static final boolean CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE = true;
 	private static final boolean CAN_SAVE_IF_ERRORS_DEFAULT_VALUE = false;
@@ -17,8 +17,6 @@ public final class PreferenceStore {
 	private static final String WARNINGS_KEY = "saveIfWarnings";
 	private static final String ERRORS_KEY = "saveIfErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
-
-	private PreferenceStore() {}
 
 	public static void setCanSaveAutomatically(final boolean saveAutomatically) {
 		PreferenceStore.setBoolean(PreferenceStore.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
