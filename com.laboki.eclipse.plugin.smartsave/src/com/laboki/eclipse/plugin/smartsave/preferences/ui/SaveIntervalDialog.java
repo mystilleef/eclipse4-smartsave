@@ -9,22 +9,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-final class SaveIntervalDialog {
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+
+final class SaveIntervalDialog extends AbstractEventBusInstance {
 
 	private static final int SPINNER_GRID_LAYOUT_COLUMNS = 3;
 	private static final int MARGIN_SIZE = 10;
 	private static Shell dialog;
 
-	public SaveIntervalDialog(final Composite composite) {
+	public SaveIntervalDialog(final Composite composite, final EventBus eventBus) {
+		super(eventBus);
 		SaveIntervalDialog.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		SaveIntervalDialog.updateProperties();
+		this.updateProperties();
 	}
 
-	private static void updateProperties() {
+	private void updateProperties() {
 		SaveIntervalDialog.getDialog().setLayout(SaveIntervalDialog.createLayout());
 		SaveIntervalDialog.getDialog().setText("Save Interval");
 		SaveIntervalDialog.addLabel();
-		SaveIntervalDialog.addSpinnerSection();
+		this.addSpinnerSection();
 		SaveIntervalDialog.getDialog().pack();
 	}
 
@@ -60,10 +64,10 @@ final class SaveIntervalDialog {
 		fieldText.setStyleRange(styleRange);
 	}
 
-	private static void addSpinnerSection() {
+	private void addSpinnerSection() {
 		final Composite composite = SaveIntervalDialog.createSpinnerComposite();
 		SaveIntervalDialog.createLabel(composite, "Save files every ");
-		new SaveIntervalDialogSpinner(composite).startListening();
+		new SaveIntervalDialogSpinner(composite, this.eventBus).begin();
 		SaveIntervalDialog.createLabel(composite, " seconds");
 	}
 

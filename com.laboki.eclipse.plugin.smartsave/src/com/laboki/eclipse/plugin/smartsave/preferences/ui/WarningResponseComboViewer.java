@@ -4,11 +4,12 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 
 import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
+import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 final class WarningResponseComboViewer extends PreferencesResponseComboViewer {
 
-	public WarningResponseComboViewer(final Composite parent) {
-		super(parent);
+	public WarningResponseComboViewer(final Composite parent, final EventBus eventBus) {
+		super(parent, eventBus);
 	}
 
 	@Override

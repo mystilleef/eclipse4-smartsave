@@ -9,8 +9,9 @@ import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.VerifyEventListener;
-import com.laboki.eclipse.plugin.smartsave.preferences.ui.Page;
+import com.laboki.eclipse.plugin.smartsave.preferences.Updater;
 
 public final class Services implements Instance {
 
@@ -33,7 +34,8 @@ public final class Services implements Instance {
 		this.startService(new ListenerToggler(this.eventBus));
 		this.startService(new CompletionListener(this.eventBus));
 		this.startService(new DirtyPartListener(this.eventBus));
-		this.startService(new Page(this.eventBus));
+		this.startService(new PreferenceChangeListener(this.eventBus));
+		this.startService(new Updater(this.eventBus));
 	}
 
 	private void startService(final Instance instance) {

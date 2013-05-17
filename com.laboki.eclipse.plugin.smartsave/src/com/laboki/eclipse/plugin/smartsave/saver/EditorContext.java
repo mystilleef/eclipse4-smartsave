@@ -46,7 +46,7 @@ public enum EditorContext {
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(EditorContext.LINK_EXIT, EditorContext.LINK_TARGET, EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
-	private static final Preference PREFERENCE = Preference.instance();
+	private static final Preference PREFERENCE = Preference.INSTANCE;
 	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();

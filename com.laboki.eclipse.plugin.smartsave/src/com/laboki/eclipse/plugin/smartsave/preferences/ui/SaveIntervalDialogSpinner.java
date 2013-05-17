@@ -8,12 +8,17 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
 
-import com.laboki.eclipse.plugin.smartsave.preferences.IPreferenceHandler;
-import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceListener;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
-final class SaveIntervalDialogSpinner implements IPreferenceHandler {
+final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 
 	private static final int TEXT_LIMIT = 3;
 	private static final int SPINNER_PAGE_INCREMENTS = 10;
@@ -21,14 +26,14 @@ final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 	private static final int SPINNER_DIGITS = 0;
 	private static final int SPINNER_MAXIMUM = 600;
 	private static final int SPINNER_MINIMUM = 1;
-	private final PreferenceListener preferenceListener = new PreferenceListener(this);
 	private final ModifyListener modifyListener = new SpinnerModifyListener();
 	private final SpinnerTraverseListener traverseListener = new SpinnerTraverseListener();
 	private static Spinner spinner;
 
-	public SaveIntervalDialogSpinner(final Composite composite) {
+	public SaveIntervalDialogSpinner(final Composite composite, final EventBus eventBus) {
+		super(eventBus);
 		SaveIntervalDialogSpinner.spinner = new Spinner(composite, SWT.BORDER | SWT.RIGHT);
-		SaveIntervalDialogSpinner.updateProperties();
+		// SaveIntervalDialogSpinner.updateProperties();
 	}
 
 	private static void updateProperties() {
@@ -38,17 +43,23 @@ final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 	}
 
 	public void startListening() {
-		this.preferenceListener.start();
 		SaveIntervalDialogSpinner.spinner.addModifyListener(this.modifyListener);
 		SaveIntervalDialogSpinner.spinner.addTraverseListener(this.traverseListener);
 	}
 
-	@Override
-	public void preferencesChanged() {
-		this.updateSelection();
+	@Subscribe
+	@AllowConcurrentEvents
+	public void preferencesChanged(@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+		new AsyncTask() {
+
+			@Override
+			public void asyncExecute() {
+				SaveIntervalDialogSpinner.this.updateSelection();
+			}
+		}.begin();
 	}
 
-	private void updateSelection() {
+	private synchronized void updateSelection() {
 		if (SaveIntervalDialogSpinner.spinner.getSelection() == PreferenceStore.getSaveIntervalInSeconds()) return;
 		SaveIntervalDialogSpinner.spinner.removeModifyListener(this.modifyListener);
 		SaveIntervalDialogSpinner.spinner.setSelection(PreferenceStore.getSaveIntervalInSeconds());
@@ -57,6 +68,18 @@ final class SaveIntervalDialogSpinner implements IPreferenceHandler {
 
 	public static Spinner getSpinner() {
 		return SaveIntervalDialogSpinner.spinner;
+	}
+
+	@Override
+	public Instance begin() {
+		this.startListening();
+		SaveIntervalDialogSpinner.updateProperties();
+		return super.begin();
+	}
+
+	@Override
+	public Instance end() {
+		return super.end();
 	}
 
 	private final class SpinnerModifyListener implements ModifyListener, Runnable {

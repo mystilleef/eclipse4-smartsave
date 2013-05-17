@@ -11,19 +11,25 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceStore;
+import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private static final int FONT_SIZE = 12;
 	private static Composite pageComposite;
+	private final EventBus eventBus = new EventBus();
+	private final Instance preferenceChangeListener = new PreferenceChangeListener(this.eventBus);
 
 	@Override
 	protected Control createContents(final Composite parent) {
+		this.preferenceChangeListener.begin();
 		PreferencesPage.pageComposite = PreferencesPage.createPageComposite(parent);
-		PreferencesPage.createSaveAutomaticallySection();
-		PreferencesPage.createWarningErrorSection();
-		PreferencesPage.createSaveIntervalSections();
+		this.createSaveAutomaticallySection();
+		this.createWarningErrorSection();
+		this.createSaveIntervalSections();
 		return PreferencesPage.pageComposite;
 	}
 
@@ -34,39 +40,39 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 		return composite;
 	}
 
-	private static void createSaveAutomaticallySection() {
+	private void createSaveAutomaticallySection() {
 		PreferencesPage.createSectionLabel("Toggle Smart Saving");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		PreferencesPage.createLabel(composite, "&Save files automatically: ");
-		new SaveResponseComboViewer(composite).startListening();
+		new SaveResponseComboViewer(composite, this.eventBus).startListening();
 		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
-	private static void createWarningErrorSection() {
+	private void createWarningErrorSection() {
 		PreferencesPage.separator(PreferencesPage.pageComposite);
 		PreferencesPage.createSectionLabel("Errors and Warnings");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
-		PreferencesPage.createErrorComboView(composite, "Save files when &errors are present: ");
-		PreferencesPage.createWarningComboView(composite, "Save files when &warnings are present: ");
+		this.createErrorComboView(composite, "Save files when &errors are present: ");
+		this.createWarningComboView(composite, "Save files when &warnings are present: ");
 		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
-	private static void createErrorComboView(final Composite composite, final String name) {
+	private void createErrorComboView(final Composite composite, final String name) {
 		PreferencesPage.createLabel(composite, name);
-		new ErrorResponseComboViewer(composite).startListening();
+		new ErrorResponseComboViewer(composite, this.eventBus).startListening();
 	}
 
-	private static void createWarningComboView(final Composite composite, final String name) {
+	private void createWarningComboView(final Composite composite, final String name) {
 		PreferencesPage.createLabel(composite, name);
-		new WarningResponseComboViewer(composite).startListening();
+		new WarningResponseComboViewer(composite, this.eventBus).startListening();
 	}
 
-	private static void createSaveIntervalSections() {
+	private void createSaveIntervalSections() {
 		PreferencesPage.separator(PreferencesPage.pageComposite);
 		PreferencesPage.createSectionLabel("Save Interval");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		PreferencesPage.createLabel(composite, "If possible try to save &files every: ");
-		new SaveIntervalButton(composite).startListening();
+		new SaveIntervalButton(composite, this.eventBus).begin();
 	}
 
 	private static void createLabel(final Composite composite, final String name) {
@@ -76,7 +82,7 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 
 	private static Composite createHorizontalLayoutComposite() {
 		final Composite layoutComposite = new Composite(PreferencesPage.pageComposite, SWT.NONE);
-		layoutComposite.setLayout(new GridLayout(2, false)); // $codepro.audit.disable numericLiterals
+		layoutComposite.setLayout(new GridLayout(2, false));
 		layoutComposite.setLayoutData(PreferencesPage.createHorizontalDataGrid());
 		return layoutComposite;
 	}

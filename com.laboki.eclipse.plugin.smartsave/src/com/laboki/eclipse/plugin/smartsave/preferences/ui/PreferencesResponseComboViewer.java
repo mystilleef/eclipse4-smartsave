@@ -5,19 +5,23 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 
-import com.laboki.eclipse.plugin.smartsave.preferences.IPreferenceHandler;
-import com.laboki.eclipse.plugin.smartsave.preferences.PreferenceListener;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
+import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
-class PreferencesResponseComboViewer extends ResponseComboViewer implements IPreferenceHandler {
+class PreferencesResponseComboViewer extends ResponseComboViewer implements Instance {
 
-	private final PreferenceListener listener = new PreferenceListener(this);
 	public static final int YES = 0;
 	public static final int NO = 1;
+	private final EventBus eventBus;
 
-	public PreferencesResponseComboViewer(final Composite parent) {
+	public PreferencesResponseComboViewer(final Composite parent, final EventBus eventBus) {
 		super(parent);
-		this.updateComboProperties();
-		this.listener.start();
+		this.eventBus = eventBus;
+		this.begin();
 	}
 
 	@Override
@@ -40,8 +44,28 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements IPre
 		this.startListening();
 	}
 
+	@Subscribe
+	@AllowConcurrentEvents
+	public void preferencesChanged(@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+		new AsyncTask() {
+
+			@Override
+			public void asyncExecute() {
+				PreferencesResponseComboViewer.this.updateSelection();
+			}
+		}.begin();
+	}
+
 	@Override
-	public void preferencesChanged() {
-		this.updateSelection();
+	public Instance begin() {
+		this.eventBus.register(this);
+		this.updateComboProperties();
+		return this;
+	}
+
+	@Override
+	public Instance end() {
+		this.eventBus.unregister(this);
+		return this;
 	}
 }
