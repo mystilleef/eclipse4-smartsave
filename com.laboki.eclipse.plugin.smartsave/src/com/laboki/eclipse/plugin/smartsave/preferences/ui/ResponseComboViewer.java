@@ -8,15 +8,13 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-class ResponseComboViewer extends ComboViewer {
+abstract class ResponseComboViewer extends ComboViewer {
 
 	private final LabelProvider labelProvider = new ResponseLabelProvider();
 	private final ISelectionChangedListener listener = new ResponseSelectionListener();
-	private final Response[] responses = new Response[] {
-		this.new Response(Response.YES),
-		this.new Response(Response.NO) };
+	private final Response[] responses = new Response[] { this.new Response(Response.YES), this.new Response(Response.NO), };
 
-	public ResponseComboViewer(final Composite parent) {
+	protected ResponseComboViewer(final Composite parent) {
 		super(parent, SWT.READ_ONLY);
 		this.updateProperties();
 	}
@@ -27,11 +25,11 @@ class ResponseComboViewer extends ComboViewer {
 		this.setInput(this.responses);
 	}
 
-	public void startListening() {
+	protected void startListening() {
 		this.addSelectionChangedListener(this.listener);
 	}
 
-	public void stopListening() {
+	protected void stopListening() {
 		this.removeSelectionChangedListener(this.listener);
 	}
 
