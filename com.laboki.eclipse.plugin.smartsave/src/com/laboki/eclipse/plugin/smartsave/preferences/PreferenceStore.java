@@ -54,7 +54,7 @@ public enum PreferenceStore {
 		try {
 			final IEclipsePreferences pref = PreferenceStore.getPreferences();
 			pref.clear();
-			PreferenceStore.sync(pref);
+			PreferenceStore.update(pref);
 		} catch (final BackingStoreException e) {
 			e.printStackTrace();
 		}
@@ -67,28 +67,28 @@ public enum PreferenceStore {
 	private static void setBoolean(final String key, final boolean value) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putBoolean(key, value);
-		PreferenceStore.sync(pref);
+		PreferenceStore.update(pref);
 	}
 
 	private static boolean getBoolean(final String key, final boolean defaultValue) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.sync(pref);
+		PreferenceStore.update(pref);
 		return pref.getBoolean(key, defaultValue);
 	}
 
 	private static void setInt(final String key, final int value) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putInt(key, value);
-		PreferenceStore.sync(pref);
+		PreferenceStore.update(pref);
 	}
 
 	private static int getInt(final String key, final int defaultValue) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.sync(pref);
+		PreferenceStore.update(pref);
 		return pref.getInt(key, defaultValue);
 	}
 
-	private static void sync(final IEclipsePreferences preferences) {
+	private static void update(final IEclipsePreferences preferences) {
 		try {
 			preferences.flush();
 			preferences.sync();
