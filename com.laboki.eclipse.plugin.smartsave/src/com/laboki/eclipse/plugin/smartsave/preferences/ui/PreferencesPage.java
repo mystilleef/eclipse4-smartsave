@@ -109,13 +109,22 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	private enum FONT {
 		FONT;
 
-		private static final FontData[] FONT_DATAS = EditorContext.getShell().getFont().getFontData();
-		private static final String DEFAULT_FONT_NAME = FONT.FONT_DATAS[0].getName();
-		private static final int DEFAULT_FONT_HEIGHT = FONT.FONT_DATAS[0].getHeight();
-		public static final Font LARGE_BOLD_FONT = FONT.makeLargeBoldFont();
+		public static final Font LARGE_BOLD_FONT = FONT.newLargeBoldFont();
 
-		private static Font makeLargeBoldFont() {
-			return new Font(EditorContext.DISPLAY, FONT.DEFAULT_FONT_NAME, FONT.DEFAULT_FONT_HEIGHT + 2, SWT.BOLD);
+		private static Font newLargeBoldFont() {
+			return new Font(EditorContext.DISPLAY, FONT.getDefaultFontName(), FONT.getDefaultFontHeight() + 2, SWT.BOLD);
+		}
+
+		private static String getDefaultFontName() {
+			return FONT.getDefaultFontData().getName();
+		}
+
+		private static int getDefaultFontHeight() {
+			return FONT.getDefaultFontData().getHeight();
+		}
+
+		private static FontData getDefaultFontData() {
+			return EditorContext.getShell().getFont().getFontData()[0];
 		}
 	}
 }
