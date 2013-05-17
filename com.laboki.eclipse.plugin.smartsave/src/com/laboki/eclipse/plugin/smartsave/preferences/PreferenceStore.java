@@ -50,57 +50,53 @@ public enum PreferenceStore {
 		return PreferenceStore.getInt(PreferenceStore.SAVE_INTERVAL_KEY, PreferenceStore.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
 	}
 
-	public static void clear() {
-		try {
-			PreferenceStore.tryToClear();
-		} catch (final BackingStoreException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void tryToClear() throws BackingStoreException {
-		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		pref.clear();
-		PreferenceStore.tryToUpdate(pref);
-	}
-
-	public static IEclipsePreferences getPreferences() {
-		return ConfigurationScope.INSTANCE.getNode(EditorContext.PLUGIN_NAME);
-	}
-
 	private static void setBoolean(final String key, final boolean value) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putBoolean(key, value);
-		PreferenceStore.tryToUpdate(pref);
+		PreferenceStore.update(pref);
 	}
 
 	private static boolean getBoolean(final String key, final boolean defaultValue) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.tryToUpdate(pref);
+		PreferenceStore.update(pref);
 		return pref.getBoolean(key, defaultValue);
 	}
 
 	private static void setInt(final String key, final int value) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
 		pref.putInt(key, value);
-		PreferenceStore.tryToUpdate(pref);
+		PreferenceStore.update(pref);
 	}
 
 	private static int getInt(final String key, final int defaultValue) {
 		final IEclipsePreferences pref = PreferenceStore.getPreferences();
-		PreferenceStore.tryToUpdate(pref);
+		PreferenceStore.update(pref);
 		return pref.getInt(key, defaultValue);
 	}
 
-	private static void tryToUpdate(final IEclipsePreferences preferences) {
+	public static void clear() {
 		try {
-			PreferenceStore.update(preferences);
-		} catch (final BackingStoreException e) {
-			e.printStackTrace();
-		}
+			PreferenceStore.tryToClear();
+		} catch (final BackingStoreException e) {}
 	}
 
-	private static void update(final IEclipsePreferences preferences) throws BackingStoreException {
+	private static void tryToClear() throws BackingStoreException {
+		final IEclipsePreferences pref = PreferenceStore.getPreferences();
+		pref.clear();
+		PreferenceStore.update(pref);
+	}
+
+	public static IEclipsePreferences getPreferences() {
+		return ConfigurationScope.INSTANCE.getNode(EditorContext.PLUGIN_NAME);
+	}
+
+	private static void update(final IEclipsePreferences preferences) {
+		try {
+			PreferenceStore.tryToUpdate(preferences);
+		} catch (final BackingStoreException e) {}
+	}
+
+	private static void tryToUpdate(final IEclipsePreferences preferences) throws BackingStoreException {
 		preferences.flush();
 		preferences.sync();
 	}
