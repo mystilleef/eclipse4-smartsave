@@ -5,11 +5,12 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.VerifyEventListener;
+import com.laboki.eclipse.plugin.smartsave.preferences.ui.Page;
 
 public final class Services implements Instance {
 
@@ -32,6 +33,7 @@ public final class Services implements Instance {
 		this.startService(new ListenerToggler(this.eventBus));
 		this.startService(new CompletionListener(this.eventBus));
 		this.startService(new DirtyPartListener(this.eventBus));
+		this.startService(new Page(this.eventBus));
 	}
 
 	private void startService(final Instance instance) {
