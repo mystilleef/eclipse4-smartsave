@@ -11,8 +11,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
@@ -22,11 +20,9 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 	private static final int FONT_SIZE = 12;
 	private static Composite pageComposite;
 	private final EventBus eventBus = EditorContext.EVENT_BUS;
-	private final Instance preferenceChangeListener = new PreferenceChangeListener(this.eventBus);
 
 	@Override
 	protected Control createContents(final Composite parent) {
-		this.preferenceChangeListener.begin();
 		PreferencesPage.pageComposite = PreferencesPage.createPageComposite(parent);
 		this.createSaveAutomaticallySection();
 		this.createWarningErrorSection();
@@ -45,7 +41,7 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 		PreferencesPage.createSectionLabel("Toggle Smart Saving");
 		final Composite composite = PreferencesPage.createHorizontalLayoutComposite();
 		PreferencesPage.createLabel(composite, "&Save files automatically: ");
-		new SaveResponseComboViewer(composite, this.eventBus).startListening();
+		new SaveResponseComboViewer(composite, this.eventBus).begin();
 		PreferencesPage.separator(PreferencesPage.pageComposite);
 	}
 
@@ -60,12 +56,12 @@ public final class PreferencesPage extends PreferencePage implements IWorkbenchP
 
 	private void createErrorComboView(final Composite composite, final String name) {
 		PreferencesPage.createLabel(composite, name);
-		new ErrorResponseComboViewer(composite, this.eventBus).startListening();
+		new ErrorResponseComboViewer(composite, this.eventBus).begin();
 	}
 
 	private void createWarningComboView(final Composite composite, final String name) {
 		PreferencesPage.createLabel(composite, name);
-		new WarningResponseComboViewer(composite, this.eventBus).startListening();
+		new WarningResponseComboViewer(composite, this.eventBus).begin();
 	}
 
 	private void createSaveIntervalSections() {

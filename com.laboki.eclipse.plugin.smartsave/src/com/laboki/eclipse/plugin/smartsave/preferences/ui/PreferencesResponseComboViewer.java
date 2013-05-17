@@ -21,7 +21,6 @@ class PreferencesResponseComboViewer extends ResponseComboViewer implements Inst
 	public PreferencesResponseComboViewer(final Composite parent, final EventBus eventBus) {
 		super(parent);
 		this.eventBus = eventBus;
-		this.begin();
 	}
 
 	@Override
