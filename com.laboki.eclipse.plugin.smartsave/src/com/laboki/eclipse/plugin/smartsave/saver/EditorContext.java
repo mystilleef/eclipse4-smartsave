@@ -201,7 +201,7 @@ public enum EditorContext {
 	}
 
 	public static int getSaveIntervalInMilliSeconds() {
-		return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT) - 1000;
+		return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT) - 750;
 	}
 
 	public static int getSaveIntervalInSeconds() {
