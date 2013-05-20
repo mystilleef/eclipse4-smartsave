@@ -20,6 +20,8 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
@@ -52,11 +54,14 @@ public enum EditorContext {
 	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
+	private static final Logger LOGGER = LoggerFactory.getLogger(EditorContext.class);
 
 	public static void flushEvents() {
 		try {
 			EditorContext.tryToFlushEvents();
-		} catch (final Exception e) {}
+		} catch (final Exception e) {
+			EditorContext.logException("Error while trying to flush events.", e);
+		}
 	}
 
 	private static void tryToFlushEvents() {
@@ -193,7 +198,13 @@ public enum EditorContext {
 	public static void syncFile(final IEditorPart editor) {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (final Exception e) {}
+		} catch (final Exception e) {
+			EditorContext.logException("Error while trying to synchronize, or refresh, local resource", e);
+		}
+	}
+
+	private static void logException(final String message, final Exception e) {
+		EditorContext.LOGGER.error(message, e);
 	}
 
 	private static IFile getFile(final IEditorPart editor) {
