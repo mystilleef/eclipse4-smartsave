@@ -45,6 +45,9 @@ Export-Package: com.google.common.annotations,
  com.laboki.eclipse.plugin.smartsave.task
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator
 Bundle-ClassPath: .,
- guava-14.0.1.jar
+ guava-14.0.1.jar,
+ logback-classic-1.0.13.jar,
+ logback-core-1.0.13.jar,
+ slf4j-api-1.7.5.jar
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
