@@ -32,35 +32,36 @@ public enum EditorContext {
 	INSTANCE;
 
 	public static final EventBus EVENT_BUS = new EventBus();
-	static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK = "smartsave scheduler enable save listeners event task";
-	static final String FILE_SYNCER_TASK = "file syncer task";
+	public static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK = "smartsave scheduler enable save listeners event task";
+	public static final String FILE_SYNCER_TASK = "file syncer task";
 	public static final String LISTENER_TASK = "Listener Task";
 	public static final String PLUGIN_NAME = "com.laboki.eclipse.plugin.smartsave";
 	public static final String CONTRIBUTOR_URI = MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
 	public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
-	private static final int MILLI_SECONDS_UNIT = 1000;
 	public static final int SHORT_DELAY_TIME = 250;
+	public static final String AUTOMATIC_SAVER_TASK = "smartsave automatic saver task";
+	public static final String LISTENER_SAVER_TASK = "smartsave listener saver task";
+	public static final String SCHEDULED_SAVER_TASK = "smartsave scheduled saver task";
+	public static final IJobManager JOB_MANAGER = Job.getJobManager();
+	public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
+	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
+	private static final int MILLI_SECONDS_UNIT = 1000;
+	private static final int SAVE_INTERVAL_DIFFERENCIAL = 750;
 	private static final String LINK_SLAVE = "org.eclipse.ui.internal.workbench.texteditor.link.slave";
 	private static final String LINK_MASTER = "org.eclipse.ui.internal.workbench.texteditor.link.master";
 	private static final String LINK_TARGET = "org.eclipse.ui.internal.workbench.texteditor.link.target";
 	private static final String LINK_EXIT = "org.eclipse.ui.internal.workbench.texteditor.link.exit";
-	public static final String AUTOMATIC_SAVER_TASK = "smartsave automatic saver task";
-	public static final String LISTENER_SAVER_TASK = "smartsave listener saver task";
-	public static final String SCHEDULED_SAVER_TASK = "smartsave scheduled saver task";
 	private static final String ANNOTATION_SEVERITY_WARNING = "warning";
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(EditorContext.LINK_EXIT, EditorContext.LINK_TARGET, EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
 	private static final Cache PREFERENCE = Cache.INSTANCE;
-	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
-	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
-	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 	private static final Logger LOGGER = LoggerFactory.getLogger(EditorContext.class);
 
 	public static void flushEvents() {
 		try {
 			EditorContext.tryToFlushEvents();
 		} catch (final Exception e) {
-			EditorContext.logException("Error while trying to flush events.", e);
+			EditorContext.LOGGER.warn("Failed to flush events.", e);
 		}
 	}
 
@@ -109,10 +110,14 @@ public enum EditorContext {
 
 	public static void tryToSave(final IEditorPart editor) {
 		try {
-			if (EditorContext.canSaveAutomatically() && EditorContext.canSaveFile(editor)) EditorContext.save(editor);
+			if (EditorContext.canSave(editor)) EditorContext.save(editor);
 		} catch (final Exception e) {
 			EditorContext.save(editor);
 		}
+	}
+
+	private static boolean canSave(final IEditorPart editor) {
+		return EditorContext.canSaveAutomatically() && EditorContext.canSaveFile(editor);
 	}
 
 	public static boolean canSaveAutomatically() {
@@ -120,10 +125,15 @@ public enum EditorContext {
 	}
 
 	private static boolean canSaveFile(final IEditorPart editor) {
-		if (EditorContext.isNotModified(editor)) return false;
-		if (EditorContext.hasSelection(editor) || EditorContext.isInLinkMode(editor)) return false;
-		if (EditorContext.bufferHasErrors(editor) || EditorContext.bufferHasWarnings(editor)) return false;
-		return true;
+		return !(EditorContext.isNotModified(editor) || EditorContext.isBeingEdited(editor) || EditorContext.hasProblems(editor));
+	}
+
+	private static boolean isBeingEdited(final IEditorPart editor) {
+		return EditorContext.hasSelection(editor) || EditorContext.isInLinkMode(editor);
+	}
+
+	private static boolean hasProblems(final IEditorPart editor) {
+		return EditorContext.bufferHasErrors(editor) || EditorContext.bufferHasWarnings(editor);
 	}
 
 	public static boolean isNotModified(final IEditorPart editor) {
@@ -199,12 +209,8 @@ public enum EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
-			EditorContext.logException("Error while trying to synchronize, or refresh, local resource", e);
+			EditorContext.LOGGER.error("Error while trying to synchronize, or refresh, local resource", e);
 		}
-	}
-
-	private static void logException(final String message, final Exception e) {
-		EditorContext.LOGGER.error(message, e);
 	}
 
 	private static IFile getFile(final IEditorPart editor) {
@@ -212,7 +218,7 @@ public enum EditorContext {
 	}
 
 	public static int getSaveIntervalInMilliSeconds() {
-		return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT) - 750;
+		return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT) - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
 	}
 
 	public static int getSaveIntervalInSeconds() {
