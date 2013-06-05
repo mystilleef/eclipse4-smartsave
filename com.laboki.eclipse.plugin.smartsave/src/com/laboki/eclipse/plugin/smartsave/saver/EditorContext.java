@@ -209,7 +209,7 @@ public enum EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
-			EditorContext.LOGGER.error("Error while trying to synchronize, or refresh, local resource", e);
+			EditorContext.LOGGER.warn("Error while trying to synchronize, or refresh, local resource", e);
 		}
 	}
 
