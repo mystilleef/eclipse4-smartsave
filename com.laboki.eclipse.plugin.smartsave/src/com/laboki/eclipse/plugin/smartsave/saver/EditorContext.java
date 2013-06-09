@@ -3,6 +3,8 @@ package com.laboki.eclipse.plugin.smartsave.saver;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -20,8 +22,6 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
@@ -55,13 +55,13 @@ public enum EditorContext {
 	private static final String ANNOTATION_SEVERITY_ERROR = "error";
 	private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(EditorContext.LINK_EXIT, EditorContext.LINK_TARGET, EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
 	private static final Cache PREFERENCE = Cache.INSTANCE;
-	private static final Logger LOGGER = LoggerFactory.getLogger(EditorContext.class);
+	private static final Logger LOGGER = Logger.getLogger(EditorContext.class.getName());
 
 	public static void flushEvents() {
 		try {
 			EditorContext.tryToFlushEvents();
 		} catch (final Exception e) {
-			EditorContext.LOGGER.warn("Failed to flush events.", e);
+			EditorContext.LOGGER.log(Level.WARNING, "Failed to flush events.", e);
 		}
 	}
 
@@ -209,7 +209,7 @@ public enum EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
-			EditorContext.LOGGER.warn("Error while trying to synchronize, or refresh, local resource", e);
+			EditorContext.LOGGER.log(Level.WARNING, "Error while trying to synchronize, or refresh, local resource", e);
 		}
 	}
 
