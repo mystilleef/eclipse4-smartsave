@@ -4,8 +4,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelListener;
 
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public class AnnotationsListener extends AbstractListener implements IAnnotationModelListener {
 

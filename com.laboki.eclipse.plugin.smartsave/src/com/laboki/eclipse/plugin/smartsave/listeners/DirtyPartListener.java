@@ -6,8 +6,8 @@ import org.eclipse.ui.IPropertyListener;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class DirtyPartListener extends AbstractEventBusInstance implements IPropertyListener {

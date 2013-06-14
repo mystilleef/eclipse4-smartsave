@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public enum Store {
 	INSTANCE;

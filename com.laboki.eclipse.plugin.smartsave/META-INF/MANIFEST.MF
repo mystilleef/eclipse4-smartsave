@@ -28,19 +28,19 @@ Export-Package: com.google.common.annotations,
  com.laboki.eclipse.plugin.smartsave.instance,
  com.laboki.eclipse.plugin.smartsave.listeners,
  com.laboki.eclipse.plugin.smartsave.listeners.abstraction,
+ com.laboki.eclipse.plugin.smartsave.main;
+  uses:="org.eclipse.jface.text.source,
+   org.eclipse.core.runtime,
+   org.eclipse.core.runtime.jobs,
+   org.eclipse.ui,
+   org.eclipse.swt.custom,
+   org.eclipse.swt.widgets",
  com.laboki.eclipse.plugin.smartsave.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.preferences.ui;
   uses:="org.eclipse.jface.preference,
    com.laboki.eclipse.plugin.smartsave.saver.preferences,
    org.eclipse.ui,
    org.eclipse.jface.viewers,
-   org.eclipse.swt.widgets",
- com.laboki.eclipse.plugin.smartsave.saver;
-  uses:="org.eclipse.jface.text.source,
-   org.eclipse.core.runtime,
-   org.eclipse.core.runtime.jobs,
-   org.eclipse.ui,
-   org.eclipse.swt.custom,
    org.eclipse.swt.widgets",
  com.laboki.eclipse.plugin.smartsave.task
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator

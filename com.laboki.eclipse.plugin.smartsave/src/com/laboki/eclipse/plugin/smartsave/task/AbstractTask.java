@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 abstract class AbstractTask extends Job implements Runnable, Instance {
 

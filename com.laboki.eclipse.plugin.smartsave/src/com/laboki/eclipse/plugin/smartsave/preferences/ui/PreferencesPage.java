@@ -12,9 +12,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 public final class PreferencesPage extends PreferencePage implements IWorkbenchPreferencePage {
 

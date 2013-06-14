@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import com.laboki.eclipse.plugin.smartsave.events.FocusSaveIntervalDialogSpinnerEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 final class SaveIntervalDialog extends AbstractEventBusInstance {
 

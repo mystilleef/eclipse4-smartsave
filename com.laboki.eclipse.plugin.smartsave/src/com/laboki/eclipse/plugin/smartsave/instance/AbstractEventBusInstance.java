@@ -1,6 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.instance;
 
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public abstract class AbstractEventBusInstance implements Instance {
 

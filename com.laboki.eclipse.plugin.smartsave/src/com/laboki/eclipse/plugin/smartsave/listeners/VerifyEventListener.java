@@ -5,8 +5,8 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public final class VerifyEventListener extends AbstractListener implements VerifyListener {
 

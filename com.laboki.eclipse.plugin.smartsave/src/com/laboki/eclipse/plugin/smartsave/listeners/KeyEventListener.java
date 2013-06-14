@@ -5,8 +5,8 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Control;
 
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
-import com.laboki.eclipse.plugin.smartsave.saver.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public final class KeyEventListener extends AbstractListener implements KeyListener {
 

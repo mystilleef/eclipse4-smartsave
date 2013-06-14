@@ -9,7 +9,7 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 abstract class PreferencesResponseComboViewer extends ResponseComboViewer implements Instance {

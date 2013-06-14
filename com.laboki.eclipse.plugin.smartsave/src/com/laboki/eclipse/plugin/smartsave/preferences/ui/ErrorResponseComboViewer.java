@@ -3,8 +3,8 @@ package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
-import com.laboki.eclipse.plugin.smartsave.saver.EventBus;
 
 final class ErrorResponseComboViewer extends PreferencesResponseComboViewer {
 
