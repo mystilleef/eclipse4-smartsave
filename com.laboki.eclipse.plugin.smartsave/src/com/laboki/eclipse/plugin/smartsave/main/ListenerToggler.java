@@ -2,7 +2,6 @@ package com.laboki.eclipse.plugin.smartsave.main;
 
 import org.eclipse.ui.IEditorPart;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
@@ -10,8 +9,6 @@ import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
-import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class ListenerToggler extends AbstractEventBusInstance {
 
@@ -22,37 +19,18 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void toggleListeners(@SuppressWarnings("unused") final PartChangedEvent event) {
-		this.asyncToggleSaverListeners();
+		this.toggleSaverListeners();
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void toggleListeners(@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
-		this.asyncToggleSaverListeners();
+		this.toggleSaverListeners();
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void disableListeners(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		new Task() {
-
-			@Override
-			public void execute() {
-				ListenerToggler.this.postDisableListenersEvent();
-			}
-		}.begin();
-	}
-
-	private void asyncToggleSaverListeners() {
-		new AsyncTask() {
-
-			@Override
-			public void asyncExecute() {
-				ListenerToggler.this.toggleSaverListeners();
-			}
-		}.begin();
+		ListenerToggler.this.postDisableListenersEvent();
 	}
 
 	private void toggleSaverListeners() {
