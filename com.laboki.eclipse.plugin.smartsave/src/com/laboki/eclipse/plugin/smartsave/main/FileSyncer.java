@@ -21,13 +21,11 @@ final class FileSyncer extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void save(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void save(@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
