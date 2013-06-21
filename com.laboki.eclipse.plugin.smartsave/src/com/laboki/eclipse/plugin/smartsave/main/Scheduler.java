@@ -40,7 +40,6 @@ public final class Scheduler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void scheduleSave(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
 		new Task(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK) {
 
@@ -52,25 +51,13 @@ public final class Scheduler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public static void cancelSaveJobs(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-		Scheduler.asyncCancelAllJobs();
+		Scheduler.cancelAllJobs();
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public static void cancelSaveJobs(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		Scheduler.asyncCancelAllJobs();
-	}
-
-	private static void asyncCancelAllJobs() {
-		new Task() {
-
-			@Override
-			public void execute() {
-				Scheduler.cancelAllJobs();
-			}
-		}.begin();
+		Scheduler.cancelAllJobs();
 	}
 
 	private static void cancelAllJobs() {
