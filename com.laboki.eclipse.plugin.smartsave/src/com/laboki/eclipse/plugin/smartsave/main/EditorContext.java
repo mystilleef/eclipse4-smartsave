@@ -226,24 +226,12 @@ public enum EditorContext {
 	}
 
 	public static void cancelAllJobs() {
-		EditorContext.cancelSaveJobs();
-		EditorContext.cancelScheduledSaveJobs();
-		EditorContext.cancelListenerJobs();
-		EditorContext.cancelJobsBelongingTo(EditorContext.FILE_SYNCER_TASK);
 		EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_TASK);
-		EditorContext.cancelJobsBelongingTo(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK);
-	}
-
-	public static void cancelSaveJobs() {
-		EditorContext.cancelJobsBelongingTo(EditorContext.AUTOMATIC_SAVER_TASK);
-	}
-
-	public static void cancelScheduledSaveJobs() {
 		EditorContext.cancelJobsBelongingTo(EditorContext.SCHEDULED_SAVER_TASK);
-	}
-
-	public static void cancelListenerJobs() {
 		EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_SAVER_TASK);
+		EditorContext.cancelJobsBelongingTo(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK);
+		EditorContext.cancelJobsBelongingTo(EditorContext.FILE_SYNCER_TASK);
+		EditorContext.cancelJobsBelongingTo(EditorContext.AUTOMATIC_SAVER_TASK);
 	}
 
 	public static void cancelJobsBelongingTo(final String jobName) {
