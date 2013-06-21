@@ -28,7 +28,7 @@ public final class KeyEventListener extends AbstractListener implements KeyListe
 
 	@Override
 	public void keyPressed(final KeyEvent event) {
-		this.scheduleSave();
+		EditorContext.cancelAllJobs();
 	}
 
 	@Override
