@@ -9,6 +9,7 @@ import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class ListenerToggler extends AbstractEventBusInstance {
 
@@ -20,17 +21,35 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 
 	@Subscribe
 	public void toggleListeners(@SuppressWarnings("unused") final PartChangedEvent event) {
-		this.toggleSaverListeners();
+		new AsyncTask() {
+
+			@Override
+			public void asyncExecute() {
+				ListenerToggler.this.toggleSaverListeners();
+			}
+		}.begin();
 	}
 
 	@Subscribe
 	public void toggleListeners(@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
-		this.toggleSaverListeners();
+		new AsyncTask() {
+
+			@Override
+			public void asyncExecute() {
+				ListenerToggler.this.toggleSaverListeners();
+			}
+		}.begin();
 	}
 
 	@Subscribe
 	public void disableListeners(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		ListenerToggler.this.postDisableListenersEvent();
+		new AsyncTask() {
+
+			@Override
+			public void asyncExecute() {
+				ListenerToggler.this.postDisableListenersEvent();
+			}
+		}.begin();
 	}
 
 	private void toggleSaverListeners() {
