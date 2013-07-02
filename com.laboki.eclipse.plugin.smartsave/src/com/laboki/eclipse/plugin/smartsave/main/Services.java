@@ -8,6 +8,7 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.ListenerSwitch;
 import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.preferences.Updater;
 
@@ -28,7 +29,7 @@ public final class Services implements Instance {
 		// FIXME: this.startService(new VerifyEventListener(EditorContext.EVENT_BUS));
 		// FIXME: this.startService(new AnnotationsListener(EditorContext.EVENT_BUS));
 		this.startService(new KeyEventListener(EditorContext.EVENT_BUS));
-		this.startService(new ListenerToggler(EditorContext.EVENT_BUS));
+		this.startService(new ListenerSwitch(EditorContext.EVENT_BUS));
 		this.startService(new CompletionListener(EditorContext.EVENT_BUS));
 		this.startService(new DirtyPartListener(EditorContext.EVENT_BUS));
 		this.startService(new Updater(EditorContext.EVENT_BUS));

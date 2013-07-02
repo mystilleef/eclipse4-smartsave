@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.main;
+package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.ui.IEditorPart;
 
@@ -9,13 +9,15 @@ import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
-public final class ListenerToggler extends AbstractEventBusInstance {
+public final class ListenerSwitch extends AbstractEventBusInstance {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 
-	public ListenerToggler(final EventBus eventBus) {
+	public ListenerSwitch(final EventBus eventBus) {
 		super(eventBus);
 	}
 
@@ -25,7 +27,7 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 
 			@Override
 			public void asyncExecute() {
-				ListenerToggler.this.toggleSaverListeners();
+				ListenerSwitch.this.toggleSaverListeners();
 			}
 		}.begin();
 	}
@@ -36,7 +38,7 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 
 			@Override
 			public void asyncExecute() {
-				ListenerToggler.this.toggleSaverListeners();
+				ListenerSwitch.this.toggleSaverListeners();
 			}
 		}.begin();
 	}
@@ -47,7 +49,7 @@ public final class ListenerToggler extends AbstractEventBusInstance {
 
 			@Override
 			public void asyncExecute() {
-				ListenerToggler.this.postDisableListenersEvent();
+				ListenerSwitch.this.postDisableListenersEvent();
 			}
 		}.begin();
 	}
