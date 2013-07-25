@@ -15,6 +15,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance implements IListener {
 
+	private static final int ONE_SECOND_DELAY = 1000;
 	private static final Logger LOGGER = Logger.getLogger(AbstractListener.class.getName());
 
 	public AbstractListener(final EventBus eventbus) {
@@ -22,7 +23,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance implemen
 	}
 
 	@Subscribe
-	public void addListener(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
+	public final void addListener(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -41,7 +42,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance implemen
 	}
 
 	@Subscribe
-	public void removeListener(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+	public final void removeListener(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -58,7 +59,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance implemen
 	public void remove() {}
 
 	@Override
-	public Instance end() {
+	public final Instance end() {
 		this.tryToRemove();
 		return super.end();
 	}
@@ -71,8 +72,13 @@ public abstract class AbstractListener extends AbstractEventBusInstance implemen
 		}
 	}
 
-	protected void scheduleSave() {
-		new Task(EditorContext.LISTENER_TASK, 1000) {
+	protected final void scheduleSave() {
+		EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_TASK);
+		this.scheduleTask();
+	}
+
+	private void scheduleTask() {
+		new Task(EditorContext.LISTENER_TASK, AbstractListener.ONE_SECOND_DELAY) {
 
 			@Override
 			public boolean shouldSchedule() {
