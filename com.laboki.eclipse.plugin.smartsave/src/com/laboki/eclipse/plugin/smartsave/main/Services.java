@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
@@ -28,7 +29,7 @@ public final class Services implements Instance {
 		this.startService(new FileSyncer(EditorContext.EVENT_BUS));
 		this.startService(new Scheduler(EditorContext.EVENT_BUS));
 		this.startService(new VerifyEventListener(EditorContext.EVENT_BUS));
-		// FIXME: this.startService(new AnnotationsListener(EditorContext.EVENT_BUS));
+		this.startService(new AnnotationsListener(EditorContext.EVENT_BUS));
 		this.startService(new KeyEventListener(EditorContext.EVENT_BUS));
 		this.startService(new ListenerSwitch(EditorContext.EVENT_BUS));
 		this.startService(new CompletionListener(EditorContext.EVENT_BUS));
