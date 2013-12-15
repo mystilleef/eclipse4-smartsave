@@ -17,11 +17,13 @@ public class AnnotationsListener extends AbstractListener implements IAnnotation
 
 	@Override
 	public void add() {
+		if (this.annotationModel == null) return;
 		this.annotationModel.addAnnotationModelListener(this);
 	}
 
 	@Override
 	public void remove() {
+		if (this.annotationModel == null) return;
 		this.annotationModel.removeAnnotationModelListener(this);
 	}
 
