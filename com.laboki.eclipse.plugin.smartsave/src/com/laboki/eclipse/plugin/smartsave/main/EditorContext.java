@@ -61,7 +61,7 @@ public enum EditorContext {
 		try {
 			EditorContext.tryToFlushEvents();
 		} catch (final Exception e) {
-			EditorContext.LOGGER.log(Level.WARNING, "Failed to flush events.", e);
+			EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 
@@ -209,7 +209,7 @@ public enum EditorContext {
 		try {
 			EditorContext.getFile(editor).refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final Exception e) {
-			EditorContext.LOGGER.log(Level.WARNING, "Error while trying to synchronize, or refresh, local resource", e);
+			EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 
