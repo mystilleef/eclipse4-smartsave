@@ -43,6 +43,20 @@ public enum Factory implements Instance {
 		public void partOpened(final IWorkbenchPart part) {}
 	}
 
+	@Override
+	public Instance begin() {
+		Factory.enableAutomaticSaverFor(Factory.PART_SERVICE.getActivePart());
+		Factory.PART_SERVICE.addPartListener(Factory.PART_LISTENER);
+		return this;
+	}
+
+	@Override
+	public Instance end() {
+		Factory.PART_SERVICE.removePartListener(Factory.PART_LISTENER);
+		Factory.stopAllSaverServices();
+		return this;
+	}
+
 	private static void enableAutomaticSaverFor(final IWorkbenchPart part) {
 		if (Factory.isInvalidPart(part)) return;
 		Factory.startSaverServiceFor(part);
@@ -83,19 +97,5 @@ public enum Factory implements Instance {
 
 	private static boolean servicesMapDoesNotContain(final IWorkbenchPart part) {
 		return !Factory.SERVICES_MAP.containsKey(part);
-	}
-
-	@Override
-	public Instance begin() {
-		Factory.enableAutomaticSaverFor(Factory.PART_SERVICE.getActivePart());
-		Factory.PART_SERVICE.addPartListener(Factory.PART_LISTENER);
-		return this;
-	}
-
-	@Override
-	public Instance end() {
-		Factory.PART_SERVICE.removePartListener(Factory.PART_LISTENER);
-		Factory.stopAllSaverServices();
-		return this;
 	}
 }
