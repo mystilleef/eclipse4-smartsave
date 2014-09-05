@@ -91,8 +91,7 @@ public enum Factory implements Instance {
 
 	private static void stopSaverServiceFor(final IWorkbenchPart part) {
 		if (Factory.servicesMapDoesNotContain(part)) return;
-		Factory.SERVICES_MAP.get(part).end();
-		Factory.SERVICES_MAP.remove(part);
+		Factory.SERVICES_MAP.remove(part).end();
 	}
 
 	private static boolean servicesMapDoesNotContain(final IWorkbenchPart part) {
