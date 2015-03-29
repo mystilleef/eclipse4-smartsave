@@ -13,8 +13,8 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class Scheduler extends AbstractEventBusInstance {
 
-  public Scheduler(final EventBus eventBus) {
-    super(eventBus);
+  public Scheduler() {
+    super();
   }
 
   @Subscribe

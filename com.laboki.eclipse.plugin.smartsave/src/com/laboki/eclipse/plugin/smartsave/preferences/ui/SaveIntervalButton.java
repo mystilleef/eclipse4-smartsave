@@ -15,7 +15,6 @@ import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
@@ -28,8 +27,8 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   private final SelectionListener buttonListener = new ButtonListener();
   private final Composite composite;
 
-  public SaveIntervalButton(final Composite composite, final EventBus eventBus) {
-    super(eventBus);
+  public SaveIntervalButton(final Composite composite) {
+    super();
     this.composite = composite;
     SaveIntervalButton.button = new Button(composite, SWT.FLAT);
   }
@@ -99,7 +98,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   }
 
   private void showNewDialog() {
-    this.dialog = new SaveIntervalDialog(this.composite, this.eventBus);
+    this.dialog = new SaveIntervalDialog(this.composite);
     this.dialog.begin();
     this.dialog.show();
   }

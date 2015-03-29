@@ -23,8 +23,8 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   private static final int MARGIN_SIZE = 10;
   private final Shell dialog;
 
-  public SaveIntervalDialog(final Composite composite, final EventBus eventBus) {
-    super(eventBus);
+  public SaveIntervalDialog(final Composite composite) {
+    super();
     this.dialog =
       new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
   }
@@ -86,7 +86,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   private void addSpinnerSection() {
     final Composite composite = this.createSpinnerComposite();
     SaveIntervalDialog.createLabel(composite, "Save files every ");
-    new SaveIntervalDialogSpinner(composite, this.eventBus).begin();
+    new SaveIntervalDialogSpinner(composite).begin();
     SaveIntervalDialog.createLabel(composite, " seconds");
   }
 
@@ -119,8 +119,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 
     @Override
     public void shellActivated(final ShellEvent arg0) {
-      SaveIntervalDialog.this.eventBus
-        .post(new FocusSaveIntervalDialogSpinnerEvent());
+      EventBus.post(new FocusSaveIntervalDialogSpinnerEvent());
     }
 
     @Override

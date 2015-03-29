@@ -5,17 +5,14 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public abstract class AbstractEventBusInstance implements Instance {
 
-  protected final EventBus eventBus;
-  boolean isRegistered = false;
+  private boolean isRegistered = false;
 
-  protected AbstractEventBusInstance(final EventBus eventBus) {
-    this.eventBus = eventBus;
-  }
+  protected AbstractEventBusInstance() {}
 
   @Override
   public Instance begin() {
     if (this.isRegistered) return this;
-    this.eventBus.register(this);
+    EventBus.register(this);
     this.isRegistered = true;
     return this;
   }
@@ -23,7 +20,7 @@ public abstract class AbstractEventBusInstance implements Instance {
   @Override
   public Instance end() {
     if (!this.isRegistered) return this;
-    this.eventBus.unregister(this);
+    EventBus.unregister(this);
     this.isRegistered = false;
     return this;
   }

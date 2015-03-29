@@ -7,16 +7,15 @@ import org.eclipse.swt.events.VerifyListener;
 
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public final class VerifyEventListener extends AbstractListener implements
-  VerifyListener {
+VerifyListener {
 
   private final StyledText buffer = EditorContext.getBuffer(EditorContext
     .getEditor());
 
-  public VerifyEventListener(final EventBus eventbus) {
-    super(eventbus);
+  public VerifyEventListener() {
+    super();
   }
 
   @Override
@@ -33,6 +32,6 @@ public final class VerifyEventListener extends AbstractListener implements
 
   @Override
   public void verifyText(final VerifyEvent arg0) {
-    this.scheduleSave();
+    AbstractListener.scheduleSave();
   }
 }

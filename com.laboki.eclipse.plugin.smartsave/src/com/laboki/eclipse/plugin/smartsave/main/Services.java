@@ -26,17 +26,17 @@ public final class Services implements Instance {
   }
 
   private void startServices() {
-    this.startService(new Saver(EditorContext.EVENT_BUS));
-    this.startService(new FileSyncer(EditorContext.EVENT_BUS));
-    this.startService(new Scheduler(EditorContext.EVENT_BUS));
-    this.startService(new VerifyEventListener(EditorContext.EVENT_BUS));
-    this.startService(new AnnotationsListener(EditorContext.EVENT_BUS));
-    this.startService(new KeyEventListener(EditorContext.EVENT_BUS));
-    this.startService(new ListenerSwitch(EditorContext.EVENT_BUS));
-    this.startService(new CompletionListener(EditorContext.EVENT_BUS));
-    this.startService(new DirtyPartListener(EditorContext.EVENT_BUS));
-    this.startService(new Updater(EditorContext.EVENT_BUS));
-    this.startService(new PreferenceChangeListener(EditorContext.EVENT_BUS));
+    this.startService(new Saver());
+    this.startService(new FileSyncer());
+    this.startService(new Scheduler());
+    this.startService(new VerifyEventListener());
+    this.startService(new AnnotationsListener());
+    this.startService(new KeyEventListener());
+    this.startService(new ListenerSwitch());
+    this.startService(new CompletionListener());
+    this.startService(new DirtyPartListener());
+    this.startService(new Updater());
+    this.startService(new PreferenceChangeListener());
   }
 
   private void startService(final Instance instance) {

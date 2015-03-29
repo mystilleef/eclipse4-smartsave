@@ -14,21 +14,19 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 
 public final class PreferencesPage extends PreferencePage implements
   IWorkbenchPreferencePage {
 
   private static Composite pageComposite;
-  private final EventBus eventBus = EditorContext.EVENT_BUS;
 
   @Override
   protected Control createContents(final Composite parent) {
     PreferencesPage.pageComposite = PreferencesPage.createPageComposite(parent);
-    this.createSaveAutomaticallySection();
-    this.createWarningErrorSection();
-    this.createSaveIntervalSections();
+    PreferencesPage.createSaveAutomaticallySection();
+    PreferencesPage.createWarningErrorSection();
+    PreferencesPage.createSaveIntervalSections();
     return PreferencesPage.pageComposite;
   }
 
@@ -39,43 +37,43 @@ public final class PreferencesPage extends PreferencePage implements
     return composite;
   }
 
-  private void createSaveAutomaticallySection() {
+  private static void createSaveAutomaticallySection() {
     PreferencesPage.createSectionLabel("Toggle Smart Saving");
     final Composite composite =
       PreferencesPage.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite, "&Save files automatically: ");
-    new SaveResponseComboViewer(composite, this.eventBus).begin();
+    new SaveResponseComboViewer(composite).begin();
   }
 
-  private void createWarningErrorSection() {
+  private static void createWarningErrorSection() {
     PreferencesPage.createSectionLabel("Errors and Warnings");
     final Composite composite =
       PreferencesPage.createHorizontalLayoutComposite();
-    this.createErrorComboView(composite,
+    PreferencesPage.createErrorComboView(composite,
       "Save files when &errors are present: ");
-    this.createWarningComboView(composite,
+    PreferencesPage.createWarningComboView(composite,
       "Save files when &warnings are present: ");
   }
 
-  private void
-    createErrorComboView(final Composite composite, final String name) {
-    PreferencesPage.createLabel(composite, name);
-    new ErrorResponseComboViewer(composite, this.eventBus).begin();
-  }
-
-  private void createWarningComboView(final Composite composite,
+  private static void createErrorComboView(final Composite composite,
     final String name) {
     PreferencesPage.createLabel(composite, name);
-    new WarningResponseComboViewer(composite, this.eventBus).begin();
+    new ErrorResponseComboViewer(composite).begin();
   }
 
-  private void createSaveIntervalSections() {
+  private static void createWarningComboView(final Composite composite,
+    final String name) {
+    PreferencesPage.createLabel(composite, name);
+    new WarningResponseComboViewer(composite).begin();
+  }
+
+  private static void createSaveIntervalSections() {
     PreferencesPage.createSectionLabel("Save Interval");
     final Composite composite =
       PreferencesPage.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite,
       "If possible try to save &files every: ");
-    new SaveIntervalButton(composite, this.eventBus).begin();
+    new SaveIntervalButton(composite).begin();
   }
 
   private static void createLabel(final Composite composite, final String name) {

@@ -7,16 +7,15 @@ import org.eclipse.swt.widgets.Control;
 
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public final class KeyEventListener extends AbstractListener implements
-  KeyListener {
+KeyListener {
 
   private final Control control = EditorContext.getControl(EditorContext
     .getEditor());
 
-  public KeyEventListener(final EventBus eventbus) {
-    super(eventbus);
+  public KeyEventListener() {
+    super();
   }
 
   @Override
@@ -38,6 +37,6 @@ public final class KeyEventListener extends AbstractListener implements
 
   @Override
   public void keyReleased(final KeyEvent event) {
-    this.scheduleSave();
+    AbstractListener.scheduleSave();
   }
 }

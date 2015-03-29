@@ -6,16 +6,15 @@ import org.eclipse.jface.text.source.IAnnotationModelListener;
 
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public class AnnotationsListener extends AbstractListener implements
-  IAnnotationModelListener {
+IAnnotationModelListener {
 
   private final IAnnotationModel annotationModel = AnnotationsListener
-    .getAnnotationModel();
+      .getAnnotationModel();
 
-  public AnnotationsListener(final EventBus eventbus) {
-    super(eventbus);
+  public AnnotationsListener() {
+    super();
   }
 
   @Override
@@ -32,13 +31,13 @@ public class AnnotationsListener extends AbstractListener implements
 
   @Override
   public void modelChanged(final IAnnotationModel model) {
-    this.scheduleSave();
+    AbstractListener.scheduleSave();
   }
 
   private static IAnnotationModel getAnnotationModel() {
     try {
       return EditorContext.getView(EditorContext.getEditor())
-        .getAnnotationModel();
+          .getAnnotationModel();
     }
     catch (final Exception e) {
       return null;

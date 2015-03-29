@@ -17,8 +17,8 @@ public final class Saver extends AbstractEventBusInstance {
   private final IEditorPart editor = EditorContext.getEditor();
   private boolean completionAssistantIsActive;
 
-  public Saver(final EventBus eventBus) {
-    super(eventBus);
+  public Saver() {
+    super();
   }
 
   @Subscribe

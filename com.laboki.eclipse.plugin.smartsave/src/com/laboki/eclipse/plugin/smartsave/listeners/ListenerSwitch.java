@@ -18,8 +18,8 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 
   private final IEditorPart editor = EditorContext.getEditor();
 
-  public ListenerSwitch(final EventBus eventBus) {
-    super(eventBus);
+  public ListenerSwitch() {
+    super();
   }
 
   @Subscribe
@@ -47,29 +47,29 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
   }
 
   @Subscribe
-  public void disableListeners(
+  public static void disableListeners(
     @SuppressWarnings("unused") final AssistSessionStartedEvent event) {
     new AsyncTask() {
 
       @Override
       public void asyncExecute() {
-        ListenerSwitch.this.postDisableListenersEvent();
+        ListenerSwitch.postDisableListenersEvent();
       }
     }.begin();
   }
 
   private void toggleSaverListeners() {
-    if (this.editor.isDirty()) this.postEnableListenersEvent();
-    else this.postDisableListenersEvent();
+    if (this.editor.isDirty()) ListenerSwitch.postEnableListenersEvent();
+    else ListenerSwitch.postDisableListenersEvent();
   }
 
-  private void postDisableListenersEvent() {
+  private static void postDisableListenersEvent() {
     EditorContext.cancelAllJobs();
-    this.eventBus.post(new DisableSaveListenersEvent());
+    EventBus.post(new DisableSaveListenersEvent());
   }
 
-  private void postEnableListenersEvent() {
+  private static void postEnableListenersEvent() {
     EditorContext.cancelAllJobs();
-    this.eventBus.post(new EnableSaveListenersEvent());
+    EventBus.post(new EnableSaveListenersEvent());
   }
 }

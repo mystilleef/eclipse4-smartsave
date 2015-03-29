@@ -5,13 +5,12 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class Updater extends AbstractEventBusInstance {
 
-  public Updater(final EventBus eventBus) {
-    super(eventBus);
+  public Updater() {
+    super();
   }
 
   @Subscribe

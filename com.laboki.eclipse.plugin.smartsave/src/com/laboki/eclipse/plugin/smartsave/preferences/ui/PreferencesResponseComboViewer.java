@@ -18,12 +18,9 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 
   protected static final int YES = 0;
   protected static final int NO = 1;
-  private final EventBus eventBus;
 
-  protected PreferencesResponseComboViewer(final Composite parent,
-    final EventBus eventBus) {
+  protected PreferencesResponseComboViewer(final Composite parent) {
     super(parent);
-    this.eventBus = eventBus;
   }
 
   @Override
@@ -62,7 +59,7 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 
   @Override
   public Instance begin() {
-    this.eventBus.register(this);
+    EventBus.register(this);
     this.startListening();
     this.updateComboProperties();
     return this;
@@ -70,7 +67,7 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 
   @Override
   public Instance end() {
-    this.eventBus.unregister(this);
+    EventBus.unregister(this);
     this.stopListening();
     return this;
   }

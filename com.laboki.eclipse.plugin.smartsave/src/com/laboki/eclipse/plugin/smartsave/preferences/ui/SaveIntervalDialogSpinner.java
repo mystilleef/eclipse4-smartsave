@@ -16,7 +16,6 @@ import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
@@ -30,12 +29,11 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   private static final int SPINNER_MINIMUM = 1;
   private final ModifyListener modifyListener = new SpinnerModifyListener();
   private final SpinnerTraverseListener traverseListener =
-    new SpinnerTraverseListener();
+      new SpinnerTraverseListener();
   private final Spinner spinner;
 
-  public SaveIntervalDialogSpinner(final Composite composite,
-    final EventBus eventBus) {
-    super(eventBus);
+  public SaveIntervalDialogSpinner(final Composite composite) {
+    super();
     this.spinner = new Spinner(composite, SWT.BORDER | SWT.RIGHT);
   }
 
@@ -71,9 +69,9 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   @Subscribe
   @AllowConcurrentEvents
   public
-    void
-    focusSpinner(
-      @SuppressWarnings("unused") final FocusSaveIntervalDialogSpinnerEvent event) {
+  void
+  focusSpinner(
+    @SuppressWarnings("unused") final FocusSaveIntervalDialogSpinnerEvent event) {
     new AsyncTask() {
 
       @Override
@@ -134,7 +132,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     @Override
     public void keyTraversed(final TraverseEvent event) {
       if (event.detail == SWT.TRAVERSE_RETURN) SaveIntervalDialogSpinner.this
-        .getSpinner().getShell().close();
+      .getSpinner().getShell().close();
     }
   }
 }
