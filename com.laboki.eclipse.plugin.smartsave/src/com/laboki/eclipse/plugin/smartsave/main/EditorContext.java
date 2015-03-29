@@ -33,7 +33,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EditorContext {
   INSTANCE;
 
-  public static final EventBus EVENT_BUS = new EventBus();
+  public static final EventBus EVENT_BUS = EventBus.INSTANCE;
   public static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK =
     "smartsave scheduler enable save listeners event task";
   public static final String FILE_SYNCER_TASK = "file syncer task";
@@ -207,8 +207,8 @@ public enum EditorContext {
   }
 
   public static boolean hasErrors(final IEditorPart editor) {
-    return EditorContext.getAnnotationSeverity(
-      EditorContext.ANNOTATION_ERROR, editor);
+    return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_ERROR,
+      editor);
   }
 
   private static boolean bufferHasWarnings(final IEditorPart editor) {
@@ -292,18 +292,18 @@ public enum EditorContext {
       EditorContext.JOB_MANAGER.cancel(jobName);
   }
 
-  public static void scheduleSave(final EventBus eventBus) {
-    EditorContext.asyncScheduleSave(eventBus,
-      EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME);
+  public static void scheduleSave() {
+    EditorContext.asyncScheduleSave(EditorContext.SCHEDULED_SAVER_TASK,
+      EditorContext.SHORT_DELAY_TIME);
   }
 
-  public static void scheduleSave(final EventBus eventBus, final int delayTime) {
-    EditorContext.asyncScheduleSave(eventBus,
-      EditorContext.SCHEDULED_SAVER_TASK, delayTime);
+  public static void scheduleSave(final int delayTime) {
+    EditorContext.asyncScheduleSave(EditorContext.SCHEDULED_SAVER_TASK,
+      delayTime);
   }
 
-  private static void asyncScheduleSave(final EventBus eventBus,
-    final String taskName, final int delayTime) {
+  private static void asyncScheduleSave(final String taskName,
+    final int delayTime) {
     new Task(taskName, delayTime) {
 
       @Override
@@ -319,7 +319,7 @@ public enum EditorContext {
 
       @Override
       public void execute() {
-        eventBus.post(new ScheduleSaveEvent());
+        EventBus.post(new ScheduleSaveEvent());
       }
     }.begin();
   }

@@ -1,33 +1,31 @@
 
 package com.laboki.eclipse.plugin.smartsave.main;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class EventBus {
+public enum EventBus {
+  INSTANCE;
 
-  private static final Executor EXECUTOR = Executors.newCachedThreadPool();
-  private final AsyncEventBus bus = new AsyncEventBus(EventBus.EXECUTOR);
+  private static final AsyncEventBus BUS = new AsyncEventBus(Executors
+    .newCachedThreadPool());
 
-  public EventBus() {}
-
-  public void register(final Object object) {
-    this.bus.register(object);
+  public static void register(final Object object) {
+    EventBus.BUS.register(object);
   }
 
-  public void unregister(final Object object) {
-    this.bus.unregister(object);
+  public static void unregister(final Object object) {
+    EventBus.BUS.unregister(object);
   }
 
-  public void post(final Object object) {
+  public static void post(final Object object) {
     new Task() {
 
       @Override
       public void execute() {
-        EventBus.this.bus.post(object);
+        EventBus.BUS.post(object);
       }
     }.begin();
   }
