@@ -33,7 +33,6 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EditorContext {
   INSTANCE;
 
-  public static final EventBus EVENT_BUS = EventBus.INSTANCE;
   public static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK =
     "smartsave scheduler enable save listeners event task";
   public static final String FILE_SYNCER_TASK = "file syncer task";

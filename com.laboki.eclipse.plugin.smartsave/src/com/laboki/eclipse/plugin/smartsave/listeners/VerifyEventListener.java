@@ -9,7 +9,7 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public final class VerifyEventListener extends AbstractListener implements
-VerifyListener {
+  VerifyListener {
 
   private final StyledText buffer = EditorContext.getBuffer(EditorContext
     .getEditor());

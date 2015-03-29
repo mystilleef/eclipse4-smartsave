@@ -17,13 +17,13 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class CompletionListener extends AbstractEventBusInstance
-  implements ICompletionListener {
+implements ICompletionListener {
 
   private final IEditorPart editor = EditorContext.getEditor();
   private final ContentAssistantFacade contentAssistantFacade = this
-    .getContentAssistantFacade();
+      .getContentAssistantFacade();
   private final IQuickAssistAssistant quickAssistAssistant = this
-    .getQuickAssistAssistant();
+      .getQuickAssistAssistant();
 
   public CompletionListener() {
     super();

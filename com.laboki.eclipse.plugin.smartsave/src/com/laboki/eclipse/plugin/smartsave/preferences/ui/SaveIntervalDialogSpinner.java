@@ -29,7 +29,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   private static final int SPINNER_MINIMUM = 1;
   private final ModifyListener modifyListener = new SpinnerModifyListener();
   private final SpinnerTraverseListener traverseListener =
-      new SpinnerTraverseListener();
+    new SpinnerTraverseListener();
   private final Spinner spinner;
 
   public SaveIntervalDialogSpinner(final Composite composite) {
@@ -69,9 +69,9 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   @Subscribe
   @AllowConcurrentEvents
   public
-  void
-  focusSpinner(
-    @SuppressWarnings("unused") final FocusSaveIntervalDialogSpinnerEvent event) {
+    void
+    focusSpinner(
+      @SuppressWarnings("unused") final FocusSaveIntervalDialogSpinnerEvent event) {
     new AsyncTask() {
 
       @Override
@@ -132,7 +132,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     @Override
     public void keyTraversed(final TraverseEvent event) {
       if (event.detail == SWT.TRAVERSE_RETURN) SaveIntervalDialogSpinner.this
-      .getSpinner().getShell().close();
+        .getSpinner().getShell().close();
     }
   }
 }

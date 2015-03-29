@@ -17,7 +17,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 
 public final class PreferencesPage extends PreferencePage implements
-  IWorkbenchPreferencePage {
+IWorkbenchPreferencePage {
 
   private static Composite pageComposite;
 
@@ -40,7 +40,7 @@ public final class PreferencesPage extends PreferencePage implements
   private static void createSaveAutomaticallySection() {
     PreferencesPage.createSectionLabel("Toggle Smart Saving");
     final Composite composite =
-      PreferencesPage.createHorizontalLayoutComposite();
+        PreferencesPage.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite, "&Save files automatically: ");
     new SaveResponseComboViewer(composite).begin();
   }
@@ -48,11 +48,11 @@ public final class PreferencesPage extends PreferencePage implements
   private static void createWarningErrorSection() {
     PreferencesPage.createSectionLabel("Errors and Warnings");
     final Composite composite =
-      PreferencesPage.createHorizontalLayoutComposite();
+        PreferencesPage.createHorizontalLayoutComposite();
     PreferencesPage.createErrorComboView(composite,
-      "Save files when &errors are present: ");
+        "Save files when &errors are present: ");
     PreferencesPage.createWarningComboView(composite,
-      "Save files when &warnings are present: ");
+        "Save files when &warnings are present: ");
   }
 
   private static void createErrorComboView(final Composite composite,
@@ -70,9 +70,9 @@ public final class PreferencesPage extends PreferencePage implements
   private static void createSaveIntervalSections() {
     PreferencesPage.createSectionLabel("Save Interval");
     final Composite composite =
-      PreferencesPage.createHorizontalLayoutComposite();
+        PreferencesPage.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite,
-      "If possible try to save &files every: ");
+        "If possible try to save &files every: ");
     new SaveIntervalButton(composite).begin();
   }
 
@@ -83,7 +83,7 @@ public final class PreferencesPage extends PreferencePage implements
 
   private static Composite createHorizontalLayoutComposite() {
     final Composite composite =
-      new Composite(PreferencesPage.pageComposite, SWT.NONE);
+        new Composite(PreferencesPage.pageComposite, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
     composite.setLayoutData(PreferencesPage.createHorizontalDataGrid());
     return composite;
@@ -95,7 +95,7 @@ public final class PreferencesPage extends PreferencePage implements
 
   private static void createSectionLabel(final String title) {
     final Composite composite =
-      new Composite(PreferencesPage.pageComposite, SWT.NONE);
+        new Composite(PreferencesPage.pageComposite, SWT.NONE);
     composite.setLayout(new GridLayout(1, false));
     composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     PreferencesPage.newSectionLabel(composite, title);
