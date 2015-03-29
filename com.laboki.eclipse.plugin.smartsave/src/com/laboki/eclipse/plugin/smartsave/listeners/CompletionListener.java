@@ -1,6 +1,9 @@
 
 package com.laboki.eclipse.plugin.smartsave.listeners;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -24,6 +27,8 @@ implements ICompletionListener {
       .getContentAssistantFacade();
   private final IQuickAssistAssistant quickAssistAssistant = this
       .getQuickAssistAssistant();
+  private static final Logger LOGGER = Logger
+      .getLogger(CompletionListener.class.getName());
 
   public CompletionListener() {
     super();
@@ -65,7 +70,9 @@ implements ICompletionListener {
     try {
       this.add();
     }
-    catch (final Exception e) {}
+    catch (final Exception e) {
+      CompletionListener.LOGGER.log(Level.OFF, e.getMessage(), e);
+    }
   }
 
   private void add() {
@@ -83,7 +90,9 @@ implements ICompletionListener {
     try {
       this.remove();
     }
-    catch (final Exception e) {}
+    catch (final Exception e) {
+      CompletionListener.LOGGER.log(Level.OFF, e.getMessage(), e);
+    }
   }
 
   private void remove() {

@@ -13,9 +13,9 @@ abstract class ResponseComboViewer extends ComboViewer {
 
   private final LabelProvider labelProvider = new ResponseLabelProvider();
   private final ISelectionChangedListener listener =
-      new ResponseSelectionListener();
+    new ResponseSelectionListener();
   private final Response[] responses = new Response[] {
-    this.new Response(Response.YES), this.new Response(Response.NO),
+    new Response(Response.YES), new Response(Response.NO),
   };
 
   protected ResponseComboViewer(final Composite parent) {
@@ -44,7 +44,7 @@ abstract class ResponseComboViewer extends ComboViewer {
     return this.responses;
   }
 
-  private final class ResponseLabelProvider extends LabelProvider {
+  private final static class ResponseLabelProvider extends LabelProvider {
 
     public ResponseLabelProvider() {}
 
@@ -55,7 +55,7 @@ abstract class ResponseComboViewer extends ComboViewer {
   }
 
   private final class ResponseSelectionListener implements
-  ISelectionChangedListener {
+    ISelectionChangedListener {
 
     public ResponseSelectionListener() {}
 
@@ -65,7 +65,7 @@ abstract class ResponseComboViewer extends ComboViewer {
     }
   }
 
-  protected final class Response {
+  protected final static class Response {
 
     private boolean value;
     public static final String YES = "yes";
