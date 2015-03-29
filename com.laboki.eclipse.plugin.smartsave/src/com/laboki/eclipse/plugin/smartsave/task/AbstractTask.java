@@ -63,9 +63,7 @@ abstract class AbstractTask extends Job implements Runnable, Instance {
 
   protected void runAsyncExecute() {
     EditorContext.asyncExec(() -> {
-      EditorContext.flushEvents();
       AbstractTask.this.asyncExecute();
-      EditorContext.flushEvents();
     });
   }
 
@@ -73,9 +71,7 @@ abstract class AbstractTask extends Job implements Runnable, Instance {
 
   protected void runSyncExecute() {
     EditorContext.syncExec(() -> {
-      EditorContext.flushEvents();
       AbstractTask.this.syncExecute();
-      EditorContext.flushEvents();
     });
   }
 
