@@ -19,7 +19,7 @@ public final class Scheduler extends AbstractEventBusInstance {
 
   @Subscribe
   @AllowConcurrentEvents
-  public void scheduleSave(
+  public static void scheduleSave(
     @SuppressWarnings("unused") final ScheduleSaveEvent event) {
     new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
@@ -36,20 +36,19 @@ public final class Scheduler extends AbstractEventBusInstance {
       @Override
       public void execute() {
         Scheduler.cancelAllJobs();
-        Scheduler.this.eventBus.post(new SyncFilesEvent());
+        EventBus.post(new SyncFilesEvent());
       }
     }.begin();
   }
 
   @Subscribe
-  public void scheduleSave(
+  public static void scheduleSave(
     @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
     new Task(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK) {
 
       @Override
       public void execute() {
-        EditorContext.scheduleSave(Scheduler.this.eventBus,
-          EditorContext.SHORT_DELAY_TIME);
+        EditorContext.scheduleSave(EditorContext.SHORT_DELAY_TIME);
       }
     }.begin();
   }

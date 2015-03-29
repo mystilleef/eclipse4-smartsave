@@ -58,7 +58,7 @@ public final class Services implements Instance {
   }
 
   private void stopService(final Instance instance) {
-    this.instances.remove(instance);
     instance.end();
+    this.instances.remove(instance);
   }
 }
