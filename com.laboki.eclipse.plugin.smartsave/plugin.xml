@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <plugin>
 	<extension point="org.eclipse.ui.startup">
 		<startup class="com.laboki.eclipse.plugin.smartsave.Startup"/>
@@ -7,7 +8,7 @@
 		point = "org.eclipse.ui.preferencePages">
 			<page id="com.laboki.eclipse.plugin.smartsave.PreferencePage"
 				class="com.laboki.eclipse.plugin.smartsave.preferences.ui.PreferencesPage"
-				name="Smart Save">
+				name="%page.name">
 			</page>
 	</extension>
 </plugin>
