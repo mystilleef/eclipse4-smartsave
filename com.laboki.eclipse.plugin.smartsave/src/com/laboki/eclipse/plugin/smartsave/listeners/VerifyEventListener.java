@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.swt.custom.StyledText;
@@ -8,28 +9,30 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
-public final class VerifyEventListener extends AbstractListener implements VerifyListener {
+public final class VerifyEventListener extends AbstractListener implements
+  VerifyListener {
 
-	private final StyledText buffer = EditorContext.getBuffer(EditorContext.getEditor());
+  private final StyledText buffer = EditorContext.getBuffer(EditorContext
+    .getEditor());
 
-	public VerifyEventListener(final EventBus eventbus) {
-		super(eventbus);
-	}
+  public VerifyEventListener(final EventBus eventbus) {
+    super(eventbus);
+  }
 
-	@Override
-	public void add() {
-		if (this.buffer == null) return;
-		this.buffer.addVerifyListener(this);
-	}
+  @Override
+  public void add() {
+    if (this.buffer == null) return;
+    this.buffer.addVerifyListener(this);
+  }
 
-	@Override
-	public void remove() {
-		if (this.buffer == null) return;
-		this.buffer.removeVerifyListener(this);
-	}
+  @Override
+  public void remove() {
+    if (this.buffer == null) return;
+    this.buffer.removeVerifyListener(this);
+  }
 
-	@Override
-	public void verifyText(final VerifyEvent arg0) {
-		this.scheduleSave();
-	}
+  @Override
+  public void verifyText(final VerifyEvent arg0) {
+    this.scheduleSave();
+  }
 }

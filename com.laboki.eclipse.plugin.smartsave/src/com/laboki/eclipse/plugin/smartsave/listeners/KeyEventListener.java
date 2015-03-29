@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.swt.events.KeyEvent;
@@ -8,33 +9,35 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
-public final class KeyEventListener extends AbstractListener implements KeyListener {
+public final class KeyEventListener extends AbstractListener implements
+  KeyListener {
 
-	private final Control control = EditorContext.getControl(EditorContext.getEditor());
+  private final Control control = EditorContext.getControl(EditorContext
+    .getEditor());
 
-	public KeyEventListener(final EventBus eventbus) {
-		super(eventbus);
-	}
+  public KeyEventListener(final EventBus eventbus) {
+    super(eventbus);
+  }
 
-	@Override
-	public void add() {
-		if (this.control == null) return;
-		this.control.addKeyListener(this);
-	}
+  @Override
+  public void add() {
+    if (this.control == null) return;
+    this.control.addKeyListener(this);
+  }
 
-	@Override
-	public void remove() {
-		if (this.control == null) return;
-		this.control.removeKeyListener(this);
-	}
+  @Override
+  public void remove() {
+    if (this.control == null) return;
+    this.control.removeKeyListener(this);
+  }
 
-	@Override
-	public void keyPressed(final KeyEvent event) {
-		EditorContext.cancelAllJobs();
-	}
+  @Override
+  public void keyPressed(final KeyEvent event) {
+    EditorContext.cancelAllJobs();
+  }
 
-	@Override
-	public void keyReleased(final KeyEvent event) {
-		this.scheduleSave();
-	}
+  @Override
+  public void keyReleased(final KeyEvent event) {
+    this.scheduleSave();
+  }
 }

@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.ui.IEditorPart;
@@ -9,41 +10,42 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
-public final class DirtyPartListener extends AbstractEventBusInstance implements IPropertyListener {
+public final class DirtyPartListener extends AbstractEventBusInstance implements
+  IPropertyListener {
 
-	private final IEditorPart editor = EditorContext.getEditor();
+  private final IEditorPart editor = EditorContext.getEditor();
 
-	public DirtyPartListener(final EventBus eventBus) {
-		super(eventBus);
-	}
+  public DirtyPartListener(final EventBus eventBus) {
+    super(eventBus);
+  }
 
-	public void add() {
-		this.editor.addPropertyListener(this);
-	}
+  public void add() {
+    this.editor.addPropertyListener(this);
+  }
 
-	public void remove() {
-		this.editor.removePropertyListener(this);
-	}
+  public void remove() {
+    this.editor.removePropertyListener(this);
+  }
 
-	@Override
-	public void propertyChanged(final Object source, final int propID) {
-		if (propID == IEditorPart.PROP_DIRTY) DirtyPartListener.this.postEvent();
-	}
+  @Override
+  public void propertyChanged(final Object source, final int propID) {
+    if (propID == IEditorPart.PROP_DIRTY) DirtyPartListener.this.postEvent();
+  }
 
-	@Override
-	public Instance begin() {
-		this.add();
-		this.postEvent();
-		return super.begin();
-	}
+  @Override
+  public Instance begin() {
+    this.add();
+    this.postEvent();
+    return super.begin();
+  }
 
-	private void postEvent() {
-		DirtyPartListener.this.eventBus.post(new PartChangedEvent());
-	}
+  private void postEvent() {
+    DirtyPartListener.this.eventBus.post(new PartChangedEvent());
+  }
 
-	@Override
-	public Instance end() {
-		this.remove();
-		return super.end();
-	}
+  @Override
+  public Instance end() {
+    this.remove();
+    return super.end();
+  }
 }

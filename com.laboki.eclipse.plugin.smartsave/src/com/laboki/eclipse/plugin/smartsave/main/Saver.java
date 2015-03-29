@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import org.eclipse.ui.IEditorPart;
@@ -13,54 +14,61 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class Saver extends AbstractEventBusInstance {
 
-	private final IEditorPart editor = EditorContext.getEditor();
-	private boolean completionAssistantIsActive;
+  private final IEditorPart editor = EditorContext.getEditor();
+  private boolean completionAssistantIsActive;
 
-	public Saver(final EventBus eventBus) {
-		super(eventBus);
-	}
+  public Saver(final EventBus eventBus) {
+    super(eventBus);
+  }
 
-	@Subscribe
-	public void save(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		this.completionAssistantIsActive = true;
-	}
+  @Subscribe
+  public void save(
+    @SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+    this.completionAssistantIsActive = true;
+  }
 
-	@Subscribe
-	public void save(@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
-		this.completionAssistantIsActive = false;
-	}
+  @Subscribe
+  public void save(
+    @SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+    this.completionAssistantIsActive = false;
+  }
 
-	@Subscribe
-	@AllowConcurrentEvents
-	public void save(@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-		new AsyncTask(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+  @Subscribe
+  @AllowConcurrentEvents
+  public void save(
+    @SuppressWarnings("unused") final StartSaveScheduleEvent event) {
+    new AsyncTask(EditorContext.AUTOMATIC_SAVER_TASK,
+      EditorContext.SHORT_DELAY_TIME) {
 
-			@Override
-			public boolean shouldSchedule() {
-				if (Saver.this.completionAssistantIsActive) return false;
-				return EditorContext.taskDoesNotExist(EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK, EditorContext.FILE_SYNCER_TASK);
-			}
+      @Override
+      public boolean shouldSchedule() {
+        if (Saver.this.completionAssistantIsActive) return false;
+        return EditorContext.taskDoesNotExist(
+          EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.LISTENER_TASK,
+          EditorContext.SCHEDULED_SAVER_TASK, EditorContext.FILE_SYNCER_TASK);
+      }
 
-			@Override
-			public boolean shouldRun() {
-				if (Saver.this.completionAssistantIsActive) return false;
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK, EditorContext.FILE_SYNCER_TASK);
-			}
+      @Override
+      public boolean shouldRun() {
+        if (Saver.this.completionAssistantIsActive) return false;
+        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK,
+          EditorContext.SCHEDULED_SAVER_TASK, EditorContext.FILE_SYNCER_TASK);
+      }
 
-			@Override
-			public void asyncExecute() {
-				Saver.this.save();
-			}
-		}.begin();
-	}
+      @Override
+      public void asyncExecute() {
+        Saver.this.save();
+      }
+    }.begin();
+  }
 
-	@Override
-	public Instance end() {
-		this.save();
-		return super.end();
-	}
+  @Override
+  public Instance end() {
+    this.save();
+    return super.end();
+  }
 
-	private void save() {
-		EditorContext.tryToSave(this.editor);
-	}
+  private void save() {
+    EditorContext.tryToSave(this.editor);
+  }
 }

@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
@@ -12,55 +13,60 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class Scheduler extends AbstractEventBusInstance {
 
-	public Scheduler(final EventBus eventBus) {
-		super(eventBus);
-	}
+  public Scheduler(final EventBus eventBus) {
+    super(eventBus);
+  }
 
-	@Subscribe
-	@AllowConcurrentEvents
-	public void scheduleSave(@SuppressWarnings("unused") final ScheduleSaveEvent event) {
-		new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
+  @Subscribe
+  @AllowConcurrentEvents
+  public void scheduleSave(
+    @SuppressWarnings("unused") final ScheduleSaveEvent event) {
+    new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
-			@Override
-			public boolean shouldSchedule() {
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
-			}
+      @Override
+      public boolean shouldSchedule() {
+        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+      }
 
-			@Override
-			public boolean shouldRun() {
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
-			}
+      @Override
+      public boolean shouldRun() {
+        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+      }
 
-			@Override
-			public void execute() {
-				Scheduler.cancelAllJobs();
-				Scheduler.this.eventBus.post(new SyncFilesEvent());
-			}
-		}.begin();
-	}
+      @Override
+      public void execute() {
+        Scheduler.cancelAllJobs();
+        Scheduler.this.eventBus.post(new SyncFilesEvent());
+      }
+    }.begin();
+  }
 
-	@Subscribe
-	public void scheduleSave(@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-		new Task(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK) {
+  @Subscribe
+  public void scheduleSave(
+    @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
+    new Task(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK) {
 
-			@Override
-			public void execute() {
-				EditorContext.scheduleSave(Scheduler.this.eventBus, EditorContext.SHORT_DELAY_TIME);
-			}
-		}.begin();
-	}
+      @Override
+      public void execute() {
+        EditorContext.scheduleSave(Scheduler.this.eventBus,
+          EditorContext.SHORT_DELAY_TIME);
+      }
+    }.begin();
+  }
 
-	@Subscribe
-	public static void cancelSaveJobs(@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-		Scheduler.cancelAllJobs();
-	}
+  @Subscribe
+  public static void cancelSaveJobs(
+    @SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+    Scheduler.cancelAllJobs();
+  }
 
-	@Subscribe
-	public static void cancelSaveJobs(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		Scheduler.cancelAllJobs();
-	}
+  @Subscribe
+  public static void cancelSaveJobs(
+    @SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+    Scheduler.cancelAllJobs();
+  }
 
-	private static void cancelAllJobs() {
-		EditorContext.cancelAllJobs();
-	}
+  private static void cancelAllJobs() {
+    EditorContext.cancelAllJobs();
+  }
 }

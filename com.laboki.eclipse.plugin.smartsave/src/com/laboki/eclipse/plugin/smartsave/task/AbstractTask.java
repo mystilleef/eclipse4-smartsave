@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.task;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -10,80 +11,73 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 abstract class AbstractTask extends Job implements Runnable, Instance {
 
-	private final int delayTime;
-	private final String name;
+  private final int delayTime;
+  private final String name;
 
-	protected AbstractTask(final String name, final int delayTime, final int priority) {
-		super(name);
-		this.name = name;
-		this.delayTime = delayTime;
-		this.setPriority(priority);
-	}
+  protected AbstractTask(final String name, final int delayTime,
+    final int priority) {
+    super(name);
+    this.name = name;
+    this.delayTime = delayTime;
+    this.setPriority(priority);
+  }
 
-	@Override
-	public boolean belongsTo(final Object family) {
-		return this.name.equals(family);
-	}
+  @Override
+  public boolean belongsTo(final Object family) {
+    return this.name.equals(family);
+  }
 
-	@Override
-	public Instance end() {
-		this.cancel();
-		return this;
-	}
+  @Override
+  public Instance end() {
+    this.cancel();
+    return this;
+  }
 
-	@Override
-	public Instance begin() {
-		this.setUser(false);
-		this.setSystem(true);
-		this.schedule(this.delayTime);
-		return this;
-	}
+  @Override
+  public Instance begin() {
+    this.setUser(false);
+    this.setSystem(true);
+    this.schedule(this.delayTime);
+    return this;
+  }
 
-	@Override
-	public void run() {
-		this.begin();
-	}
+  @Override
+  public void run() {
+    this.begin();
+  }
 
-	@Override
-	protected IStatus run(final IProgressMonitor monitor) {
-		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-		this.runTask();
-		return Status.OK_STATUS;
-	}
+  @Override
+  protected IStatus run(final IProgressMonitor monitor) {
+    if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+    this.runTask();
+    return Status.OK_STATUS;
+  }
 
-	protected void runTask() {}
+  protected void runTask() {}
 
-	protected void runExecute() {
-		this.execute();
-	}
+  protected void runExecute() {
+    this.execute();
+  }
 
-	protected void execute() {}
+  protected void execute() {}
 
-	protected void runAsyncExecute() {
-		EditorContext.asyncExec(new Runnable() {
+  protected void runAsyncExecute() {
+    EditorContext.asyncExec(() -> {
+      EditorContext.flushEvents();
+      AbstractTask.this.asyncExecute();
+      EditorContext.flushEvents();
+    });
+  }
 
-			@Override
-			public void run() {
-				EditorContext.flushEvents();
-				AbstractTask.this.asyncExecute();
-				EditorContext.flushEvents();
-			}
-		});
-	}
+  protected void asyncExecute() {}
 
-	protected void asyncExecute() {}
+  protected void runSyncExecute() {
+    EditorContext.syncExec(() -> {
+      EditorContext.flushEvents();
+      AbstractTask.this.syncExecute();
+      EditorContext.flushEvents();
+    });
+  }
 
-	protected void runSyncExecute() {
-		EditorContext.syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				EditorContext.flushEvents();
-				AbstractTask.this.syncExecute();
-				EditorContext.flushEvents();
-			}
-		});
-	}
-
-	protected void syncExecute() {}
+  protected void syncExecute() {}
 }

@@ -1,3 +1,4 @@
+
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import org.eclipse.ui.IEditorPart;
@@ -13,45 +14,50 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 final class FileSyncer extends AbstractEventBusInstance {
 
-	private final IEditorPart editor = EditorContext.getEditor();
-	private boolean completionAssistantIsActive;
+  private final IEditorPart editor = EditorContext.getEditor();
+  private boolean completionAssistantIsActive;
 
-	public FileSyncer(final EventBus eventBus) {
-		super(eventBus);
-	}
+  public FileSyncer(final EventBus eventBus) {
+    super(eventBus);
+  }
 
-	@Subscribe
-	public void save(@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-		this.completionAssistantIsActive = true;
-	}
+  @Subscribe
+  public void save(
+    @SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+    this.completionAssistantIsActive = true;
+  }
 
-	@Subscribe
-	public void save(@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
-		this.completionAssistantIsActive = false;
-	}
+  @Subscribe
+  public void save(
+    @SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+    this.completionAssistantIsActive = false;
+  }
 
-	@Subscribe
-	@AllowConcurrentEvents
-	public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
-		new Task(EditorContext.FILE_SYNCER_TASK, EditorContext.getSaveIntervalInMilliSeconds()) {
+  @Subscribe
+  @AllowConcurrentEvents
+  public void syncFiles(@SuppressWarnings("unused") final SyncFilesEvent event) {
+    new Task(EditorContext.FILE_SYNCER_TASK, EditorContext
+      .getSaveIntervalInMilliSeconds()) {
 
-			@Override
-			public boolean shouldSchedule() {
-				if (FileSyncer.this.completionAssistantIsActive) return false;
-				return EditorContext.taskDoesNotExist(EditorContext.FILE_SYNCER_TASK, EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
-			}
+      @Override
+      public boolean shouldSchedule() {
+        if (FileSyncer.this.completionAssistantIsActive) return false;
+        return EditorContext.taskDoesNotExist(EditorContext.FILE_SYNCER_TASK,
+          EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
+      }
 
-			@Override
-			public boolean shouldRun() {
-				if (FileSyncer.this.completionAssistantIsActive) return false;
-				return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK, EditorContext.SCHEDULED_SAVER_TASK);
-			}
+      @Override
+      public boolean shouldRun() {
+        if (FileSyncer.this.completionAssistantIsActive) return false;
+        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK,
+          EditorContext.SCHEDULED_SAVER_TASK);
+      }
 
-			@Override
-			public void execute() {
-				EditorContext.syncFile(FileSyncer.this.editor);
-				FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
-			}
-		}.begin();
-	}
+      @Override
+      public void execute() {
+        EditorContext.syncFile(FileSyncer.this.editor);
+        FileSyncer.this.eventBus.post(new StartSaveScheduleEvent());
+      }
+    }.begin();
+  }
 }
