@@ -58,12 +58,12 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
     }.begin();
   }
 
-  private void toggleSaverListeners() {
+  void toggleSaverListeners() {
     if (this.editor.isDirty()) ListenerSwitch.postEnableListenersEvent();
     else ListenerSwitch.postDisableListenersEvent();
   }
 
-  private static void postDisableListenersEvent() {
+  static void postDisableListenersEvent() {
     EditorContext.cancelAllJobs();
     EventBus.post(new DisableSaveListenersEvent());
   }

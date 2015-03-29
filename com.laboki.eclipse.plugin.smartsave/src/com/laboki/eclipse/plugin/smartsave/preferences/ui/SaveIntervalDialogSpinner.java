@@ -81,12 +81,12 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     }.begin();
   }
 
-  private void focus() {
+  void focus() {
     this.spinner.setFocus();
     this.spinner.forceFocus();
   }
 
-  private synchronized void updateSelection() {
+  synchronized void updateSelection() {
     if (this.spinner.getSelection() == Store.getSaveIntervalInSeconds()) return;
     this.spinner.removeModifyListener(this.modifyListener);
     this.spinner.setSelection(Store.getSaveIntervalInSeconds());

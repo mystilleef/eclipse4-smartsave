@@ -33,7 +33,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
     SaveIntervalButton.button = new Button(composite, SWT.FLAT);
   }
 
-  private static void updateText() {
+  static void updateText() {
     SaveIntervalButton.button.setText(SaveIntervalButton
       .minutesAndSeconds(Store.getSaveIntervalInSeconds()));
     SaveIntervalButton.button.pack();

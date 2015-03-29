@@ -36,7 +36,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance
     }.begin();
   }
 
-  private void tryToAdd() {
+  void tryToAdd() {
     try {
       this.add();
     }
@@ -70,7 +70,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance
     return super.end();
   }
 
-  private void tryToRemove() {
+  void tryToRemove() {
     try {
       this.remove();
     }

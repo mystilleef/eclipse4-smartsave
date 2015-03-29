@@ -65,7 +65,7 @@ public final class Scheduler extends AbstractEventBusInstance {
     Scheduler.cancelAllJobs();
   }
 
-  private static void cancelAllJobs() {
+  static void cancelAllJobs() {
     EditorContext.cancelAllJobs();
   }
 }

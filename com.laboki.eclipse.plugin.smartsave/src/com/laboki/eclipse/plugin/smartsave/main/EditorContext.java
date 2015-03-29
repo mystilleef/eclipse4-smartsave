@@ -265,7 +265,7 @@ public enum EditorContext {
 
     @Override
     public boolean belongsTo(final Object family) {
-      return family == SaveWorkspaceJob.SAVE_WORKSPACE_JOB_FAMILY;
+      return family.equals(SaveWorkspaceJob.SAVE_WORKSPACE_JOB_FAMILY);
     }
 
     @Override
@@ -303,7 +303,7 @@ public enum EditorContext {
     }
   }
 
-  private static IFile getFile(final IEditorPart editor) {
+  static IFile getFile(final IEditorPart editor) {
     return ((FileEditorInput) editor.getEditorInput()).getFile();
   }
 

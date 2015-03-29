@@ -58,7 +58,7 @@ public enum Factory implements Instance {
     return this;
   }
 
-  private static void enableAutomaticSaverFor(final IWorkbenchPart part) {
+  static void enableAutomaticSaverFor(final IWorkbenchPart part) {
     if (Factory.isInvalidPart(part)) return;
     Factory.startSaverServiceFor(part);
   }
@@ -85,7 +85,7 @@ public enum Factory implements Instance {
     Factory.SERVICES_MAP.put((IEditorPart) part, new Services().begin());
   }
 
-  private static void stopAllSaverServices() {
+  static void stopAllSaverServices() {
     for (final IEditorPart part : Factory.SERVICES_MAP.keySet())
       Factory.stopSaverServiceFor(part);
   }

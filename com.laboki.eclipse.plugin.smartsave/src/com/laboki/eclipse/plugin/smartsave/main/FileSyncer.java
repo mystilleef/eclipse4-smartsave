@@ -14,8 +14,8 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 final class FileSyncer extends AbstractEventBusInstance {
 
-  private final IEditorPart editor = EditorContext.getEditor();
-  private boolean completionAssistantIsActive;
+  final IEditorPart editor = EditorContext.getEditor();
+  boolean completionAssistantIsActive;
 
   public FileSyncer() {
     super();

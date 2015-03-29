@@ -15,7 +15,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 public final class Saver extends AbstractEventBusInstance {
 
   private final IEditorPart editor = EditorContext.getEditor();
-  private boolean completionAssistantIsActive;
+  boolean completionAssistantIsActive;
 
   public Saver() {
     super();
@@ -68,7 +68,7 @@ public final class Saver extends AbstractEventBusInstance {
     return super.end();
   }
 
-  private void save() {
+  void save() {
     EditorContext.tryToSave(this.editor);
   }
 }
