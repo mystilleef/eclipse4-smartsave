@@ -11,7 +11,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public final class DirtyPartListener extends AbstractEventBusInstance implements
-  IPropertyListener {
+IPropertyListener {
 
   private final IEditorPart editor = EditorContext.getEditor();
 

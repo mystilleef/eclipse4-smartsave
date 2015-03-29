@@ -14,7 +14,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-  implements IListener {
+implements IListener {
 
   private static final int ONE_SECOND_DELAY = 1000;
   private static final Logger LOGGER = Logger.getLogger(AbstractListener.class
