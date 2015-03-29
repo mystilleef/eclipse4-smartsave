@@ -2,49 +2,83 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
-Bundle-Version: 20131214.1
+Bundle-Version: 20140328.0
 Bundle-Vendor: %Bundle-Vendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
  org.eclipse.jface.text;bundle-version="3.8.1",
  org.eclipse.core.resources;bundle-version="3.8.1",
  org.eclipse.ui.ide;bundle-version="3.8.1",
  org.eclipse.core.runtime;bundle-version="3.8.0"
 Export-Package: com.google.common.annotations,
- com.google.common.base,
+ com.google.common.base;uses:="new com.google.common.base",
  com.google.common.base.internal;x-internal:=true,
- com.google.common.cache,
- com.google.common.collect,
- com.google.common.eventbus,
- com.google.common.hash,
- com.google.common.io,
+ com.google.common.cache;
+  uses:="com.google.common.base,
+   new com.google.common.cache,
+   com.google.common.util.concurrent,
+   com.google.common.collect,
+   sun.misc",
+ com.google.common.collect;
+  uses:="com.google.common.base,
+   new new new com.google.common.collect,
+   new new com.google.common.collect,
+   new com.google.common.collect",
+ com.google.common.eventbus;uses:="com.google.common.cache,com.google.common.collect",
+ com.google.common.hash;uses:="new com.google.common.hash,com.google.common.base",
+ com.google.common.io;
+  uses:="new com.google.common.io,
+   com.google.common.base,
+   com.google.common.hash,
+   com.google.common.collect",
  com.google.common.math,
- com.google.common.net,
- com.google.common.primitives,
- com.google.common.reflect,
- com.google.common.util.concurrent,
- com.laboki.eclipse.plugin.smartsave;uses:="org.eclipse.ui",
+ com.google.common.net;uses:="com.google.common.base,com.google.common.collect",
+ com.google.common.primitives;uses:="sun.misc",
+ com.google.common.reflect;uses:="new com.google.common.reflect,com.google.common.base,com.google.common.collect",
+ com.google.common.util.concurrent;uses:="new com.google.common.util.concurrent,com.google.common.base,com.google.common.collect",
+ com.laboki.eclipse.plugin.smartsave;
+  uses:="org.osgi.framework,
+   org.eclipse.ui,
+   com.laboki.eclipse.plugin.smartsave.instance,
+   org.eclipse.ui.plugin",
  com.laboki.eclipse.plugin.smartsave.events,
- com.laboki.eclipse.plugin.smartsave.instance,
- com.laboki.eclipse.plugin.smartsave.listeners,
- com.laboki.eclipse.plugin.smartsave.listeners.abstraction,
+ com.laboki.eclipse.plugin.smartsave.instance;uses:="com.laboki.eclipse.plugin.smartsave.main",
+ com.laboki.eclipse.plugin.smartsave.listeners;
+  uses:="org.eclipse.jface.text.contentassist,
+   com.laboki.eclipse.plugin.smartsave.main,
+   org.eclipse.ui,
+   org.eclipse.swt.events,
+   com.laboki.eclipse.plugin.smartsave.listeners.abstraction,
+   org.eclipse.jface.text.source,
+   com.laboki.eclipse.plugin.smartsave.instance,
+   com.laboki.eclipse.plugin.smartsave.events,
+   org.eclipse.core.runtime.preferences",
+ com.laboki.eclipse.plugin.smartsave.listeners.abstraction;uses:="com.laboki.eclipse.plugin.smartsave.main,com.laboki.eclipse.plugin.smartsave.instance,com.laboki.eclipse.plugin.smartsave.events",
  com.laboki.eclipse.plugin.smartsave.main;
-  uses:="org.eclipse.jface.text.source,
-   org.eclipse.core.runtime,
-   org.eclipse.core.runtime.jobs,
+  uses:="org.eclipse.core.runtime.jobs,
    org.eclipse.ui,
-   org.eclipse.swt.custom,
-   org.eclipse.swt.widgets",
- com.laboki.eclipse.plugin.smartsave.preferences;uses:="org.eclipse.core.runtime.preferences",
+   org.eclipse.jface.text.source,
+   com.laboki.eclipse.plugin.smartsave.instance,
+   com.laboki.eclipse.plugin.smartsave.events,
+   org.eclipse.swt.widgets,
+   org.eclipse.swt.custom",
+ com.laboki.eclipse.plugin.smartsave.preferences;
+  uses:="com.laboki.eclipse.plugin.smartsave.main,
+   com.laboki.eclipse.plugin.smartsave.instance,
+   com.laboki.eclipse.plugin.smartsave.events,
+   org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.preferences.ui;
-  uses:="org.eclipse.jface.preference,
-   com.laboki.eclipse.plugin.smartsave.saver.preferences,
+  uses:="com.laboki.eclipse.plugin.smartsave.main,
    org.eclipse.ui,
-   org.eclipse.jface.viewers,
-   org.eclipse.swt.widgets",
- com.laboki.eclipse.plugin.smartsave.task
+   com.laboki.eclipse.plugin.smartsave.instance,
+   com.laboki.eclipse.plugin.smartsave.events,
+   org.eclipse.swt.widgets,
+   org.eclipse.jface.preference,
+   org.eclipse.jface.viewers",
+ com.laboki.eclipse.plugin.smartsave.task;uses:="org.eclipse.core.runtime.jobs,org.eclipse.core.runtime,com.laboki.eclipse.plugin.smartsave.instance"
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator
 Bundle-ClassPath: .,
  guava-14.0.1.jar
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
+Import-Package: org.eclipse.ui.texteditor
