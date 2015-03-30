@@ -22,13 +22,7 @@ public enum Plugin implements Instance {
 
   @Override
   public Instance end() {
-    new AsyncTask() {
-
-      @Override
-      public void asyncExecute() {
-        Factory.INSTANCE.end();
-      }
-    }.begin();
+    Factory.INSTANCE.end();
     return this;
   }
 }
