@@ -90,8 +90,8 @@ public enum EditorContext {
   }
 
   private static boolean displayIsDisposed() {
-    return (EditorContext.DISPLAY == null)
-        || EditorContext.DISPLAY.isDisposed();
+    if (EditorContext.DISPLAY == null) return true;
+    return EditorContext.DISPLAY.isDisposed();
   }
 
   public static IPartService getPartService() {
