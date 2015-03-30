@@ -85,22 +85,7 @@ public enum EditorContext {
   private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
       new DefaultMarkerAnnotationAccess();
   public static final MessageConsole CONSOLE = EditorContext
-      .getConsole("Eclipse Google Drive Console");
-
-  public static void asyncExec(final Runnable runnable) {
-    if (EditorContext.displayIsDisposed()) return;
-    EditorContext.DISPLAY.asyncExec(runnable);
-  }
-
-  public static void syncExec(final Runnable runnable) {
-    if (EditorContext.displayIsDisposed()) return;
-    EditorContext.DISPLAY.syncExec(runnable);
-  }
-
-  private static boolean displayIsDisposed() {
-    if (EditorContext.DISPLAY == null) return true;
-    return EditorContext.DISPLAY.isDisposed();
-  }
+      .getConsole("Smart Save");
 
   public static IPartService getPartService() {
     return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
@@ -241,7 +226,9 @@ public enum EditorContext {
   }
 
   public static void forceSave() {
+    EditorContext.flushEvents();
     EditorContext.WORKBENCH.saveAllEditors(false);
+    EditorContext.flushEvents();
   }
 
   public static void save(final IEditorPart editor) {
@@ -267,7 +254,9 @@ public enum EditorContext {
     @Override
     public IStatus runInWorkspace(final IProgressMonitor monitor) {
       if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+      EditorContext.flushEvents();
       EditorContext.asyncExec(this);
+      EditorContext.flushEvents();
       return Status.OK_STATUS;
     }
 
@@ -415,5 +404,41 @@ public enum EditorContext {
       myConsole
     });
     return myConsole;
+  }
+
+  public static void flushEvents() {
+    try {
+      EditorContext.tryToFlushEvents();
+    }
+    catch (final Exception e) {
+      EditorContext.LOGGER.log(Level.FINEST, e.getMessage(), e);
+    }
+  }
+
+  private static void tryToFlushEvents() {
+    if (EditorContext.displayExists()) EditorContext.updateDisplay();
+  }
+
+  private static void updateDisplay() {
+    while (EditorContext.DISPLAY.readAndDispatch())
+      EditorContext.DISPLAY.update();
+  }
+
+  public static void asyncExec(final Runnable runnable) {
+    if (EditorContext.displayExists()) EditorContext.DISPLAY
+    .asyncExec(runnable);
+  }
+
+  public static void syncExec(final Runnable runnable) {
+    if (EditorContext.displayExists()) EditorContext.DISPLAY.syncExec(runnable);
+  }
+
+  private static boolean displayExists() {
+    return !EditorContext.displayIsDisposed();
+  }
+
+  private static boolean displayIsDisposed() {
+    if (EditorContext.DISPLAY == null) return true;
+    return EditorContext.DISPLAY.isDisposed();
   }
 }
