@@ -55,7 +55,7 @@ final class FileSyncer extends AbstractEventBusInstance {
 
       @Override
       public void execute() {
-        EditorContext.syncFile(FileSyncer.this.editor);
+        // EditorContext.syncFile(FileSyncer.this.editor);
         EventBus.post(new StartSaveScheduleEvent());
       }
     }.begin();

@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -44,38 +43,38 @@ public enum EditorContext {
   INSTANCE;
 
   public static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK =
-      "smartsave scheduler enable save listeners event task";
+    "smartsave scheduler enable save listeners event task";
   public static final String FILE_SYNCER_TASK = "file syncer task";
   public static final String LISTENER_TASK = "Listener Task";
   public static final String PLUGIN_NAME =
-      "com.laboki.eclipse.plugin.smartsave";
+    "com.laboki.eclipse.plugin.smartsave";
   public static final String CONTRIBUTOR_URI = MessageFormat.format(
     "plugin://{0}", EditorContext.PLUGIN_NAME);
   public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
   public static final int SHORT_DELAY_TIME = 250;
   public static final String AUTOMATIC_SAVER_TASK =
-      "smartsave automatic saver task";
+    "smartsave automatic saver task";
   public static final String LISTENER_SAVER_TASK =
-      "smartsave listener saver task";
+    "smartsave listener saver task";
   public static final String SCHEDULED_SAVER_TASK =
-      "smartsave scheduled saver task";
+    "smartsave scheduled saver task";
   public static final IJobManager JOB_MANAGER = Job.getJobManager();
   public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
   public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
   private static final int MILLI_SECONDS_UNIT = 1000;
   private static final int SAVE_INTERVAL_DIFFERENCIAL = 750;
   private static final String LINK_SLAVE =
-      "org.eclipse.ui.internal.workbench.texteditor.link.slave";
+    "org.eclipse.ui.internal.workbench.texteditor.link.slave";
   private static final String LINK_MASTER =
-      "org.eclipse.ui.internal.workbench.texteditor.link.master";
+    "org.eclipse.ui.internal.workbench.texteditor.link.master";
   private static final String LINK_TARGET =
-      "org.eclipse.ui.internal.workbench.texteditor.link.target";
+    "org.eclipse.ui.internal.workbench.texteditor.link.target";
   private static final String LINK_EXIT =
-      "org.eclipse.ui.internal.workbench.texteditor.link.exit";
+    "org.eclipse.ui.internal.workbench.texteditor.link.exit";
   private static final String ANNOTATION_WARNING =
-      "org.eclipse.ui.workbench.texteditor.warning";
+    "org.eclipse.ui.workbench.texteditor.warning";
   private static final String ANNOTATION_ERROR =
-      "org.eclipse.ui.workbench.texteditor.error";
+    "org.eclipse.ui.workbench.texteditor.error";
   private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(
     EditorContext.LINK_EXIT, EditorContext.LINK_TARGET,
     EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
@@ -83,13 +82,13 @@ public enum EditorContext {
   private static final Logger LOGGER = Logger.getLogger(EditorContext.class
     .getName());
   private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
-      new DefaultMarkerAnnotationAccess();
+    new DefaultMarkerAnnotationAccess();
   public static final MessageConsole CONSOLE = EditorContext
-      .getConsole("Smart Save");
+    .getConsole("Smart Save");
 
   public static IPartService getPartService() {
     return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-        .getService(IPartService.class);
+      .getService(IPartService.class);
   }
 
   public static Shell getShell() {
@@ -98,7 +97,7 @@ public enum EditorContext {
 
   public static IEditorPart getEditor() {
     return EditorContext.WORKBENCH.getActiveWorkbenchWindow().getActivePage()
-        .getActiveEditor();
+      .getActiveEditor();
   }
 
   public static Control getControl(final IEditorPart editor) {
@@ -124,7 +123,7 @@ public enum EditorContext {
 
   private static boolean canSave(final IEditorPart editor) {
     return EditorContext.canSaveAutomatically()
-        && EditorContext.canSaveFile(editor);
+      && EditorContext.canSaveFile(editor);
   }
 
   public static boolean canSaveAutomatically() {
@@ -133,18 +132,18 @@ public enum EditorContext {
 
   private static boolean canSaveFile(final IEditorPart editor) {
     return !(EditorContext.isNotModified(editor)
-        || EditorContext.isBeingEdited(editor) || EditorContext
+      || EditorContext.isBeingEdited(editor) || EditorContext
         .hasProblems(editor));
   }
 
   private static boolean isBeingEdited(final IEditorPart editor) {
     return EditorContext.hasSelection(editor)
-        || EditorContext.isInLinkMode(editor);
+      || EditorContext.isInLinkMode(editor);
   }
 
   private static boolean hasProblems(final IEditorPart editor) {
     return EditorContext.bufferHasErrors(editor)
-        || EditorContext.bufferHasWarnings(editor);
+      || EditorContext.bufferHasWarnings(editor);
   }
 
   public static boolean isNotModified(final IEditorPart editor) {
@@ -157,7 +156,7 @@ public enum EditorContext {
 
   public static boolean hasSelection(final IEditorPart editor) {
     return (EditorContext.getBuffer(editor).getSelectionCount() > 0)
-        || EditorContext.getBuffer(editor).getBlockSelection();
+      || EditorContext.getBuffer(editor).getBlockSelection();
   }
 
   public static boolean isInLinkMode(final IEditorPart editor) {
@@ -166,7 +165,7 @@ public enum EditorContext {
 
   private static boolean hasLinkAnnotations(final IEditorPart editor) {
     final Iterator<Annotation> iterator =
-        EditorContext.getView(editor).getAnnotationModel()
+      EditorContext.getView(editor).getAnnotationModel()
         .getAnnotationIterator();
     while (iterator.hasNext())
       if (EditorContext.isLinkModeAnnotation(iterator)) return true;
@@ -210,7 +209,7 @@ public enum EditorContext {
   private static boolean getAnnotationSeverity(final String problemSeverity,
     final IEditorPart editor) {
     final Iterator<Annotation> iterator =
-        EditorContext.getView(editor).getAnnotationModel()
+      EditorContext.getView(editor).getAnnotationModel()
         .getAnnotationIterator();
     while (iterator.hasNext())
       if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
@@ -239,7 +238,7 @@ public enum EditorContext {
 
     private final IEditorPart editor;
     public static final String SAVE_WORKSPACE_JOB_FAMILY =
-        "saveworkspacejobfamily";
+      "saveworkspacejobfamily";
 
     public SaveWorkspaceJob(final IEditorPart editor) {
       super("Save Workspace Job");
@@ -268,7 +267,7 @@ public enum EditorContext {
     @Override
     public boolean shouldSchedule() {
       return super.shouldSchedule() && SaveWorkspaceJob.jobDoesNotExists()
-        && Job.getJobManager().isIdle();
+          && Job.getJobManager().isIdle();
     }
 
     private static boolean jobDoesNotExists() {
@@ -290,23 +289,13 @@ public enum EditorContext {
     }
   }
 
-  public static void syncFile(final IEditorPart editor) {
-    try {
-      EditorContext.getFile(editor)
-      .refreshLocal(IResource.DEPTH_INFINITE, null);
-    }
-    catch (final Exception e) {
-      EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-  }
-
   static IFile getFile(final IEditorPart editor) {
     return ((FileEditorInput) editor.getEditorInput()).getFile();
   }
 
   public static int getSaveIntervalInMilliSeconds() {
     return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT)
-        - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
+      - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
   }
 
   public static int getSaveIntervalInSeconds() {
@@ -344,7 +333,7 @@ public enum EditorContext {
       @Override
       public boolean shouldSchedule() {
         return EditorContext
-            .taskDoesNotExist(EditorContext.SCHEDULED_SAVER_TASK);
+          .taskDoesNotExist(EditorContext.SCHEDULED_SAVER_TASK);
       }
 
       @Override
@@ -380,8 +369,8 @@ public enum EditorContext {
 
   private static void tryToShowConsole() throws PartInitException {
     ((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-      .getActivePage().showView(IConsoleConstants.ID_CONSOLE_VIEW))
-      .display(EditorContext.CONSOLE);
+        .getActivePage().showView(IConsoleConstants.ID_CONSOLE_VIEW))
+        .display(EditorContext.CONSOLE);
   }
 
   private static MessageConsole getConsole(final String name) {
@@ -392,7 +381,7 @@ public enum EditorContext {
 
   private static MessageConsole findConsole(final String name) {
     final IConsole[] consoles =
-        ConsolePlugin.getDefault().getConsoleManager().getConsoles();
+      ConsolePlugin.getDefault().getConsoleManager().getConsoles();
     for (final IConsole console : consoles)
       if (name.equals(console.getName())) return (MessageConsole) console;
     return null;
@@ -426,7 +415,7 @@ public enum EditorContext {
 
   public static void asyncExec(final Runnable runnable) {
     if (EditorContext.displayExists()) EditorContext.DISPLAY
-    .asyncExec(runnable);
+      .asyncExec(runnable);
   }
 
   public static void syncExec(final Runnable runnable) {
