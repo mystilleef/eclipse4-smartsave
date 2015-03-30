@@ -25,7 +25,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.console.IConsoleView;
+import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 
@@ -78,6 +84,8 @@ public enum EditorContext {
     .getName());
   private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
       new DefaultMarkerAnnotationAccess();
+  public static final MessageConsole CONSOLE = EditorContext
+      .getConsole("Eclipse Google Drive Console");
 
   public static void asyncExec(final Runnable runnable) {
     if (EditorContext.displayIsDisposed()) return;
@@ -366,5 +374,46 @@ public enum EditorContext {
     for (final String name : names)
       if (EditorContext.JOB_MANAGER.find(name).length > 0) return false;
     return true;
+  }
+
+  public static void out(final Object message) {
+    EditorContext.CONSOLE.newMessageStream().println(String.valueOf(message));
+  }
+
+  public static void showPluginConsole() {
+    try {
+      EditorContext.tryToShowConsole();
+    }
+    catch (final PartInitException e) {
+      EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+  }
+
+  private static void tryToShowConsole() throws PartInitException {
+    ((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
+      .getActivePage().showView(IConsoleConstants.ID_CONSOLE_VIEW))
+      .display(EditorContext.CONSOLE);
+  }
+
+  private static MessageConsole getConsole(final String name) {
+    final MessageConsole console = EditorContext.findConsole(name);
+    if (console != null) return console;
+    return EditorContext.newConsole(name);
+  }
+
+  private static MessageConsole findConsole(final String name) {
+    final IConsole[] consoles =
+        ConsolePlugin.getDefault().getConsoleManager().getConsoles();
+    for (final IConsole console : consoles)
+      if (name.equals(console.getName())) return (MessageConsole) console;
+    return null;
+  }
+
+  private static MessageConsole newConsole(final String name) {
+    final MessageConsole myConsole = new MessageConsole(name, null);
+    ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] {
+      myConsole
+    });
+    return myConsole;
   }
 }

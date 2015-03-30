@@ -78,4 +78,5 @@ Bundle-ClassPath: .,
  guava-14.0.1.jar
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
-Import-Package: org.eclipse.ui.texteditor
+Import-Package: org.eclipse.ui.console,
+ org.eclipse.ui.texteditor
