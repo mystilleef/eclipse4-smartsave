@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.laboki.eclipse.plugin.smartsave;singleton:=true
-Bundle-Version: 20150329.0
+Bundle-Version: 20150330.0
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
@@ -54,13 +54,14 @@ Export-Package: com.google.common.annotations,
    org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.listeners.abstraction;uses:="com.laboki.eclipse.plugin.smartsave.instance,com.laboki.eclipse.plugin.smartsave.events",
  com.laboki.eclipse.plugin.smartsave.main;
-  uses:="org.eclipse.core.runtime.jobs,
-   org.eclipse.ui,
-   org.eclipse.core.runtime,
-   org.eclipse.jface.text.source,
+  uses:="org.eclipse.jface.text.source,
    com.laboki.eclipse.plugin.smartsave.instance,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.swt.widgets,
+   org.eclipse.core.runtime.jobs,
+   org.eclipse.ui,
+   org.eclipse.ui.console,
+   org.eclipse.core.runtime,
    org.eclipse.swt.custom,
    com.google.common.eventbus,
    org.eclipse.core.resources",
