@@ -4,14 +4,15 @@ package com.laboki.eclipse.plugin.smartsave.task;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-abstract class AbstractTask extends Job implements Runnable, Instance {
+public abstract class AbstractTask extends Job implements Runnable, Instance {
 
-  private final int delayTime;
+  private int delayTime;
   private final String name;
 
   protected AbstractTask(final String name, final int delayTime,
@@ -30,6 +31,36 @@ abstract class AbstractTask extends Job implements Runnable, Instance {
   @Override
   public Instance end() {
     this.cancel();
+    return this;
+  }
+
+  protected AbstractTask setTaskName(final String name) {
+    this.setName(name);
+    return this;
+  }
+
+  protected AbstractTask setTastPriority(final int priority) {
+    this.setPriority(priority);
+    return this;
+  }
+
+  protected AbstractTask setTaskUser(final boolean user) {
+    this.setUser(user);
+    return this;
+  }
+
+  protected AbstractTask setTaskSystem(final boolean system) {
+    this.setSystem(system);
+    return this;
+  }
+
+  public AbstractTask setTaskRule(final ISchedulingRule rule) {
+    this.setRule(rule);
+    return this;
+  }
+
+  protected AbstractTask setTaskDelay(final int delay) {
+    this.delayTime = delay;
     return this;
   }
 

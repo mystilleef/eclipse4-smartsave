@@ -64,12 +64,12 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
   }
 
   static void postDisableListenersEvent() {
-    EditorContext.cancelAllJobs();
+    EditorContext.cancelSaverTaskJobs();
     EventBus.post(new DisableSaveListenersEvent());
   }
 
   private static void postEnableListenersEvent() {
-    EditorContext.cancelAllJobs();
+    EditorContext.cancelSaverTaskJobs();
     EventBus.post(new EnableSaveListenersEvent());
   }
 }

@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.Annotation;
@@ -42,38 +43,30 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EditorContext {
   INSTANCE;
 
-  public static final String SCHEDULER_ENABLE_SAVE_LISTENERS_TASK =
-      "smartsave scheduler enable save listeners event task";
-  public static final String LISTENER_TASK = "Listener Task";
+  private static final String SAVER_TASK = "EDITOR_CONTEXT_SAVER_TASK";
   public static final String PLUGIN_NAME =
-      "com.laboki.eclipse.plugin.smartsave";
+    "com.laboki.eclipse.plugin.smartsave";
   public static final String CONTRIBUTOR_URI = MessageFormat.format(
     "plugin://{0}", EditorContext.PLUGIN_NAME);
   public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
   public static final int SHORT_DELAY_TIME = 250;
-  public static final String AUTOMATIC_SAVER_TASK =
-      "smartsave automatic saver task";
-  public static final String LISTENER_SAVER_TASK =
-      "smartsave listener saver task";
-  public static final String SCHEDULED_SAVER_TASK =
-      "smartsave scheduled saver task";
   public static final IJobManager JOB_MANAGER = Job.getJobManager();
   public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
   public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
   private static final int MILLI_SECONDS_UNIT = 1000;
   private static final int SAVE_INTERVAL_DIFFERENCIAL = 750;
   private static final String LINK_SLAVE =
-      "org.eclipse.ui.internal.workbench.texteditor.link.slave";
+    "org.eclipse.ui.internal.workbench.texteditor.link.slave";
   private static final String LINK_MASTER =
-      "org.eclipse.ui.internal.workbench.texteditor.link.master";
+    "org.eclipse.ui.internal.workbench.texteditor.link.master";
   private static final String LINK_TARGET =
-      "org.eclipse.ui.internal.workbench.texteditor.link.target";
+    "org.eclipse.ui.internal.workbench.texteditor.link.target";
   private static final String LINK_EXIT =
-      "org.eclipse.ui.internal.workbench.texteditor.link.exit";
+    "org.eclipse.ui.internal.workbench.texteditor.link.exit";
   private static final String ANNOTATION_WARNING =
-      "org.eclipse.ui.workbench.texteditor.warning";
+    "org.eclipse.ui.workbench.texteditor.warning";
   private static final String ANNOTATION_ERROR =
-      "org.eclipse.ui.workbench.texteditor.error";
+    "org.eclipse.ui.workbench.texteditor.error";
   private static final List<String> LINK_ANNOTATIONS = Lists.newArrayList(
     EditorContext.LINK_EXIT, EditorContext.LINK_TARGET,
     EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
@@ -81,13 +74,16 @@ public enum EditorContext {
   private static final Logger LOGGER = Logger.getLogger(EditorContext.class
     .getName());
   private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
-      new DefaultMarkerAnnotationAccess();
+    new DefaultMarkerAnnotationAccess();
   public static final MessageConsole CONSOLE = EditorContext
-      .getConsole("Smart Save");
+    .getConsole("Smart Save");
+  public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
+  public static final ISchedulingRule SAVER_TASK_RULE =
+    new SaverMutexTaskRule();
 
   public static IPartService getPartService() {
     return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-        .getService(IPartService.class);
+      .getService(IPartService.class);
   }
 
   public static Shell getShell() {
@@ -96,7 +92,7 @@ public enum EditorContext {
 
   public static IEditorPart getEditor() {
     return EditorContext.WORKBENCH.getActiveWorkbenchWindow().getActivePage()
-        .getActiveEditor();
+      .getActiveEditor();
   }
 
   public static Control getControl(final IEditorPart editor) {
@@ -122,7 +118,7 @@ public enum EditorContext {
 
   private static boolean canSave(final IEditorPart editor) {
     return EditorContext.canSaveAutomatically()
-        && EditorContext.canSaveFile(editor);
+      && EditorContext.canSaveFile(editor);
   }
 
   public static boolean canSaveAutomatically() {
@@ -131,18 +127,18 @@ public enum EditorContext {
 
   private static boolean canSaveFile(final IEditorPart editor) {
     return !(EditorContext.isNotModified(editor)
-        || EditorContext.isBeingEdited(editor) || EditorContext
+      || EditorContext.isBeingEdited(editor) || EditorContext
         .hasProblems(editor));
   }
 
   private static boolean isBeingEdited(final IEditorPart editor) {
     return EditorContext.hasSelection(editor)
-        || EditorContext.isInLinkMode(editor);
+      || EditorContext.isInLinkMode(editor);
   }
 
   private static boolean hasProblems(final IEditorPart editor) {
     return EditorContext.bufferHasErrors(editor)
-        || EditorContext.bufferHasWarnings(editor);
+      || EditorContext.bufferHasWarnings(editor);
   }
 
   public static boolean isNotModified(final IEditorPart editor) {
@@ -155,7 +151,7 @@ public enum EditorContext {
 
   public static boolean hasSelection(final IEditorPart editor) {
     return (EditorContext.getBuffer(editor).getSelectionCount() > 0)
-        || EditorContext.getBuffer(editor).getBlockSelection();
+      || EditorContext.getBuffer(editor).getBlockSelection();
   }
 
   public static boolean isInLinkMode(final IEditorPart editor) {
@@ -164,7 +160,7 @@ public enum EditorContext {
 
   private static boolean hasLinkAnnotations(final IEditorPart editor) {
     final Iterator<Annotation> iterator =
-        EditorContext.getView(editor).getAnnotationModel()
+      EditorContext.getView(editor).getAnnotationModel()
         .getAnnotationIterator();
     while (iterator.hasNext())
       if (EditorContext.isLinkModeAnnotation(iterator)) return true;
@@ -208,7 +204,7 @@ public enum EditorContext {
   private static boolean getAnnotationSeverity(final String problemSeverity,
     final IEditorPart editor) {
     final Iterator<Annotation> iterator =
-        EditorContext.getView(editor).getAnnotationModel()
+      EditorContext.getView(editor).getAnnotationModel()
         .getAnnotationIterator();
     while (iterator.hasNext())
       if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
@@ -237,7 +233,7 @@ public enum EditorContext {
 
     private final IEditorPart editor;
     public static final String SAVE_WORKSPACE_JOB_FAMILY =
-        "saveworkspacejobfamily";
+      "saveworkspacejobfamily";
 
     public SaveWorkspaceJob(final IEditorPart editor) {
       super("Save Workspace Job");
@@ -266,7 +262,7 @@ public enum EditorContext {
     @Override
     public boolean shouldSchedule() {
       return super.shouldSchedule() && SaveWorkspaceJob.jobDoesNotExists()
-        && Job.getJobManager().isIdle();
+          && Job.getJobManager().isIdle();
     }
 
     private static boolean jobDoesNotExists() {
@@ -294,34 +290,20 @@ public enum EditorContext {
 
   public static int getSaveIntervalInMilliSeconds() {
     return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT)
-        - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
+      - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
   }
 
   public static int getSaveIntervalInSeconds() {
     return EditorContext.PREFERENCE.saveIntervalInSeconds();
   }
 
-  public static void cancelAllJobs() {
-    EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_TASK,
-      EditorContext.SCHEDULED_SAVER_TASK);
-    EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_SAVER_TASK,
-      EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK);
-    EditorContext.cancelJobsBelongingTo(EditorContext.AUTOMATIC_SAVER_TASK);
-  }
-
-  public static void cancelJobsBelongingTo(final String... jobNames) {
-    for (final String jobName : jobNames)
-      EditorContext.JOB_MANAGER.cancel(jobName);
-  }
-
   public static void scheduleSave() {
-    EditorContext.asyncScheduleSave(EditorContext.SCHEDULED_SAVER_TASK,
+    EditorContext.asyncScheduleSave(EditorContext.SAVER_TASK,
       EditorContext.SHORT_DELAY_TIME);
   }
 
   public static void scheduleSave(final int delayTime) {
-    EditorContext.asyncScheduleSave(EditorContext.SCHEDULED_SAVER_TASK,
-      delayTime);
+    EditorContext.asyncScheduleSave(EditorContext.SAVER_TASK, delayTime);
   }
 
   private static void asyncScheduleSave(final String taskName,
@@ -329,21 +311,15 @@ public enum EditorContext {
     new Task(taskName, delayTime) {
 
       @Override
-      public boolean shouldSchedule() {
-        return EditorContext
-            .taskDoesNotExist(EditorContext.SCHEDULED_SAVER_TASK);
-      }
-
-      @Override
-      public boolean shouldRun() {
-        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
-      }
-
-      @Override
       public void execute() {
         EventBus.post(new ScheduleSaveEvent());
       }
-    }.begin();
+
+      @Override
+      public boolean belongsTo(final Object family) {
+        return family.equals(EditorContext.SAVER_TASK_FAMILY);
+      }
+    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
   }
 
   public static boolean taskDoesNotExist(final String... names) {
@@ -367,8 +343,8 @@ public enum EditorContext {
 
   private static void tryToShowConsole() throws PartInitException {
     ((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-      .getActivePage().showView(IConsoleConstants.ID_CONSOLE_VIEW))
-      .display(EditorContext.CONSOLE);
+        .getActivePage().showView(IConsoleConstants.ID_CONSOLE_VIEW))
+        .display(EditorContext.CONSOLE);
   }
 
   private static MessageConsole getConsole(final String name) {
@@ -379,7 +355,7 @@ public enum EditorContext {
 
   private static MessageConsole findConsole(final String name) {
     final IConsole[] consoles =
-        ConsolePlugin.getDefault().getConsoleManager().getConsoles();
+      ConsolePlugin.getDefault().getConsoleManager().getConsoles();
     for (final IConsole console : consoles)
       if (name.equals(console.getName())) return (MessageConsole) console;
     return null;
@@ -413,7 +389,7 @@ public enum EditorContext {
 
   public static void asyncExec(final Runnable runnable) {
     if (EditorContext.displayExists()) EditorContext.DISPLAY
-    .asyncExec(runnable);
+      .asyncExec(runnable);
   }
 
   public static void syncExec(final Runnable runnable) {
@@ -427,5 +403,28 @@ public enum EditorContext {
   private static boolean displayIsDisposed() {
     if (EditorContext.DISPLAY == null) return true;
     return EditorContext.DISPLAY.isDisposed();
+  }
+
+  public static boolean hasNoSaverTaskJobs() {
+    return Job.getJobManager().find(EditorContext.SAVER_TASK_FAMILY).length == 0;
+  }
+
+  public static void cancelSaverTaskJobs() {
+    EditorContext.flushEvents();
+    Job.getJobManager().cancel(EditorContext.SAVER_TASK_FAMILY);
+    EditorContext.flushEvents();
+  }
+
+  static class SaverMutexTaskRule implements ISchedulingRule {
+
+    @Override
+    public boolean isConflicting(final ISchedulingRule rule) {
+      return rule == this;
+    }
+
+    @Override
+    public boolean contains(final ISchedulingRule rule) {
+      return rule == this;
+    }
   }
 }

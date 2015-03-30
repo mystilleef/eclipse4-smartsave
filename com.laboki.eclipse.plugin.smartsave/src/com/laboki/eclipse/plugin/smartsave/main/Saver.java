@@ -14,6 +14,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class Saver extends AbstractEventBusInstance {
 
+  private static final String SAVER_SAVER_TASK = "SAVER_SAVER_TASK";
   private final IEditorPart editor = EditorContext.getEditor();
   boolean completionAssistantIsActive;
 
@@ -37,29 +38,30 @@ public final class Saver extends AbstractEventBusInstance {
   @AllowConcurrentEvents
   public void save(
     @SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-    new AsyncTask(EditorContext.AUTOMATIC_SAVER_TASK,
-      EditorContext.SHORT_DELAY_TIME) {
+    new AsyncTask(Saver.SAVER_SAVER_TASK, EditorContext.SHORT_DELAY_TIME) {
 
       @Override
       public boolean shouldSchedule() {
         if (Saver.this.completionAssistantIsActive) return false;
-        return EditorContext.taskDoesNotExist(
-          EditorContext.AUTOMATIC_SAVER_TASK, EditorContext.LISTENER_TASK,
-          EditorContext.SCHEDULED_SAVER_TASK);
+        return super.shouldSchedule() && EditorContext.hasNoSaverTaskJobs();
       }
 
       @Override
       public boolean shouldRun() {
         if (Saver.this.completionAssistantIsActive) return false;
-        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK,
-          EditorContext.SCHEDULED_SAVER_TASK);
+        return super.shouldRun();
+      }
+
+      @Override
+      public boolean belongsTo(final Object family) {
+        return family.equals(EditorContext.SAVER_TASK_FAMILY);
       }
 
       @Override
       public void asyncExecute() {
         Saver.this.save();
       }
-    }.begin();
+    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
   }
 
   @Override

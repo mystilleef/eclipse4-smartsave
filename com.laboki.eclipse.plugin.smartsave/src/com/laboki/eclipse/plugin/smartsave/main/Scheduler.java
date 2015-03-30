@@ -14,6 +14,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class Scheduler extends AbstractEventBusInstance {
 
+  private static final String SAVER_TASK = "SCHEDULER_SAVER_TASK";
   boolean completionAssistantIsActive;
 
   public Scheduler() {
@@ -36,20 +37,24 @@ public final class Scheduler extends AbstractEventBusInstance {
   @AllowConcurrentEvents
   public void scheduleSave(
     @SuppressWarnings("unused") final ScheduleSaveEvent event) {
-    new Task(EditorContext.SCHEDULED_SAVER_TASK, EditorContext
+    new Task(Scheduler.SAVER_TASK, EditorContext
       .getSaveIntervalInMilliSeconds()) {
 
       @Override
       public boolean shouldSchedule() {
         if (Scheduler.this.completionAssistantIsActive) return false;
-        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK,
-          EditorContext.SCHEDULED_SAVER_TASK);
+        return super.shouldSchedule() && EditorContext.hasNoSaverTaskJobs();
       }
 
       @Override
       public boolean shouldRun() {
         if (Scheduler.this.completionAssistantIsActive) return false;
-        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+        return super.shouldRun();
+      }
+
+      @Override
+      public boolean belongsTo(final Object family) {
+        return family.equals(EditorContext.SAVER_TASK_FAMILY);
       }
 
       @Override
@@ -57,19 +62,24 @@ public final class Scheduler extends AbstractEventBusInstance {
         Scheduler.cancelAllJobs();
         EventBus.post(new StartSaveScheduleEvent());
       }
-    }.begin();
+    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
   }
 
   @Subscribe
   public static void scheduleSave(
     @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-    new Task(EditorContext.SCHEDULER_ENABLE_SAVE_LISTENERS_TASK) {
+    new Task(Scheduler.SAVER_TASK) {
 
       @Override
       public void execute() {
         EditorContext.scheduleSave(EditorContext.SHORT_DELAY_TIME);
       }
-    }.begin();
+
+      @Override
+      public boolean belongsTo(final Object family) {
+        return family.equals(EditorContext.SAVER_TASK_FAMILY);
+      }
+    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
   }
 
   @Subscribe
@@ -85,6 +95,6 @@ public final class Scheduler extends AbstractEventBusInstance {
   }
 
   static void cancelAllJobs() {
-    EditorContext.cancelAllJobs();
+    EditorContext.cancelSaverTaskJobs();
   }
 }

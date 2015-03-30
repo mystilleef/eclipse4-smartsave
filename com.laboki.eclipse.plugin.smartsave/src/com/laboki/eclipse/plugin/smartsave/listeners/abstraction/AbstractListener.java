@@ -14,8 +14,9 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-implements IListener {
+  implements IListener {
 
+  private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
   private static final int ONE_SECOND_DELAY = 1000;
   private static final Logger LOGGER = Logger.getLogger(AbstractListener.class
     .getName());
@@ -81,22 +82,27 @@ implements IListener {
   }
 
   protected final static void scheduleSave() {
-    EditorContext.cancelJobsBelongingTo(EditorContext.LISTENER_TASK);
+    EditorContext.cancelSaverTaskJobs();
     AbstractListener.scheduleTask();
   }
 
   private static void scheduleTask() {
-    new Task(EditorContext.LISTENER_TASK, AbstractListener.ONE_SECOND_DELAY) {
+    new Task(AbstractListener.SAVER_TASK, AbstractListener.ONE_SECOND_DELAY) {
 
       @Override
       public boolean shouldSchedule() {
-        return EditorContext.taskDoesNotExist(EditorContext.LISTENER_TASK);
+        return super.shouldSchedule() && EditorContext.hasNoSaverTaskJobs();
       }
 
       @Override
       public void execute() {
         EditorContext.scheduleSave();
       }
-    }.begin();
+
+      @Override
+      public boolean belongsTo(final Object family) {
+        return family.equals(EditorContext.SAVER_TASK_FAMILY);
+      }
+    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
   }
 }
