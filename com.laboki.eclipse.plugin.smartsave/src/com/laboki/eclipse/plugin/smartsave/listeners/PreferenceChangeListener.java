@@ -38,7 +38,7 @@ implements IPreferenceChangeListener {
         EventBus.post(new PreferenceStoreChangeEvent());
       }
     }.setName(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK)
-      .setDelay(EditorContext.SHORT_DELAY_TIME)
+      .setDelay(EditorContext.SHORT_DELAY)
       .begin();
   }
 

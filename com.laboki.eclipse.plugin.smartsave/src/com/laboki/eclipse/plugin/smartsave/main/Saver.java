@@ -49,9 +49,11 @@ public final class Saver extends AbstractEventBusInstance {
       public void execute() {
         Saver.this.save();
       }
-    }.setFamily(EditorContext.SAVER_TASK_FAMILY).setName(Saver.SAVER_TASK)
-      .setDelay(EditorContext.SHORT_DELAY_TIME).setRule(
-        EditorContext.SAVER_TASK_RULE).begin();
+    }.setName(Saver.SAVER_TASK)
+      .setFamily(EditorContext.SAVER_TASK_FAMILY)
+      .setDelay(EditorContext.SHORT_DELAY)
+      .setRule(EditorContext.SAVER_TASK_RULE)
+      .begin();
   }
 
   @Override

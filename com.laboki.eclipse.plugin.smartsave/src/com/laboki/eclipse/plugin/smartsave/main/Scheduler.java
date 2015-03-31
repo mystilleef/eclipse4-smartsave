@@ -63,7 +63,7 @@ public final class Scheduler extends AbstractEventBusInstance {
 
       @Override
       public void execute() {
-        EditorContext.scheduleSave(EditorContext.SHORT_DELAY_TIME);
+        EditorContext.scheduleSave(EditorContext.SHORT_DELAY);
       }
     }.setName(Scheduler.SAVER_TASK)
       .setFamily(EditorContext.SAVER_TASK_FAMILY)

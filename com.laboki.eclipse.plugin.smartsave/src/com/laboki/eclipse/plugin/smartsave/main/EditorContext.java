@@ -47,7 +47,7 @@ public enum EditorContext {
   public static final String CONTRIBUTOR_URI = MessageFormat.format(
     "plugin://{0}", EditorContext.PLUGIN_NAME);
   public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
-  public static final int SHORT_DELAY_TIME = 250;
+  public static final int SHORT_DELAY = 250;
   public static final IJobManager JOB_MANAGER = Job.getJobManager();
   public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
   public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
@@ -248,7 +248,7 @@ public enum EditorContext {
 
   public static void scheduleSave() {
     EditorContext.asyncScheduleSave(EditorContext.SAVER_TASK,
-      EditorContext.SHORT_DELAY_TIME);
+      EditorContext.SHORT_DELAY);
   }
 
   public static void scheduleSave(final int delayTime) {
