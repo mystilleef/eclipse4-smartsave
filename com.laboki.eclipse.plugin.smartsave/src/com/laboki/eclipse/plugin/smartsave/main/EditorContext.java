@@ -104,13 +104,13 @@ public enum EditorContext {
     return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
   }
 
-  public static void tryToSave(final IEditorPart editor) {
+  public static void save(final IEditorPart editor) {
     try {
-      if (EditorContext.canSave(editor)) EditorContext.save(editor);
+      if (EditorContext.canSave(editor)) EditorContext.tryToSave(editor);
     }
     catch (final Exception e) {
       // TODO: This is weird. why?
-      EditorContext.save(editor);
+      EditorContext.tryToSave(editor);
     }
   }
 
@@ -229,7 +229,7 @@ public enum EditorContext {
     }.begin();
   }
 
-  public static void save(final IEditorPart editor) {
+  public static void tryToSave(final IEditorPart editor) {
     EditorContext.SAVE_JOB.execute(editor);
   }
 
