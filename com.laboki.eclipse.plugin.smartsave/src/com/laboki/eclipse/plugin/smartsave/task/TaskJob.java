@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
-public class TaskJob extends Job {
+public abstract class TaskJob extends Job {
 
   private Object family;
 
@@ -27,7 +27,7 @@ public class TaskJob extends Job {
     return Status.OK_STATUS;
   }
 
-  protected void runTask() {}
+  protected abstract void runTask();
 
   public void setFamily(final Object family) {
     this.family = family;
