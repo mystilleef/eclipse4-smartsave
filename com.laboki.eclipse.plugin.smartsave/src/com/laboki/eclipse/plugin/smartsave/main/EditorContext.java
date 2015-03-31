@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import java.text.MessageFormat;
@@ -35,6 +34,7 @@ import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Cache;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public enum EditorContext {
   INSTANCE;
@@ -75,8 +75,7 @@ public enum EditorContext {
   public static final MessageConsole CONSOLE = EditorContext
       .getConsole("Smart Save");
   public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
-  public static final ISchedulingRule SAVER_TASK_RULE =
-      new SaverMutexTaskRule();
+  public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
 
   public static IPartService getPartService() {
     return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
@@ -354,18 +353,5 @@ public enum EditorContext {
 
   public static void cancelSaverTaskJobs() {
     Job.getJobManager().cancel(EditorContext.SAVER_TASK_FAMILY);
-  }
-
-  static class SaverMutexTaskRule implements ISchedulingRule {
-
-    @Override
-    public boolean isConflicting(final ISchedulingRule rule) {
-      return rule == this;
-    }
-
-    @Override
-    public boolean contains(final ISchedulingRule rule) {
-      return rule == this;
-    }
   }
 }
