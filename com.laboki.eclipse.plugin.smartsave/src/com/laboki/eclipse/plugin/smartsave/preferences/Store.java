@@ -61,7 +61,7 @@ public enum Store {
   }
 
   private static boolean
-  getBoolean(final String key, final boolean defaultValue) {
+    getBoolean(final String key, final boolean defaultValue) {
     final IEclipsePreferences pref = Store.getPreferences();
     Store.update(pref);
     return pref.getBoolean(key, defaultValue);
@@ -104,7 +104,7 @@ public enum Store {
   }
 
   private static void tryToUpdate(final IEclipsePreferences preferences)
-      throws BackingStoreException {
+    throws BackingStoreException {
     preferences.flush();
     preferences.sync();
   }

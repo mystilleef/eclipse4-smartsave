@@ -7,10 +7,10 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public class AnnotationsListener extends AbstractListener implements
-  IAnnotationModelListener {
+IAnnotationModelListener {
 
   private final IAnnotationModel annotationModel = AnnotationsListener
-    .getAnnotationModel();
+      .getAnnotationModel();
 
   public AnnotationsListener() {
     super();
@@ -36,7 +36,7 @@ public class AnnotationsListener extends AbstractListener implements
   private static IAnnotationModel getAnnotationModel() {
     try {
       return EditorContext.getView(EditorContext.getEditor())
-        .getAnnotationModel();
+          .getAnnotationModel();
     }
     catch (final Exception e) {
       return null;

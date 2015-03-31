@@ -25,7 +25,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   public SaveIntervalDialog(final Composite composite) {
     super();
     this.dialog =
-      new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+        new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
   }
 
   @Override
@@ -59,13 +59,13 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   private void addLabel() {
     final String text = "Press ESC or ENTER to close window.";
     final StyledText fieldText =
-      new StyledText(this.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
+        new StyledText(this.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
     this.setLabelProperties(text, fieldText);
     SaveIntervalDialog.setLabelStyle(text, fieldText);
   }
 
   private void
-    setLabelProperties(final String text, final StyledText fieldText) {
+  setLabelProperties(final String text, final StyledText fieldText) {
     fieldText.setText(text);
     fieldText.setEditable(false);
     fieldText.setCaret(null);
