@@ -63,6 +63,6 @@ public final class Saver extends AbstractEventBusInstance {
   }
 
   void save() {
-    EditorContext.tryToSave(this.editor);
+    EditorContext.save(this.editor);
   }
 }
