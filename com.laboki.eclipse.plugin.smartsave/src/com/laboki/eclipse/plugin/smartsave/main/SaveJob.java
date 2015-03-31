@@ -5,9 +5,10 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
+
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class SaveJob extends WorkspaceJob implements Runnable {
 
@@ -23,7 +24,7 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
     this.setPriority(Job.DECORATE);
     this.setUser(false);
     this.setSystem(true);
-    this.setRule(this.new MutexRule());
+    this.setRule(new TaskMutexRule());
   }
 
   @Override
@@ -62,20 +63,5 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
     this.editor = editorPart;
     this.setRule(EditorContext.getFile(editorPart));
     this.schedule(100);
-  }
-
-  private class MutexRule implements ISchedulingRule {
-
-    public MutexRule() {}
-
-    @Override
-    public boolean isConflicting(final ISchedulingRule rule) {
-      return rule == this;
-    }
-
-    @Override
-    public boolean contains(final ISchedulingRule rule) {
-      return rule == this;
-    }
   }
 }
