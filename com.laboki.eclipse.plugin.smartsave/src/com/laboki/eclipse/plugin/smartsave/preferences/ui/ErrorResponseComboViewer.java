@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -20,7 +19,7 @@ final class ErrorResponseComboViewer extends PreferencesResponseComboViewer {
   @Override
   protected void updateSelection() {
     if (Store.getCanSaveIfErrors()) this
-    .setSelection(PreferencesResponseComboViewer.YES);
+      .setSelection(PreferencesResponseComboViewer.YES);
     else this.setSelection(PreferencesResponseComboViewer.NO);
   }
 }

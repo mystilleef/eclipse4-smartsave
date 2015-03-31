@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.instance;
 
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;

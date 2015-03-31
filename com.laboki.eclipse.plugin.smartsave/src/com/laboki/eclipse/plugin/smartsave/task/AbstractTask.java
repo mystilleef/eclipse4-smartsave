@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.task;
 
 import org.eclipse.core.runtime.IProgressMonitor;

@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -13,7 +12,7 @@ abstract class ResponseComboViewer extends ComboViewer {
 
   private final LabelProvider labelProvider = new ResponseLabelProvider();
   private final ISelectionChangedListener listener =
-      new ResponseSelectionListener();
+    new ResponseSelectionListener();
   private final Response[] responses = new Response[] {
     new Response(Response.YES), new Response(Response.NO),
   };
@@ -55,7 +54,7 @@ abstract class ResponseComboViewer extends ComboViewer {
   }
 
   private final class ResponseSelectionListener implements
-  ISelectionChangedListener {
+    ISelectionChangedListener {
 
     public ResponseSelectionListener() {}
 

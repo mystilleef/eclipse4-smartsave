@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.preferences;
 
 import com.google.common.eventbus.AllowConcurrentEvents;

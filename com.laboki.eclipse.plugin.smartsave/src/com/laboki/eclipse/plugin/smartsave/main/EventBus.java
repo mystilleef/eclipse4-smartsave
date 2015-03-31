@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import java.util.concurrent.Executors;

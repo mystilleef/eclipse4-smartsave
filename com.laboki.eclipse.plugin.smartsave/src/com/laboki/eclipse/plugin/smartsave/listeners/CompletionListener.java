@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import java.util.logging.Level;
@@ -20,15 +19,15 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class CompletionListener extends AbstractEventBusInstance
-  implements ICompletionListener {
+implements ICompletionListener {
 
   private final IEditorPart editor = EditorContext.getEditor();
   private final ContentAssistantFacade contentAssistantFacade = this
-    .getContentAssistantFacade();
+      .getContentAssistantFacade();
   private final IQuickAssistAssistant quickAssistAssistant = this
-    .getQuickAssistAssistant();
+      .getQuickAssistAssistant();
   private static final Logger LOGGER = Logger
-    .getLogger(CompletionListener.class.getName());
+      .getLogger(CompletionListener.class.getName());
 
   public CompletionListener() {
     super();

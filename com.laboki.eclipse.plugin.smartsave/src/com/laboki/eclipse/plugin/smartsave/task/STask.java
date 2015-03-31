@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.task;
 
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;

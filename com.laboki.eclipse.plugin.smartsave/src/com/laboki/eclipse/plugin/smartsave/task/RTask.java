@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.task;
 
 public abstract class RTask extends BaseTask implements ExecuteTask {

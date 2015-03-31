@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.task;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -16,8 +15,8 @@ public class TaskJob extends Job {
 
   @Override
   public boolean belongsTo(final Object family) {
-    if (family == null) return false;
     if (this.family == null) return false;
+    if (family == null) return false;
     return this.family.equals(family);
   }
 

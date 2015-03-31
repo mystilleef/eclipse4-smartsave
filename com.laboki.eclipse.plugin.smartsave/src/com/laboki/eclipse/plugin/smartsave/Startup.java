@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave;
 
 import org.eclipse.ui.IStartup;

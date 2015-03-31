@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import java.text.MessageFormat;

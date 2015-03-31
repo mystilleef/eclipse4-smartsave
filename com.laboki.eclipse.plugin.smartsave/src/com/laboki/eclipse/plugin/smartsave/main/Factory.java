@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import java.util.Map;
@@ -15,9 +14,9 @@ public enum Factory implements Instance {
   INSTANCE;
 
   private static final Map<IEditorPart, Instance> SERVICES_MAP = Maps
-      .newHashMap();
+    .newHashMap();
   private static final IPartService PART_SERVICE = EditorContext
-      .getPartService();
+    .getPartService();
   private static final PartListener PART_LISTENER = new PartListener();
 
   private static final class PartListener implements IPartListener {

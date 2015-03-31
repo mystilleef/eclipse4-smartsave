@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.listeners.abstraction;
 
 public interface IListener {

@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import java.util.List;
@@ -36,6 +35,7 @@ public final class Services implements Instance {
     this.startService(new DirtyPartListener());
     this.startService(new Updater());
     this.startService(new PreferenceChangeListener());
+    this.startService(new NewTaskWatcher());
   }
 
   private void startService(final Instance instance) {

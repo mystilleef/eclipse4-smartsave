@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.listeners.abstraction;
 
 import java.util.logging.Level;
@@ -14,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-  implements IListener {
+implements IListener {
 
   private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
   private static final int ONE_SECOND_DELAY = 1000;

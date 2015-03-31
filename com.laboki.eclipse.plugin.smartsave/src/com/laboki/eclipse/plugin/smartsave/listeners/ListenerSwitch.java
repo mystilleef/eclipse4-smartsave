@@ -1,4 +1,3 @@
-
 package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.ui.IEditorPart;
