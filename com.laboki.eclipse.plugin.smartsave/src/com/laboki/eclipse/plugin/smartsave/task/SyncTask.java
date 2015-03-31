@@ -1,31 +1,22 @@
 package com.laboki.eclipse.plugin.smartsave.task;
 
-import org.eclipse.core.runtime.jobs.Job;
+import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-public class SyncTask extends AbstractTask {
+public abstract class STask extends BaseTask implements ExecuteTask {
 
-  public SyncTask() {
-    super("", 0, Job.INTERACTIVE);
-  }
+  public STask() {}
 
-  public SyncTask(final String name) {
-    super(name, 0, Job.INTERACTIVE);
-  }
+  @Override
+  protected TaskJob newTaskJob() {
+    return new TaskJob() {
 
-  public SyncTask(final int delayTime) {
-    super("", delayTime, Job.DECORATE);
-  }
-
-  public SyncTask(final String name, final int delayTime) {
-    super(name, delayTime, Job.DECORATE);
-  }
-
-  public SyncTask(final String name, final int delayTime, final int priority) {
-    super(name, delayTime, priority);
+      @Override
+      protected void runTask() {
+        EditorContext.syncExec(() -> STask.this.execute());
+      }
+    };
   }
 
   @Override
-  protected void runTask() {
-    this.runSyncExecute();
-  }
+  public abstract void execute();
 }
