@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-  implements IListener {
+implements IListener {
 
   private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
   private static final int ONE_SECOND_DELAY = 1000;
@@ -41,8 +41,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance
       this.add();
     }
     catch (final Exception e) {
-      AbstractListener.LOGGER.log(Level.WARNING,
-        "failed to add listener for object", e);
+      AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
 
@@ -75,8 +74,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance
       this.remove();
     }
     catch (final Exception e) {
-      AbstractListener.LOGGER.log(Level.WARNING,
-        "failed to remove listener for object", e);
+      AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
 
@@ -98,9 +96,9 @@ public abstract class AbstractListener extends AbstractEventBusInstance
         EditorContext.scheduleSave();
       }
     }.setName(AbstractListener.SAVER_TASK)
-    .setFamily(EditorContext.SAVER_TASK_FAMILY)
-    .setDelay(AbstractListener.ONE_SECOND_DELAY)
-    .setRule(EditorContext.SAVER_TASK_RULE)
-    .begin();
+      .setFamily(EditorContext.SAVER_TASK_FAMILY)
+      .setDelay(AbstractListener.ONE_SECOND_DELAY)
+      .setRule(EditorContext.SAVER_TASK_RULE)
+      .begin();
   }
 }
