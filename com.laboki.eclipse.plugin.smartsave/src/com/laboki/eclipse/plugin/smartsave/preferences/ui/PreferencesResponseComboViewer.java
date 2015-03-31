@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 abstract class PreferencesResponseComboViewer extends ResponseComboViewer
-implements Instance {
+  implements Instance {
 
   protected static final int YES = 0;
   protected static final int NO = 1;
@@ -28,7 +28,7 @@ implements Instance {
   protected boolean getSelectionValue(final SelectionChangedEvent event) {
     super.handleResponseSelection(event);
     return ((Response) ((IStructuredSelection) event.getSelection())
-        .getFirstElement()).value();
+      .getFirstElement()).value();
   }
 
   private void updateComboProperties() {
@@ -50,7 +50,7 @@ implements Instance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         PreferencesResponseComboViewer.this.updateSelection();
       }
     }.begin();

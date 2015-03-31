@@ -13,10 +13,10 @@ import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class PreferenceChangeListener extends AbstractEventBusInstance
-  implements IPreferenceChangeListener {
+implements IPreferenceChangeListener {
 
   private static final String SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK =
-    "smartsave preference change event listener";
+      "smartsave preference change event listener";
   private static final IEclipsePreferences PREFERENCES = Store.getPreferences();
 
   public PreferenceChangeListener() {
@@ -25,20 +25,21 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 
   @Override
   public void preferenceChange(final PreferenceChangeEvent event) {
-    new Task(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK,
-      250) {
+    new Task() {
 
       @Override
       public boolean shouldSchedule() {
         return EditorContext
-          .taskDoesNotExist(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK);
+            .taskDoesNotExist(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK);
       }
 
       @Override
       public void execute() {
         EventBus.post(new PreferenceStoreChangeEvent());
       }
-    }.begin();
+    }.setName(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK)
+      .setDelay(EditorContext.SHORT_DELAY_TIME)
+      .begin();
   }
 
   @Override

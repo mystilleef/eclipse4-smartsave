@@ -1,8 +1,8 @@
 package com.laboki.eclipse.plugin.smartsave.task;
 
-public abstract class RTask extends BaseTask implements ExecuteTask {
+public abstract class Task extends BaseTask implements ExecuteTask {
 
-  public RTask() {}
+  public Task() {}
 
   @Override
   protected TaskJob newTaskJob() {
@@ -10,7 +10,7 @@ public abstract class RTask extends BaseTask implements ExecuteTask {
 
       @Override
       protected void runTask() {
-        RTask.this.execute();
+        Task.this.execute();
       }
     };
   }

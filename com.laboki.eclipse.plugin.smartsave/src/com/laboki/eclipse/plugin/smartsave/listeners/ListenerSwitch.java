@@ -27,7 +27,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         ListenerSwitch.this.toggleSaverListeners();
       }
     }.begin();
@@ -39,7 +39,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         ListenerSwitch.this.toggleSaverListeners();
       }
     }.begin();
@@ -51,7 +51,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         ListenerSwitch.postDisableListenersEvent();
       }
     }.begin();

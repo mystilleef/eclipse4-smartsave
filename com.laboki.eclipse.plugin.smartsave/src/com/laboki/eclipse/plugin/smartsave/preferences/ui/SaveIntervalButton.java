@@ -85,7 +85,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         SaveIntervalButton.updateText();
       }
     }.begin();

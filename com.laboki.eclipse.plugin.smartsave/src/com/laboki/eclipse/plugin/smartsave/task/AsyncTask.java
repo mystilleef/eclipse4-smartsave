@@ -2,9 +2,9 @@ package com.laboki.eclipse.plugin.smartsave.task;
 
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-public abstract class ATask extends BaseTask implements ExecuteTask {
+public abstract class AsyncTask extends BaseTask implements ExecuteTask {
 
-  public ATask() {}
+  public AsyncTask() {}
 
   @Override
   protected TaskJob newTaskJob() {
@@ -12,7 +12,7 @@ public abstract class ATask extends BaseTask implements ExecuteTask {
 
       @Override
       protected void runTask() {
-        EditorContext.asyncExec(() -> ATask.this.execute());
+        EditorContext.asyncExec(() -> AsyncTask.this.execute());
       }
     };
   }

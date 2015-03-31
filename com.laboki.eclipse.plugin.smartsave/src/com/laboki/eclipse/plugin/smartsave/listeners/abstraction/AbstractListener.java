@@ -30,7 +30,7 @@ implements IListener {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         AbstractListener.this.tryToAdd();
       }
     }.begin();
@@ -52,7 +52,7 @@ implements IListener {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         AbstractListener.this.tryToRemove();
       }
     }.begin();
@@ -86,22 +86,21 @@ implements IListener {
   }
 
   private static void scheduleTask() {
-    new Task(AbstractListener.SAVER_TASK, AbstractListener.ONE_SECOND_DELAY) {
+    new Task() {
 
       @Override
       public boolean shouldSchedule() {
-        return super.shouldSchedule() && EditorContext.hasNoSaverTaskJobs();
+        return EditorContext.hasNoSaverTaskJobs();
       }
 
       @Override
       public void execute() {
         EditorContext.scheduleSave();
       }
-
-      @Override
-      public boolean belongsTo(final Object family) {
-        return family.equals(EditorContext.SAVER_TASK_FAMILY);
-      }
-    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
+    }.setName(AbstractListener.SAVER_TASK)
+      .setFamily(EditorContext.SAVER_TASK_FAMILY)
+      .setDelay(AbstractListener.ONE_SECOND_DELAY)
+      .setRule(EditorContext.SAVER_TASK_RULE)
+      .begin();
   }
 }

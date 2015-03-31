@@ -12,7 +12,7 @@ public enum Plugin implements Instance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         Factory.INSTANCE.begin();
       }
     }.begin();

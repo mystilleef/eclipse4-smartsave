@@ -59,7 +59,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         SaveIntervalDialogSpinner.this.updateSelection();
       }
     }.begin();
@@ -74,7 +74,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     new AsyncTask() {
 
       @Override
-      public void asyncExecute() {
+      public void execute() {
         SaveIntervalDialogSpinner.this.focus();
       }
     }.begin();

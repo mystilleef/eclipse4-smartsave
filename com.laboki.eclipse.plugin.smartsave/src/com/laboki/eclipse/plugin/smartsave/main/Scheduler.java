@@ -36,24 +36,12 @@ public final class Scheduler extends AbstractEventBusInstance {
   @AllowConcurrentEvents
   public void scheduleSave(
     @SuppressWarnings("unused") final ScheduleSaveEvent event) {
-    new Task(Scheduler.SAVER_TASK, EditorContext
-      .getSaveIntervalInMilliSeconds()) {
+    new Task() {
 
       @Override
       public boolean shouldSchedule() {
         if (Scheduler.this.completionAssistantIsActive) return false;
-        return super.shouldSchedule() && EditorContext.hasNoSaverTaskJobs();
-      }
-
-      @Override
-      public boolean shouldRun() {
-        if (Scheduler.this.completionAssistantIsActive) return false;
-        return super.shouldRun();
-      }
-
-      @Override
-      public boolean belongsTo(final Object family) {
-        return family.equals(EditorContext.SAVER_TASK_FAMILY);
+        return EditorContext.hasNoSaverTaskJobs();
       }
 
       @Override
@@ -61,24 +49,26 @@ public final class Scheduler extends AbstractEventBusInstance {
         Scheduler.cancelAllJobs();
         EventBus.post(new StartSaveScheduleEvent());
       }
-    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
+    }.setName(Scheduler.SAVER_TASK)
+      .setDelay(EditorContext.getSaveIntervalInMilliSeconds())
+      .setFamily(EditorContext.SAVER_TASK_FAMILY)
+      .setRule(EditorContext.SAVER_TASK_RULE)
+      .begin();
   }
 
   @Subscribe
   public static void scheduleSave(
     @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-    new Task(Scheduler.SAVER_TASK) {
+    new Task() {
 
       @Override
       public void execute() {
         EditorContext.scheduleSave(EditorContext.SHORT_DELAY_TIME);
       }
-
-      @Override
-      public boolean belongsTo(final Object family) {
-        return family.equals(EditorContext.SAVER_TASK_FAMILY);
-      }
-    }.setTaskRule(EditorContext.SAVER_TASK_RULE).begin();
+    }.setName(Scheduler.SAVER_TASK)
+      .setFamily(EditorContext.SAVER_TASK_FAMILY)
+      .setRule(EditorContext.SAVER_TASK_RULE)
+      .begin();
   }
 
   @Subscribe
