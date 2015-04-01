@@ -27,7 +27,7 @@ public abstract class TaskJob extends Job {
     return Status.OK_STATUS;
   }
 
-  protected abstract void runTask();
+  abstract void runTask();
 
   public void setFamily(final Object family) {
     this.family = family;

@@ -31,7 +31,7 @@ public final class KeyEventListener extends AbstractListener implements
 
   @Override
   public void keyPressed(final KeyEvent event) {
-    EditorContext.cancelSaverTaskJobs();
+    EditorContext.cancelAllSaverTasks();
   }
 
   @Override
