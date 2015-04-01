@@ -42,16 +42,17 @@ public final class Saver extends AbstractEventBusInstance {
       @Override
       public boolean shouldSchedule() {
         if (Saver.this.completionAssistantIsActive) return false;
-        return EditorContext.hasNoSaverTaskJobs();
+        return EditorContext.canScheduleSave();
       }
 
       @Override
       public void execute() {
         Saver.this.save();
       }
-    }.setName(Saver.SAVER_TASK).setFamily(EditorContext.SAVER_TASK_FAMILY)
-    .setDelay(EditorContext.SHORT_DELAY)
-    .setRule(EditorContext.SAVER_TASK_RULE).begin();
+    }.setName(Saver.SAVER_TASK)
+      .setFamily(EditorContext.SAVER_TASK_FAMILY)
+      .setDelay(EditorContext.SHORT_DELAY)
+      .setRule(EditorContext.SAVER_TASK_RULE).begin();
   }
 
   @Override

@@ -41,7 +41,7 @@ public final class Scheduler extends AbstractEventBusInstance {
       @Override
       public boolean shouldSchedule() {
         if (Scheduler.this.completionAssistantIsActive) return false;
-        return EditorContext.hasNoSaverTaskJobs();
+        return EditorContext.canScheduleSave();
       }
 
       @Override
@@ -84,6 +84,6 @@ public final class Scheduler extends AbstractEventBusInstance {
   }
 
   static void cancelAllJobs() {
-    EditorContext.cancelSaverTaskJobs();
+    EditorContext.cancelAllSaverTasks();
   }
 }
