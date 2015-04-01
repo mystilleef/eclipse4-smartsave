@@ -7,11 +7,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
 
-import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
-
 public final class SaveJob extends WorkspaceJob implements Runnable {
 
-  private static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
+  public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
   private IEditorPart editor;
 
   public SaveJob() {
@@ -23,7 +21,6 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
     this.setPriority(Job.DECORATE);
     this.setUser(false);
     this.setSystem(true);
-    this.setRule(new TaskMutexRule());
   }
 
   @Override
@@ -32,9 +29,9 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
   }
 
   private void save() {
-    EditorContext.flushEvents();
+    // EditorContext.flushEvents();
     this.editor.getSite().getPage().saveEditor(this.editor, false);
-    EditorContext.flushEvents();
+    // EditorContext.flushEvents();
   }
 
   @Override
@@ -51,16 +48,21 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
 
   @Override
   public boolean shouldSchedule() {
-    return super.shouldSchedule() && SaveJob.jobDoesNotExists();
+    return EditorContext.canScheduleSave();
   }
 
-  private static boolean jobDoesNotExists() {
+  public static boolean doesNotExists() {
     return Job.getJobManager().find(SaveJob.JOB_FAMILY).length == 0;
   }
 
   public void execute(final IEditorPart editorPart) {
+    this.setNewRule(editorPart);
     this.editor = editorPart;
+    this.schedule(EditorContext.SHORT_DELAY);
+  }
+
+  private void setNewRule(final IEditorPart editorPart) {
+    if (this.editor == editorPart) return;
     this.setRule(EditorContext.getFile(editorPart));
-    this.schedule(100);
   }
 }
