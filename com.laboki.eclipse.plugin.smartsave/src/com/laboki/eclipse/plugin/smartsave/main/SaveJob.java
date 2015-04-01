@@ -29,9 +29,7 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
   }
 
   private void save() {
-    // EditorContext.flushEvents();
     this.editor.getSite().getPage().saveEditor(this.editor, false);
-    // EditorContext.flushEvents();
   }
 
   @Override

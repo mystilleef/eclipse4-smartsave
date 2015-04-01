@@ -40,8 +40,6 @@ import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 public enum EditorContext {
   INSTANCE;
 
-  static final SaveJob SAVE_JOB = new SaveJob();
-  private static final String SAVER_TASK = "EDITOR_CONTEXT_SAVER_TASK";
   public static final String PLUGIN_NAME =
     "com.laboki.eclipse.plugin.smartsave";
   public static final String CONTRIBUTOR_URI = MessageFormat.format(
@@ -51,6 +49,12 @@ public enum EditorContext {
   public static final IJobManager JOB_MANAGER = Job.getJobManager();
   public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
   public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
+  public static final MessageConsole CONSOLE = EditorContext
+      .getConsole("Smart Save");
+  public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
+  public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
+  static final SaveJob SAVE_JOB = new SaveJob();
+  private static final String SAVER_TASK = "EDITOR_CONTEXT_SAVER_TASK";
   private static final int MILLI_SECONDS_UNIT = 1000;
   private static final int SAVE_INTERVAL_DIFFERENCIAL = 750;
   private static final String LINK_SLAVE =
@@ -69,14 +73,10 @@ public enum EditorContext {
     EditorContext.LINK_EXIT, EditorContext.LINK_TARGET,
     EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
   private static final Cache PREFERENCE = Cache.INSTANCE;
+  private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
+      new DefaultMarkerAnnotationAccess();
   private static final Logger LOGGER = Logger.getLogger(EditorContext.class
     .getName());
-  private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
-    new DefaultMarkerAnnotationAccess();
-  public static final MessageConsole CONSOLE = EditorContext
-    .getConsole("Smart Save");
-  public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
-  public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
 
   public static IPartService getPartService() {
     return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
@@ -109,7 +109,6 @@ public enum EditorContext {
       if (EditorContext.canSave(editor)) EditorContext.tryToSave(editor);
     }
     catch (final Exception e) {
-      // TODO: This is weird. why?
       EditorContext.tryToSave(editor);
     }
   }
@@ -222,9 +221,7 @@ public enum EditorContext {
 
       @Override
       public void execute() {
-        EditorContext.flushEvents();
         EditorContext.WORKBENCH.saveAllEditors(false);
-        EditorContext.flushEvents();
       }
     }.begin();
   }
@@ -233,10 +230,15 @@ public enum EditorContext {
     new Task() {
 
       @Override
+      protected boolean shouldSchedule() {
+        return EditorContext.canScheduleSave();
+      }
+
+      @Override
       public void execute() {
         EditorContext.SAVE_JOB.execute(editor);
       }
-    }.begin();
+    }.setFamily(EditorContext.SAVER_TASK_FAMILY).begin();
   }
 
   static IFile getFile(final IEditorPart editor) {
@@ -330,24 +332,6 @@ public enum EditorContext {
       myConsole
     });
     return myConsole;
-  }
-
-  public static void flushEvents() {
-    try {
-      EditorContext.tryToFlushEvents();
-    }
-    catch (final Exception e) {
-      EditorContext.LOGGER.log(Level.FINEST, e.getMessage(), e);
-    }
-  }
-
-  private static void tryToFlushEvents() {
-    if (EditorContext.displayExists()) EditorContext.updateDisplay();
-  }
-
-  private static void updateDisplay() {
-    while (EditorContext.DISPLAY.readAndDispatch())
-      EditorContext.DISPLAY.update();
   }
 
   public static void asyncExec(final Runnable runnable) {
