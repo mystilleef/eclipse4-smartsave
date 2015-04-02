@@ -11,13 +11,16 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-public final class PreferenceChangeListener extends AbstractEventBusInstance
-  implements IPreferenceChangeListener {
+public final class PreferenceChangeListener
+  extends AbstractEventBusInstance implements IPreferenceChangeListener {
 
-  private static final String SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK =
+  private static final TaskMutexRule RULE = new TaskMutexRule();
+  private static final String TASK_NAME =
     "smartsave preference change event listener";
-  private static final IEclipsePreferences PREFERENCES = Store.getPreferences();
+  private static final IEclipsePreferences PREFERENCES =
+    Store.getPreferences();
 
   public PreferenceChangeListener() {
     super();
@@ -28,37 +31,26 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
     new Task() {
 
       @Override
-      public boolean shouldSchedule() {
-        return EditorContext
-          .taskDoesNotExist(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK);
-      }
-
-      @Override
       public void execute() {
         EventBus.post(new PreferenceStoreChangeEvent());
       }
-    }.setName(PreferenceChangeListener.SMARTSAVE_PREFERENCE_CHANGE_EVENT_TASK)
-    .setDelay(EditorContext.SHORT_DELAY)
-    .begin();
+    }.setName(PreferenceChangeListener.TASK_NAME)
+      .setRule(PreferenceChangeListener.RULE)
+      .setDelay(EditorContext.SHORT_DELAY)
+      .begin();
   }
 
   @Override
   public Instance begin() {
-    this.add();
+    PreferenceChangeListener.PREFERENCES
+      .addPreferenceChangeListener(this);
     return super.begin();
-  }
-
-  private void add() {
-    PreferenceChangeListener.PREFERENCES.addPreferenceChangeListener(this);
   }
 
   @Override
   public Instance end() {
-    this.remove();
+    PreferenceChangeListener.PREFERENCES
+      .removePreferenceChangeListener(this);
     return super.end();
-  }
-
-  private void remove() {
-    PreferenceChangeListener.PREFERENCES.removePreferenceChangeListener(this);
   }
 }

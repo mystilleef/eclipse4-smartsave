@@ -11,10 +11,14 @@ import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 abstract class PreferencesResponseComboViewer extends ResponseComboViewer
-implements Instance {
+  implements Instance {
 
+  private static final String TASK_NAME =
+    "preferences response combo viewer task";
+  private static final TaskMutexRule RULE = new TaskMutexRule();
   protected static final int YES = 0;
   protected static final int NO = 1;
 
@@ -28,7 +32,7 @@ implements Instance {
   protected boolean getSelectionValue(final SelectionChangedEvent event) {
     super.handleResponseSelection(event);
     return ((Response) ((IStructuredSelection) event.getSelection())
-        .getFirstElement()).value();
+      .getFirstElement()).value();
   }
 
   private void updateComboProperties() {
@@ -53,7 +57,9 @@ implements Instance {
       public void execute() {
         PreferencesResponseComboViewer.this.updateSelection();
       }
-    }.begin();
+    }.setName(PreferencesResponseComboViewer.TASK_NAME)
+    .setRule(PreferencesResponseComboViewer.RULE)
+    .begin();
   }
 
   @Override

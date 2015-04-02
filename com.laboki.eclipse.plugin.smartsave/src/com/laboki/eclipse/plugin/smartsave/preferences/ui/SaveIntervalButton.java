@@ -16,9 +16,12 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 final class SaveIntervalButton extends AbstractEventBusInstance {
 
+  private static final String TASK_NAME = "save interval button task";
+  private static final TaskMutexRule RULE = new TaskMutexRule();
   private static final int ZERO = 0;
   private static Button button;
   private SaveIntervalDialog dialog;
@@ -88,7 +91,9 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
       public void execute() {
         SaveIntervalButton.updateText();
       }
-    }.begin();
+    }.setName(SaveIntervalButton.TASK_NAME)
+      .setRule(SaveIntervalButton.RULE)
+      .begin();
   }
 
   public void showSaveIntervalDialog() {

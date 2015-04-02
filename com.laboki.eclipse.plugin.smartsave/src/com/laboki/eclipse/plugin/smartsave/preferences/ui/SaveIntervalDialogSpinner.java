@@ -17,9 +17,14 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 
+  private static final String FOCUC_TASK = "save dialog interval focuc task";
+  private static final String SELECTION_TASK =
+      "save interval dialog update selection task";
+  private static final TaskMutexRule RULE = new TaskMutexRule();
   private static final int TEXT_LIMIT = 3;
   private static final int SPINNER_PAGE_INCREMENTS = 10;
   private static final int SPINNER_INCREMENTS = 1;
@@ -28,7 +33,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   private static final int SPINNER_MINIMUM = 1;
   private final ModifyListener modifyListener = new SpinnerModifyListener();
   private final SpinnerTraverseListener traverseListener =
-      new SpinnerTraverseListener();
+    new SpinnerTraverseListener();
   private final Spinner spinner;
 
   public SaveIntervalDialogSpinner(final Composite composite) {
@@ -62,22 +67,26 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
       public void execute() {
         SaveIntervalDialogSpinner.this.updateSelection();
       }
-    }.begin();
+    }.setName(SaveIntervalDialogSpinner.SELECTION_TASK)
+    .setRule(SaveIntervalDialogSpinner.RULE)
+    .begin();
   }
 
   @Subscribe
   @AllowConcurrentEvents
   public
-  void
-  focusSpinner(
-    @SuppressWarnings("unused") final FocusSaveIntervalDialogSpinnerEvent event) {
+    void
+    focusSpinner(
+      @SuppressWarnings("unused") final FocusSaveIntervalDialogSpinnerEvent event) {
     new AsyncTask() {
 
       @Override
       public void execute() {
         SaveIntervalDialogSpinner.this.focus();
       }
-    }.begin();
+    }.setName(SaveIntervalDialogSpinner.FOCUC_TASK)
+    .setRule(SaveIntervalDialogSpinner.RULE)
+    .begin();
   }
 
   void focus() {
@@ -131,7 +140,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     @Override
     public void keyTraversed(final TraverseEvent event) {
       if (event.detail == SWT.TRAVERSE_RETURN) SaveIntervalDialogSpinner.this
-      .getSpinner().getShell().close();
+        .getSpinner().getShell().close();
     }
   }
 }
