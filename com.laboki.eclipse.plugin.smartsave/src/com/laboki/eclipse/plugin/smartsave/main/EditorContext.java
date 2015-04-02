@@ -33,13 +33,13 @@ import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Cache;
-import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public enum EditorContext {
   INSTANCE;
 
+  static final ForceSaveJob FORCE_SAVE_JOB = new ForceSaveJob();
   public static final String PLUGIN_NAME =
     "com.laboki.eclipse.plugin.smartsave";
   public static final String CONTRIBUTOR_URI = MessageFormat.format(
@@ -73,7 +73,7 @@ public enum EditorContext {
     EditorContext.LINK_EXIT, EditorContext.LINK_TARGET,
     EditorContext.LINK_MASTER, EditorContext.LINK_SLAVE);
   private static final Cache PREFERENCE = Cache.INSTANCE;
-  private final static DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
+  private static final DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
       new DefaultMarkerAnnotationAccess();
   private static final Logger LOGGER = Logger.getLogger(EditorContext.class
     .getName());
@@ -217,11 +217,11 @@ public enum EditorContext {
   }
 
   public static void forceSave() {
-    new AsyncTask() {
+    new Task() {
 
       @Override
       public void execute() {
-        EditorContext.WORKBENCH.saveAllEditors(false);
+        EditorContext.FORCE_SAVE_JOB.execute(null);
       }
     }.begin();
   }
@@ -247,7 +247,7 @@ public enum EditorContext {
 
   public static int getSaveIntervalInMilliSeconds() {
     return (EditorContext.getSaveIntervalInSeconds() * EditorContext.MILLI_SECONDS_UNIT)
-      - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
+        - EditorContext.SAVE_INTERVAL_DIFFERENCIAL;
   }
 
   public static int getSaveIntervalInSeconds() {
@@ -320,7 +320,7 @@ public enum EditorContext {
 
   private static MessageConsole findConsole(final String name) {
     final IConsole[] consoles =
-      ConsolePlugin.getDefault().getConsoleManager().getConsoles();
+        ConsolePlugin.getDefault().getConsoleManager().getConsoles();
     for (final IConsole console : consoles)
       if (name.equals(console.getName())) return (MessageConsole) console;
     return null;
@@ -362,7 +362,13 @@ public enum EditorContext {
   }
 
   public static boolean canScheduleSave() {
-    return EditorContext.taskDoesNotExist(EditorContext.SAVER_TASK_FAMILY)
-        || SaveJob.doesNotExists();
+    if (EditorContext.taskDoesNotExist(EditorContext.SAVER_TASK_FAMILY)) return true;
+    return SaveJob.doesNotExists();
+  }
+
+  static boolean currentJobIsBlocking() {
+    final Job currentJob = EditorContext.JOB_MANAGER.currentJob();
+    if (currentJob == null) return false;
+    return currentJob.isBlocking();
   }
 }

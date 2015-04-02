@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
 
-public final class SaveJob extends WorkspaceJob implements Runnable {
+public class SaveJob extends WorkspaceJob implements Runnable {
 
   public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
   private IEditorPart editor;
@@ -28,7 +28,7 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
     this.save();
   }
 
-  private void save() {
+  protected void save() {
     this.editor.getSite().getPage().saveEditor(this.editor, false);
   }
 
@@ -46,6 +46,7 @@ public final class SaveJob extends WorkspaceJob implements Runnable {
 
   @Override
   public boolean shouldSchedule() {
+    if (EditorContext.currentJobIsBlocking()) return false;
     return EditorContext.canScheduleSave();
   }
 
