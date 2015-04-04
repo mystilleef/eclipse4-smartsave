@@ -19,7 +19,7 @@ public final class Updater extends AbstractEventBusInstance {
   @Subscribe
   @AllowConcurrentEvents
   public static void updatePreferences(
-    @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+      @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
     new Task() {
 
       @Override

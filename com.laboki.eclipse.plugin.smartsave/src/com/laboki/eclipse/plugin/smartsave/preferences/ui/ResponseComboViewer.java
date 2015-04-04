@@ -14,7 +14,7 @@ abstract class ResponseComboViewer extends ComboViewer {
   private final ISelectionChangedListener listener =
       new ResponseSelectionListener();
   private final Response[] responses = new Response[] {
-    new Response(Response.YES), new Response(Response.NO),
+      new Response(Response.YES), new Response(Response.NO),
   };
 
   protected ResponseComboViewer(final Composite parent) {
@@ -37,7 +37,7 @@ abstract class ResponseComboViewer extends ComboViewer {
   }
 
   protected void handleResponseSelection(
-    @SuppressWarnings("unused") final SelectionChangedEvent event) {}
+      @SuppressWarnings("unused") final SelectionChangedEvent event) {}
 
   protected Response[] getResponses() {
     return this.responses;
@@ -54,7 +54,7 @@ abstract class ResponseComboViewer extends ComboViewer {
   }
 
   private final class ResponseSelectionListener implements
-  ISelectionChangedListener {
+      ISelectionChangedListener {
 
     public ResponseSelectionListener() {}
 

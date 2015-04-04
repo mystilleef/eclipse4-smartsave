@@ -14,13 +14,13 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class PreferenceChangeListener
-  extends AbstractEventBusInstance implements IPreferenceChangeListener {
+    extends AbstractEventBusInstance implements IPreferenceChangeListener {
 
   private static final TaskMutexRule RULE = new TaskMutexRule();
   private static final String TASK_NAME =
-    "smartsave preference change event listener";
+      "smartsave preference change event listener";
   private static final IEclipsePreferences PREFERENCES =
-    Store.getPreferences();
+      Store.getPreferences();
 
   public PreferenceChangeListener() {
     super();
@@ -35,22 +35,22 @@ public final class PreferenceChangeListener
         EventBus.post(new PreferenceStoreChangeEvent());
       }
     }.setName(PreferenceChangeListener.TASK_NAME)
-      .setRule(PreferenceChangeListener.RULE)
-      .setDelay(EditorContext.SHORT_DELAY)
-      .begin();
+        .setRule(PreferenceChangeListener.RULE)
+        .setDelay(EditorContext.SHORT_DELAY)
+        .begin();
   }
 
   @Override
   public Instance begin() {
     PreferenceChangeListener.PREFERENCES
-      .addPreferenceChangeListener(this);
+        .addPreferenceChangeListener(this);
     return super.begin();
   }
 
   @Override
   public Instance end() {
     PreferenceChangeListener.PREFERENCES
-      .removePreferenceChangeListener(this);
+        .removePreferenceChangeListener(this);
     return super.end();
   }
 }

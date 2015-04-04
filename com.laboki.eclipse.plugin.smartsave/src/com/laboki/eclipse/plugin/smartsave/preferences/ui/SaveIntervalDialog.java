@@ -25,7 +25,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   public SaveIntervalDialog(final Composite composite) {
     super();
     this.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM |
-      SWT.APPLICATION_MODAL);
+        SWT.APPLICATION_MODAL);
   }
 
   @Override
@@ -59,13 +59,13 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   private void addLabel() {
     final String text = "Press ESC or ENTER to close window.";
     final StyledText fieldText =
-      new StyledText(this.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
+        new StyledText(this.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
     this.setLabelProperties(text, fieldText);
     SaveIntervalDialog.setLabelStyle(text, fieldText);
   }
 
   private void
-    setLabelProperties(final String text, final StyledText fieldText) {
+      setLabelProperties(final String text, final StyledText fieldText) {
     fieldText.setText(text);
     fieldText.setEditable(false);
     fieldText.setCaret(null);
@@ -74,7 +74,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   }
 
   private static void setLabelStyle(final String text,
-    final StyledText fieldText) {
+      final StyledText fieldText) {
     final StyleRange styleRange = new StyleRange();
     styleRange.start = 0;
     styleRange.length = text.length();
@@ -97,7 +97,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   private Composite createSpinnerComposite() {
     final Composite composite = new Composite(this.dialog, SWT.NONE);
     composite.setLayout(new GridLayout(
-      SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS, false));
+        SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS, false));
     composite.setLayoutData(new GridData());
     return composite;
   }

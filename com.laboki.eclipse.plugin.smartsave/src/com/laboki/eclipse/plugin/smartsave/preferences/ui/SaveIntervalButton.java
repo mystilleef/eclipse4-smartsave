@@ -37,7 +37,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   void updateText() {
     if ((this.button == null) || this.button.isDisposed()) return;
     this.button.setText(SaveIntervalButton
-      .minutesAndSeconds(Store.getSaveIntervalInSeconds()));
+        .minutesAndSeconds(Store.getSaveIntervalInSeconds()));
     this.button.pack();
     this.button.update();
   }
@@ -57,13 +57,13 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   }
 
   private static String formatMinutesAndSeconds(final int minutes,
-    final int seconds) {
+      final int seconds) {
     if (SaveIntervalButton.zero(minutes)) return MessageFormat.format(
-      " {0} sec ", String.valueOf(seconds));
+        " {0} sec ", String.valueOf(seconds));
     if (SaveIntervalButton.zero(seconds)) return MessageFormat.format(
-      " {0} min ", String.valueOf(minutes));
+        " {0} min ", String.valueOf(minutes));
     return MessageFormat.format(" {0} min {1} sec ", String.valueOf(minutes),
-      String.valueOf(seconds));
+        String.valueOf(seconds));
   }
 
   private static boolean zero(final int minutes) {
@@ -83,7 +83,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 
   @Subscribe
   public void preferencesChanged(
-    @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+      @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
     new AsyncTask() {
 
       @Override
@@ -91,8 +91,8 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
         SaveIntervalButton.this.updateText();
       }
     }.setName(SaveIntervalButton.TASK_NAME)
-    .setRule(SaveIntervalButton.RULE)
-    .begin();
+        .setRule(SaveIntervalButton.RULE)
+        .begin();
   }
 
   public void showSaveIntervalDialog() {

@@ -7,7 +7,7 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public class AnnotationsListener extends AbstractListener implements
-IAnnotationModelListener {
+    IAnnotationModelListener {
 
   private final IAnnotationModel annotationModel = AnnotationsListener
       .getAnnotationModel();

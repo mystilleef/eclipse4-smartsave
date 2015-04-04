@@ -16,7 +16,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 
 public final class PreferencesPage extends PreferencePage implements
-  IWorkbenchPreferencePage {
+    IWorkbenchPreferencePage {
 
   private Composite pageComposite;
 
@@ -40,7 +40,7 @@ public final class PreferencesPage extends PreferencePage implements
   private void createSaveAutomaticallySection() {
     this.createSectionLabel("Toggle Smart Saving");
     final Composite composite =
-      this.createHorizontalLayoutComposite();
+        this.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite, "&Save files automatically: ");
     new SaveResponseComboViewer(composite).begin();
   }
@@ -48,21 +48,21 @@ public final class PreferencesPage extends PreferencePage implements
   private void createWarningErrorSection() {
     this.createSectionLabel("Errors and Warnings");
     final Composite composite =
-      this.createHorizontalLayoutComposite();
+        this.createHorizontalLayoutComposite();
     PreferencesPage.createErrorComboView(composite,
-      "Save files when &errors are present: ");
+        "Save files when &errors are present: ");
     PreferencesPage.createWarningComboView(composite,
-      "Save files when &warnings are present: ");
+        "Save files when &warnings are present: ");
   }
 
   private static void createErrorComboView(final Composite composite,
-    final String name) {
+      final String name) {
     PreferencesPage.createLabel(composite, name);
     new ErrorResponseComboViewer(composite).begin();
   }
 
   private static void createWarningComboView(final Composite composite,
-    final String name) {
+      final String name) {
     PreferencesPage.createLabel(composite, name);
     new WarningResponseComboViewer(composite).begin();
   }
@@ -70,9 +70,9 @@ public final class PreferencesPage extends PreferencePage implements
   private void createSaveIntervalSections() {
     this.createSectionLabel("Save Interval");
     final Composite composite =
-      this.createHorizontalLayoutComposite();
+        this.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite,
-      "If possible try to save &files every: ");
+        "If possible try to save &files every: ");
     new SaveIntervalButton(composite).begin();
   }
 
@@ -83,7 +83,7 @@ public final class PreferencesPage extends PreferencePage implements
 
   private Composite createHorizontalLayoutComposite() {
     final Composite composite =
-      new Composite(this.pageComposite, SWT.NONE);
+        new Composite(this.pageComposite, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
     composite.setLayoutData(PreferencesPage.createHorizontalDataGrid());
     return composite;
@@ -95,14 +95,14 @@ public final class PreferencesPage extends PreferencePage implements
 
   private void createSectionLabel(final String title) {
     final Composite composite =
-      new Composite(this.pageComposite, SWT.NONE);
+        new Composite(this.pageComposite, SWT.NONE);
     composite.setLayout(new GridLayout(1, false));
     composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     PreferencesPage.newSectionLabel(composite, title);
   }
 
   private static void newSectionLabel(final Composite composite,
-    final String title) {
+      final String title) {
     final Label label = new Label(composite, SWT.None);
     label.setText(title);
     label.setFont(FONT.LARGE_BOLD_FONT);
@@ -123,9 +123,9 @@ public final class PreferencesPage extends PreferencePage implements
 
     private static Font newLargeBoldFont() {
       return new Font(EditorContext.DISPLAY,
-        FONT.getDefaultFontName(),
-        FONT.getDefaultFontHeight() + 2,
-        SWT.BOLD);
+          FONT.getDefaultFontName(),
+          FONT.getDefaultFontHeight() + 2,
+          SWT.BOLD);
     }
 
     private static String getDefaultFontName() {

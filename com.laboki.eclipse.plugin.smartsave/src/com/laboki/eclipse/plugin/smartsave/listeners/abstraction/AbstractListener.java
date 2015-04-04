@@ -13,12 +13,12 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-implements IListener {
+    implements IListener {
 
   private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
   private static final int ONE_SECOND_DELAY = 1000;
   private static final Logger LOGGER = Logger.getLogger(AbstractListener.class
-    .getName());
+      .getName());
 
   public AbstractListener() {
     super();
@@ -26,7 +26,7 @@ implements IListener {
 
   @Subscribe
   public final void addListener(
-    @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
+      @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
     new AsyncTask() {
 
       @Override
@@ -47,7 +47,7 @@ implements IListener {
 
   @Subscribe
   public final void removeListener(
-    @SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+      @SuppressWarnings("unused") final DisableSaveListenersEvent event) {
     new AsyncTask() {
 
       @Override
@@ -96,9 +96,9 @@ implements IListener {
         EditorContext.scheduleSave();
       }
     }.setName(AbstractListener.SAVER_TASK)
-    .setFamily(EditorContext.SAVER_TASK_FAMILY)
-    .setDelay(AbstractListener.ONE_SECOND_DELAY)
-    .setRule(EditorContext.SAVER_TASK_RULE)
-    .begin();
+        .setFamily(EditorContext.SAVER_TASK_FAMILY)
+        .setDelay(AbstractListener.ONE_SECOND_DELAY)
+        .setRule(EditorContext.SAVER_TASK_RULE)
+        .begin();
   }
 }

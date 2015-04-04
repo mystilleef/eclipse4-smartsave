@@ -24,7 +24,7 @@ public enum Store {
 
   public static boolean getCanSaveAutomatically() {
     return Store.getBoolean(Store.SAVE_AUTOMATICALLY_KEY,
-      Store.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
+        Store.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
   }
 
   public static void setCanSaveIfWarnings(final boolean checkWarnings) {
@@ -33,7 +33,7 @@ public enum Store {
 
   public static boolean getCanSaveIfWarnings() {
     return Store.getBoolean(Store.WARNINGS_KEY,
-      Store.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
+        Store.CAN_SAVE_IF_WARNINGS_DEFAULT_VALUE);
   }
 
   public static void setCanSaveIfErrors(final boolean checkErrors) {
@@ -42,7 +42,7 @@ public enum Store {
 
   public static boolean getCanSaveIfErrors() {
     return Store.getBoolean(Store.ERRORS_KEY,
-      Store.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
+        Store.CAN_SAVE_IF_ERRORS_DEFAULT_VALUE);
   }
 
   public static void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
@@ -51,7 +51,7 @@ public enum Store {
 
   public static int getSaveIntervalInSeconds() {
     return Store.getInt(Store.SAVE_INTERVAL_KEY,
-      Store.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
+        Store.SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE);
   }
 
   private static void setBoolean(final String key, final boolean value) {
@@ -61,7 +61,7 @@ public enum Store {
   }
 
   private static boolean
-    getBoolean(final String key, final boolean defaultValue) {
+      getBoolean(final String key, final boolean defaultValue) {
     final IEclipsePreferences pref = Store.getPreferences();
     Store.update(pref);
     return pref.getBoolean(key, defaultValue);
@@ -104,7 +104,7 @@ public enum Store {
   }
 
   private static void tryToUpdate(final IEclipsePreferences preferences)
-    throws BackingStoreException {
+      throws BackingStoreException {
     preferences.flush();
     preferences.sync();
   }
