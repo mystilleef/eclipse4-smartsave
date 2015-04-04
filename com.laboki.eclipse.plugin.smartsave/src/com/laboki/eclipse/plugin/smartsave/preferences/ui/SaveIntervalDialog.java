@@ -24,8 +24,8 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 
   public SaveIntervalDialog(final Composite composite) {
     super();
-    this.dialog =
-        new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+    this.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM |
+      SWT.APPLICATION_MODAL);
   }
 
   @Override

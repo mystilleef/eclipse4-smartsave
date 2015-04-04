@@ -8,7 +8,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
@@ -23,7 +22,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   private static final String TASK_NAME = "save interval button task";
   private static final TaskMutexRule RULE = new TaskMutexRule();
   private static final int ZERO = 0;
-  private static Button button;
+  private final Button button;
   private SaveIntervalDialog dialog;
   private static final int SIXTY_SECONDS = 60;
   private final SelectionListener buttonListener = new ButtonListener();
@@ -32,14 +31,15 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   public SaveIntervalButton(final Composite composite) {
     super();
     this.composite = composite;
-    SaveIntervalButton.button = new Button(composite, SWT.FLAT);
+    this.button = new Button(composite, SWT.FLAT);
   }
 
-  static void updateText() {
-    SaveIntervalButton.button.setText(SaveIntervalButton
+  void updateText() {
+    if ((this.button == null) || this.button.isDisposed()) return;
+    this.button.setText(SaveIntervalButton
       .minutesAndSeconds(Store.getSaveIntervalInSeconds()));
-    SaveIntervalButton.button.pack();
-    SaveIntervalButton.button.update();
+    this.button.pack();
+    this.button.update();
   }
 
   private static String minutesAndSeconds(final int intervalInSeconds) {
@@ -73,27 +73,26 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   @Override
   public Instance begin() {
     this.startListening();
-    SaveIntervalButton.updateText();
+    this.updateText();
     return super.begin();
   }
 
   public void startListening() {
-    SaveIntervalButton.button.addSelectionListener(this.buttonListener);
+    this.button.addSelectionListener(this.buttonListener);
   }
 
   @Subscribe
-  @AllowConcurrentEvents
-  public static void preferencesChanged(
+  public void preferencesChanged(
     @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
     new AsyncTask() {
 
       @Override
       public void execute() {
-        SaveIntervalButton.updateText();
+        SaveIntervalButton.this.updateText();
       }
     }.setName(SaveIntervalButton.TASK_NAME)
-      .setRule(SaveIntervalButton.RULE)
-      .begin();
+    .setRule(SaveIntervalButton.RULE)
+    .begin();
   }
 
   public void showSaveIntervalDialog() {
