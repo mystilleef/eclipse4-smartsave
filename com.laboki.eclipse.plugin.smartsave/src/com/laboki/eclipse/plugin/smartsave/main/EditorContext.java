@@ -49,8 +49,9 @@ public enum EditorContext {
   public static final IJobManager JOB_MANAGER = Job.getJobManager();
   public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
   public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
-  public static final MessageConsole CONSOLE = EditorContext
-      .getConsole("Smart Save");
+  public static final MessageConsole CONSOLE =
+      EditorContext
+                   .getConsole("Smart Save");
   public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
   public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
   static final SaveJob SAVE_JOB = new SaveJob();
@@ -75,12 +76,13 @@ public enum EditorContext {
   private static final Cache PREFERENCE = Cache.INSTANCE;
   private static final DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
       new DefaultMarkerAnnotationAccess();
-  private static final Logger LOGGER = Logger.getLogger(EditorContext.class
-      .getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(EditorContext.class
+                                          .getName());
 
   public static IPartService getPartService() {
     return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-        .getService(IPartService.class);
+                                                 .getService(IPartService.class);
   }
 
   public static Shell getShell() {
@@ -89,7 +91,7 @@ public enum EditorContext {
 
   public static IEditorPart getEditor() {
     return EditorContext.WORKBENCH.getActiveWorkbenchWindow().getActivePage()
-        .getActiveEditor();
+                                  .getActiveEditor();
   }
 
   public static Control getControl(final IEditorPart editor) {
@@ -125,7 +127,7 @@ public enum EditorContext {
   private static boolean canSaveFile(final IEditorPart editor) {
     return !(EditorContext.isNotModified(editor)
         || EditorContext.isBeingEdited(editor) || EditorContext
-          .hasProblems(editor));
+                                                               .hasProblems(editor));
   }
 
   private static boolean isBeingEdited(final IEditorPart editor) {
@@ -158,7 +160,7 @@ public enum EditorContext {
   private static boolean hasLinkAnnotations(final IEditorPart editor) {
     final Iterator<Annotation> iterator =
         EditorContext.getView(editor).getAnnotationModel()
-            .getAnnotationIterator();
+                     .getAnnotationIterator();
     while (iterator.hasNext())
       if (EditorContext.isLinkModeAnnotation(iterator)) return true;
     return false;
@@ -202,7 +204,7 @@ public enum EditorContext {
       final IEditorPart editor) {
     final Iterator<Annotation> iterator =
         EditorContext.getView(editor).getAnnotationModel()
-            .getAnnotationIterator();
+                     .getAnnotationIterator();
     while (iterator.hasNext())
       if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
     return false;
@@ -277,10 +279,10 @@ public enum EditorContext {
         EventBus.post(new ScheduleSaveEvent());
       }
     }.setName(taskName)
-        .setFamily(EditorContext.SAVER_TASK_FAMILY)
-        .setDelay(delayTime)
-        .setRule(EditorContext.SAVER_TASK_RULE)
-        .begin();
+     .setFamily(EditorContext.SAVER_TASK_FAMILY)
+     .setDelay(delayTime)
+     .setRule(EditorContext.SAVER_TASK_RULE)
+     .begin();
   }
 
   public static boolean taskDoesNotExist(final String... names) {
@@ -308,8 +310,10 @@ public enum EditorContext {
 
   private static void tryToShowConsole() throws PartInitException {
     ((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-        .getActivePage().showView(IConsoleConstants.ID_CONSOLE_VIEW))
-        .display(EditorContext.CONSOLE);
+                                           .getActivePage()
+                                           .showView(
+                                               IConsoleConstants.ID_CONSOLE_VIEW))
+                                                                                  .display(EditorContext.CONSOLE);
   }
 
   private static MessageConsole getConsole(final String name) {
@@ -336,7 +340,7 @@ public enum EditorContext {
 
   public static void asyncExec(final Runnable runnable) {
     if (EditorContext.displayExists()) EditorContext.DISPLAY
-        .asyncExec(runnable);
+                                                            .asyncExec(runnable);
   }
 
   public static void syncExec(final Runnable runnable) {
