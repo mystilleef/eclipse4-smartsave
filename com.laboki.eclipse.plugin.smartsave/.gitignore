@@ -25,3 +25,4 @@ local.properties
 *.war
 *.ear
 hs_err_pid*
+/.eclipse-pmd
