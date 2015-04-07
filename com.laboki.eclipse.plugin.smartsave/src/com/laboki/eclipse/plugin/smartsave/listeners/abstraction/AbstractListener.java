@@ -3,6 +3,8 @@ package com.laboki.eclipse.plugin.smartsave.listeners.abstraction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.jobs.Job;
+
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
@@ -13,12 +15,12 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-    implements IListener {
+implements IListener {
 
   private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
   private static final int ONE_SECOND_DELAY = 1000;
-  private static final Logger LOGGER = Logger.getLogger(AbstractListener.class
-      .getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(AbstractListener.class.getName());
 
   public AbstractListener() {
     super();
@@ -96,9 +98,10 @@ public abstract class AbstractListener extends AbstractEventBusInstance
         EditorContext.scheduleSave();
       }
     }.setName(AbstractListener.SAVER_TASK)
-        .setFamily(EditorContext.SAVER_TASK_FAMILY)
-        .setDelay(AbstractListener.ONE_SECOND_DELAY)
-        .setRule(EditorContext.SAVER_TASK_RULE)
-        .begin();
+    .setFamily(EditorContext.SAVER_TASK_FAMILY)
+    .setDelay(AbstractListener.ONE_SECOND_DELAY)
+    .setRule(EditorContext.SAVER_TASK_RULE)
+    .setPriority(Job.BUILD)
+    .begin();
   }
 }
