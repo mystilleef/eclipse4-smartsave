@@ -8,10 +8,25 @@
 
 	<extension point="org.eclipse.ui.preferencePages">
 		<page 
-		  id="com.laboki.eclipse.plugin.smartsave.PreferencePage"
+			id="com.laboki.eclipse.plugin.smartsave.PreferencePage"
 			class="com.laboki.eclipse.plugin.smartsave.preferences.ui.PreferencesPage"
 			name="%page.name">
 		</page>
+	</extension>
+
+	<extension point="org.eclipse.ui.commands">
+		<category
+			id="com.laboki.eclipse.plugin.smartsave.commands.category"
+			name="%category.name"
+			description="%category.description">
+		</category>
+
+		<command
+			categoryId="com.laboki.eclipse.plugin.smartsave.commands.category"
+			id="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+			name="%command.name"
+			description="%command.description">
+		</command>
 	</extension>
 	
 </plugin>
