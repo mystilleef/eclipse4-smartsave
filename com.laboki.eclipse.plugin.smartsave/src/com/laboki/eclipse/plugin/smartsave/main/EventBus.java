@@ -2,13 +2,15 @@ package com.laboki.eclipse.plugin.smartsave.main;
 
 import java.util.concurrent.Executors;
 
+import org.eclipse.core.runtime.jobs.Job;
+
 import com.google.common.eventbus.AsyncEventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public enum EventBus {
   INSTANCE;
 
-  static final AsyncEventBus BUS =
+  protected static final AsyncEventBus BUS =
       new AsyncEventBus(Executors.newCachedThreadPool());
 
   public static void register(final Object object) {
@@ -26,6 +28,6 @@ public enum EventBus {
       public void execute() {
         EventBus.BUS.post(object);
       }
-    }.begin();
+    }.setPriority(Job.INTERACTIVE).begin();
   }
 }
