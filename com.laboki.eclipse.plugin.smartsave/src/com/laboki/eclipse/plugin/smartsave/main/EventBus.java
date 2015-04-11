@@ -28,6 +28,6 @@ public enum EventBus {
       public void execute() {
         EventBus.BUS.post(object);
       }
-    }.setPriority(Job.INTERACTIVE).begin();
+    }.setPriority(Job.INTERACTIVE).start();
   }
 }

@@ -42,7 +42,7 @@ public final class PreferencesPage extends PreferencePage implements
     final Composite composite =
         this.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite, "&Save files automatically: ");
-    new SaveResponseComboViewer(composite).begin();
+    new SaveResponseComboViewer(composite).start();
   }
 
   private void createWarningErrorSection() {
@@ -58,13 +58,13 @@ public final class PreferencesPage extends PreferencePage implements
   private static void createErrorComboView(final Composite composite,
       final String name) {
     PreferencesPage.createLabel(composite, name);
-    new ErrorResponseComboViewer(composite).begin();
+    new ErrorResponseComboViewer(composite).start();
   }
 
   private static void createWarningComboView(final Composite composite,
       final String name) {
     PreferencesPage.createLabel(composite, name);
-    new WarningResponseComboViewer(composite).begin();
+    new WarningResponseComboViewer(composite).start();
   }
 
   private void createSaveIntervalSections() {
@@ -73,7 +73,7 @@ public final class PreferencesPage extends PreferencePage implements
         this.createHorizontalLayoutComposite();
     PreferencesPage.createLabel(composite,
         "If possible try to save &files every: ");
-    new SaveIntervalButton(composite).begin();
+    new SaveIntervalButton(composite).start();
   }
 
   private static void createLabel(final Composite composite, final String name) {

@@ -26,6 +26,6 @@ public final class Updater extends AbstractEventBusInstance {
       public void execute() {
         Cache.INSTANCE.update();
       }
-    }.setName(Updater.TASK_NAME).setRule(Updater.RULE).begin();
+    }.setName(Updater.TASK_NAME).setRule(Updater.RULE).start();
   }
 }

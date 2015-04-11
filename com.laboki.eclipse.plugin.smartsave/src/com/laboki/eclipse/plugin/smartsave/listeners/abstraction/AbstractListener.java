@@ -35,7 +35,7 @@ implements IListener {
       public void execute() {
         AbstractListener.this.tryToAdd();
       }
-    }.begin();
+    }.start();
   }
 
   void tryToAdd() {
@@ -56,7 +56,7 @@ implements IListener {
       public void execute() {
         AbstractListener.this.tryToRemove();
       }
-    }.begin();
+    }.start();
   }
 
   @Override
@@ -66,9 +66,9 @@ implements IListener {
   public void remove() {}
 
   @Override
-  public final Instance end() {
+  public final Instance stop() {
     this.tryToRemove();
-    return super.end();
+    return super.stop();
   }
 
   void tryToRemove() {
@@ -102,6 +102,6 @@ implements IListener {
     .setDelay(AbstractListener.ONE_SECOND_DELAY)
     .setRule(EditorContext.SAVER_TASK_RULE)
     .setPriority(Job.BUILD)
-    .begin();
+    .start();
   }
 }

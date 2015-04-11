@@ -59,11 +59,11 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
       }
     }.setName(PreferencesResponseComboViewer.TASK_NAME)
         .setRule(PreferencesResponseComboViewer.RULE)
-        .begin();
+        .start();
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     EventBus.register(this);
     this.startListening();
     this.updateComboProperties();
@@ -71,7 +71,7 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     EventBus.unregister(this);
     this.stopListening();
     return this;

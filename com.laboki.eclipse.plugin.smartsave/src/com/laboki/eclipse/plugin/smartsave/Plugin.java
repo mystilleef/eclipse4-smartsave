@@ -8,20 +8,20 @@ public enum Plugin implements Instance {
   INSTANCE;
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     new AsyncTask() {
 
       @Override
       public void execute() {
-        Factory.INSTANCE.begin();
+        Factory.INSTANCE.start();
       }
-    }.begin();
+    }.start();
     return this;
   }
 
   @Override
-  public Instance end() {
-    Factory.INSTANCE.end();
+  public Instance stop() {
+    Factory.INSTANCE.stop();
     return this;
   }
 }

@@ -30,7 +30,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
       public void execute() {
         ListenerSwitch.this.toggleSaverListeners();
       }
-    }.begin();
+    }.start();
   }
 
   @Subscribe
@@ -42,7 +42,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
       public void execute() {
         ListenerSwitch.this.toggleSaverListeners();
       }
-    }.begin();
+    }.start();
   }
 
   @Subscribe
@@ -54,7 +54,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
       public void execute() {
         ListenerSwitch.postDisableListenersEvent();
       }
-    }.begin();
+    }.start();
   }
 
   void toggleSaverListeners() {

@@ -32,10 +32,10 @@ public final class DirtyPartListener extends AbstractEventBusInstance implements
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     this.add();
     DirtyPartListener.postEvent();
-    return super.begin();
+    return super.start();
   }
 
   private static void postEvent() {
@@ -43,8 +43,8 @@ public final class DirtyPartListener extends AbstractEventBusInstance implements
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     this.remove();
-    return super.end();
+    return super.stop();
   }
 }

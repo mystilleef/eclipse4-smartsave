@@ -37,20 +37,20 @@ public final class PreferenceChangeListener
     }.setName(PreferenceChangeListener.TASK_NAME)
         .setRule(PreferenceChangeListener.RULE)
         .setDelay(EditorContext.SHORT_DELAY)
-        .begin();
+        .start();
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     PreferenceChangeListener.PREFERENCES
         .addPreferenceChangeListener(this);
-    return super.begin();
+    return super.start();
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     PreferenceChangeListener.PREFERENCES
         .removePreferenceChangeListener(this);
-    return super.end();
+    return super.stop();
   }
 }

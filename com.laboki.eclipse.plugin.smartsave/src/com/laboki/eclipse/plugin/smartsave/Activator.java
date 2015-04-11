@@ -14,13 +14,13 @@ public final class Activator extends AbstractUIPlugin {
   @Override
   public void start(final BundleContext context) throws Exception {
     super.start(context);
-    Plugin.INSTANCE.begin();
+    Plugin.INSTANCE.start();
   }
 
   @Override
   public void stop(final BundleContext context) throws Exception {
     Activator.instance = null;
-    Plugin.INSTANCE.end();
+    Plugin.INSTANCE.stop();
     super.stop(context);
   }
 

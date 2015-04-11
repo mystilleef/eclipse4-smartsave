@@ -19,7 +19,7 @@ public final class Services implements Instance {
   private final List<Instance> instances = Lists.newArrayList();
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     this.startServices();
     return this;
   }
@@ -38,12 +38,12 @@ public final class Services implements Instance {
   }
 
   private void startService(final Instance instance) {
-    instance.begin();
+    instance.start();
     this.instances.add(instance);
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     this.stopServices();
     this.instances.clear();
     return this;
@@ -56,7 +56,7 @@ public final class Services implements Instance {
   }
 
   private void stopService(final Instance instance) {
-    instance.end();
+    instance.stop();
     this.instances.remove(instance);
   }
 }

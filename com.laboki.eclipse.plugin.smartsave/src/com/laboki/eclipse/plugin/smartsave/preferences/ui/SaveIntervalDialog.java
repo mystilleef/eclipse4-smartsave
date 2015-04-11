@@ -29,10 +29,10 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     this.setupDialog();
     this.arrangeWidgets();
-    return super.begin();
+    return super.start();
   }
 
   private void setupDialog() {
@@ -85,7 +85,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   private void addSpinnerSection() {
     final Composite composite = this.createSpinnerComposite();
     SaveIntervalDialog.createLabel(composite, "Save files every ");
-    new SaveIntervalDialogSpinner(composite).begin();
+    new SaveIntervalDialogSpinner(composite).start();
     SaveIntervalDialog.createLabel(composite, " seconds");
   }
 
@@ -107,9 +107,9 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     this.dialog.dispose();
-    return super.end();
+    return super.stop();
   }
 
   private final class DialogShellListener implements ShellListener {

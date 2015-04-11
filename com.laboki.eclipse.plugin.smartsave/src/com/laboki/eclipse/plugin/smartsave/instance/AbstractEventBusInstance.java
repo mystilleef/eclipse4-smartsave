@@ -9,7 +9,7 @@ public abstract class AbstractEventBusInstance implements Instance {
   protected AbstractEventBusInstance() {}
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     if (this.isRegistered) return this;
     EventBus.register(this);
     this.isRegistered = true;
@@ -17,7 +17,7 @@ public abstract class AbstractEventBusInstance implements Instance {
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     if (!this.isRegistered) return this;
     EventBus.unregister(this);
     this.isRegistered = false;

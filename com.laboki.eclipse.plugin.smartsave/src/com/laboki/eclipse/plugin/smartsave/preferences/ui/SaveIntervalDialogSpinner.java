@@ -40,10 +40,10 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     this.updateProperties();
     this.startListening();
-    return super.begin();
+    return super.start();
   }
 
   private void updateProperties() {
@@ -73,7 +73,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
       }
     }.setName(SaveIntervalDialogSpinner.SELECTION_TASK)
         .setRule(SaveIntervalDialogSpinner.RULE)
-        .begin();
+        .start();
   }
 
   protected void updateSelection() {
@@ -98,7 +98,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
     }.setName(SaveIntervalDialogSpinner.FOCUS_TASK)
         .setFamily("FOCUS_SAVE_DIALOG_TASK_NAME")
         .setRule(SaveIntervalDialogSpinner.RULE)
-        .begin();
+        .start();
   }
 
   void focus() {
@@ -108,9 +108,9 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     this.spinner.dispose();
-    return super.end();
+    return super.stop();
   }
 
   private final class SpinnerModifyListener implements ModifyListener {
@@ -126,7 +126,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
           Store.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.this
               .spinner.getSelection());
         }
-      }.setRule(SaveIntervalDialogSpinner.RULE).begin();
+      }.setRule(SaveIntervalDialogSpinner.RULE).start();
     }
   }
 
@@ -143,7 +143,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
         public void execute() {
           SaveIntervalDialogSpinner.this.spinner.getShell().close();
         }
-      }.begin();
+      }.start();
     }
   }
 }

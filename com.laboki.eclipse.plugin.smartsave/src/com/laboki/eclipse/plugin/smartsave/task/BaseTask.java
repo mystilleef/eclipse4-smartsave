@@ -24,18 +24,18 @@ public abstract class BaseTask implements Runnable, Instance {
 
   @Override
   public void run() {
-    this.begin();
+    this.start();
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     if (!this.shouldSchedule()) return this;
     this.job.schedule(this.delay);
     return this;
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     this.job.cancel();
     return this;
   }

@@ -225,7 +225,7 @@ public enum EditorContext {
       public void execute() {
         EditorContext.FORCE_SAVE_JOB.execute(null);
       }
-    }.begin();
+    }.start();
   }
 
   public static void tryToSave(final IEditorPart editor) {
@@ -240,7 +240,7 @@ public enum EditorContext {
       public void execute() {
         EditorContext.SAVE_JOB.execute(editor);
       }
-    }.setFamily(EditorContext.SAVER_TASK_FAMILY).begin();
+    }.setFamily(EditorContext.SAVER_TASK_FAMILY).start();
   }
 
   static IFile getFile(final IEditorPart editor) {
@@ -282,7 +282,7 @@ public enum EditorContext {
     .setFamily(EditorContext.SAVER_TASK_FAMILY)
     .setDelay(delayTime)
     .setRule(EditorContext.SAVER_TASK_RULE)
-    .begin();
+    .start();
   }
 
   public static boolean taskDoesNotExist(final String... names) {

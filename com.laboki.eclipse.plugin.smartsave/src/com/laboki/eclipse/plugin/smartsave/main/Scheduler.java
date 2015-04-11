@@ -53,7 +53,7 @@ public final class Scheduler extends AbstractEventBusInstance {
         .setDelay(EditorContext.getSaveIntervalInMilliSeconds())
         .setFamily(EditorContext.SAVER_TASK_FAMILY)
         .setRule(EditorContext.SAVER_TASK_RULE)
-        .begin();
+        .start();
   }
 
   @Subscribe
@@ -68,7 +68,7 @@ public final class Scheduler extends AbstractEventBusInstance {
     }.setName(Scheduler.SAVER_TASK)
         .setFamily(EditorContext.SAVER_TASK_FAMILY)
         .setRule(EditorContext.SAVER_TASK_RULE)
-        .begin();
+        .start();
   }
 
   @Subscribe

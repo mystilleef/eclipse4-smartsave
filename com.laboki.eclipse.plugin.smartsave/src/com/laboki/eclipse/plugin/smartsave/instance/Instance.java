@@ -2,7 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.instance;
 
 public interface Instance {
 
-  Instance begin();
+  Instance start();
 
-  Instance end();
+  Instance stop();
 }

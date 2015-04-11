@@ -44,14 +44,14 @@ public enum Factory implements Instance {
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     Factory.enableAutomaticSaverFor(Factory.PART_SERVICE.getActivePart());
     Factory.PART_SERVICE.addPartListener(Factory.PART_LISTENER);
     return this;
   }
 
   @Override
-  public Instance end() {
+  public Instance stop() {
     Factory.PART_SERVICE.removePartListener(Factory.PART_LISTENER);
     Factory.stopAllSaverServices();
     return this;
@@ -81,7 +81,7 @@ public enum Factory implements Instance {
 
   private static void startSaverServiceFor(final IWorkbenchPart part) {
     Factory.stopAllSaverServices();
-    Factory.SERVICES_MAP.put((IEditorPart) part, new Services().begin());
+    Factory.SERVICES_MAP.put((IEditorPart) part, new Services().start());
   }
 
   static void stopAllSaverServices() {
@@ -91,7 +91,7 @@ public enum Factory implements Instance {
 
   private static void stopSaverServiceFor(final IWorkbenchPart part) {
     if (Factory.servicesMapDoesNotContain(part)) return;
-    Factory.SERVICES_MAP.remove(part).end();
+    Factory.SERVICES_MAP.remove(part).stop();
   }
 
   private static boolean servicesMapDoesNotContain(final IWorkbenchPart part) {

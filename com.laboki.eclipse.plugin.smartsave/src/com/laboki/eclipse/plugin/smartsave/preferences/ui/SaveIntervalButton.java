@@ -71,10 +71,10 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
   }
 
   @Override
-  public Instance begin() {
+  public Instance start() {
     this.startListening();
     this.updateText();
-    return super.begin();
+    return super.start();
   }
 
   public void startListening() {
@@ -92,7 +92,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
       }
     }.setName(SaveIntervalButton.TASK_NAME)
         .setRule(SaveIntervalButton.RULE)
-        .begin();
+        .start();
   }
 
   public void showSaveIntervalDialog() {
@@ -102,7 +102,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 
   private void showNewDialog() {
     this.dialog = new SaveIntervalDialog(this.composite);
-    this.dialog.begin();
+    this.dialog.start();
     this.dialog.show();
   }
 
