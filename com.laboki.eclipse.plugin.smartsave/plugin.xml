@@ -43,8 +43,23 @@
 		</key>
 	</extension>
 
+	<!-- FIXME: Add correct menu metadata -->
 	<extension point="org.eclipse.ui.menus">
+		<menuContribution 
+			locationURI="toolbar:org.eclipse.ui.main.toolbar">
+			
+			<toolbar id="com.laboki.eclipse.plugin.smartsave.group.toggle">
+				<command
+					commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+					style="toggle">
+				</command>
+			</toolbar>
 
+			<separator
+				name="additions"
+				visible="false">
+			</separator>
+		</menuContribution>
 	</extension>
 
 </plugin>
