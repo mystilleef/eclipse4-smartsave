@@ -19,105 +19,109 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class CompletionListener extends AbstractEventBusInstance
-    implements ICompletionListener {
+	implements ICompletionListener {
 
-  private static final Logger LOGGER = Logger
-      .getLogger(CompletionListener.class.getName());
-  private final IEditorPart editor = EditorContext.getEditor();
-  private final ContentAssistantFacade contentAssistantFacade = this
-      .getContentAssistantFacade();
-  private final IQuickAssistAssistant quickAssistAssistant = this
-      .getQuickAssistAssistant();
+	private static final Logger LOGGER =
+		Logger
+				.getLogger(CompletionListener.class.getName());
+	private final IEditorPart editor = EditorContext.getEditor();
+	private final ContentAssistantFacade contentAssistantFacade =
+		this
+			.getContentAssistantFacade();
+	private final IQuickAssistAssistant quickAssistAssistant =
+		this
+			.getQuickAssistAssistant();
 
-  public CompletionListener() {
-    super();
-  }
+	public CompletionListener() {
+		super();
+	}
 
-  @Override
-  public void assistSessionEnded(final ContentAssistEvent event) {
-    new Task() {
+	@Override
+	public void assistSessionEnded(final ContentAssistEvent event) {
+		new Task() {
 
-      @Override
-      public void execute() {
-        EventBus.post(new AssistSessionEndedEvent());
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				EventBus.post(new AssistSessionEndedEvent());
+			}
+		}.start();
+	}
 
-  @Override
-  public void assistSessionStarted(final ContentAssistEvent event) {
-    new Task() {
+	@Override
+	public void assistSessionStarted(final ContentAssistEvent event) {
+		new Task() {
 
-      @Override
-      public void execute() {
-        EventBus.post(new AssistSessionStartedEvent());
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				EventBus.post(new AssistSessionStartedEvent());
+			}
+		}.start();
+	}
 
-  @Override
-  public void selectionChanged(final ICompletionProposal arg0,
-      final boolean arg1) {}
+	@Override
+	public void selectionChanged(final ICompletionProposal arg0,
+		final boolean arg1) {}
 
-  @Override
-  public Instance start() {
-    this.tryToAdd();
-    return super.start();
-  }
+	@Override
+	public Instance start() {
+		this.tryToAdd();
+		return super.start();
+	}
 
-  private void tryToAdd() {
-    try {
-      this.add();
-    }
-    catch (final Exception e) {
-      CompletionListener.LOGGER.log(Level.OFF, e.getMessage(), e);
-    }
-  }
+	private void tryToAdd() {
+		try {
+			this.add();
+		}
+		catch (final Exception e) {
+			CompletionListener.LOGGER.log(Level.OFF, e.getMessage(), e);
+		}
+	}
 
-  private void add() {
-    if (this.contentAssistantFacade != null) this.contentAssistantFacade
-        .addCompletionListener(this);
-    if (this.quickAssistAssistant != null) this.quickAssistAssistant
-        .addCompletionListener(this);
-  }
+	private void add() {
+		if (this.contentAssistantFacade != null) this.contentAssistantFacade
+																			.addCompletionListener(this);
+		if (this.quickAssistAssistant != null) this.quickAssistAssistant
+																		.addCompletionListener(this);
+	}
 
-  @Override
-  public Instance stop() {
-    this.tryToRemove();
-    return super.stop();
-  }
+	@Override
+	public Instance stop() {
+		this.tryToRemove();
+		return super.stop();
+	}
 
-  private void tryToRemove() {
-    try {
-      this.remove();
-    }
-    catch (final Exception e) {
-      CompletionListener.LOGGER.log(Level.OFF, e.getMessage(), e);
-    }
-  }
+	private void tryToRemove() {
+		try {
+			this.remove();
+		}
+		catch (final Exception e) {
+			CompletionListener.LOGGER.log(Level.OFF, e.getMessage(), e);
+		}
+	}
 
-  private void remove() {
-    if (this.contentAssistantFacade != null) this.contentAssistantFacade
-        .removeCompletionListener(this);
-    if (this.quickAssistAssistant != null) this.quickAssistAssistant
-        .removeCompletionListener(this);
-  }
+	private void remove() {
+		if (this.contentAssistantFacade != null) this.contentAssistantFacade
+																			.removeCompletionListener(this);
+		if (this.quickAssistAssistant != null) this.quickAssistAssistant
+																		.removeCompletionListener(this);
+	}
 
-  private ContentAssistantFacade getContentAssistantFacade() {
-    try {
-      return EditorContext.getView(this.editor).getContentAssistantFacade();
-    }
-    catch (final Exception e) {
-      return null;
-    }
-  }
+	private ContentAssistantFacade getContentAssistantFacade() {
+		try {
+			return EditorContext.getView(this.editor)
+								.getContentAssistantFacade();
+		}
+		catch (final Exception e) {
+			return null;
+		}
+	}
 
-  private IQuickAssistAssistant getQuickAssistAssistant() {
-    try {
-      return EditorContext.getView(this.editor).getQuickAssistAssistant();
-    }
-    catch (final Exception e) {
-      return null;
-    }
-  }
+	private IQuickAssistAssistant getQuickAssistAssistant() {
+		try {
+			return EditorContext.getView(this.editor).getQuickAssistAssistant();
+		}
+		catch (final Exception e) {
+			return null;
+		}
+	}
 }

@@ -7,29 +7,29 @@ import org.eclipse.core.runtime.jobs.Job;
 
 public abstract class TaskJob extends Job {
 
-  private Object family;
+	private Object family;
 
-  public TaskJob() {
-    super("");
-  }
+	public TaskJob() {
+		super("");
+	}
 
-  @Override
-  public boolean belongsTo(final Object family) {
-    if (this.family == null) return false;
-    if (family == null) return false;
-    return this.family.equals(family);
-  }
+	@Override
+	public boolean belongsTo(final Object family) {
+		if (this.family == null) return false;
+		if (family == null) return false;
+		return this.family.equals(family);
+	}
 
-  @Override
-  protected IStatus run(final IProgressMonitor monitor) {
-    if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-    this.runTask();
-    return Status.OK_STATUS;
-  }
+	@Override
+	protected IStatus run(final IProgressMonitor monitor) {
+		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+		this.runTask();
+		return Status.OK_STATUS;
+	}
 
-  abstract void runTask();
+	abstract void runTask();
 
-  public void setFamily(final Object family) {
-    this.family = family;
-  }
+	public void setFamily(final Object family) {
+		this.family = family;
+	}
 }

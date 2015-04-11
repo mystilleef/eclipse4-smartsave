@@ -14,66 +14,66 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 abstract class PreferencesResponseComboViewer extends ResponseComboViewer
-    implements Instance {
+	implements Instance {
 
-  private static final String TASK_NAME =
-      "preferences response combo viewer task";
-  private static final TaskMutexRule RULE = new TaskMutexRule();
-  protected static final int YES = 0;
-  protected static final int NO = 1;
+	private static final String TASK_NAME =
+		"preferences response combo viewer task";
+	private static final TaskMutexRule RULE = new TaskMutexRule();
+	protected static final int YES = 0;
+	protected static final int NO = 1;
 
-  protected PreferencesResponseComboViewer(final Composite parent) {
-    super(parent);
-  }
+	protected PreferencesResponseComboViewer(final Composite parent) {
+		super(parent);
+	}
 
-  @Override
-  protected void handleResponseSelection(final SelectionChangedEvent event) {}
+	@Override
+	protected void handleResponseSelection(final SelectionChangedEvent event) {}
 
-  protected boolean getSelectionValue(final SelectionChangedEvent event) {
-    super.handleResponseSelection(event);
-    return ((Response) ((IStructuredSelection) event.getSelection())
-        .getFirstElement()).value();
-  }
+	protected boolean getSelectionValue(final SelectionChangedEvent event) {
+		super.handleResponseSelection(event);
+		return ((Response) ((IStructuredSelection) event.getSelection())
+																		.getFirstElement()).value();
+	}
 
-  private void updateComboProperties() {
-    this.updateSelection();
-  }
+	private void updateComboProperties() {
+		this.updateSelection();
+	}
 
-  protected void updateSelection() {}
+	protected void updateSelection() {}
 
-  protected void setSelection(final int index) {
-    this.stopListening();
-    this.setSelection(new StructuredSelection(this.getResponses()[index]));
-    this.startListening();
-  }
+	protected void setSelection(final int index) {
+		this.stopListening();
+		this.setSelection(new StructuredSelection(this.getResponses()[index]));
+		this.startListening();
+	}
 
-  @Subscribe
-  @AllowConcurrentEvents
-  public void preferencesChanged(
-      @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	@AllowConcurrentEvents
+	public void preferencesChanged(
+		@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        PreferencesResponseComboViewer.this.updateSelection();
-      }
-    }.setName(PreferencesResponseComboViewer.TASK_NAME)
-        .setRule(PreferencesResponseComboViewer.RULE)
-        .start();
-  }
+			@Override
+			public void execute() {
+				PreferencesResponseComboViewer.this.updateSelection();
+			}
+		}.setName(PreferencesResponseComboViewer.TASK_NAME)
+			.setRule(PreferencesResponseComboViewer.RULE)
+			.start();
+	}
 
-  @Override
-  public Instance start() {
-    EventBus.register(this);
-    this.startListening();
-    this.updateComboProperties();
-    return this;
-  }
+	@Override
+	public Instance start() {
+		EventBus.register(this);
+		this.startListening();
+		this.updateComboProperties();
+		return this;
+	}
 
-  @Override
-  public Instance stop() {
-    EventBus.unregister(this);
-    this.stopListening();
-    return this;
-  }
+	@Override
+	public Instance stop() {
+		EventBus.unregister(this);
+		this.stopListening();
+		return this;
+	}
 }

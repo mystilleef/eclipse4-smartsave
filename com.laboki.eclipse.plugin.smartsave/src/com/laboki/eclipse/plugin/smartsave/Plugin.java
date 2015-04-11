@@ -5,23 +5,23 @@ import com.laboki.eclipse.plugin.smartsave.main.Factory;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public enum Plugin implements Instance {
-  INSTANCE;
+	INSTANCE;
 
-  @Override
-  public Instance start() {
-    new AsyncTask() {
+	@Override
+	public Instance start() {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        Factory.INSTANCE.start();
-      }
-    }.start();
-    return this;
-  }
+			@Override
+			public void execute() {
+				Factory.INSTANCE.start();
+			}
+		}.start();
+		return this;
+	}
 
-  @Override
-  public Instance stop() {
-    Factory.INSTANCE.stop();
-    return this;
-  }
+	@Override
+	public Instance stop() {
+		Factory.INSTANCE.stop();
+		return this;
+	}
 }

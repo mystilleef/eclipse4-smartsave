@@ -15,93 +15,93 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-implements IListener {
+	implements IListener {
 
-  private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
-  private static final int ONE_SECOND_DELAY = 1000;
-  private static final Logger LOGGER =
-      Logger.getLogger(AbstractListener.class.getName());
+	private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
+	private static final int ONE_SECOND_DELAY = 1000;
+	private static final Logger LOGGER =
+		Logger.getLogger(AbstractListener.class.getName());
 
-  public AbstractListener() {
-    super();
-  }
+	public AbstractListener() {
+		super();
+	}
 
-  @Subscribe
-  public final void addListener(
-      @SuppressWarnings("unused") final EnableSaveListenersEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	public final void addListener(
+		@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        AbstractListener.this.tryToAdd();
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				AbstractListener.this.tryToAdd();
+			}
+		}.start();
+	}
 
-  void tryToAdd() {
-    try {
-      this.add();
-    }
-    catch (final Exception e) {
-      AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-  }
+	void tryToAdd() {
+		try {
+			this.add();
+		}
+		catch (final Exception e) {
+			AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
+		}
+	}
 
-  @Subscribe
-  public final void removeListener(
-      @SuppressWarnings("unused") final DisableSaveListenersEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	public final void removeListener(
+		@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        AbstractListener.this.tryToRemove();
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				AbstractListener.this.tryToRemove();
+			}
+		}.start();
+	}
 
-  @Override
-  public void add() {}
+	@Override
+	public void add() {}
 
-  @Override
-  public void remove() {}
+	@Override
+	public void remove() {}
 
-  @Override
-  public final Instance stop() {
-    this.tryToRemove();
-    return super.stop();
-  }
+	@Override
+	public final Instance stop() {
+		this.tryToRemove();
+		return super.stop();
+	}
 
-  void tryToRemove() {
-    try {
-      this.remove();
-    }
-    catch (final Exception e) {
-      AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-  }
+	void tryToRemove() {
+		try {
+			this.remove();
+		}
+		catch (final Exception e) {
+			AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
+		}
+	}
 
-  protected static final void scheduleSave() {
-    EditorContext.cancelAllSaverTasks();
-    AbstractListener.scheduleTask();
-  }
+	protected static final void scheduleSave() {
+		EditorContext.cancelAllSaverTasks();
+		AbstractListener.scheduleTask();
+	}
 
-  private static void scheduleTask() {
-    new Task() {
+	private static void scheduleTask() {
+		new Task() {
 
-      @Override
-      public boolean shouldSchedule() {
-        return EditorContext.canScheduleSave();
-      }
+			@Override
+			public boolean shouldSchedule() {
+				return EditorContext.canScheduleSave();
+			}
 
-      @Override
-      public void execute() {
-        EditorContext.scheduleSave();
-      }
-    }.setName(AbstractListener.SAVER_TASK)
-    .setFamily(EditorContext.SAVER_TASK_FAMILY)
-    .setDelay(AbstractListener.ONE_SECOND_DELAY)
-    .setRule(EditorContext.SAVER_TASK_RULE)
-    .setPriority(Job.BUILD)
-    .start();
-  }
+			@Override
+			public void execute() {
+				EditorContext.scheduleSave();
+			}
+		}.setName(AbstractListener.SAVER_TASK)
+			.setFamily(EditorContext.SAVER_TASK_FAMILY)
+			.setDelay(AbstractListener.ONE_SECOND_DELAY)
+			.setRule(EditorContext.SAVER_TASK_RULE)
+			.setPriority(Job.BUILD)
+			.start();
+	}
 }

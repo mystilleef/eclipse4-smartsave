@@ -4,23 +4,23 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public abstract class AbstractEventBusInstance implements Instance {
 
-  private boolean isRegistered = false;
+	private boolean isRegistered = false;
 
-  protected AbstractEventBusInstance() {}
+	protected AbstractEventBusInstance() {}
 
-  @Override
-  public Instance start() {
-    if (this.isRegistered) return this;
-    EventBus.register(this);
-    this.isRegistered = true;
-    return this;
-  }
+	@Override
+	public Instance start() {
+		if (this.isRegistered) return this;
+		EventBus.register(this);
+		this.isRegistered = true;
+		return this;
+	}
 
-  @Override
-  public Instance stop() {
-    if (!this.isRegistered) return this;
-    EventBus.unregister(this);
-    this.isRegistered = false;
-    return this;
-  }
+	@Override
+	public Instance stop() {
+		if (!this.isRegistered) return this;
+		EventBus.unregister(this);
+		this.isRegistered = false;
+		return this;
+	}
 }

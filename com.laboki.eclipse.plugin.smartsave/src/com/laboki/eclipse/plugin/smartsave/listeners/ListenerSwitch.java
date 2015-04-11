@@ -15,58 +15,58 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class ListenerSwitch extends AbstractEventBusInstance {
 
-  private final IEditorPart editor = EditorContext.getEditor();
+	private final IEditorPart editor = EditorContext.getEditor();
 
-  public ListenerSwitch() {
-    super();
-  }
+	public ListenerSwitch() {
+		super();
+	}
 
-  @Subscribe
-  public void toggleListeners(
-      @SuppressWarnings("unused") final PartChangedEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	public void toggleListeners(
+		@SuppressWarnings("unused") final PartChangedEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        ListenerSwitch.this.toggleSaverListeners();
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				ListenerSwitch.this.toggleSaverListeners();
+			}
+		}.start();
+	}
 
-  @Subscribe
-  public void toggleListeners(
-      @SuppressWarnings("unused") final AssistSessionEndedEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	public void toggleListeners(
+		@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        ListenerSwitch.this.toggleSaverListeners();
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				ListenerSwitch.this.toggleSaverListeners();
+			}
+		}.start();
+	}
 
-  @Subscribe
-  public static void disableListeners(
-      @SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	public static void disableListeners(
+		@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public void execute() {
-        ListenerSwitch.postDisableListenersEvent();
-      }
-    }.start();
-  }
+			@Override
+			public void execute() {
+				ListenerSwitch.postDisableListenersEvent();
+			}
+		}.start();
+	}
 
-  void toggleSaverListeners() {
-    if (this.editor.isDirty()) ListenerSwitch.postEnableListenersEvent();
-    else ListenerSwitch.postDisableListenersEvent();
-  }
+	void toggleSaverListeners() {
+		if (this.editor.isDirty()) ListenerSwitch.postEnableListenersEvent();
+		else ListenerSwitch.postDisableListenersEvent();
+	}
 
-  static void postDisableListenersEvent() {
-    EventBus.post(new DisableSaveListenersEvent());
-  }
+	static void postDisableListenersEvent() {
+		EventBus.post(new DisableSaveListenersEvent());
+	}
 
-  private static void postEnableListenersEvent() {
-    EventBus.post(new EnableSaveListenersEvent());
-  }
+	private static void postEnableListenersEvent() {
+		EventBus.post(new EnableSaveListenersEvent());
+	}
 }

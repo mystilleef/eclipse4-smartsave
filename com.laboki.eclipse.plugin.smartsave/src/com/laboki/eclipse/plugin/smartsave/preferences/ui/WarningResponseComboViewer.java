@@ -7,19 +7,19 @@ import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 
 final class WarningResponseComboViewer extends PreferencesResponseComboViewer {
 
-  public WarningResponseComboViewer(final Composite parent) {
-    super(parent);
-  }
+	public WarningResponseComboViewer(final Composite parent) {
+		super(parent);
+	}
 
-  @Override
-  protected void handleResponseSelection(final SelectionChangedEvent event) {
-    Store.setCanSaveIfWarnings(this.getSelectionValue(event));
-  }
+	@Override
+	protected void handleResponseSelection(final SelectionChangedEvent event) {
+		Store.setCanSaveIfWarnings(this.getSelectionValue(event));
+	}
 
-  @Override
-  protected void updateSelection() {
-    if (Store.getCanSaveIfWarnings()) this
-        .setSelection(PreferencesResponseComboViewer.YES);
-    else this.setSelection(PreferencesResponseComboViewer.NO);
-  }
+	@Override
+	protected void updateSelection() {
+		if (Store.getCanSaveIfWarnings()) this
+												.setSelection(PreferencesResponseComboViewer.YES);
+		else this.setSelection(PreferencesResponseComboViewer.NO);
+	}
 }

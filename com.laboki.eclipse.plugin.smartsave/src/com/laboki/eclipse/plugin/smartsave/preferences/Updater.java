@@ -9,23 +9,23 @@ import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class Updater extends AbstractEventBusInstance {
 
-  private static final String TASK_NAME = "update preferences task";
-  private static final TaskMutexRule RULE = new TaskMutexRule();
+	private static final String TASK_NAME = "update preferences task";
+	private static final TaskMutexRule RULE = new TaskMutexRule();
 
-  public Updater() {
-    super();
-  }
+	public Updater() {
+		super();
+	}
 
-  @Subscribe
-  @AllowConcurrentEvents
-  public static void updatePreferences(
-      @SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
-    new Task() {
+	@Subscribe
+	@AllowConcurrentEvents
+	public static void updatePreferences(
+		@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+		new Task() {
 
-      @Override
-      public void execute() {
-        Cache.INSTANCE.update();
-      }
-    }.setName(Updater.TASK_NAME).setRule(Updater.RULE).start();
-  }
+			@Override
+			public void execute() {
+				Cache.INSTANCE.update();
+			}
+		}.setName(Updater.TASK_NAME).setRule(Updater.RULE).start();
+	}
 }

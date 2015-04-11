@@ -10,41 +10,41 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
 public final class DirtyPartListener extends AbstractEventBusInstance implements
-    IPropertyListener {
+	IPropertyListener {
 
-  private final IEditorPart editor = EditorContext.getEditor();
+	private final IEditorPart editor = EditorContext.getEditor();
 
-  public DirtyPartListener() {
-    super();
-  }
+	public DirtyPartListener() {
+		super();
+	}
 
-  public void add() {
-    this.editor.addPropertyListener(this);
-  }
+	public void add() {
+		this.editor.addPropertyListener(this);
+	}
 
-  public void remove() {
-    this.editor.removePropertyListener(this);
-  }
+	public void remove() {
+		this.editor.removePropertyListener(this);
+	}
 
-  @Override
-  public void propertyChanged(final Object source, final int propID) {
-    if (propID == IEditorPart.PROP_DIRTY) DirtyPartListener.postEvent();
-  }
+	@Override
+	public void propertyChanged(final Object source, final int propID) {
+		if (propID == IEditorPart.PROP_DIRTY) DirtyPartListener.postEvent();
+	}
 
-  @Override
-  public Instance start() {
-    this.add();
-    DirtyPartListener.postEvent();
-    return super.start();
-  }
+	@Override
+	public Instance start() {
+		this.add();
+		DirtyPartListener.postEvent();
+		return super.start();
+	}
 
-  private static void postEvent() {
-    EventBus.post(new PartChangedEvent());
-  }
+	private static void postEvent() {
+		EventBus.post(new PartChangedEvent());
+	}
 
-  @Override
-  public Instance stop() {
-    this.remove();
-    return super.stop();
-  }
+	@Override
+	public Instance stop() {
+		this.remove();
+		return super.stop();
+	}
 }

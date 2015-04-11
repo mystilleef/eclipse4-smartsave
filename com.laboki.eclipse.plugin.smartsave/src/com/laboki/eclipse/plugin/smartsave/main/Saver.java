@@ -13,55 +13,55 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class Saver extends AbstractEventBusInstance {
 
-  private static final String SAVER_TASK = "SAVER_SAVER_TASK";
-  boolean completionAssistantIsActive;
-  private final IEditorPart editor = EditorContext.getEditor();
+	private static final String SAVER_TASK = "SAVER_SAVER_TASK";
+	boolean completionAssistantIsActive;
+	private final IEditorPart editor = EditorContext.getEditor();
 
-  public Saver() {
-    super();
-  }
+	public Saver() {
+		super();
+	}
 
-  @Subscribe
-  public void save(
-      @SuppressWarnings("unused") final AssistSessionStartedEvent event) {
-    this.completionAssistantIsActive = true;
-  }
+	@Subscribe
+	public void save(
+		@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+		this.completionAssistantIsActive = true;
+	}
 
-  @Subscribe
-  public void save(
-      @SuppressWarnings("unused") final AssistSessionEndedEvent event) {
-    this.completionAssistantIsActive = false;
-  }
+	@Subscribe
+	public void save(
+		@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+		this.completionAssistantIsActive = false;
+	}
 
-  @Subscribe
-  @AllowConcurrentEvents
-  public void save(
-      @SuppressWarnings("unused") final StartSaveScheduleEvent event) {
-    new AsyncTask() {
+	@Subscribe
+	@AllowConcurrentEvents
+	public void save(
+		@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
+		new AsyncTask() {
 
-      @Override
-      public boolean shouldSchedule() {
-        if (Saver.this.completionAssistantIsActive) return false;
-        return EditorContext.canScheduleSave();
-      }
+			@Override
+			public boolean shouldSchedule() {
+				if (Saver.this.completionAssistantIsActive) return false;
+				return EditorContext.canScheduleSave();
+			}
 
-      @Override
-      public void execute() {
-        Saver.this.save();
-      }
-    }.setName(Saver.SAVER_TASK)
-        .setFamily(EditorContext.SAVER_TASK_FAMILY)
-        .setDelay(EditorContext.SHORT_DELAY)
-        .setRule(EditorContext.SAVER_TASK_RULE).start();
-  }
+			@Override
+			public void execute() {
+				Saver.this.save();
+			}
+		}.setName(Saver.SAVER_TASK)
+			.setFamily(EditorContext.SAVER_TASK_FAMILY)
+			.setDelay(EditorContext.SHORT_DELAY)
+			.setRule(EditorContext.SAVER_TASK_RULE).start();
+	}
 
-  @Override
-  public Instance stop() {
-    this.save();
-    return super.stop();
-  }
+	@Override
+	public Instance stop() {
+		this.save();
+		return super.stop();
+	}
 
-  void save() {
-    EditorContext.save(this.editor);
-  }
+	void save() {
+		EditorContext.save(this.editor);
+	}
 }

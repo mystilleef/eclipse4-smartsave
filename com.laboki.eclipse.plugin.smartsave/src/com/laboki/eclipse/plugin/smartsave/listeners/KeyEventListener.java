@@ -8,34 +8,35 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public final class KeyEventListener extends AbstractListener implements
-    KeyListener {
+	KeyListener {
 
-  private final Control control = EditorContext.getControl(EditorContext
-      .getEditor());
+	private final Control control =
+		EditorContext.getControl(EditorContext
+												.getEditor());
 
-  public KeyEventListener() {
-    super();
-  }
+	public KeyEventListener() {
+		super();
+	}
 
-  @Override
-  public void add() {
-    if (this.control == null) return;
-    this.control.addKeyListener(this);
-  }
+	@Override
+	public void add() {
+		if (this.control == null) return;
+		this.control.addKeyListener(this);
+	}
 
-  @Override
-  public void remove() {
-    if (this.control == null) return;
-    this.control.removeKeyListener(this);
-  }
+	@Override
+	public void remove() {
+		if (this.control == null) return;
+		this.control.removeKeyListener(this);
+	}
 
-  @Override
-  public void keyPressed(final KeyEvent event) {
-    EditorContext.cancelAllSaverTasks();
-  }
+	@Override
+	public void keyPressed(final KeyEvent event) {
+		EditorContext.cancelAllSaverTasks();
+	}
 
-  @Override
-  public void keyReleased(final KeyEvent event) {
-    AbstractListener.scheduleSave();
-  }
+	@Override
+	public void keyReleased(final KeyEvent event) {
+		AbstractListener.scheduleSave();
+	}
 }

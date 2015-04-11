@@ -5,17 +5,17 @@ import org.eclipse.ui.IEditorPart;
 
 public final class ForceSaveJob extends SaveJob {
 
-  public ForceSaveJob() {
-    this.setRule(ResourcesPlugin.getWorkspace().getRoot());
-  }
+	public ForceSaveJob() {
+		this.setRule(ResourcesPlugin.getWorkspace().getRoot());
+	}
 
-  @Override
-  protected void save() {
-    EditorContext.WORKBENCH.saveAllEditors(false);
-  }
+	@Override
+	protected void save() {
+		EditorContext.WORKBENCH.saveAllEditors(false);
+	}
 
-  @Override
-  public void execute(final IEditorPart editorPart) {
-    this.schedule(EditorContext.SHORT_DELAY);
-  }
+	@Override
+	public void execute(final IEditorPart editorPart) {
+		this.schedule(EditorContext.SHORT_DELAY);
+	}
 }

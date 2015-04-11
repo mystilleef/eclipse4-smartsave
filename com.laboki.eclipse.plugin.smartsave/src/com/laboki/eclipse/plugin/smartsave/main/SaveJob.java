@@ -9,60 +9,60 @@ import org.eclipse.ui.IEditorPart;
 
 public class SaveJob extends WorkspaceJob implements Runnable {
 
-  private static final String TASK_NAME = "SMART_SAVE_WORKSPACE_SAVE_JOB";
-  public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
-  private IEditorPart editor;
+	private static final String TASK_NAME = "SMART_SAVE_WORKSPACE_SAVE_JOB";
+	public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
+	private IEditorPart editor;
 
-  public SaveJob() {
-    super(SaveJob.TASK_NAME);
-    this.setProperties();
-  }
+	public SaveJob() {
+		super(SaveJob.TASK_NAME);
+		this.setProperties();
+	}
 
-  private void setProperties() {
-    this.setPriority(Job.DECORATE);
-    this.setUser(false);
-    this.setSystem(true);
-  }
+	private void setProperties() {
+		this.setPriority(Job.DECORATE);
+		this.setUser(false);
+		this.setSystem(true);
+	}
 
-  @Override
-  public void run() {
-    this.save();
-  }
+	@Override
+	public void run() {
+		this.save();
+	}
 
-  protected void save() {
-    this.editor.getSite().getPage().saveEditor(this.editor, false);
-  }
+	protected void save() {
+		this.editor.getSite().getPage().saveEditor(this.editor, false);
+	}
 
-  @Override
-  public IStatus runInWorkspace(final IProgressMonitor monitor) {
-    if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-    EditorContext.asyncExec(this);
-    return Status.OK_STATUS;
-  }
+	@Override
+	public IStatus runInWorkspace(final IProgressMonitor monitor) {
+		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+		EditorContext.asyncExec(this);
+		return Status.OK_STATUS;
+	}
 
-  @Override
-  public boolean belongsTo(final Object family) {
-    return family.equals(SaveJob.JOB_FAMILY);
-  }
+	@Override
+	public boolean belongsTo(final Object family) {
+		return family.equals(SaveJob.JOB_FAMILY);
+	}
 
-  @Override
-  public boolean shouldSchedule() {
-    if (EditorContext.currentJobIsBlocking()) return false;
-    return EditorContext.canScheduleSave();
-  }
+	@Override
+	public boolean shouldSchedule() {
+		if (EditorContext.currentJobIsBlocking()) return false;
+		return EditorContext.canScheduleSave();
+	}
 
-  public static boolean doesNotExists() {
-    return Job.getJobManager().find(SaveJob.JOB_FAMILY).length == 0;
-  }
+	public static boolean doesNotExists() {
+		return Job.getJobManager().find(SaveJob.JOB_FAMILY).length == 0;
+	}
 
-  public void execute(final IEditorPart editorPart) {
-    this.setNewRule(editorPart);
-    this.editor = editorPart;
-    this.schedule(EditorContext.SHORT_DELAY);
-  }
+	public void execute(final IEditorPart editorPart) {
+		this.setNewRule(editorPart);
+		this.editor = editorPart;
+		this.schedule(EditorContext.SHORT_DELAY);
+	}
 
-  private void setNewRule(final IEditorPart editorPart) {
-    if (this.editor == editorPart) return;
-    this.setRule(EditorContext.getFile(editorPart));
-  }
+	private void setNewRule(final IEditorPart editorPart) {
+		if (this.editor == editorPart) return;
+		this.setRule(EditorContext.getFile(editorPart));
+	}
 }

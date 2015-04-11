@@ -4,19 +4,19 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public abstract class AsyncTask extends BaseTask implements ExecuteTask {
 
-  public AsyncTask() {}
+	public AsyncTask() {}
 
-  @Override
-  protected TaskJob newTaskJob() {
-    return new TaskJob() {
+	@Override
+	protected TaskJob newTaskJob() {
+		return new TaskJob() {
 
-      @Override
-      protected void runTask() {
-        EditorContext.asyncExec(() -> AsyncTask.this.execute());
-      }
-    };
-  }
+			@Override
+			protected void runTask() {
+				EditorContext.asyncExec(() -> AsyncTask.this.execute());
+			}
+		};
+	}
 
-  @Override
-  public abstract void execute();
+	@Override
+	public abstract void execute();
 }
