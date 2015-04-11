@@ -9,11 +9,12 @@ import org.eclipse.ui.IEditorPart;
 
 public class SaveJob extends WorkspaceJob implements Runnable {
 
+  private static final String TASK_NAME = "SMART_SAVE_WORKSPACE_SAVE_JOB";
   public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
   private IEditorPart editor;
 
   public SaveJob() {
-    super("SMART_SAVE_WORKSPACE_SAVE_JOB");
+    super(SaveJob.TASK_NAME);
     this.setProperties();
   }
 
