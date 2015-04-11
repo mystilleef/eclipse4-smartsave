@@ -29,4 +29,22 @@
 		</command>
 	</extension>
 
+	<extension point="org.eclipse.ui.bindings">
+		<scheme
+			id="com.laboki.eclipse.plugin.smartsave.scheme"
+			name="%scheme.name">
+		</scheme>
+		
+		<key
+			commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+			contextId="org.eclipse.ui.contexts.window"
+			schemeId="com.laboki.eclipse.plugin.smartsave.scheme"
+			sequence="CTRL+SHIFT+ALT+S">
+		</key>
+	</extension>
+
+	<extension point="org.eclipse.ui.menus">
+
+	</extension>
+
 </plugin>
