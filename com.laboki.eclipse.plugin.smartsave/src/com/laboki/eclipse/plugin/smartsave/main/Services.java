@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveCommand;
+import com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveCommandState;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
@@ -35,7 +35,7 @@ public final class Services implements Instance {
 		this.startService(new CompletionListener());
 		this.startService(new DirtyPartListener());
 		this.startService(new Updater());
-		this.startService(new ToggleSmartSaveCommand());
+		this.startService(new ToggleSmartSaveCommandState());
 		this.startService(new PreferenceChangeListener());
 	}
 

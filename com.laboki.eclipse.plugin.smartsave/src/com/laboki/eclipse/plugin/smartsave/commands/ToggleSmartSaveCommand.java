@@ -4,53 +4,40 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
 import org.eclipse.ui.commands.ICommandService;
 
-import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.Activator;
-import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 
-public final class ToggleSmartSaveCommand extends AbstractEventBusInstance {
+public enum ToggleSmartSaveCommand {
 
-	private static final String TOGGLE_STATE =
+	INSTANCE;
+
+	private static final String STATE_ID =
 		"org.eclipse.ui.commands.toggleState";
-	private static final String COMMAND_ID =
+	public static final String ID =
 		"com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save";
-	protected static final Command COMMAND =
+	public static final Command COMMAND =
 		ToggleSmartSaveCommand.getCommand();
-
-	public ToggleSmartSaveCommand() {
-		ToggleSmartSaveCommand.setToggleState(EditorContext.canSaveAutomatically());
-	}
+	public static final State STATE =
+		ToggleSmartSaveCommand.getStateInstance();
 
 	private static Command getCommand() {
 		return ((ICommandService) Activator.getInstance()
 			.getWorkbench()
 			.getService(ICommandService.class))
-			.getCommand(ToggleSmartSaveCommand.COMMAND_ID);
+			.getCommand(ToggleSmartSaveCommand.ID);
 	}
 
-	@Subscribe
-	public static void preferencesChanged(
-		@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
-		new Task() {
-
-			@Override
-			public void execute() {
-				ToggleSmartSaveCommand.setToggleState(EditorContext.canSaveAutomatically());
-			}
-		}.setDelay(EditorContext.SHORT_DELAY).start();
-	}
-
-	protected static void setToggleState(final boolean state) {
-		ToggleSmartSaveCommand.getToggleState().setValue(state);
-	}
-
-	private static State getToggleState() {
+	private static State getStateInstance() {
 		return ToggleSmartSaveCommand.COMMAND
-			.getState(ToggleSmartSaveCommand.TOGGLE_STATE);
+			.getState(ToggleSmartSaveCommand.STATE_ID);
+	}
+
+	public static boolean getState() {
+		return (boolean) ToggleSmartSaveCommand.STATE.getValue();
+	}
+
+	public static void setState(final boolean state) {
+		ToggleSmartSaveCommand.STATE.setValue(state);
 	}
 
 }
