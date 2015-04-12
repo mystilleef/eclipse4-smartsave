@@ -14,6 +14,15 @@
 		</page>
 	</extension>
 
+	<extension point="org.eclipse.ui.bindings">
+		<key
+			commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+			contextId="org.eclipse.ui.contexts.window"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+M2+M3+S">
+		</key>
+	</extension>
+
 	<extension point="org.eclipse.ui.commands">
 		<category
 			id="com.laboki.eclipse.plugin.smartsave.commands.category"
@@ -22,35 +31,28 @@
 		</category>
 
 		<command
-			categoryId="com.laboki.eclipse.plugin.smartsave.commands.category"
 			id="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
 			name="%command.name"
-			description="%command.description">
+			description="%command.description"
+			categoryId="com.laboki.eclipse.plugin.smartsave.commands.category"
+			defaultHandler="com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveHandler">
+			
+			<state 
+				class="org.eclipse.ui.handlers.RegistryToggleState:true"
+				id="org.eclipse.ui.commands.toggleState">
+			</state>
 		</command>
 	</extension>
 
-	<extension point="org.eclipse.ui.bindings">
-		<scheme
-			id="com.laboki.eclipse.plugin.smartsave.scheme"
-			name="%scheme.name">
-		</scheme>
-		
-		<key
-			commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
-			contextId="org.eclipse.ui.contexts.window"
-			schemeId="com.laboki.eclipse.plugin.smartsave.scheme"
-			sequence="CTRL+SHIFT+ALT+S">
-		</key>
-	</extension>
-
-	<!-- FIXME: Add correct menu metadata -->
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution 
 			locationURI="toolbar:org.eclipse.ui.main.toolbar">
 			
-			<toolbar id="com.laboki.eclipse.plugin.smartsave.group.toggle">
+			<toolbar id="com.laboki.eclipse.plugin.smartsave.toolbar.item.toggle.smart.save">
 				<command
 					commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+					icon="$nl$/icons/save-refresh.gif"
+					tooltip="%command.tooltip"
 					style="toggle">
 				</command>
 			</toolbar>

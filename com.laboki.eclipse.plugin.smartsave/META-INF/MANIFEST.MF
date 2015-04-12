@@ -40,6 +40,7 @@ Export-Package: com.google.common.annotations,
    org.eclipse.ui,
    com.laboki.eclipse.plugin.smartsave.instance,
    org.eclipse.ui.plugin",
+ com.laboki.eclipse.plugin.smartsave.commands;uses:="org.eclipse.core.commands",
  com.laboki.eclipse.plugin.smartsave.events,
  com.laboki.eclipse.plugin.smartsave.instance,
  com.laboki.eclipse.plugin.smartsave.listeners;
@@ -71,6 +72,7 @@ Export-Package: com.google.common.annotations,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.swt.widgets,
    org.eclipse.jface.preference,
+   com.laboki.eclipse.plugin.smartsave.task,
    org.eclipse.jface.viewers",
  com.laboki.eclipse.plugin.smartsave.task;uses:="org.eclipse.core.runtime.jobs,org.eclipse.core.runtime,com.laboki.eclipse.plugin.smartsave.instance"
 Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator

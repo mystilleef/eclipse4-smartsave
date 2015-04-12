@@ -1,5 +1,8 @@
 package com.laboki.eclipse.plugin.smartsave.preferences;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
@@ -17,6 +20,8 @@ public enum Store {
 	private static final String WARNINGS_KEY = "saveIfWarnings";
 	private static final String ERRORS_KEY = "saveIfErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
+	private static final Logger LOGGER =
+		Logger.getLogger(Store.class.getName());
 
 	public static void setCanSaveAutomatically(final boolean saveAutomatically) {
 		Store.setBoolean(Store.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
@@ -25,6 +30,10 @@ public enum Store {
 	public static boolean getCanSaveAutomatically() {
 		return Store.getBoolean(Store.SAVE_AUTOMATICALLY_KEY,
 			Store.CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE);
+	}
+
+	public static void toggleCanSaveAutomatically() {
+		Store.setCanSaveAutomatically(!Store.getCanSaveAutomatically());
 	}
 
 	public static void setCanSaveIfWarnings(final boolean checkWarnings) {
@@ -46,7 +55,7 @@ public enum Store {
 	}
 
 	public static
-		void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
+	void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
 		Store.setInt(Store.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
 	}
 
@@ -62,7 +71,7 @@ public enum Store {
 	}
 
 	private static boolean
-		getBoolean(final String key, final boolean defaultValue) {
+	getBoolean(final String key, final boolean defaultValue) {
 		final IEclipsePreferences pref = Store.getPreferences();
 		Store.update(pref);
 		return pref.getBoolean(key, defaultValue);
@@ -84,7 +93,9 @@ public enum Store {
 		try {
 			Store.tryToClear();
 		}
-		catch (final BackingStoreException e) {}
+		catch (final BackingStoreException e) {
+			Store.LOGGER.log(Level.OFF, e.getMessage(), e);
+		}
 	}
 
 	private static void tryToClear() throws BackingStoreException {
@@ -101,7 +112,9 @@ public enum Store {
 		try {
 			Store.tryToUpdate(preferences);
 		}
-		catch (final BackingStoreException e) {}
+		catch (final BackingStoreException e) {
+			Store.LOGGER.log(Level.OFF, e.getMessage(), e);
+		}
 	}
 
 	private static void tryToUpdate(final IEclipsePreferences preferences)

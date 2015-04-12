@@ -33,6 +33,7 @@ import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Cache;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
@@ -124,6 +125,10 @@ public enum EditorContext {
 
 	public static boolean canSaveAutomatically() {
 		return EditorContext.PREFERENCE.canSaveAutomatically();
+	}
+
+	public static void toggleCanSaveAutomatically() {
+		Store.toggleCanSaveAutomatically();
 	}
 
 	private static boolean canSaveFile(final IEditorPart editor) {
