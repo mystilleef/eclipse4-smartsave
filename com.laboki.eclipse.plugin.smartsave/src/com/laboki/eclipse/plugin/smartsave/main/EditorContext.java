@@ -344,12 +344,17 @@ public enum EditorContext {
 	}
 
 	public static void asyncExec(final Runnable runnable) {
-		if (EditorContext.displayExists()) EditorContext.DISPLAY
-		.asyncExec(runnable);
+		if (EditorContext.displayDoesNotExist()) return;
+		EditorContext.DISPLAY.asyncExec(runnable);
 	}
 
 	public static void syncExec(final Runnable runnable) {
-		if (EditorContext.displayExists()) EditorContext.DISPLAY.syncExec(runnable);
+		if (EditorContext.displayDoesNotExist()) return;
+		EditorContext.DISPLAY.syncExec(runnable);
+	}
+
+	private static boolean displayDoesNotExist() {
+		return !EditorContext.displayExists();
 	}
 
 	private static boolean displayExists() {
