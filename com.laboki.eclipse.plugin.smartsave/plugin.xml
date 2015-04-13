@@ -80,15 +80,66 @@
 					icon="$nl$/icons/save-refresh.gif"
 					tooltip="%command.tooltip"
 					style="toggle">
-					<!--activeWhen> 
-						<with 
-							variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
-							<equals value="true"></equals>
-						</with> 
-					</activeWhen--> 
 				</command>
 			</toolbar>
 		</menuContribution>
+		<menuContribution locationURI="menu:file?after=additions"> 
+			<command 
+				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave" 
+				style="push"> 
+				<visibleWhen> 
+					<with 
+						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+						<equals value="false"></equals>
+					</with> 
+				</visibleWhen> 
+			</command> 
+
+			<command 
+				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave" 
+				style="push"> 
+				<visibleWhen> 
+					<with 
+						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+						<equals value="true"></equals>
+					</with> 
+				</visibleWhen> 
+			</command> 
+		</menuContribution> 
+		<menuContribution 
+			locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+			<separator
+				name="com.laboki.eclipse.plugin.smartsave.separator1"
+				visible="true">
+			</separator> 
+			
+			<command 
+				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave" 
+				style="push"> 
+				<visibleWhen> 
+					<with 
+						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+						<equals value="false"></equals>
+					</with> 
+				</visibleWhen>
+			</command> 
+
+			<command 
+				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave" 
+				style="push"> 
+				<visibleWhen> 
+					<with 
+						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+						<equals value="true"></equals>
+					</with> 
+				</visibleWhen> 
+			</command>
+
+			<separator
+				name="com.laboki.eclipse.plugin.smartsave.separator2"
+				visible="true">
+			</separator> 
+		 </menuContribution> 
 	</extension>
 
 </plugin>
