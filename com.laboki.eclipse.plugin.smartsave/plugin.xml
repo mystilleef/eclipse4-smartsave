@@ -16,7 +16,7 @@
 
 	<extension point="org.eclipse.ui.bindings">
 		<key
-			commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+			commandId="com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave"
 			contextId="org.eclipse.ui.contexts.window"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+M3+S">
@@ -31,7 +31,7 @@
 		</category>
 
 		<command
-			id="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+			id="com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave"
 			name="%command.name"
 			description="%command.description"
 			categoryId="com.laboki.eclipse.plugin.smartsave.commands.category"
@@ -48,19 +48,15 @@
 		<menuContribution 
 			locationURI="toolbar:org.eclipse.ui.main.toolbar">
 			
-			<toolbar id="com.laboki.eclipse.plugin.smartsave.toolbar.item.toggle.smart.save">
+			<toolbar id="com.laboki.eclipse.plugin.smartsave.toolbar.item.ToggleSmartSave">
 				<command
-					commandId="com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save"
+					id="com.laboki.eclipse.plugin.smartsave.toolbar.command.toggleSmartSave"
+					commandId="com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave"
 					icon="$nl$/icons/save-refresh.gif"
 					tooltip="%command.tooltip"
 					style="toggle">
 				</command>
 			</toolbar>
-
-			<separator
-				name="additions"
-				visible="false">
-			</separator>
 		</menuContribution>
 	</extension>
 

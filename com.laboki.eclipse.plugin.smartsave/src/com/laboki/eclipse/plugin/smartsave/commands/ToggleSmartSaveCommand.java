@@ -14,7 +14,7 @@ public enum ToggleSmartSaveCommand {
 	private static final String STATE_ID =
 		"org.eclipse.ui.commands.toggleState";
 	public static final String ID =
-		"com.laboki.eclipse.plugin.smartsave.command.toggle.smart.save";
+		"com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave";
 	public static final Command COMMAND =
 		ToggleSmartSaveCommand.getCommand();
 	public static final State STATE =
