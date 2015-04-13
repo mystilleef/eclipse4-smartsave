@@ -5,10 +5,13 @@ import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 
 public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance {
 
+
+	private static final TaskMutexRule RULE = new TaskMutexRule();
 
 	public ToggleSmartSaveCommandState() {
 		ToggleSmartSaveCommandState.updateState();
@@ -18,12 +21,14 @@ public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance 
 	public static void preferencesChanged(
 		@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
 		new Task() {
-	
+
 			@Override
 			public void execute() {
 				ToggleSmartSaveCommandState.updateState();
 			}
-		}.setDelay(EditorContext.SHORT_DELAY).start();
+		}.setRule(ToggleSmartSaveCommandState.RULE)
+		.setDelay(EditorContext.SHORT_DELAY)
+		.start();
 	}
 
 	protected static void updateState() {
