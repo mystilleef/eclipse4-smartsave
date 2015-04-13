@@ -131,6 +131,10 @@ public enum EditorContext {
 		Store.toggleCanSaveAutomatically();
 	}
 
+	public static void setCanSaveAutomatically(final boolean canSave) {
+		Store.setCanSaveAutomatically(canSave);
+	}
+
 	private static boolean canSaveFile(final IEditorPart editor) {
 		return !(EditorContext.isNotModified(editor)
 			|| EditorContext.isBeingEdited(editor)

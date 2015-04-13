@@ -23,9 +23,19 @@
 		</key>
 	</extension>
 
+	<extension point="org.eclipse.ui.services"> 
+		<sourceProvider 
+			provider="com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveProvider"> 
+			<variable
+				name="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"
+				priorityLevel="workbench"> 
+			</variable> 
+		</sourceProvider> 
+	</extension>
+
 	<extension point="org.eclipse.ui.commands">
 		<category
-			id="com.laboki.eclipse.plugin.smartsave.commands.category"
+			id="com.laboki.eclipse.plugin.smartsave.category.commands"
 			name="%category.name"
 			description="%category.description">
 		</category>
@@ -34,7 +44,7 @@
 			id="com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave"
 			name="%command.name"
 			description="%command.description"
-			categoryId="com.laboki.eclipse.plugin.smartsave.commands.category"
+			categoryId="com.laboki.eclipse.plugin.smartsave.category.commands"
 			defaultHandler="com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveHandler">
 			
 			<state 
@@ -42,19 +52,40 @@
 				id="org.eclipse.ui.commands.toggleState">
 			</state>
 		</command>
+		
+		<command
+			id="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave"
+			name="%command.name.0"
+			description="%command.description.0"
+			categoryId="com.laboki.eclipse.plugin.smartsave.category.commands"
+			defaultHandler="com.laboki.eclipse.plugin.smartsave.commands.EnableSmartSaveHandler">
+		</command>
+
+		<command
+			id="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave"
+			name="%command.name.1"
+			description="%command.description.1"
+			categoryId="com.laboki.eclipse.plugin.smartsave.category.commands"
+			defaultHandler="com.laboki.eclipse.plugin.smartsave.commands.DisableSmartSaveHandler">
+		</command>
 	</extension>
 
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution 
 			locationURI="toolbar:org.eclipse.ui.main.toolbar">
-			
-			<toolbar id="com.laboki.eclipse.plugin.smartsave.toolbar.item.ToggleSmartSave">
+			<toolbar id="com.laboki.eclipse.plugin.smartsave.toolbar">
 				<command
-					id="com.laboki.eclipse.plugin.smartsave.toolbar.command.toggleSmartSave"
+					id="com.laboki.eclipse.plugin.smartsave.item.command.toggleSmartSave"
 					commandId="com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave"
 					icon="$nl$/icons/save-refresh.gif"
 					tooltip="%command.tooltip"
 					style="toggle">
+					<!--activeWhen> 
+						<with 
+							variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+							<equals value="true"></equals>
+						</with> 
+					</activeWhen--> 
 				</command>
 			</toolbar>
 		</menuContribution>
