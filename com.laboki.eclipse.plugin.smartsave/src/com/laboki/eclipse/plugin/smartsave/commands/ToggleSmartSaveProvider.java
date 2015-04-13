@@ -19,7 +19,6 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 
 	public ToggleSmartSaveProvider() {
 		EventBus.register(this);
-		EditorContext.out("enable toggle smart save provider");
 	}
 
 	@Override
@@ -40,7 +39,6 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 	@Override
 	public void dispose() {
 		EventBus.unregister(this);
-		EditorContext.out("disable toggle smart save provider");
 	}
 
 	@Subscribe
@@ -58,7 +56,5 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());
-		EditorContext.out("fired source change event "
-			+ EditorContext.canSaveAutomatically());
 	}
 }
