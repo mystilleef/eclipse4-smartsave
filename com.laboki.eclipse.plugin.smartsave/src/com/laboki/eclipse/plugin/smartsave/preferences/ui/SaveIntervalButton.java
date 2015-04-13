@@ -91,8 +91,8 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 				SaveIntervalButton.this.updateText();
 			}
 		}.setName(SaveIntervalButton.TASK_NAME)
-		.setRule(SaveIntervalButton.RULE)
-		.start();
+			.setRule(SaveIntervalButton.RULE)
+			.start();
 	}
 
 	public void showSaveIntervalDialog() {

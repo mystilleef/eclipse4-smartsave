@@ -8,11 +8,11 @@ import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListene
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public final class KeyEventListener extends AbstractListener implements
-	KeyListener {
+KeyListener {
 
 	private final Control control =
 		EditorContext.getControl(EditorContext
-												.getEditor());
+			.getEditor());
 
 	public KeyEventListener() {
 		super();

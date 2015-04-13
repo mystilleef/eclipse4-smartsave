@@ -7,9 +7,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-
 public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance {
-
 
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 
@@ -19,7 +17,7 @@ public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance 
 
 	@Subscribe
 	public static
-		void preferencesChanged(final PreferenceStoreChangeEvent event) {
+	void preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new Task() {
 
 			@Override
@@ -27,8 +25,8 @@ public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance 
 				ToggleSmartSaveCommandState.updateState();
 			}
 		}.setRule(ToggleSmartSaveCommandState.RULE)
-		.setDelay(EditorContext.SHORT_DELAY)
-		.start();
+			.setDelay(EditorContext.SHORT_DELAY)
+			.start();
 	}
 
 	protected static void updateState() {

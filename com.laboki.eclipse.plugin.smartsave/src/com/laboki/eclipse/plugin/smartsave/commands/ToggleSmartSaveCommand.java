@@ -6,9 +6,7 @@ import org.eclipse.ui.commands.ICommandService;
 
 import com.laboki.eclipse.plugin.smartsave.Activator;
 
-
 public enum ToggleSmartSaveCommand {
-
 	INSTANCE;
 
 	private static final String STATE_ID =
@@ -39,5 +37,4 @@ public enum ToggleSmartSaveCommand {
 	public static void setState(final boolean state) {
 		ToggleSmartSaveCommand.STATE.setValue(state);
 	}
-
 }

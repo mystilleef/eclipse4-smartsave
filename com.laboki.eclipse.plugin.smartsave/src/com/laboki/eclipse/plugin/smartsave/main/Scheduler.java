@@ -47,10 +47,10 @@ public final class Scheduler extends AbstractEventBusInstance {
 				EventBus.post(new StartSaveScheduleEvent());
 			}
 		}.setName(Scheduler.SAVER_TASK)
-		.setDelay(EditorContext.getSaveIntervalInMilliSeconds())
-		.setFamily(EditorContext.SAVER_TASK_FAMILY)
-		.setRule(EditorContext.SAVER_TASK_RULE)
-		.start();
+			.setDelay(EditorContext.getSaveIntervalInMilliSeconds())
+			.setFamily(EditorContext.SAVER_TASK_FAMILY)
+			.setRule(EditorContext.SAVER_TASK_RULE)
+			.start();
 	}
 
 	@Subscribe
@@ -62,9 +62,9 @@ public final class Scheduler extends AbstractEventBusInstance {
 				EditorContext.scheduleSave(EditorContext.SHORT_DELAY);
 			}
 		}.setName(Scheduler.SAVER_TASK)
-		.setFamily(EditorContext.SAVER_TASK_FAMILY)
-		.setRule(EditorContext.SAVER_TASK_RULE)
-		.start();
+			.setFamily(EditorContext.SAVER_TASK_FAMILY)
+			.setRule(EditorContext.SAVER_TASK_RULE)
+			.start();
 	}
 
 	@Subscribe

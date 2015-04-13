@@ -14,7 +14,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class PreferenceChangeListener
-	extends AbstractEventBusInstance implements IPreferenceChangeListener {
+extends AbstractEventBusInstance implements IPreferenceChangeListener {
 
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 	private static final String TASK_NAME =
@@ -35,22 +35,22 @@ public final class PreferenceChangeListener
 				EventBus.post(new PreferenceStoreChangeEvent());
 			}
 		}.setName(PreferenceChangeListener.TASK_NAME)
-			.setRule(PreferenceChangeListener.RULE)
-			.setDelay(EditorContext.SHORT_DELAY)
-			.start();
+		.setRule(PreferenceChangeListener.RULE)
+		.setDelay(EditorContext.SHORT_DELAY)
+		.start();
 	}
 
 	@Override
 	public Instance start() {
 		PreferenceChangeListener.PREFERENCES
-											.addPreferenceChangeListener(this);
+			.addPreferenceChangeListener(this);
 		return super.start();
 	}
 
 	@Override
 	public Instance stop() {
 		PreferenceChangeListener.PREFERENCES
-											.removePreferenceChangeListener(this);
+			.removePreferenceChangeListener(this);
 		return super.stop();
 	}
 }

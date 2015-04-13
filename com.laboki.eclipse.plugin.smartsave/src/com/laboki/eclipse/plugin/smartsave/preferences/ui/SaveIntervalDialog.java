@@ -65,7 +65,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 	}
 
 	private void
-		setLabelProperties(final String text, final StyledText fieldText) {
+	setLabelProperties(final String text, final StyledText fieldText) {
 		fieldText.setText(text);
 		fieldText.setEditable(false);
 		fieldText.setCaret(null);
@@ -90,7 +90,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 	}
 
 	private static
-		void createLabel(final Composite composite, final String name) {
+	void createLabel(final Composite composite, final String name) {
 		final Label label = new Label(composite, SWT.NONE);
 		label.setText(name);
 	}

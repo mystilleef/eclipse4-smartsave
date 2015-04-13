@@ -14,7 +14,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 abstract class PreferencesResponseComboViewer extends ResponseComboViewer
-implements Instance {
+	implements Instance {
 
 	private static final String TASK_NAME =
 		"preferences response combo viewer task";
@@ -57,8 +57,8 @@ implements Instance {
 				PreferencesResponseComboViewer.this.updateSelection();
 			}
 		}.setName(PreferencesResponseComboViewer.TASK_NAME)
-		.setRule(PreferencesResponseComboViewer.RULE)
-		.start();
+			.setRule(PreferencesResponseComboViewer.RULE)
+			.start();
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public enum EditorContext {
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
 	public static final MessageConsole CONSOLE =
 		EditorContext
-		.getConsole("Smart Save");
+			.getConsole("Smart Save");
 	public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
 	public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
 	static final SaveJob SAVE_JOB = new SaveJob();
@@ -171,7 +171,7 @@ public enum EditorContext {
 	private static boolean hasLinkAnnotations(final IEditorPart editor) {
 		final Iterator<Annotation> iterator =
 			EditorContext.getView(editor).getAnnotationModel()
-			.getAnnotationIterator();
+				.getAnnotationIterator();
 		while (iterator.hasNext())
 			if (EditorContext.isLinkModeAnnotation(iterator)) return true;
 		return false;
@@ -216,7 +216,7 @@ public enum EditorContext {
 		final IEditorPart editor) {
 		final Iterator<Annotation> iterator =
 			EditorContext.getView(editor).getAnnotationModel()
-			.getAnnotationIterator();
+				.getAnnotationIterator();
 		while (iterator.hasNext())
 			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
 		return false;
@@ -291,10 +291,10 @@ public enum EditorContext {
 				EventBus.post(new ScheduleSaveEvent());
 			}
 		}.setName(taskName)
-		.setFamily(EditorContext.SAVER_TASK_FAMILY)
-		.setDelay(delayTime)
-		.setRule(EditorContext.SAVER_TASK_RULE)
-		.start();
+			.setFamily(EditorContext.SAVER_TASK_FAMILY)
+			.setDelay(delayTime)
+			.setRule(EditorContext.SAVER_TASK_RULE)
+			.start();
 	}
 
 	public static boolean taskDoesNotExist(final String... names) {
@@ -326,7 +326,7 @@ public enum EditorContext {
 			.getActivePage()
 			.showView(
 				IConsoleConstants.ID_CONSOLE_VIEW))
-				.display(EditorContext.CONSOLE);
+			.display(EditorContext.CONSOLE);
 	}
 
 	private static MessageConsole getConsole(final String name) {

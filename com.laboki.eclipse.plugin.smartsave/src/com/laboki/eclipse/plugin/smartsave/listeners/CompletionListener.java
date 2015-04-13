@@ -19,18 +19,18 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class CompletionListener extends AbstractEventBusInstance
-	implements ICompletionListener {
+implements ICompletionListener {
 
 	private static final Logger LOGGER =
 		Logger
-				.getLogger(CompletionListener.class.getName());
+			.getLogger(CompletionListener.class.getName());
 	private final IEditorPart editor = EditorContext.getEditor();
 	private final ContentAssistantFacade contentAssistantFacade =
 		this
-			.getContentAssistantFacade();
+		.getContentAssistantFacade();
 	private final IQuickAssistAssistant quickAssistAssistant =
 		this
-			.getQuickAssistAssistant();
+		.getQuickAssistAssistant();
 
 	public CompletionListener() {
 		super();
@@ -79,9 +79,9 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private void add() {
 		if (this.contentAssistantFacade != null) this.contentAssistantFacade
-																			.addCompletionListener(this);
+			.addCompletionListener(this);
 		if (this.quickAssistAssistant != null) this.quickAssistAssistant
-																		.addCompletionListener(this);
+			.addCompletionListener(this);
 	}
 
 	@Override
@@ -101,15 +101,15 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private void remove() {
 		if (this.contentAssistantFacade != null) this.contentAssistantFacade
-																			.removeCompletionListener(this);
+			.removeCompletionListener(this);
 		if (this.quickAssistAssistant != null) this.quickAssistAssistant
-																		.removeCompletionListener(this);
+			.removeCompletionListener(this);
 	}
 
 	private ContentAssistantFacade getContentAssistantFacade() {
 		try {
 			return EditorContext.getView(this.editor)
-								.getContentAssistantFacade();
+				.getContentAssistantFacade();
 		}
 		catch (final Exception e) {
 			return null;

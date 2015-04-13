@@ -19,7 +19,7 @@ public final class Updater extends AbstractEventBusInstance {
 	@Subscribe
 	@AllowConcurrentEvents
 	public static
-		void updatePreferences(final PreferenceStoreChangeEvent event) {
+	void updatePreferences(final PreferenceStoreChangeEvent event) {
 		new Task() {
 
 			@Override

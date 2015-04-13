@@ -16,7 +16,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 
 public final class PreferencesPage extends PreferencePage implements
-	IWorkbenchPreferencePage {
+IWorkbenchPreferencePage {
 
 	private Composite pageComposite;
 
@@ -77,7 +77,7 @@ public final class PreferencesPage extends PreferencePage implements
 	}
 
 	private static
-		void createLabel(final Composite composite, final String name) {
+	void createLabel(final Composite composite, final String name) {
 		final Label label = new Label(composite, SWT.NONE);
 		label.setText(name);
 	}

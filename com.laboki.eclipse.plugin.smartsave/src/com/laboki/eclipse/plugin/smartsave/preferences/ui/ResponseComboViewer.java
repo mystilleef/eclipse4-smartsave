@@ -53,7 +53,7 @@ abstract class ResponseComboViewer extends ComboViewer {
 	}
 
 	private final class ResponseSelectionListener implements
-	ISelectionChangedListener {
+		ISelectionChangedListener {
 
 		public ResponseSelectionListener() {}
 
