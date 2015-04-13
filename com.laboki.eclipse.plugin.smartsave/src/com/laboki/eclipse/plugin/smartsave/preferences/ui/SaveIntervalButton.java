@@ -37,7 +37,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 	void updateText() {
 		if ((this.button == null) || this.button.isDisposed()) return;
 		this.button.setText(SaveIntervalButton
-												.minutesAndSeconds(Store.getSaveIntervalInSeconds()));
+			.minutesAndSeconds(Store.getSaveIntervalInSeconds()));
 		this.button.pack();
 		this.button.update();
 	}
@@ -83,8 +83,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void preferencesChanged(
-		@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+	public void preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -92,8 +91,8 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 				SaveIntervalButton.this.updateText();
 			}
 		}.setName(SaveIntervalButton.TASK_NAME)
-			.setRule(SaveIntervalButton.RULE)
-			.start();
+		.setRule(SaveIntervalButton.RULE)
+		.start();
 	}
 
 	public void showSaveIntervalDialog() {

@@ -22,21 +22,18 @@ public final class Saver extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void save(
-		@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+	public void save(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
 	}
 
 	@Subscribe
-	public void save(
-		@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+	public void save(final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
-	public void save(
-		@SuppressWarnings("unused") final StartSaveScheduleEvent event) {
+	public void save(final StartSaveScheduleEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -50,9 +47,9 @@ public final class Saver extends AbstractEventBusInstance {
 				Saver.this.save();
 			}
 		}.setName(Saver.SAVER_TASK)
-			.setFamily(EditorContext.SAVER_TASK_FAMILY)
-			.setDelay(EditorContext.SHORT_DELAY)
-			.setRule(EditorContext.SAVER_TASK_RULE).start();
+		.setFamily(EditorContext.SAVER_TASK_FAMILY)
+		.setDelay(EditorContext.SHORT_DELAY)
+		.setRule(EditorContext.SAVER_TASK_RULE).start();
 	}
 
 	@Override

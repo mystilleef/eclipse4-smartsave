@@ -22,8 +22,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void toggleListeners(
-		@SuppressWarnings("unused") final PartChangedEvent event) {
+	public void toggleListeners(final PartChangedEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -34,8 +33,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void toggleListeners(
-		@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+	public void toggleListeners(final AssistSessionEndedEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -46,8 +44,7 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public static void disableListeners(
-		@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+	public static void disableListeners(final AssistSessionStartedEvent event) {
 		new AsyncTask() {
 
 			@Override

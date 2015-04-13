@@ -18,8 +18,8 @@ public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance 
 	}
 
 	@Subscribe
-	public static void preferencesChanged(
-		@SuppressWarnings("unused") final PreferenceStoreChangeEvent event) {
+	public static
+		void preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new Task() {
 
 			@Override

@@ -21,21 +21,18 @@ public final class Scheduler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void save(
-		@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+	public void save(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
 	}
 
 	@Subscribe
-	public void save(
-		@SuppressWarnings("unused") final AssistSessionEndedEvent event) {
+	public void save(final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
-	public void scheduleSave(
-		@SuppressWarnings("unused") final ScheduleSaveEvent event) {
+	public void scheduleSave(final ScheduleSaveEvent event) {
 		new Task() {
 
 			@Override
@@ -50,15 +47,14 @@ public final class Scheduler extends AbstractEventBusInstance {
 				EventBus.post(new StartSaveScheduleEvent());
 			}
 		}.setName(Scheduler.SAVER_TASK)
-			.setDelay(EditorContext.getSaveIntervalInMilliSeconds())
-			.setFamily(EditorContext.SAVER_TASK_FAMILY)
-			.setRule(EditorContext.SAVER_TASK_RULE)
-			.start();
+		.setDelay(EditorContext.getSaveIntervalInMilliSeconds())
+		.setFamily(EditorContext.SAVER_TASK_FAMILY)
+		.setRule(EditorContext.SAVER_TASK_RULE)
+		.start();
 	}
 
 	@Subscribe
-	public static void scheduleSave(
-		@SuppressWarnings("unused") final EnableSaveListenersEvent event) {
+	public static void scheduleSave(final EnableSaveListenersEvent event) {
 		new Task() {
 
 			@Override
@@ -66,20 +62,18 @@ public final class Scheduler extends AbstractEventBusInstance {
 				EditorContext.scheduleSave(EditorContext.SHORT_DELAY);
 			}
 		}.setName(Scheduler.SAVER_TASK)
-			.setFamily(EditorContext.SAVER_TASK_FAMILY)
-			.setRule(EditorContext.SAVER_TASK_RULE)
-			.start();
+		.setFamily(EditorContext.SAVER_TASK_FAMILY)
+		.setRule(EditorContext.SAVER_TASK_RULE)
+		.start();
 	}
 
 	@Subscribe
-	public static void cancelSaveJobs(
-		@SuppressWarnings("unused") final DisableSaveListenersEvent event) {
+	public static void cancelSaveJobs(final DisableSaveListenersEvent event) {
 		Scheduler.cancelAllJobs();
 	}
 
 	@Subscribe
-	public static void cancelSaveJobs(
-		@SuppressWarnings("unused") final AssistSessionStartedEvent event) {
+	public static void cancelSaveJobs(final AssistSessionStartedEvent event) {
 		Scheduler.cancelAllJobs();
 	}
 
