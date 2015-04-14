@@ -3,6 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.commands;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.ISources;
 
@@ -19,6 +20,7 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 
 	public ToggleSmartSaveProvider() {
 		EventBus.register(this);
+		this.update();
 	}
 
 	@Override
@@ -49,12 +51,16 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 			public void execute() {
 				ToggleSmartSaveProvider.this.update();
 			}
-		}.setDelay(EditorContext.SHORT_DELAY).start();
+		}.setPriority(Job.INTERACTIVE)
+		.setDelay(EditorContext.SHORT_DELAY)
+		.start();
 	}
 
 	protected void update() {
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());
+		EditorContext.out("update fire source changed "
+			+ EditorContext.canSaveAutomatically());
 	}
 }

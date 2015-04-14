@@ -22,13 +22,31 @@
 			sequence="M1+M2+M3+S">
 		</key>
 	</extension>
+	
+	<extension point="org.eclipse.core.expressions.definitions">
+		<definition 
+			id="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsEnabled">
+			<with 
+				variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+				<equals value="true"></equals>
+			</with> 
+		</definition>
 
+		<definition
+			id="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsDisabled">
+			<with 
+				variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
+				<equals value="false"></equals>
+			</with> 
+		</definition>
+	</extension>
+	
 	<extension point="org.eclipse.ui.services"> 
 		<sourceProvider 
 			provider="com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveProvider"> 
 			<variable
 				name="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"
-				priorityLevel="workbench"> 
+				priorityLevel="activeSite"> 
 			</variable> 
 		</sourceProvider> 
 	</extension>
@@ -46,13 +64,13 @@
 			description="%command.description"
 			categoryId="com.laboki.eclipse.plugin.smartsave.category.commands"
 			defaultHandler="com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveHandler">
-			
+
 			<state 
 				class="org.eclipse.ui.handlers.RegistryToggleState:false"
 				id="org.eclipse.ui.commands.toggleState">
 			</state>
 		</command>
-		
+
 		<command
 			id="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave"
 			name="%command.name.0"
@@ -71,11 +89,10 @@
 	</extension>
 
 	<extension point="org.eclipse.ui.menus">
-		<menuContribution 
-			locationURI="toolbar:org.eclipse.ui.main.toolbar">
+		<menuContribution 	locationURI="toolbar:org.eclipse.ui.main.toolbar">
 			<toolbar id="com.laboki.eclipse.plugin.smartsave.toolbar">
 				<command
-					id="com.laboki.eclipse.plugin.smartsave.item.command.toggleSmartSave"
+					id="com.laboki.eclipse.plugin.smartsave.toolbar.item.toggleSmartSave"
 					commandId="com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave"
 					icon="$nl$/icons/save-refresh.gif"
 					tooltip="%command.tooltip"
@@ -83,63 +100,62 @@
 				</command>
 			</toolbar>
 		</menuContribution>
-		<menuContribution locationURI="menu:file?after=additions"> 
-			<command 
-				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave" 
-				style="push"> 
-				<visibleWhen> 
-					<with 
-						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
-						<equals value="false"></equals>
-					</with> 
-				</visibleWhen> 
-			</command> 
 
-			<command 
-				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave" 
-				style="push"> 
-				<visibleWhen> 
-					<with 
-						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
-						<equals value="true"></equals>
-					</with> 
-				</visibleWhen> 
-			</command> 
-		</menuContribution> 
-		<menuContribution 
+		<menuContribution
 			locationURI="popup:org.eclipse.ui.popup.any?after=additions">
 			<separator
 				name="com.laboki.eclipse.plugin.smartsave.separator1"
-				visible="true">
-			</separator> 
-			
-			<command 
-				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave" 
+				visible="true" />
+
+			<command
+				id="com.laboki.eclipse.plugin.smartsave.popup.item.enableSmartSave"
+				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave"
+				label="%command.label"
 				style="push"> 
 				<visibleWhen> 
-					<with 
-						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
-						<equals value="false"></equals>
-					</with> 
+					<reference
+						definitionId="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsDisabled" />
 				</visibleWhen>
 			</command> 
 
-			<command 
-				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave" 
+			<command
+				id="com.laboki.eclipse.plugin.smartsave.popup.item.disableSmartSave"
+				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave"
+				label="%command.label.0"
 				style="push"> 
 				<visibleWhen> 
-					<with 
-						variable="com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled"> 
-						<equals value="true"></equals>
-					</with> 
+					<reference 
+						definitionId="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsEnabled" />
 				</visibleWhen> 
 			</command>
 
 			<separator
 				name="com.laboki.eclipse.plugin.smartsave.separator2"
-				visible="true">
-			</separator> 
-		 </menuContribution> 
-	</extension>
+				visible="true" />
+		 </menuContribution>
 
+		<menuContribution locationURI="menu:file?after=additions"> 
+			<command
+				id="com.laboki.eclipse.plugin.smartsave.menu.file.item.enableSmartSave"
+				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave"
+				label="%command.label.1"
+				style="push"> 
+				<visibleWhen> 
+					<reference 
+						definitionId="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsDisabled" />
+				</visibleWhen> 
+			</command> 
+
+			<command 
+				id="com.laboki.eclipse.plugin.smartsave.menu.file.item.disableSmartSave"
+				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave"
+				label="%command.label.2" 
+				style="push"> 
+				<visibleWhen> 
+					<reference 
+						definitionId="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsEnabled" />
+				</visibleWhen> 
+			</command> 
+		</menuContribution> 
+	</extension>
 </plugin>

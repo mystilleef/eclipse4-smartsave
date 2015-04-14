@@ -1,5 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave.commands;
 
+import org.eclipse.core.runtime.jobs.Job;
+
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
@@ -24,9 +26,10 @@ public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance 
 			public void execute() {
 				ToggleSmartSaveCommandState.updateState();
 			}
-		}.setRule(ToggleSmartSaveCommandState.RULE)
-			.setDelay(EditorContext.SHORT_DELAY)
-			.start();
+		}.setPriority(Job.INTERACTIVE)
+		.setRule(ToggleSmartSaveCommandState.RULE)
+		.setDelay(EditorContext.SHORT_DELAY)
+		.start();
 	}
 
 	protected static void updateState() {
