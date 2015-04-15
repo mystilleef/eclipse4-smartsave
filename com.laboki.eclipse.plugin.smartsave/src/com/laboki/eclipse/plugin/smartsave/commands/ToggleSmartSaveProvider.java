@@ -12,9 +12,11 @@ import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 
+	private static final TaskMutexRule RULE = new TaskMutexRule();
 	public final static String SMART_SAVE_IS_ENABLED =
 		"com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled";
 
@@ -53,6 +55,7 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 			}
 		}.setPriority(Job.INTERACTIVE)
 		.setDelay(EditorContext.SHORT_DELAY)
+		.setRule(ToggleSmartSaveProvider.RULE)
 		.start();
 	}
 
@@ -60,7 +63,5 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());
-		EditorContext.out("update fire source changed "
-			+ EditorContext.canSaveAutomatically());
 	}
 }

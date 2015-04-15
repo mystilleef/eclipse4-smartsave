@@ -7,8 +7,11 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class EnableSmartSaveHandler extends AbstractHandler {
+
+	private static final TaskMutexRule RULE = new TaskMutexRule();
 
 	@Override
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
@@ -19,7 +22,9 @@ public final class EnableSmartSaveHandler extends AbstractHandler {
 				if (EditorContext.canSaveAutomatically()) return;
 				EditorContext.setCanSaveAutomatically(true);
 			}
-		}.setPriority(Job.INTERACTIVE).start();
+		}.setRule(EnableSmartSaveHandler.RULE)
+		.setPriority(Job.INTERACTIVE)
+		.start();
 		return null;
 	}
 }

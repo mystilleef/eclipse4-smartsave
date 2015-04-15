@@ -24,7 +24,7 @@ public enum Cache {
 		return this.canSaveIfWarnings;
 	}
 
-	public synchronized void update() {
+	public void update() {
 		this.saveIntervalInSeconds = Store.getSaveIntervalInSeconds();
 		this.canSaveAutomatically = Store.getCanSaveAutomatically();
 		this.canSaveIfErrors = Store.getCanSaveIfErrors();

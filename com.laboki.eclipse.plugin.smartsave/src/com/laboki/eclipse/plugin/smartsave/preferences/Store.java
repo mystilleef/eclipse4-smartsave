@@ -55,7 +55,8 @@ public enum Store {
 	}
 
 	public static
-		void setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
+	void
+	setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
 		Store.setInt(Store.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
 	}
 
@@ -70,8 +71,9 @@ public enum Store {
 		Store.update(pref);
 	}
 
-	private static boolean
-		getBoolean(final String key, final boolean defaultValue) {
+	private static boolean getBoolean(
+		final String key,
+		final boolean defaultValue) {
 		final IEclipsePreferences pref = Store.getPreferences();
 		Store.update(pref);
 		return pref.getBoolean(key, defaultValue);
@@ -118,7 +120,7 @@ public enum Store {
 	}
 
 	private static void tryToUpdate(final IEclipsePreferences preferences)
-		throws BackingStoreException {
+	throws BackingStoreException {
 		preferences.flush();
 		preferences.sync();
 	}
