@@ -139,7 +139,7 @@
 
 			<command
 				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave"
-				icon="icons/save-refresh.gif"
+				icon="$nl$/icons/save-refresh.gif"
 				id="com.laboki.eclipse.plugin.smartsave.popup.item.enableSmartSave"
 				label="%command.label"
 				style="push">
@@ -151,7 +151,7 @@
 
 			<command
 				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave"
-				icon="icons/save-refresh.gif"
+				icon="$nl$/icons/save-refresh.gif"
 				id="com.laboki.eclipse.plugin.smartsave.popup.item.disableSmartSave"
 				label="%command.label.0"
 				style="push">
@@ -168,7 +168,7 @@
 		<menuContribution locationURI="menu:file?after=additions"> 
 			<command
 				commandId="com.laboki.eclipse.plugin.smartsave.command.enableSmartSave"
-				icon="icons/save-refresh.gif"
+				icon="$nl$/icons/save-refresh.gif"
 				id="com.laboki.eclipse.plugin.smartsave.menu.file.item.enableSmartSave"
 				label="%command.label.1"
 				style="push">
@@ -180,7 +180,7 @@
 
 			<command
 				commandId="com.laboki.eclipse.plugin.smartsave.command.disableSmartSave"
-				icon="icons/save-refresh.gif"
+				icon="$nl$/icons/save-refresh.gif"
 				id="com.laboki.eclipse.plugin.smartsave.menu.file.item.disableSmartSave"
 				label="%command.label.2"
 				style="push">

@@ -40,7 +40,11 @@ Export-Package: com.google.common.annotations,
    org.eclipse.ui,
    com.laboki.eclipse.plugin.smartsave.instance,
    org.eclipse.ui.plugin",
- com.laboki.eclipse.plugin.smartsave.commands;uses:="org.eclipse.core.commands",
+ com.laboki.eclipse.plugin.smartsave.commands;
+  uses:="org.eclipse.ui,
+   com.laboki.eclipse.plugin.smartsave.instance,
+   com.laboki.eclipse.plugin.smartsave.events,
+   org.eclipse.core.commands",
  com.laboki.eclipse.plugin.smartsave.events,
  com.laboki.eclipse.plugin.smartsave.instance,
  com.laboki.eclipse.plugin.smartsave.listeners;
@@ -82,4 +86,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.console,
  org.eclipse.ui.texteditor
-Bundle-Version: 20150414
+Bundle-Version: 20150416
