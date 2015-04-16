@@ -21,28 +21,33 @@ public final class Scheduler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void save(final AssistSessionStartedEvent event) {
+	public void
+	save(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
 	}
 
 	@Subscribe
-	public void save(final AssistSessionEndedEvent event) {
+	public void
+	save(final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
-	public void scheduleSave(final ScheduleSaveEvent event) {
+	public void
+	scheduleSave(final ScheduleSaveEvent event) {
 		new Task() {
 
 			@Override
-			public boolean shouldSchedule() {
+			public boolean
+			shouldSchedule() {
 				if (Scheduler.this.completionAssistantIsActive) return false;
 				return EditorContext.canScheduleSave();
 			}
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				Scheduler.cancelAllJobs();
 				EventBus.post(new StartSaveScheduleEvent());
 			}
@@ -54,11 +59,13 @@ public final class Scheduler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public static void scheduleSave(final EnableSaveListenersEvent event) {
+	public static void
+	scheduleSave(final EnableSaveListenersEvent event) {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				EditorContext.scheduleSave(EditorContext.SHORT_DELAY);
 			}
 		}.setName(Scheduler.SAVER_TASK)
@@ -68,16 +75,19 @@ public final class Scheduler extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public static void cancelSaveJobs(final DisableSaveListenersEvent event) {
+	public static void
+	cancelSaveJobs(final DisableSaveListenersEvent event) {
 		Scheduler.cancelAllJobs();
 	}
 
 	@Subscribe
-	public static void cancelSaveJobs(final AssistSessionStartedEvent event) {
+	public static void
+	cancelSaveJobs(final AssistSessionStartedEvent event) {
 		Scheduler.cancelAllJobs();
 	}
 
-	static void cancelAllJobs() {
+	static void
+	cancelAllJobs() {
 		EditorContext.cancelAllSaverTasks();
 	}
 }

@@ -12,12 +12,14 @@ final class ErrorResponseComboViewer extends PreferencesResponseComboViewer {
 	}
 
 	@Override
-	protected void handleResponseSelection(final SelectionChangedEvent event) {
+	protected void
+	handleResponseSelection(final SelectionChangedEvent event) {
 		Store.setCanSaveIfErrors(this.getSelectionValue(event));
 	}
 
 	@Override
-	protected void updateSelection() {
+	protected void
+	updateSelection() {
 		if (Store.getCanSaveIfErrors()) this
 			.setSelection(PreferencesResponseComboViewer.YES);
 		else this.setSelection(PreferencesResponseComboViewer.NO);

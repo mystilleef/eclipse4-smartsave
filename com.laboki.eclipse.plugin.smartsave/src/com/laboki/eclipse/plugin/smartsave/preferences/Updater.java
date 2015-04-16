@@ -17,13 +17,13 @@ public final class Updater extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public static
-	void
+	public static void
 	updatePreferences(final PreferenceStoreChangeEvent event) {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				Cache.INSTANCE.update();
 			}
 		}.setPriority(Job.INTERACTIVE).setRule(Updater.RULE).start();

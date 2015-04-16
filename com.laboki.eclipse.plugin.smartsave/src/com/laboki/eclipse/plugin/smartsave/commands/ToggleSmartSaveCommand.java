@@ -13,28 +13,31 @@ public enum ToggleSmartSaveCommand {
 		"org.eclipse.ui.commands.toggleState";
 	public static final String ID =
 		"com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave";
-	public static final Command COMMAND =
-		ToggleSmartSaveCommand.getCommand();
-	public static final State STATE =
-		ToggleSmartSaveCommand.getStateInstance();
+	public static final Command COMMAND = ToggleSmartSaveCommand.getCommand();
+	public static final State STATE = ToggleSmartSaveCommand.getStateInstance();
 
-	private static Command getCommand() {
-		return ((ICommandService) Activator.getInstance()
+	private static Command
+	getCommand() {
+		return ((ICommandService) Activator
+			.getInstance()
 			.getWorkbench()
 			.getService(ICommandService.class))
 			.getCommand(ToggleSmartSaveCommand.ID);
 	}
 
-	private static State getStateInstance() {
+	private static State
+	getStateInstance() {
 		return ToggleSmartSaveCommand.COMMAND
 			.getState(ToggleSmartSaveCommand.STATE_ID);
 	}
 
-	public static boolean getState() {
+	public static boolean
+	getState() {
 		return (boolean) ToggleSmartSaveCommand.STATE.getValue();
 	}
 
-	public static void setState(final boolean state) {
+	public static void
+	setState(final boolean state) {
 		ToggleSmartSaveCommand.STATE.setValue(state);
 	}
 }

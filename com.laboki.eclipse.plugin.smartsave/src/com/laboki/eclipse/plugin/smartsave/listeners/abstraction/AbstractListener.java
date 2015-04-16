@@ -17,32 +17,35 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public abstract class AbstractListener extends AbstractEventBusInstance
-implements
-IListener {
+	implements
+		IListener {
 
-	private static final ISchedulingRule RULE =
-	MultiRule.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
+	private static final ISchedulingRule RULE = MultiRule
+		.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
 	private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
 	private static final int ONE_SECOND_DELAY = 1000;
-	private static final Logger LOGGER =
-		Logger.getLogger(AbstractListener.class.getName());
+	private static final Logger LOGGER = Logger
+		.getLogger(AbstractListener.class.getName());
 
 	public AbstractListener() {
 		super();
 	}
 
 	@Subscribe
-	public final void addListener(final EnableSaveListenersEvent event) {
+	public final void
+	addListener(final EnableSaveListenersEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				AbstractListener.this.tryToAdd();
 			}
 		}.start();
 	}
 
-	void tryToAdd() {
+	void
+	tryToAdd() {
 		try {
 			this.add();
 		}
@@ -52,29 +55,35 @@ IListener {
 	}
 
 	@Subscribe
-	public final void removeListener(final DisableSaveListenersEvent event) {
+	public final void
+	removeListener(final DisableSaveListenersEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				AbstractListener.this.tryToRemove();
 			}
 		}.start();
 	}
 
 	@Override
-	public void add() {}
+	public void
+	add() {}
 
 	@Override
-	public void remove() {}
+	public void
+	remove() {}
 
 	@Override
-	public final Instance stop() {
+	public final Instance
+	stop() {
 		this.tryToRemove();
 		return super.stop();
 	}
 
-	void tryToRemove() {
+	void
+	tryToRemove() {
 		try {
 			this.remove();
 		}
@@ -83,27 +92,31 @@ IListener {
 		}
 	}
 
-	protected static final void scheduleSave() {
+	protected static final void
+	scheduleSave() {
 		EditorContext.cancelAllSaverTasks();
 		AbstractListener.scheduleTask();
 	}
 
-	private static void scheduleTask() {
+	private static void
+	scheduleTask() {
 		new Task() {
 
 			@Override
-			public boolean shouldSchedule() {
+			public boolean
+			shouldSchedule() {
 				return EditorContext.canScheduleSave();
 			}
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				EditorContext.scheduleSave();
 			}
 		}.setName(AbstractListener.SAVER_TASK)
-		.setFamily(EditorContext.SAVER_TASK_FAMILY)
-		.setDelay(AbstractListener.ONE_SECOND_DELAY)
-		.setRule(AbstractListener.RULE)
-		.start();
+			.setFamily(EditorContext.SAVER_TASK_FAMILY)
+			.setDelay(AbstractListener.ONE_SECOND_DELAY)
+			.setRule(AbstractListener.RULE)
+			.start();
 	}
 }

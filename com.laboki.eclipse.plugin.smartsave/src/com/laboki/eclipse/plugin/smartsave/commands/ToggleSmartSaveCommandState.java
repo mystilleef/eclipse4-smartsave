@@ -18,21 +18,23 @@ public final class ToggleSmartSaveCommandState extends AbstractEventBusInstance 
 	}
 
 	@Subscribe
-	public static
-	void preferencesChanged(final PreferenceStoreChangeEvent event) {
+	public static void
+	preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				ToggleSmartSaveCommandState.updateState();
 			}
 		}.setPriority(Job.INTERACTIVE)
-		.setRule(ToggleSmartSaveCommandState.RULE)
-		.setDelay(EditorContext.SHORT_DELAY)
-		.start();
+			.setRule(ToggleSmartSaveCommandState.RULE)
+			.setDelay(EditorContext.SHORT_DELAY)
+			.start();
 	}
 
-	protected static void updateState() {
+	protected static void
+	updateState() {
 		ToggleSmartSaveCommand.setState(EditorContext.canSaveAutomatically());
 	}
 }

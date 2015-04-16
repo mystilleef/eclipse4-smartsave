@@ -22,43 +22,51 @@ public final class Saver extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void save(final AssistSessionStartedEvent event) {
+	public void
+	save(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
 	}
 
 	@Subscribe
-	public void save(final AssistSessionEndedEvent event) {
+	public void
+	save(final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
-	public void save(final StartSaveScheduleEvent event) {
+	public void
+	save(final StartSaveScheduleEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public boolean shouldSchedule() {
+			public boolean
+			shouldSchedule() {
 				if (Saver.this.completionAssistantIsActive) return false;
 				return EditorContext.canScheduleSave();
 			}
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				Saver.this.save();
 			}
 		}.setName(Saver.SAVER_TASK)
 			.setFamily(EditorContext.SAVER_TASK_FAMILY)
 			.setDelay(EditorContext.SHORT_DELAY)
-			.setRule(EditorContext.SAVER_TASK_RULE).start();
+			.setRule(EditorContext.SAVER_TASK_RULE)
+			.start();
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.save();
 		return super.stop();
 	}
 
-	void save() {
+	void
+	save() {
 		EditorContext.save(this.editor);
 	}
 }

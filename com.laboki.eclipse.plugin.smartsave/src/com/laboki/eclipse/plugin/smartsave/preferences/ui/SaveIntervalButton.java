@@ -34,60 +34,68 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 		this.button = new Button(composite, SWT.FLAT);
 	}
 
-	void updateText() {
+	void
+	updateText() {
 		if ((this.button == null) || this.button.isDisposed()) return;
-		this.button.setText(SaveIntervalButton
-			.minutesAndSeconds(Store.getSaveIntervalInSeconds()));
+		this.button.setText(SaveIntervalButton.minutesAndSeconds(Store
+			.getSaveIntervalInSeconds()));
 		this.button.pack();
 		this.button.update();
 	}
 
-	private static String minutesAndSeconds(final int intervalInSeconds) {
+	private static String
+	minutesAndSeconds(final int intervalInSeconds) {
 		final int minutes = SaveIntervalButton.getMinutes(intervalInSeconds);
 		final int seconds = SaveIntervalButton.getSeconds(intervalInSeconds);
 		return SaveIntervalButton.formatMinutesAndSeconds(minutes, seconds);
 	}
 
-	private static int getMinutes(final int intervalInSeconds) {
+	private static int
+	getMinutes(final int intervalInSeconds) {
 		return intervalInSeconds / SaveIntervalButton.SIXTY_SECONDS;
 	}
 
-	private static int getSeconds(final int intervalInSeconds) {
+	private static int
+	getSeconds(final int intervalInSeconds) {
 		return intervalInSeconds % SaveIntervalButton.SIXTY_SECONDS;
 	}
 
-	private static String formatMinutesAndSeconds(final int minutes,
-		final int seconds) {
-		if (SaveIntervalButton.zero(minutes)) return MessageFormat.format(
-			" {0} sec ", String.valueOf(seconds));
-		if (SaveIntervalButton.zero(seconds)) return MessageFormat.format(
-			" {0} min ", String.valueOf(minutes));
-		return MessageFormat.format(" {0} min {1} sec ",
-			String.valueOf(minutes),
-			String.valueOf(seconds));
+	private static String
+	formatMinutesAndSeconds(final int minutes, final int seconds) {
+		if (SaveIntervalButton.zero(minutes)) return MessageFormat
+			.format(" {0} sec ", String.valueOf(seconds));
+		if (SaveIntervalButton.zero(seconds)) return MessageFormat
+			.format(" {0} min ", String.valueOf(minutes));
+		return MessageFormat.format(" {0} min {1} sec ", String
+			.valueOf(minutes), String.valueOf(seconds));
 	}
 
-	private static boolean zero(final int minutes) {
+	private static boolean
+	zero(final int minutes) {
 		return minutes == SaveIntervalButton.ZERO;
 	}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		this.startListening();
 		this.updateText();
 		return super.start();
 	}
 
-	public void startListening() {
+	public void
+	startListening() {
 		this.button.addSelectionListener(this.buttonListener);
 	}
 
 	@Subscribe
-	public void preferencesChanged(final PreferenceStoreChangeEvent event) {
+	public void
+	preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				SaveIntervalButton.this.updateText();
 			}
 		}.setName(SaveIntervalButton.TASK_NAME)
@@ -95,12 +103,14 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 			.start();
 	}
 
-	public void showSaveIntervalDialog() {
+	public void
+	showSaveIntervalDialog() {
 		if (this.dialog == null) this.showNewDialog();
 		else this.dialog.show();
 	}
 
-	private void showNewDialog() {
+	private void
+	showNewDialog() {
 		this.dialog = new SaveIntervalDialog(this.composite);
 		this.dialog.start();
 		this.dialog.show();
@@ -111,17 +121,20 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 		public ButtonListener() {}
 
 		@Override
-		public void run() {
+		public void
+		run() {
 			SaveIntervalButton.this.showSaveIntervalDialog();
 		}
 
 		@Override
-		public void widgetDefaultSelected(final SelectionEvent event) {
+		public void
+		widgetDefaultSelected(final SelectionEvent event) {
 			this.widgetSelected(event);
 		}
 
 		@Override
-		public void widgetSelected(final SelectionEvent event) {
+		public void
+		widgetSelected(final SelectionEvent event) {
 			EditorContext.asyncExec(this);
 		}
 	}

@@ -22,23 +22,28 @@ abstract class ResponseComboViewer extends ComboViewer {
 		this.updateProperties();
 	}
 
-	private void updateProperties() {
+	private void
+	updateProperties() {
 		this.setContentProvider(ArrayContentProvider.getInstance());
 		this.setLabelProvider(this.labelProvider);
 		this.setInput(this.responses);
 	}
 
-	protected void startListening() {
+	protected void
+	startListening() {
 		this.addSelectionChangedListener(this.listener);
 	}
 
-	protected void stopListening() {
+	protected void
+	stopListening() {
 		this.removeSelectionChangedListener(this.listener);
 	}
 
-	protected void handleResponseSelection(final SelectionChangedEvent event) {}
+	protected void
+	handleResponseSelection(final SelectionChangedEvent event) {}
 
-	protected Response[] getResponses() {
+	protected Response[]
+	getResponses() {
 		return this.responses;
 	}
 
@@ -47,18 +52,21 @@ abstract class ResponseComboViewer extends ComboViewer {
 		public ResponseLabelProvider() {}
 
 		@Override
-		public String getText(final Object element) {
+		public String
+		getText(final Object element) {
 			return ((Response) element).string();
 		}
 	}
 
-	private final class ResponseSelectionListener implements
-		ISelectionChangedListener {
+	private final class ResponseSelectionListener
+		implements
+			ISelectionChangedListener {
 
 		public ResponseSelectionListener() {}
 
 		@Override
-		public void selectionChanged(final SelectionChangedEvent event) {
+		public void
+		selectionChanged(final SelectionChangedEvent event) {
 			ResponseComboViewer.this.handleResponseSelection(event);
 		}
 	}
@@ -73,11 +81,13 @@ abstract class ResponseComboViewer extends ComboViewer {
 			if (response.equals(Response.YES)) this.value = true;
 		}
 
-		public boolean value() {
+		public boolean
+		value() {
 			return this.value;
 		}
 
-		public String string() {
+		public String
+		string() {
 			if (this.value) return "Yes";
 			return "No";
 		}

@@ -8,23 +8,28 @@ public enum Cache {
 	private boolean canSaveIfErrors = Store.getCanSaveIfErrors();
 	private boolean canSaveIfWarnings = Store.getCanSaveIfWarnings();
 
-	public int saveIntervalInSeconds() {
+	public int
+	saveIntervalInSeconds() {
 		return this.saveIntervalInSeconds;
 	}
 
-	public boolean canSaveAutomatically() {
+	public boolean
+	canSaveAutomatically() {
 		return this.canSaveAutomatically;
 	}
 
-	public boolean canSaveIfErrors() {
+	public boolean
+	canSaveIfErrors() {
 		return this.canSaveIfErrors;
 	}
 
-	public boolean canSaveIfWarnings() {
+	public boolean
+	canSaveIfWarnings() {
 		return this.canSaveIfWarnings;
 	}
 
-	public void update() {
+	public void
+	update() {
 		this.saveIntervalInSeconds = Store.getSaveIntervalInSeconds();
 		this.canSaveAutomatically = Store.getCanSaveAutomatically();
 		this.canSaveIfErrors = Store.getCanSaveIfErrors();

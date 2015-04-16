@@ -12,12 +12,14 @@ final class WarningResponseComboViewer extends PreferencesResponseComboViewer {
 	}
 
 	@Override
-	protected void handleResponseSelection(final SelectionChangedEvent event) {
+	protected void
+	handleResponseSelection(final SelectionChangedEvent event) {
 		Store.setCanSaveIfWarnings(this.getSelectionValue(event));
 	}
 
 	@Override
-	protected void updateSelection() {
+	protected void
+	updateSelection() {
 		if (Store.getCanSaveIfWarnings()) this
 			.setSelection(PreferencesResponseComboViewer.YES);
 		else this.setSelection(PreferencesResponseComboViewer.NO);

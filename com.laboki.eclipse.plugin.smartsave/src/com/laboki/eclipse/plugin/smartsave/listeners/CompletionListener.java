@@ -19,17 +19,15 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class CompletionListener extends AbstractEventBusInstance
-implements ICompletionListener {
+	implements
+		ICompletionListener {
 
-	private static final Logger LOGGER =
-		Logger
-			.getLogger(CompletionListener.class.getName());
+	private static final Logger LOGGER = Logger
+		.getLogger(CompletionListener.class.getName());
 	private final IEditorPart editor = EditorContext.getEditor();
-	private final ContentAssistantFacade contentAssistantFacade =
-		this
+	private final ContentAssistantFacade contentAssistantFacade = this
 		.getContentAssistantFacade();
-	private final IQuickAssistAssistant quickAssistAssistant =
-		this
+	private final IQuickAssistAssistant quickAssistAssistant = this
 		.getQuickAssistAssistant();
 
 	public CompletionListener() {
@@ -37,38 +35,44 @@ implements ICompletionListener {
 	}
 
 	@Override
-	public void assistSessionEnded(final ContentAssistEvent event) {
+	public void
+	assistSessionEnded(final ContentAssistEvent event) {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				EventBus.post(new AssistSessionEndedEvent());
 			}
 		}.start();
 	}
 
 	@Override
-	public void assistSessionStarted(final ContentAssistEvent event) {
+	public void
+	assistSessionStarted(final ContentAssistEvent event) {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				EventBus.post(new AssistSessionStartedEvent());
 			}
 		}.start();
 	}
 
 	@Override
-	public void selectionChanged(final ICompletionProposal arg0,
-		final boolean arg1) {}
+	public void
+	selectionChanged(final ICompletionProposal arg0, final boolean arg1) {}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		this.tryToAdd();
 		return super.start();
 	}
 
-	private void tryToAdd() {
+	private void
+	tryToAdd() {
 		try {
 			this.add();
 		}
@@ -77,7 +81,8 @@ implements ICompletionListener {
 		}
 	}
 
-	private void add() {
+	private void
+	add() {
 		if (this.contentAssistantFacade != null) this.contentAssistantFacade
 			.addCompletionListener(this);
 		if (this.quickAssistAssistant != null) this.quickAssistAssistant
@@ -85,12 +90,14 @@ implements ICompletionListener {
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.tryToRemove();
 		return super.stop();
 	}
 
-	private void tryToRemove() {
+	private void
+	tryToRemove() {
 		try {
 			this.remove();
 		}
@@ -99,16 +106,19 @@ implements ICompletionListener {
 		}
 	}
 
-	private void remove() {
+	private void
+	remove() {
 		if (this.contentAssistantFacade != null) this.contentAssistantFacade
 			.removeCompletionListener(this);
 		if (this.quickAssistAssistant != null) this.quickAssistAssistant
 			.removeCompletionListener(this);
 	}
 
-	private ContentAssistantFacade getContentAssistantFacade() {
+	private ContentAssistantFacade
+	getContentAssistantFacade() {
 		try {
-			return EditorContext.getView(this.editor)
+			return EditorContext
+				.getView(this.editor)
 				.getContentAssistantFacade();
 		}
 		catch (final Exception e) {
@@ -116,7 +126,8 @@ implements ICompletionListener {
 		}
 	}
 
-	private IQuickAssistAssistant getQuickAssistAssistant() {
+	private IQuickAssistAssistant
+	getQuickAssistAssistant() {
 		try {
 			return EditorContext.getView(this.editor).getQuickAssistAssistant();
 		}

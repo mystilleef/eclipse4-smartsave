@@ -26,7 +26,8 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 	}
 
 	@Override
-	public Map getCurrentState() {
+	public Map
+	getCurrentState() {
 		final Map<String, Boolean> currentState = new HashMap<>(1);
 		currentState.put(ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());
@@ -34,32 +35,37 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 	}
 
 	@Override
-	public String[] getProvidedSourceNames() {
+	public String[]
+	getProvidedSourceNames() {
 		return new String[] {
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED
 		};
 	}
 
 	@Override
-	public void dispose() {
+	public void
+	dispose() {
 		EventBus.unregister(this);
 	}
 
 	@Subscribe
-	public void eventHandler(final PreferenceStoreChangeEvent event) {
+	public void
+	eventHandler(final PreferenceStoreChangeEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				ToggleSmartSaveProvider.this.update();
 			}
 		}.setPriority(Job.INTERACTIVE)
-		.setDelay(EditorContext.SHORT_DELAY)
-		.setRule(ToggleSmartSaveProvider.RULE)
-		.start();
+			.setDelay(EditorContext.SHORT_DELAY)
+			.setRule(ToggleSmartSaveProvider.RULE)
+			.start();
 	}
 
-	protected void update() {
+	protected void
+	update() {
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());

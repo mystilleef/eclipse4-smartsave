@@ -9,8 +9,9 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
-public final class DirtyPartListener extends AbstractEventBusInstance implements
-IPropertyListener {
+public final class DirtyPartListener extends AbstractEventBusInstance
+	implements
+		IPropertyListener {
 
 	private final IEditorPart editor = EditorContext.getEditor();
 
@@ -18,32 +19,38 @@ IPropertyListener {
 		super();
 	}
 
-	public void add() {
+	public void
+	add() {
 		this.editor.addPropertyListener(this);
 	}
 
-	public void remove() {
+	public void
+	remove() {
 		this.editor.removePropertyListener(this);
 	}
 
 	@Override
-	public void propertyChanged(final Object source, final int propID) {
+	public void
+	propertyChanged(final Object source, final int propID) {
 		if (propID == IEditorPart.PROP_DIRTY) DirtyPartListener.postEvent();
 	}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		this.add();
 		DirtyPartListener.postEvent();
 		return super.start();
 	}
 
-	private static void postEvent() {
+	private static void
+	postEvent() {
 		EventBus.post(new PartChangedEvent());
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.remove();
 		return super.stop();
 	}

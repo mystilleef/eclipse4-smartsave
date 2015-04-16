@@ -14,16 +14,18 @@ public final class ToggleSmartSaveHandler extends AbstractHandler {
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 
 	@Override
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
+	public Object
+	execute(final ExecutionEvent event) throws ExecutionException {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				EditorContext.toggleCanSaveAutomatically();
 			}
 		}.setRule(ToggleSmartSaveHandler.RULE)
-		.setPriority(Job.INTERACTIVE)
-		.start();
+			.setPriority(Job.INTERACTIVE)
+			.start();
 		return null;
 	}
 }

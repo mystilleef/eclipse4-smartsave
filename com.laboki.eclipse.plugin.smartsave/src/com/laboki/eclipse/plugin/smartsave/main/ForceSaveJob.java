@@ -10,12 +10,14 @@ public final class ForceSaveJob extends SaveJob {
 	}
 
 	@Override
-	protected void save() {
+	protected void
+	save() {
 		EditorContext.WORKBENCH.saveAllEditors(false);
 	}
 
 	@Override
-	public void execute(final IEditorPart editorPart) {
+	public void
+	execute(final IEditorPart editorPart) {
 		this.schedule(EditorContext.SHORT_DELAY);
 	}
 }

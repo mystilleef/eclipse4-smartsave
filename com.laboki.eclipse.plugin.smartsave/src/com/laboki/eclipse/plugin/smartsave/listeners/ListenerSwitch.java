@@ -22,48 +22,57 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 	}
 
 	@Subscribe
-	public void toggleListeners(final PartChangedEvent event) {
+	public void
+	toggleListeners(final PartChangedEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				ListenerSwitch.this.toggleSaverListeners();
 			}
 		}.start();
 	}
 
 	@Subscribe
-	public void toggleListeners(final AssistSessionEndedEvent event) {
+	public void
+	toggleListeners(final AssistSessionEndedEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				ListenerSwitch.this.toggleSaverListeners();
 			}
 		}.start();
 	}
 
 	@Subscribe
-	public static void disableListeners(final AssistSessionStartedEvent event) {
+	public static void
+	disableListeners(final AssistSessionStartedEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				ListenerSwitch.postDisableListenersEvent();
 			}
 		}.start();
 	}
 
-	void toggleSaverListeners() {
+	void
+	toggleSaverListeners() {
 		if (this.editor.isDirty()) ListenerSwitch.postEnableListenersEvent();
 		else ListenerSwitch.postDisableListenersEvent();
 	}
 
-	static void postDisableListenersEvent() {
+	static void
+	postDisableListenersEvent() {
 		EventBus.post(new DisableSaveListenersEvent());
 	}
 
-	private static void postEnableListenersEvent() {
+	private static void
+	postEnableListenersEvent() {
 		EventBus.post(new EnableSaveListenersEvent());
 	}
 }

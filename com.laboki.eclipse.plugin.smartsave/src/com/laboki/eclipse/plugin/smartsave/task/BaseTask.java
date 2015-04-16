@@ -15,80 +15,96 @@ public abstract class BaseTask implements Runnable, Instance {
 		this.setDefaultProperties();
 	}
 
-	protected abstract TaskJob newTaskJob();
+	protected abstract TaskJob
+	newTaskJob();
 
-	private void setDefaultProperties() {
+	private void
+	setDefaultProperties() {
 		this.job.setUser(false);
 		this.job.setSystem(true);
 	}
 
 	@Override
-	public void run() {
+	public void
+	run() {
 		this.start();
 	}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		if (!this.shouldSchedule()) return this;
 		this.job.schedule(this.delay);
 		return this;
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.job.cancel();
 		return this;
 	}
 
-	public BaseTask setDelay(final long delay) {
+	public BaseTask
+	setDelay(final long delay) {
 		this.delay = delay;
 		return this;
 	}
 
-	public BaseTask setFamily(final Object family) {
+	public BaseTask
+	setFamily(final Object family) {
 		this.job.setFamily(family);
 		return this;
 	}
 
-	public BaseTask setName(final String name) {
+	public BaseTask
+	setName(final String name) {
 		this.job.setName(name);
 		return this;
 	}
 
-	public BaseTask setPriority(final int priority) {
+	public BaseTask
+	setPriority(final int priority) {
 		this.job.setPriority(priority);
 		return this;
 	}
 
-	public BaseTask setUser(final boolean isUserTask) {
+	public BaseTask
+	setUser(final boolean isUserTask) {
 		this.job.setUser(isUserTask);
 		return this;
 	}
 
-	public BaseTask setSystem(final boolean isSystemTask) {
+	public BaseTask
+	setSystem(final boolean isSystemTask) {
 		this.job.setSystem(isSystemTask);
 		return this;
 	}
 
-	public BaseTask setRule(final ISchedulingRule rule) {
+	public BaseTask
+	setRule(final ISchedulingRule rule) {
 		this.job.setRule(rule);
 		return this;
 	}
 
-	protected void reschedule(final long delay) {
+	protected void
+	reschedule(final long delay) {
 		this.job.schedule(delay);
 		return;
 	}
 
-	protected boolean belongsTo(final Object family) {
+	protected boolean
+	belongsTo(final Object family) {
 		return this.job.belongsTo(family);
 	}
 
-	protected boolean shouldSchedule() {
+	protected boolean
+	shouldSchedule() {
 		return this.job.shouldSchedule();
 	}
 
-	protected static boolean taskFamilyExists(final Object family) {
+	protected static boolean
+	taskFamilyExists(final Object family) {
 		return Job.getJobManager().find(family).length > 0;
 	}
 }

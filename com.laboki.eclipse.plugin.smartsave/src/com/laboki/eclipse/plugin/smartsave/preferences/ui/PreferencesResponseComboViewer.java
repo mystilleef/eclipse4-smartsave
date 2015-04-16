@@ -14,7 +14,8 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 abstract class PreferencesResponseComboViewer extends ResponseComboViewer
-	implements Instance {
+	implements
+		Instance {
 
 	private static final String TASK_NAME =
 		"preferences response combo viewer task";
@@ -27,21 +28,26 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 	}
 
 	@Override
-	protected void handleResponseSelection(final SelectionChangedEvent event) {}
+	protected void
+	handleResponseSelection(final SelectionChangedEvent event) {}
 
-	protected boolean getSelectionValue(final SelectionChangedEvent event) {
+	protected boolean
+	getSelectionValue(final SelectionChangedEvent event) {
 		super.handleResponseSelection(event);
 		return ((Response) ((IStructuredSelection) event.getSelection())
 			.getFirstElement()).value();
 	}
 
-	private void updateComboProperties() {
+	private void
+	updateComboProperties() {
 		this.updateSelection();
 	}
 
-	protected void updateSelection() {}
+	protected void
+	updateSelection() {}
 
-	protected void setSelection(final int index) {
+	protected void
+	setSelection(final int index) {
 		this.stopListening();
 		this.setSelection(new StructuredSelection(this.getResponses()[index]));
 		this.startListening();
@@ -49,11 +55,13 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 
 	@Subscribe
 	@AllowConcurrentEvents
-	public void preferencesChanged(final PreferenceStoreChangeEvent event) {
+	public void
+	preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				PreferencesResponseComboViewer.this.updateSelection();
 			}
 		}.setName(PreferencesResponseComboViewer.TASK_NAME)
@@ -62,7 +70,8 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 	}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		EventBus.register(this);
 		this.startListening();
 		this.updateComboProperties();
@@ -70,7 +79,8 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		EventBus.unregister(this);
 		this.stopListening();
 		return this;

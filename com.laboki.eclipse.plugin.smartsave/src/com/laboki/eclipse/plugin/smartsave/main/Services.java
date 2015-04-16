@@ -20,12 +20,14 @@ public final class Services implements Instance {
 	private final List<Instance> instances = Lists.newArrayList();
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		this.startServices();
 		return this;
 	}
 
-	private void startServices() {
+	private void
+	startServices() {
 		this.startService(new Saver());
 		this.startService(new Scheduler());
 		this.startService(new VerifyEventListener());
@@ -39,25 +41,29 @@ public final class Services implements Instance {
 		this.startService(new PreferenceChangeListener());
 	}
 
-	private void startService(final Instance instance) {
+	private void
+	startService(final Instance instance) {
 		instance.start();
 		this.instances.add(instance);
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.stopServices();
 		this.instances.clear();
 		return this;
 	}
 
-	private void stopServices() {
+	private void
+	stopServices() {
 		EditorContext.forceSave();
 		for (final Instance instance : ImmutableList.copyOf(this.instances))
 			this.stopService(instance);
 	}
 
-	private void stopService(final Instance instance) {
+	private void
+	stopService(final Instance instance) {
 		instance.stop();
 		this.instances.remove(instance);
 	}

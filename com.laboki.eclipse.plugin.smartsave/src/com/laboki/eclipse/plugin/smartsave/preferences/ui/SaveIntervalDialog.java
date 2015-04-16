@@ -24,24 +24,28 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 
 	public SaveIntervalDialog(final Composite composite) {
 		super();
-		this.dialog = new Shell(composite.getShell(), SWT.DIALOG_TRIM |
-			SWT.APPLICATION_MODAL);
+		this.dialog =
+			new Shell(composite.getShell(), SWT.DIALOG_TRIM
+				| SWT.APPLICATION_MODAL);
 	}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		this.setupDialog();
 		this.arrangeWidgets();
 		return super.start();
 	}
 
-	private void setupDialog() {
+	private void
+	setupDialog() {
 		this.dialog.setLayout(SaveIntervalDialog.createLayout());
 		this.dialog.setText("Save Interval");
 		this.dialog.addShellListener(new DialogShellListener());
 	}
 
-	private static GridLayout createLayout() {
+	private static GridLayout
+	createLayout() {
 		final GridLayout layout = new GridLayout(1, false);
 		layout.marginBottom = SaveIntervalDialog.MARGIN_SIZE;
 		layout.marginTop = SaveIntervalDialog.MARGIN_SIZE;
@@ -50,13 +54,15 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 		return layout;
 	}
 
-	private void arrangeWidgets() {
+	private void
+	arrangeWidgets() {
 		this.addLabel();
 		this.addSpinnerSection();
 		this.dialog.pack();
 	}
 
-	private void addLabel() {
+	private void
+	addLabel() {
 		final String text = "Press ESC or ENTER to close window.";
 		final StyledText fieldText =
 			new StyledText(this.dialog, SWT.LEFT | SWT.WRAP | SWT.READ_ONLY);
@@ -73,8 +79,8 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 		fieldText.setLayoutData(new GridData());
 	}
 
-	private static void setLabelStyle(final String text,
-		final StyledText fieldText) {
+	private static void
+	setLabelStyle(final String text, final StyledText fieldText) {
 		final StyleRange styleRange = new StyleRange();
 		styleRange.start = 0;
 		styleRange.length = text.length();
@@ -82,33 +88,38 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 		fieldText.setStyleRange(styleRange);
 	}
 
-	private void addSpinnerSection() {
+	private void
+	addSpinnerSection() {
 		final Composite composite = this.createSpinnerComposite();
 		SaveIntervalDialog.createLabel(composite, "Save files every ");
 		new SaveIntervalDialogSpinner(composite).start();
 		SaveIntervalDialog.createLabel(composite, " seconds");
 	}
 
-	private static
-	void createLabel(final Composite composite, final String name) {
+	private static void
+	createLabel(final Composite composite, final String name) {
 		final Label label = new Label(composite, SWT.NONE);
 		label.setText(name);
 	}
 
-	private Composite createSpinnerComposite() {
+	private Composite
+	createSpinnerComposite() {
 		final Composite composite = new Composite(this.dialog, SWT.NONE);
-		composite.setLayout(new GridLayout(
-			SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS, false));
+		composite
+			.setLayout(new GridLayout(SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS,
+				false));
 		composite.setLayoutData(new GridData());
 		return composite;
 	}
 
-	public void show() {
+	public void
+	show() {
 		this.dialog.open();
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.dialog.dispose();
 		return super.stop();
 	}
@@ -118,23 +129,28 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 		public DialogShellListener() {}
 
 		@Override
-		public void shellActivated(final ShellEvent arg0) {
+		public void
+		shellActivated(final ShellEvent arg0) {
 			EventBus.post(new FocusSaveIntervalDialogSpinnerEvent());
 		}
 
 		@Override
-		public void shellClosed(final ShellEvent event) {
+		public void
+		shellClosed(final ShellEvent event) {
 			event.doit = false;
 			SaveIntervalDialog.this.dialog.setVisible(false);
 		}
 
 		@Override
-		public void shellDeactivated(final ShellEvent arg0) {}
+		public void
+		shellDeactivated(final ShellEvent arg0) {}
 
 		@Override
-		public void shellDeiconified(final ShellEvent arg0) {}
+		public void
+		shellDeiconified(final ShellEvent arg0) {}
 
 		@Override
-		public void shellIconified(final ShellEvent arg0) {}
+		public void
+		shellIconified(final ShellEvent arg0) {}
 	}
 }

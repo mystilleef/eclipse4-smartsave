@@ -7,16 +7,19 @@ public abstract class AsyncTask extends BaseTask implements ExecuteTask {
 	public AsyncTask() {}
 
 	@Override
-	protected TaskJob newTaskJob() {
+	protected TaskJob
+	newTaskJob() {
 		return new TaskJob() {
 
 			@Override
-			protected void runTask() {
+			protected void
+			runTask() {
 				EditorContext.asyncExec(() -> AsyncTask.this.execute());
 			}
 		};
 	}
 
 	@Override
-	public abstract void execute();
+	public abstract void
+	execute();
 }

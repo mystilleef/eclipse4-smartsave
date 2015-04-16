@@ -40,13 +40,15 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 	}
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		this.updateProperties();
 		this.startListening();
 		return super.start();
 	}
 
-	private void updateProperties() {
+	private void
+	updateProperties() {
 		this.spinner.setTextLimit(SaveIntervalDialogSpinner.TEXT_LIMIT);
 		this.spinner.setValues(Store.getSaveIntervalInSeconds(),
 			SaveIntervalDialogSpinner.SPINNER_MINIMUM,
@@ -57,17 +59,20 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 		this.focus();
 	}
 
-	public void startListening() {
+	public void
+	startListening() {
 		this.spinner.addModifyListener(this.modifyListener);
 		this.spinner.addTraverseListener(this.traverseListener);
 	}
 
 	@Subscribe
-	public void preferencesChanged(final PreferenceStoreChangeEvent event) {
+	public void
+	preferencesChanged(final PreferenceStoreChangeEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				SaveIntervalDialogSpinner.this.updateSelection();
 			}
 		}.setName(SaveIntervalDialogSpinner.SELECTION_TASK)
@@ -75,7 +80,8 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 			.start();
 	}
 
-	protected void updateSelection() {
+	protected void
+	updateSelection() {
 		if ((this.spinner == null) || this.spinner.isDisposed()) return;
 		if (this.spinner.getSelection() == Store.getSaveIntervalInSeconds()) return;
 		this.spinner.removeModifyListener(this.modifyListener);
@@ -85,11 +91,12 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 
 	@Subscribe
 	public void
-		focusSpinner(final FocusSaveIntervalDialogSpinnerEvent event) {
+	focusSpinner(final FocusSaveIntervalDialogSpinnerEvent event) {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				SaveIntervalDialogSpinner.this.focus();
 			}
 		}.setName(SaveIntervalDialogSpinner.FOCUS_TASK)
@@ -98,14 +105,16 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 			.start();
 	}
 
-	void focus() {
+	void
+	focus() {
 		if ((this.spinner == null) || this.spinner.isDisposed()) return;
 		this.spinner.setFocus();
 		this.spinner.forceFocus();
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		this.spinner.dispose();
 		return super.stop();
 	}
@@ -115,29 +124,33 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 		public SpinnerModifyListener() {}
 
 		@Override
-		public void modifyText(final ModifyEvent event) {
+		public void
+		modifyText(final ModifyEvent event) {
 			new AsyncTask() {
 
 				@Override
-				public void execute() {
-					Store.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.this
-						.spinner.getSelection());
+				public void
+				execute() {
+					Store
+						.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.this.spinner
+							.getSelection());
 				}
 			}.setRule(SaveIntervalDialogSpinner.RULE).start();
 		}
 	}
 
-	private final class SpinnerTraverseListener
-		implements TraverseListener {
+	private final class SpinnerTraverseListener implements TraverseListener {
 
 		public SpinnerTraverseListener() {}
 
 		@Override
-		public void keyTraversed(final TraverseEvent event) {
+		public void
+		keyTraversed(final TraverseEvent event) {
 			if (event.detail == SWT.TRAVERSE_RETURN) new AsyncTask() {
 
 				@Override
-				public void execute() {
+				public void
+				execute() {
 					SaveIntervalDialogSpinner.this.spinner.getShell().close();
 				}
 			}.start();

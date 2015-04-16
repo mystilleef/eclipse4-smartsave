@@ -8,11 +8,13 @@ public enum Plugin implements Instance {
 	INSTANCE;
 
 	@Override
-	public Instance start() {
+	public Instance
+	start() {
 		new AsyncTask() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				Factory.INSTANCE.start();
 			}
 		}.start();
@@ -20,7 +22,8 @@ public enum Plugin implements Instance {
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		Factory.INSTANCE.stop();
 		return this;
 	}

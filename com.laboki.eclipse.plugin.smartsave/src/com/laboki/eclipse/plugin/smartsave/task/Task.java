@@ -5,16 +5,19 @@ public abstract class Task extends BaseTask implements ExecuteTask {
 	public Task() {}
 
 	@Override
-	protected TaskJob newTaskJob() {
+	protected TaskJob
+	newTaskJob() {
 		return new TaskJob() {
 
 			@Override
-			protected void runTask() {
+			protected void
+			runTask() {
 				Task.this.execute();
 			}
 		};
 	}
 
 	@Override
-	public abstract void execute();
+	public abstract void
+	execute();
 }

@@ -13,42 +13,46 @@ import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-public final class PreferenceChangeListener
-extends AbstractEventBusInstance implements IPreferenceChangeListener {
+public final class PreferenceChangeListener extends AbstractEventBusInstance
+	implements
+		IPreferenceChangeListener {
 
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 	private static final String TASK_NAME =
 		"smartsave preference change event listener";
-	private static final IEclipsePreferences PREFERENCES =
-		Store.getPreferences();
+	private static final IEclipsePreferences PREFERENCES = Store
+		.getPreferences();
 
 	public PreferenceChangeListener() {
 		super();
 	}
 
 	@Override
-	public void preferenceChange(final PreferenceChangeEvent event) {
+	public void
+	preferenceChange(final PreferenceChangeEvent event) {
 		new Task() {
 
 			@Override
-			public void execute() {
+			public void
+			execute() {
 				EventBus.post(new PreferenceStoreChangeEvent());
 			}
 		}.setName(PreferenceChangeListener.TASK_NAME)
-		.setRule(PreferenceChangeListener.RULE)
-		.setDelay(EditorContext.SHORT_DELAY)
-		.start();
+			.setRule(PreferenceChangeListener.RULE)
+			.setDelay(EditorContext.SHORT_DELAY)
+			.start();
 	}
 
 	@Override
-	public Instance start() {
-		PreferenceChangeListener.PREFERENCES
-			.addPreferenceChangeListener(this);
+	public Instance
+	start() {
+		PreferenceChangeListener.PREFERENCES.addPreferenceChangeListener(this);
 		return super.start();
 	}
 
 	@Override
-	public Instance stop() {
+	public Instance
+	stop() {
 		PreferenceChangeListener.PREFERENCES
 			.removePreferenceChangeListener(this);
 		return super.stop();

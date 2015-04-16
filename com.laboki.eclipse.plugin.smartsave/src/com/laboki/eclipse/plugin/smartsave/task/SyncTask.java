@@ -7,16 +7,19 @@ public abstract class SyncTask extends BaseTask implements ExecuteTask {
 	public SyncTask() {}
 
 	@Override
-	protected TaskJob newTaskJob() {
+	protected TaskJob
+	newTaskJob() {
 		return new TaskJob() {
 
 			@Override
-			protected void runTask() {
+			protected void
+			runTask() {
 				EditorContext.syncExec(() -> SyncTask.this.execute());
 			}
 		};
 	}
 
 	@Override
-	public abstract void execute();
+	public abstract void
+	execute();
 }
