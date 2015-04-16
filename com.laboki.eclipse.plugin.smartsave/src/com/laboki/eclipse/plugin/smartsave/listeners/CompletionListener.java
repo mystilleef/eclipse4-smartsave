@@ -22,13 +22,13 @@ public final class CompletionListener extends AbstractEventBusInstance
 	implements
 		ICompletionListener {
 
-	private static final Logger LOGGER = Logger
-		.getLogger(CompletionListener.class.getName());
+	private static final Logger LOGGER =
+		Logger.getLogger(CompletionListener.class.getName());
 	private final IEditorPart editor = EditorContext.getEditor();
-	private final ContentAssistantFacade contentAssistantFacade = this
-		.getContentAssistantFacade();
-	private final IQuickAssistAssistant quickAssistAssistant = this
-		.getQuickAssistAssistant();
+	private final ContentAssistantFacade contentAssistantFacade =
+		this.getContentAssistantFacade();
+	private final IQuickAssistAssistant quickAssistAssistant =
+		this.getQuickAssistAssistant();
 
 	public CompletionListener() {
 		super();
@@ -83,10 +83,8 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private void
 	add() {
-		if (this.contentAssistantFacade != null) this.contentAssistantFacade
-			.addCompletionListener(this);
-		if (this.quickAssistAssistant != null) this.quickAssistAssistant
-			.addCompletionListener(this);
+		if (this.contentAssistantFacade != null) this.contentAssistantFacade.addCompletionListener(this);
+		if (this.quickAssistAssistant != null) this.quickAssistAssistant.addCompletionListener(this);
 	}
 
 	@Override
@@ -108,18 +106,14 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private void
 	remove() {
-		if (this.contentAssistantFacade != null) this.contentAssistantFacade
-			.removeCompletionListener(this);
-		if (this.quickAssistAssistant != null) this.quickAssistAssistant
-			.removeCompletionListener(this);
+		if (this.contentAssistantFacade != null) this.contentAssistantFacade.removeCompletionListener(this);
+		if (this.quickAssistAssistant != null) this.quickAssistAssistant.removeCompletionListener(this);
 	}
 
 	private ContentAssistantFacade
 	getContentAssistantFacade() {
 		try {
-			return EditorContext
-				.getView(this.editor)
-				.getContentAssistantFacade();
+			return EditorContext.getView(this.editor).getContentAssistantFacade();
 		}
 		catch (final Exception e) {
 			return null;

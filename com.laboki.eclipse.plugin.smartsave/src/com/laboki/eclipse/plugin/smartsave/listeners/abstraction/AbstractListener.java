@@ -20,12 +20,12 @@ public abstract class AbstractListener extends AbstractEventBusInstance
 	implements
 		IListener {
 
-	private static final ISchedulingRule RULE = MultiRule
-		.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
+	private static final ISchedulingRule RULE =
+		MultiRule.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
 	private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
 	private static final int ONE_SECOND_DELAY = 1000;
-	private static final Logger LOGGER = Logger
-		.getLogger(AbstractListener.class.getName());
+	private static final Logger LOGGER =
+		Logger.getLogger(AbstractListener.class.getName());
 
 	public AbstractListener() {
 		super();

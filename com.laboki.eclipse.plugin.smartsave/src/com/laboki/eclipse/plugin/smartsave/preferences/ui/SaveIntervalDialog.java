@@ -25,8 +25,7 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 	public SaveIntervalDialog(final Composite composite) {
 		super();
 		this.dialog =
-			new Shell(composite.getShell(), SWT.DIALOG_TRIM
-				| SWT.APPLICATION_MODAL);
+			new Shell(composite.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 	}
 
 	@Override
@@ -105,9 +104,8 @@ final class SaveIntervalDialog extends AbstractEventBusInstance {
 	private Composite
 	createSpinnerComposite() {
 		final Composite composite = new Composite(this.dialog, SWT.NONE);
-		composite
-			.setLayout(new GridLayout(SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS,
-				false));
+		composite.setLayout(new GridLayout(SaveIntervalDialog.SPINNER_GRID_LAYOUT_COLUMNS,
+			false));
 		composite.setLayoutData(new GridData());
 		return composite;
 	}

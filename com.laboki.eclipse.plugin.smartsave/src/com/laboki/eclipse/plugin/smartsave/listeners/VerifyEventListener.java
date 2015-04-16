@@ -11,8 +11,8 @@ public final class VerifyEventListener extends AbstractListener
 	implements
 		VerifyListener {
 
-	private final StyledText buffer = EditorContext.getBuffer(EditorContext
-		.getEditor());
+	private final StyledText buffer =
+		EditorContext.getBuffer(EditorContext.getEditor());
 
 	public VerifyEventListener() {
 		super();

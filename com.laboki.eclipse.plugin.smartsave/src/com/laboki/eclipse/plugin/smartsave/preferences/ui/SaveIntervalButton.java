@@ -37,8 +37,7 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 	void
 	updateText() {
 		if ((this.button == null) || this.button.isDisposed()) return;
-		this.button.setText(SaveIntervalButton.minutesAndSeconds(Store
-			.getSaveIntervalInSeconds()));
+		this.button.setText(SaveIntervalButton.minutesAndSeconds(Store.getSaveIntervalInSeconds()));
 		this.button.pack();
 		this.button.update();
 	}
@@ -62,12 +61,13 @@ final class SaveIntervalButton extends AbstractEventBusInstance {
 
 	private static String
 	formatMinutesAndSeconds(final int minutes, final int seconds) {
-		if (SaveIntervalButton.zero(minutes)) return MessageFormat
-			.format(" {0} sec ", String.valueOf(seconds));
-		if (SaveIntervalButton.zero(seconds)) return MessageFormat
-			.format(" {0} min ", String.valueOf(minutes));
-		return MessageFormat.format(" {0} min {1} sec ", String
-			.valueOf(minutes), String.valueOf(seconds));
+		if (SaveIntervalButton.zero(minutes)) return MessageFormat.format(" {0} sec ",
+			String.valueOf(seconds));
+		if (SaveIntervalButton.zero(seconds)) return MessageFormat.format(" {0} min ",
+			String.valueOf(minutes));
+		return MessageFormat.format(" {0} min {1} sec ",
+			String.valueOf(minutes),
+			String.valueOf(seconds));
 	}
 
 	private static boolean

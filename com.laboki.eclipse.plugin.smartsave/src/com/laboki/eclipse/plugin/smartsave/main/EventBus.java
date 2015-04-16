@@ -10,8 +10,8 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EventBus {
 	INSTANCE;
 
-	protected static final AsyncEventBus BUS = new AsyncEventBus(Executors
-		.newCachedThreadPool());
+	protected static final AsyncEventBus BUS =
+		new AsyncEventBus(Executors.newCachedThreadPool());
 
 	public static void
 	register(final Object object) {

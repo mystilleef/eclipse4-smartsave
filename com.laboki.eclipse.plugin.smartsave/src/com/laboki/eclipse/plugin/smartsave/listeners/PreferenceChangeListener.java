@@ -20,8 +20,8 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 	private static final String TASK_NAME =
 		"smartsave preference change event listener";
-	private static final IEclipsePreferences PREFERENCES = Store
-		.getPreferences();
+	private static final IEclipsePreferences PREFERENCES =
+		Store.getPreferences();
 
 	public PreferenceChangeListener() {
 		super();
@@ -53,8 +53,7 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 	@Override
 	public Instance
 	stop() {
-		PreferenceChangeListener.PREFERENCES
-			.removePreferenceChangeListener(this);
+		PreferenceChangeListener.PREFERENCES.removePreferenceChangeListener(this);
 		return super.stop();
 	}
 }

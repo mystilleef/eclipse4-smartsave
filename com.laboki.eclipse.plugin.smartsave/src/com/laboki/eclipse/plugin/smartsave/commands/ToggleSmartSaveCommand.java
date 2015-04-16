@@ -9,8 +9,7 @@ import com.laboki.eclipse.plugin.smartsave.Activator;
 public enum ToggleSmartSaveCommand {
 	INSTANCE;
 
-	private static final String STATE_ID =
-		"org.eclipse.ui.commands.toggleState";
+	private static final String STATE_ID = "org.eclipse.ui.commands.toggleState";
 	public static final String ID =
 		"com.laboki.eclipse.plugin.smartsave.command.toggleSmartSave";
 	public static final Command COMMAND = ToggleSmartSaveCommand.getCommand();
@@ -18,17 +17,14 @@ public enum ToggleSmartSaveCommand {
 
 	private static Command
 	getCommand() {
-		return ((ICommandService) Activator
-			.getInstance()
+		return ((ICommandService) Activator.getInstance()
 			.getWorkbench()
-			.getService(ICommandService.class))
-			.getCommand(ToggleSmartSaveCommand.ID);
+			.getService(ICommandService.class)).getCommand(ToggleSmartSaveCommand.ID);
 	}
 
 	private static State
 	getStateInstance() {
-		return ToggleSmartSaveCommand.COMMAND
-			.getState(ToggleSmartSaveCommand.STATE_ID);
+		return ToggleSmartSaveCommand.COMMAND.getState(ToggleSmartSaveCommand.STATE_ID);
 	}
 
 	public static boolean

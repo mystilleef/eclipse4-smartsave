@@ -13,10 +13,10 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 public enum Factory implements Instance {
 	INSTANCE;
 
-	private static final Map<IEditorPart, Instance> SERVICES_MAP = Maps
-		.newHashMap();
-	private static final IPartService PART_SERVICE = EditorContext
-		.getPartService();
+	private static final Map<IEditorPart, Instance> SERVICES_MAP =
+		Maps.newHashMap();
+	private static final IPartService PART_SERVICE =
+		EditorContext.getPartService();
 	private static final PartListener PART_LISTENER = new PartListener();
 
 	private static final class PartListener implements IPartListener {

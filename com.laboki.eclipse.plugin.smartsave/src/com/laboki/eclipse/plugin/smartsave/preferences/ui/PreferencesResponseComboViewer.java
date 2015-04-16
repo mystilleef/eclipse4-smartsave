@@ -34,8 +34,7 @@ abstract class PreferencesResponseComboViewer extends ResponseComboViewer
 	protected boolean
 	getSelectionValue(final SelectionChangedEvent event) {
 		super.handleResponseSelection(event);
-		return ((Response) ((IStructuredSelection) event.getSelection())
-			.getFirstElement()).value();
+		return ((Response) ((IStructuredSelection) event.getSelection()).getFirstElement()).value();
 	}
 
 	private void

@@ -10,8 +10,8 @@ public class AnnotationsListener extends AbstractListener
 	implements
 		IAnnotationModelListener {
 
-	private final IAnnotationModel annotationModel = AnnotationsListener
-		.getAnnotationModel();
+	private final IAnnotationModel annotationModel =
+		AnnotationsListener.getAnnotationModel();
 
 	public AnnotationsListener() {
 		super();
@@ -40,8 +40,7 @@ public class AnnotationsListener extends AbstractListener
 	private static IAnnotationModel
 	getAnnotationModel() {
 		try {
-			return EditorContext
-				.getView(EditorContext.getEditor())
+			return EditorContext.getView(EditorContext.getEditor())
 				.getAnnotationModel();
 		}
 		catch (final Exception e) {

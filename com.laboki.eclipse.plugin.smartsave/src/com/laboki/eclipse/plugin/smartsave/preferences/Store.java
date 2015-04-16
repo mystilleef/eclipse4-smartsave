@@ -20,8 +20,7 @@ public enum Store {
 	private static final String WARNINGS_KEY = "saveIfWarnings";
 	private static final String ERRORS_KEY = "saveIfErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
-	private static final Logger LOGGER = Logger
-		.getLogger(Store.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Store.class.getName());
 
 	public static void
 	setCanSaveAutomatically(final boolean saveAutomatically) {
@@ -134,7 +133,7 @@ public enum Store {
 
 	private static void
 	tryToUpdate(final IEclipsePreferences preferences)
-	throws BackingStoreException {
+																										throws BackingStoreException {
 		preferences.flush();
 		preferences.sync();
 	}

@@ -43,15 +43,15 @@ public enum EditorContext {
 	static final ForceSaveJob FORCE_SAVE_JOB = new ForceSaveJob();
 	public static final String PLUGIN_NAME =
 		"com.laboki.eclipse.plugin.smartsave";
-	public static final String CONTRIBUTOR_URI = MessageFormat
-		.format("plugin://{0}", EditorContext.PLUGIN_NAME);
+	public static final String CONTRIBUTOR_URI =
+		MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
 	public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
 	public static final int SHORT_DELAY = 250;
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 	public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
-	public static final MessageConsole CONSOLE = EditorContext
-		.getConsole("Smart Save");
+	public static final MessageConsole CONSOLE =
+		EditorContext.getConsole("Smart Save");
 	public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
 	public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
 	static final SaveJob SAVE_JOB = new SaveJob();
@@ -70,21 +70,20 @@ public enum EditorContext {
 		"org.eclipse.ui.workbench.texteditor.warning";
 	private static final String ANNOTATION_ERROR =
 		"org.eclipse.ui.workbench.texteditor.error";
-	private static final List<String> LINK_ANNOTATIONS = Lists
-		.newArrayList(EditorContext.LINK_EXIT,
+	private static final List<String> LINK_ANNOTATIONS =
+		Lists.newArrayList(EditorContext.LINK_EXIT,
 			EditorContext.LINK_TARGET,
 			EditorContext.LINK_MASTER,
 			EditorContext.LINK_SLAVE);
 	private static final Cache PREFERENCE = Cache.INSTANCE;
 	private static final DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
 		new DefaultMarkerAnnotationAccess();
-	private static final Logger LOGGER = Logger.getLogger(EditorContext.class
-		.getName());
+	private static final Logger LOGGER =
+		Logger.getLogger(EditorContext.class.getName());
 
 	public static IPartService
 	getPartService() {
-		return (IPartService) EditorContext.WORKBENCH
-			.getActiveWorkbenchWindow()
+		return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
 			.getService(IPartService.class);
 	}
 
@@ -95,8 +94,7 @@ public enum EditorContext {
 
 	public static IEditorPart
 	getEditor() {
-		return EditorContext.WORKBENCH
-			.getActiveWorkbenchWindow()
+		return EditorContext.WORKBENCH.getActiveWorkbenchWindow()
 			.getActivePage()
 			.getActiveEditor();
 	}
@@ -150,8 +148,7 @@ public enum EditorContext {
 	private static boolean
 	canSaveFile(final IEditorPart editor) {
 		return !(EditorContext.isNotModified(editor)
-			|| EditorContext.isBeingEdited(editor) || EditorContext
-				.hasProblems(editor));
+			|| EditorContext.isBeingEdited(editor) || EditorContext.hasProblems(editor));
 	}
 
 	private static boolean
@@ -190,8 +187,7 @@ public enum EditorContext {
 	private static boolean
 	hasLinkAnnotations(final IEditorPart editor) {
 		final Iterator<Annotation> iterator =
-			EditorContext
-				.getView(editor)
+			EditorContext.getView(editor)
 				.getAnnotationModel()
 				.getAnnotationIterator();
 		while (iterator.hasNext())
@@ -218,8 +214,8 @@ public enum EditorContext {
 
 	public static boolean
 	hasErrors(final IEditorPart editor) {
-		return EditorContext
-			.getAnnotationSeverity(EditorContext.ANNOTATION_ERROR, editor);
+		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_ERROR,
+			editor);
 	}
 
 	private static boolean
@@ -235,15 +231,14 @@ public enum EditorContext {
 
 	public static boolean
 	hasWarnings(final IEditorPart editor) {
-		return EditorContext
-			.getAnnotationSeverity(EditorContext.ANNOTATION_WARNING, editor);
+		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_WARNING,
+			editor);
 	}
 
 	private static boolean
 	getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
 		final Iterator<Annotation> iterator =
-			EditorContext
-				.getView(editor)
+			EditorContext.getView(editor)
 				.getAnnotationModel()
 				.getAnnotationIterator();
 		while (iterator.hasNext())
@@ -252,9 +247,7 @@ public enum EditorContext {
 	}
 
 	private static boolean
-	hasProblems(
-		final String problemSeverity,
-		final Iterator<Annotation> iterator) {
+	hasProblems(final String problemSeverity, final Iterator<Annotation> iterator) {
 		final Annotation annotation = iterator.next();
 		if (annotation.isMarkedDeleted()) return false;
 		return EditorContext.ANNOTATION_ACCESS.isSubtype(annotation.getType(),
@@ -354,8 +347,7 @@ public enum EditorContext {
 
 	public static void
 	out(final Object message) {
-		EditorContext.CONSOLE.newMessageStream().println(String
-			.valueOf(message));
+		EditorContext.CONSOLE.newMessageStream().println(String.valueOf(message));
 	}
 
 	public static void
@@ -370,11 +362,9 @@ public enum EditorContext {
 
 	private static void
 	tryToShowConsole() throws PartInitException {
-		((IConsoleView) EditorContext.WORKBENCH
-			.getActiveWorkbenchWindow()
+		((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
 			.getActivePage()
-			.showView(IConsoleConstants.ID_CONSOLE_VIEW))
-			.display(EditorContext.CONSOLE);
+			.showView(IConsoleConstants.ID_CONSOLE_VIEW)).display(EditorContext.CONSOLE);
 	}
 
 	private static MessageConsole
@@ -396,12 +386,9 @@ public enum EditorContext {
 	private static MessageConsole
 	newConsole(final String name) {
 		final MessageConsole myConsole = new MessageConsole(name, null);
-		ConsolePlugin
-			.getDefault()
-			.getConsoleManager()
-			.addConsoles(new IConsole[] {
-				myConsole
-			});
+		ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] {
+			myConsole
+		});
 		return myConsole;
 	}
 

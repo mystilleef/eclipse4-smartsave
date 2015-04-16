@@ -131,9 +131,7 @@ final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
 				@Override
 				public void
 				execute() {
-					Store
-						.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.this.spinner
-							.getSelection());
+					Store.setSaveIntervalInSeconds(SaveIntervalDialogSpinner.this.spinner.getSelection());
 				}
 			}.setRule(SaveIntervalDialogSpinner.RULE).start();
 		}

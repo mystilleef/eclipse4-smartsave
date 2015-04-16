@@ -11,8 +11,8 @@ public final class KeyEventListener extends AbstractListener
 	implements
 		KeyListener {
 
-	private final Control control = EditorContext.getControl(EditorContext
-		.getEditor());
+	private final Control control =
+		EditorContext.getControl(EditorContext.getEditor());
 
 	public KeyEventListener() {
 		super();
