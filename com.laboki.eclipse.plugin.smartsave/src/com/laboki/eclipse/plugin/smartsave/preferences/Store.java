@@ -133,7 +133,7 @@ public enum Store {
 
 	private static void
 	tryToUpdate(final IEclipsePreferences preferences)
-																										throws BackingStoreException {
+		throws BackingStoreException {
 		preferences.flush();
 		preferences.sync();
 	}
