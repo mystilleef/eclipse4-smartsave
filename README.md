@@ -21,7 +21,7 @@ __Smartsave__ intelligently saves files after edits.
 
 ### Requirement
 
-* You need __Eclipse 4.2(Juno)__ or later to use this plugin.
+* You need __Eclipse 4.4(Luna)__ or later to use this plugin.
 
 ### Eclipse Market Place
 
