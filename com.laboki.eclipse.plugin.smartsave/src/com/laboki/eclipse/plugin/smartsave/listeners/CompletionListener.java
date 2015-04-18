@@ -69,9 +69,9 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private void
 	add() {
-		if (!this.contentAssistant.isPresent()) this.contentAssistant.get()
+		if (this.contentAssistant.isPresent()) this.contentAssistant.get()
 			.addCompletionListener(this);
-		if (!this.quickAssistant.isPresent()) this.quickAssistant.get()
+		if (this.quickAssistant.isPresent()) this.quickAssistant.get()
 			.addCompletionListener(this);
 	}
 
@@ -84,9 +84,9 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private void
 	remove() {
-		if (!this.contentAssistant.isPresent()) this.contentAssistant.get()
+		if (this.contentAssistant.isPresent()) this.contentAssistant.get()
 			.removeCompletionListener(this);
-		if (!this.quickAssistant.isPresent()) this.quickAssistant.get()
+		if (this.quickAssistant.isPresent()) this.quickAssistant.get()
 			.removeCompletionListener(this);
 	}
 
