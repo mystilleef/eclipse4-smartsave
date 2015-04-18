@@ -32,7 +32,6 @@ import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
-import com.laboki.eclipse.plugin.smartsave.preferences.Cache;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
@@ -75,7 +74,6 @@ public enum EditorContext {
 			EditorContext.LINK_TARGET,
 			EditorContext.LINK_MASTER,
 			EditorContext.LINK_SLAVE);
-	private static final Cache PREFERENCE = Cache.INSTANCE;
 	private static final DefaultMarkerAnnotationAccess ANNOTATION_ACCESS =
 		new DefaultMarkerAnnotationAccess();
 	private static final Logger LOGGER =
@@ -132,7 +130,7 @@ public enum EditorContext {
 
 	public static boolean
 	canSaveAutomatically() {
-		return EditorContext.PREFERENCE.canSaveAutomatically();
+		return Store.getCanSaveAutomatically();
 	}
 
 	public static void
@@ -209,7 +207,7 @@ public enum EditorContext {
 
 	public static boolean
 	canSaveIfErrors() {
-		return EditorContext.PREFERENCE.canSaveIfErrors();
+		return Store.getCanSaveIfErrors();
 	}
 
 	public static boolean
@@ -226,7 +224,7 @@ public enum EditorContext {
 
 	public static boolean
 	canSaveIfWarnings() {
-		return EditorContext.PREFERENCE.canSaveIfWarnings();
+		return Store.getCanSaveIfWarnings();
 	}
 
 	public static boolean
@@ -297,7 +295,7 @@ public enum EditorContext {
 
 	public static int
 	getSaveIntervalInSeconds() {
-		return EditorContext.PREFERENCE.saveIntervalInSeconds();
+		return Store.getSaveIntervalInSeconds();
 	}
 
 	public static void

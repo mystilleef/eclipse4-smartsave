@@ -13,7 +13,6 @@ import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.ListenerSwitch;
 import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.VerifyEventListener;
-import com.laboki.eclipse.plugin.smartsave.preferences.Updater;
 
 public final class Services implements Instance {
 
@@ -36,9 +35,9 @@ public final class Services implements Instance {
 		this.startService(new ListenerSwitch());
 		this.startService(new CompletionListener());
 		this.startService(new DirtyPartListener());
-		this.startService(new Updater());
 		this.startService(new ToggleSmartSaveCommandState());
 		this.startService(new PreferenceChangeListener());
+		this.startService(new SupportedContentTypePrinter());
 	}
 
 	private void
