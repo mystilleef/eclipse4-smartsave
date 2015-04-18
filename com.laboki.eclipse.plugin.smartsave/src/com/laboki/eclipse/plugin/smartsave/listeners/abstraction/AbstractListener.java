@@ -1,8 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.listeners.abstraction;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 
@@ -24,8 +21,6 @@ public abstract class AbstractListener extends AbstractEventBusInstance
 		MultiRule.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
 	private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
 	private static final int ONE_SECOND_DELAY = 1000;
-	private static final Logger LOGGER =
-		Logger.getLogger(AbstractListener.class.getName());
 
 	public AbstractListener() {
 		super();
@@ -39,19 +34,9 @@ public abstract class AbstractListener extends AbstractEventBusInstance
 			@Override
 			public void
 			execute() {
-				AbstractListener.this.tryToAdd();
+				AbstractListener.this.add();
 			}
 		}.start();
-	}
-
-	void
-	tryToAdd() {
-		try {
-			this.add();
-		}
-		catch (final Exception e) {
-			AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
-		}
 	}
 
 	@Subscribe
@@ -62,7 +47,7 @@ public abstract class AbstractListener extends AbstractEventBusInstance
 			@Override
 			public void
 			execute() {
-				AbstractListener.this.tryToRemove();
+				AbstractListener.this.remove();
 			}
 		}.start();
 	}
@@ -78,18 +63,8 @@ public abstract class AbstractListener extends AbstractEventBusInstance
 	@Override
 	public final Instance
 	stop() {
-		this.tryToRemove();
+		this.remove();
 		return super.stop();
-	}
-
-	void
-	tryToRemove() {
-		try {
-			this.remove();
-		}
-		catch (final Exception e) {
-			AbstractListener.LOGGER.log(Level.WARNING, e.getMessage(), e);
-		}
 	}
 
 	protected static final void
