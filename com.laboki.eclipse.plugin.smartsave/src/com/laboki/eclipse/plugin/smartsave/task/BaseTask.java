@@ -107,4 +107,9 @@ public abstract class BaseTask implements Runnable, Instance {
 	taskFamilyExists(final Object family) {
 		return Job.getJobManager().find(family).length > 0;
 	}
+
+	protected static boolean
+	noTaskFamilyExists(final Object family) {
+		return !BaseTask.taskFamilyExists(family);
+	}
 }
