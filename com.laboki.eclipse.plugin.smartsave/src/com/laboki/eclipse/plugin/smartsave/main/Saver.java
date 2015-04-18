@@ -23,20 +23,20 @@ public final class Saver extends AbstractEventBusInstance {
 
 	@Subscribe
 	public void
-	save(final AssistSessionStartedEvent event) {
+	eventHandler(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
 	}
 
 	@Subscribe
 	public void
-	save(final AssistSessionEndedEvent event) {
+	eventHandler(final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void
-	save(final StartSaveScheduleEvent event) {
+	eventHandler(final StartSaveScheduleEvent event) {
 		new AsyncTask() {
 
 			@Override

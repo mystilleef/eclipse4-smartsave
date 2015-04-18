@@ -3,6 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.listeners;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelListener;
 
+import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
@@ -10,7 +11,7 @@ public class AnnotationsListener extends AbstractListener
 	implements
 		IAnnotationModelListener {
 
-	private final IAnnotationModel annotationModel =
+	private final Optional<IAnnotationModel> annotationModel =
 		AnnotationsListener.getAnnotationModel();
 
 	public AnnotationsListener() {
@@ -20,15 +21,15 @@ public class AnnotationsListener extends AbstractListener
 	@Override
 	public void
 	add() {
-		if (this.annotationModel == null) return;
-		this.annotationModel.addAnnotationModelListener(this);
+		if (!this.annotationModel.isPresent()) return;
+		this.annotationModel.get().addAnnotationModelListener(this);
 	}
 
 	@Override
 	public void
 	remove() {
-		if (this.annotationModel == null) return;
-		this.annotationModel.removeAnnotationModelListener(this);
+		if (!this.annotationModel.isPresent()) return;
+		this.annotationModel.get().removeAnnotationModelListener(this);
 	}
 
 	@Override
@@ -37,14 +38,9 @@ public class AnnotationsListener extends AbstractListener
 		AbstractListener.scheduleSave();
 	}
 
-	private static IAnnotationModel
+	private static Optional<IAnnotationModel>
 	getAnnotationModel() {
-		try {
-			return EditorContext.getView(EditorContext.getEditor())
-				.getAnnotationModel();
-		}
-		catch (final Exception e) {
-			return null;
-		}
+		return Optional.fromNullable(EditorContext.getView(EditorContext.getEditor())
+			.getAnnotationModel());
 	}
 }
