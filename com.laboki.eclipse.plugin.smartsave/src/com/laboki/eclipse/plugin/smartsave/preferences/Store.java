@@ -16,11 +16,25 @@ public enum Store {
 	private static final boolean CAN_SAVE_IF_ERRORS_DEFAULT_VALUE = false;
 	private static final boolean CAN_SAVE_AUTOMATICALLY_DEFAULT_VALUE = true;
 	private static final int SAVE_INTERVAL_IN_SECONDS_DEFAULT_VALUE = 3;
+	private static final String CONTENT_TYPE_BLACKLIST_DEFAULT_VALUE = "";
 	private static final String SAVE_AUTOMATICALLY_KEY = "saveAutomatically";
 	private static final String WARNINGS_KEY = "saveIfWarnings";
 	private static final String ERRORS_KEY = "saveIfErrors";
 	private static final String SAVE_INTERVAL_KEY = "saveIntervalInSeconds";
+	private static final String CONTENT_TYPE_BLACKLIST_KEY =
+		"contentTypeBlacklist";
 	private static final Logger LOGGER = Logger.getLogger(Store.class.getName());
+
+	public static String
+	getContentTypeBlacklist() {
+		return Store.getString(Store.CONTENT_TYPE_BLACKLIST_KEY,
+			Store.CONTENT_TYPE_BLACKLIST_DEFAULT_VALUE);
+	}
+
+	public static void
+	setContentTypeBlacklist(final String contentTypeBlacklist) {
+		Store.setString(Store.CONTENT_TYPE_BLACKLIST_KEY, contentTypeBlacklist);
+	}
 
 	public static void
 	setCanSaveAutomatically(final boolean saveAutomatically) {
@@ -97,6 +111,20 @@ public enum Store {
 		final IEclipsePreferences pref = Store.getPreferences();
 		Store.update(pref);
 		return pref.getInt(key, defaultValue);
+	}
+
+	private static void
+	setString(final String key, final String value) {
+		final IEclipsePreferences pref = Store.getPreferences();
+		pref.put(key, value);
+		Store.update(pref);
+	}
+
+	private static String
+	getString(final String key, final String defaultValue) {
+		final IEclipsePreferences pref = Store.getPreferences();
+		Store.update(pref);
+		return pref.get(key, defaultValue);
 	}
 
 	public static void

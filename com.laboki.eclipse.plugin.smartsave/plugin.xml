@@ -12,6 +12,13 @@
 			class="com.laboki.eclipse.plugin.smartsave.preferences.ui.PreferencesPage"
 			name="%page.name">
 		</page>
+
+		<page 
+			id="com.laboki.eclipse.plugin.smartsave.content.types.PreferencePage"
+			class="com.laboki.eclipse.plugin.smartsave.preferences.ui.ContentTypePreferencesPage"
+			name="%page.name.0"
+			category="com.laboki.eclipse.plugin.smartsave.PreferencePage">
+		</page>
 	</extension>
 
 	<extension point="org.eclipse.ui.bindings">
