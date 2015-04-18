@@ -30,6 +30,7 @@ import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
@@ -107,9 +108,9 @@ public enum EditorContext {
 		return (StyledText) EditorContext.getControl(editor);
 	}
 
-	public static SourceViewer
+	public static Optional<SourceViewer>
 	getView(final IEditorPart editor) {
-		return (SourceViewer) editor.getAdapter(ITextOperationTarget.class);
+		return Optional.fromNullable((SourceViewer) editor.getAdapter(ITextOperationTarget.class));
 	}
 
 	public static void
@@ -184,10 +185,10 @@ public enum EditorContext {
 
 	private static boolean
 	hasLinkAnnotations(final IEditorPart editor) {
+		final Optional<SourceViewer> view = EditorContext.getView(editor);
+		if (!view.isPresent()) return false;
 		final Iterator<Annotation> iterator =
-			EditorContext.getView(editor)
-				.getAnnotationModel()
-				.getAnnotationIterator();
+			view.get().getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
 			if (EditorContext.isLinkModeAnnotation(iterator)) return true;
 		return false;
@@ -235,10 +236,10 @@ public enum EditorContext {
 
 	private static boolean
 	getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
+		final Optional<SourceViewer> view = EditorContext.getView(editor);
+		if (!view.isPresent()) return false;
 		final Iterator<Annotation> iterator =
-			EditorContext.getView(editor)
-				.getAnnotationModel()
-				.getAnnotationIterator();
+			view.get().getAnnotationModel().getAnnotationIterator();
 		while (iterator.hasNext())
 			if (EditorContext.hasProblems(problemSeverity, iterator)) return true;
 		return false;

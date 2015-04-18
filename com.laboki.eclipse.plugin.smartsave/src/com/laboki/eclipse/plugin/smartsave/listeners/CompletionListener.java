@@ -5,6 +5,7 @@ import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
 import org.eclipse.jface.text.source.ContentAssistantFacade;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
@@ -92,13 +93,15 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private Optional<ContentAssistantFacade>
 	getContentAssistant() {
-		return Optional.fromNullable(EditorContext.getView(this.editor)
-			.getContentAssistantFacade());
+		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
+		if (!view.isPresent()) return Optional.absent();
+		return Optional.fromNullable(view.get().getContentAssistantFacade());
 	}
 
 	private Optional<IQuickAssistAssistant>
 	getQuickAssistant() {
-		return Optional.fromNullable(EditorContext.getView(this.editor)
-			.getQuickAssistAssistant());
+		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
+		if (!view.isPresent()) return Optional.absent();
+		return Optional.fromNullable(view.get().getQuickAssistAssistant());
 	}
 }

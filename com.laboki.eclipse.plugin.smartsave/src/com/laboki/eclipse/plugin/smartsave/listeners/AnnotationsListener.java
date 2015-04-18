@@ -2,6 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelListener;
+import org.eclipse.jface.text.source.SourceViewer;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
@@ -40,7 +41,9 @@ public class AnnotationsListener extends AbstractListener
 
 	private static Optional<IAnnotationModel>
 	getAnnotationModel() {
-		return Optional.fromNullable(EditorContext.getView(EditorContext.getEditor())
-			.getAnnotationModel());
+		final Optional<SourceViewer> view =
+			EditorContext.getView(EditorContext.getEditor());
+		if (!view.isPresent()) return Optional.absent();
+		return Optional.fromNullable(view.get().getAnnotationModel());
 	}
 }
