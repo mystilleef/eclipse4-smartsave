@@ -22,20 +22,21 @@ public final class Scheduler extends AbstractEventBusInstance {
 
 	@Subscribe
 	public void
-	save(final AssistSessionStartedEvent event) {
+	eventHandler(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
+		Scheduler.cancelAllJobs();
 	}
 
 	@Subscribe
 	public void
-	save(final AssistSessionEndedEvent event) {
+	eventHandler(final AssistSessionEndedEvent event) {
 		this.completionAssistantIsActive = false;
 	}
 
 	@Subscribe
 	@AllowConcurrentEvents
 	public void
-	scheduleSave(final ScheduleSaveEvent event) {
+	eventHandler(final ScheduleSaveEvent event) {
 		new Task() {
 
 			@Override
@@ -60,7 +61,7 @@ public final class Scheduler extends AbstractEventBusInstance {
 
 	@Subscribe
 	public static void
-	scheduleSave(final EnableSaveListenersEvent event) {
+	eventHandler(final EnableSaveListenersEvent event) {
 		new Task() {
 
 			@Override
@@ -76,13 +77,7 @@ public final class Scheduler extends AbstractEventBusInstance {
 
 	@Subscribe
 	public static void
-	cancelSaveJobs(final DisableSaveListenersEvent event) {
-		Scheduler.cancelAllJobs();
-	}
-
-	@Subscribe
-	public static void
-	cancelSaveJobs(final AssistSessionStartedEvent event) {
+	eventHandler(final DisableSaveListenersEvent event) {
 		Scheduler.cancelAllJobs();
 	}
 
