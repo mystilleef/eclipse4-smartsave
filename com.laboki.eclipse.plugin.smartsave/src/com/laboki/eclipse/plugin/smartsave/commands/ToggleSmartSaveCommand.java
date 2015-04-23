@@ -34,6 +34,7 @@ public enum ToggleSmartSaveCommand {
 
 	public static void
 	setState(final boolean state) {
+		if (ToggleSmartSaveCommand.getState() == state) return;
 		ToggleSmartSaveCommand.STATE.setValue(state);
 	}
 }

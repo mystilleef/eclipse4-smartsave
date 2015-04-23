@@ -21,7 +21,6 @@ public final class DisableSmartSaveHandler extends AbstractHandler {
 			@Override
 			public void
 			execute() {
-				if (!EditorContext.canSaveAutomatically()) return;
 				EditorContext.setCanSaveAutomatically(false);
 			}
 		}.setRule(DisableSmartSaveHandler.RULE)
