@@ -2,6 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.main;
 
 import org.eclipse.ui.IEditorPart;
 
+import com.google.common.base.Optional;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
@@ -15,7 +16,7 @@ public final class Saver extends AbstractEventBusInstance {
 
 	private static final String SAVER_TASK = "SAVER_SAVER_TASK";
 	boolean completionAssistantIsActive;
-	private final IEditorPart editor = EditorContext.getEditor();
+	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
 	public Saver() {
 		super();
@@ -67,6 +68,7 @@ public final class Saver extends AbstractEventBusInstance {
 
 	void
 	save() {
-		EditorContext.save(this.editor);
+		if (!this.editor.isPresent()) return;
+		EditorContext.save(this.editor.get());
 	}
 }
