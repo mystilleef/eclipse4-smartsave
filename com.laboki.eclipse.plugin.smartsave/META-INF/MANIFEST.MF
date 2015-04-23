@@ -66,12 +66,13 @@ Export-Package: com.google.common.annotations,
    org.eclipse.ui,
    org.eclipse.ui.console,
    org.eclipse.core.runtime,
-   org.eclipse.swt.custom,
    com.google.common.eventbus,
    org.eclipse.core.resources",
- com.laboki.eclipse.plugin.smartsave.preferences;uses:="org.eclipse.core.runtime.preferences",
+ com.laboki.eclipse.plugin.smartsave.preferences;uses:="com.laboki.eclipse.plugin.smartsave.instance,com.laboki.eclipse.plugin.smartsave.events,org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.preferences.ui;
   uses:="org.eclipse.ui,
+   org.eclipse.swt.graphics,
+   org.eclipse.jface.resource,
    com.laboki.eclipse.plugin.smartsave.instance,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.swt.widgets,
@@ -86,4 +87,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.console,
  org.eclipse.ui.texteditor
-Bundle-Version: 20150418.1
+Bundle-Version: 20150423
