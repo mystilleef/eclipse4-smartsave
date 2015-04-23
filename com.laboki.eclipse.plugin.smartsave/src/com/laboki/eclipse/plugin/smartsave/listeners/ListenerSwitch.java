@@ -2,6 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.listeners;
 
 import org.eclipse.ui.IEditorPart;
 
+import com.google.common.base.Optional;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
@@ -15,7 +16,7 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class ListenerSwitch extends AbstractEventBusInstance {
 
-	private final IEditorPart editor = EditorContext.getEditor();
+	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
 	public ListenerSwitch() {
 		super();
@@ -62,7 +63,8 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 
 	void
 	toggleSaverListeners() {
-		if (this.editor.isDirty()) ListenerSwitch.postEnableListenersEvent();
+		if (!this.editor.isPresent()) return;
+		if (this.editor.get().isDirty()) ListenerSwitch.postEnableListenersEvent();
 		else ListenerSwitch.postDisableListenersEvent();
 	}
 

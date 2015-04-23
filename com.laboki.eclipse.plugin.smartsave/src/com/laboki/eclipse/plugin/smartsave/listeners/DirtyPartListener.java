@@ -3,6 +3,7 @@ package com.laboki.eclipse.plugin.smartsave.listeners;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 
+import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
@@ -13,7 +14,7 @@ public final class DirtyPartListener extends AbstractEventBusInstance
 	implements
 		IPropertyListener {
 
-	private final IEditorPart editor = EditorContext.getEditor();
+	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
 	public DirtyPartListener() {
 		super();
@@ -21,12 +22,14 @@ public final class DirtyPartListener extends AbstractEventBusInstance
 
 	public void
 	add() {
-		this.editor.addPropertyListener(this);
+		if (!this.editor.isPresent()) return;
+		this.editor.get().addPropertyListener(this);
 	}
 
 	public void
 	remove() {
-		this.editor.removePropertyListener(this);
+		if (!this.editor.isPresent()) return;
+		this.editor.get().removePropertyListener(this);
 	}
 
 	@Override

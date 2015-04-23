@@ -21,7 +21,7 @@ public final class CompletionListener extends AbstractEventBusInstance
 	implements
 		ICompletionListener {
 
-	private final IEditorPart editor = EditorContext.getEditor();
+	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 	private final Optional<ContentAssistantFacade> contentAssistant =
 		this.getContentAssistant();
 	private final Optional<IQuickAssistAssistant> quickAssistant =
@@ -93,14 +93,18 @@ public final class CompletionListener extends AbstractEventBusInstance
 
 	private Optional<ContentAssistantFacade>
 	getContentAssistant() {
-		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
+		if (!this.editor.isPresent()) return Optional.absent();
+		final Optional<SourceViewer> view =
+			EditorContext.getView(this.editor.get());
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getContentAssistantFacade());
 	}
 
 	private Optional<IQuickAssistAssistant>
 	getQuickAssistant() {
-		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
+		if (!this.editor.isPresent()) return Optional.absent();
+		final Optional<SourceViewer> view =
+			EditorContext.getView(this.editor.get());
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getQuickAssistAssistant());
 	}
