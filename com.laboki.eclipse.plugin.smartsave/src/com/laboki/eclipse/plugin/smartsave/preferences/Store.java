@@ -33,11 +33,13 @@ public enum Store {
 
 	public static void
 	setContentTypeBlacklist(final String contentTypeBlacklist) {
+		if (Store.getContentTypeBlacklist().equals(contentTypeBlacklist)) return;
 		Store.setString(Store.CONTENT_TYPE_BLACKLIST_KEY, contentTypeBlacklist);
 	}
 
 	public static void
 	setCanSaveAutomatically(final boolean saveAutomatically) {
+		if (Store.getCanSaveAutomatically() == saveAutomatically) return;
 		Store.setBoolean(Store.SAVE_AUTOMATICALLY_KEY, saveAutomatically);
 	}
 
@@ -54,6 +56,7 @@ public enum Store {
 
 	public static void
 	setCanSaveIfWarnings(final boolean checkWarnings) {
+		if (Store.getCanSaveIfWarnings() == checkWarnings) return;
 		Store.setBoolean(Store.WARNINGS_KEY, checkWarnings);
 	}
 
@@ -65,6 +68,7 @@ public enum Store {
 
 	public static void
 	setCanSaveIfErrors(final boolean checkErrors) {
+		if (Store.getCanSaveIfErrors() == checkErrors) return;
 		Store.setBoolean(Store.ERRORS_KEY, checkErrors);
 	}
 
@@ -76,6 +80,7 @@ public enum Store {
 
 	public static void
 	setSaveIntervalInSeconds(final int saveIntervalInSeconds) {
+		if (Store.getSaveIntervalInSeconds() == saveIntervalInSeconds) return;
 		Store.setInt(Store.SAVE_INTERVAL_KEY, saveIntervalInSeconds);
 	}
 

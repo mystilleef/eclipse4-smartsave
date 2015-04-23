@@ -37,7 +37,6 @@ public final class Services implements Instance {
 		this.startService(new DirtyPartListener());
 		this.startService(new ToggleSmartSaveCommandState());
 		this.startService(new PreferenceChangeListener());
-		this.startService(new SupportedContentTypePrinter());
 	}
 
 	private void

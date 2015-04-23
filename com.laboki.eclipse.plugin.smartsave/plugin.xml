@@ -16,7 +16,7 @@
 		<page 
 			id="com.laboki.eclipse.plugin.smartsave.content.types.PreferencePage"
 			class="com.laboki.eclipse.plugin.smartsave.preferences.ui.ContentTypePreferencesPage"
-			name="%page.name.0"
+			name="%page.name.1"
 			category="com.laboki.eclipse.plugin.smartsave.PreferencePage">
 		</page>
 	</extension>
@@ -31,6 +31,22 @@
 	</extension>
 	
 	<extension point="org.eclipse.core.expressions.definitions">
+		<definition 
+			id="com.laboki.eclipse.plugin.smartsave.expression.isBlacklisted">
+			<with 
+				variable="com.laboki.eclipse.plugin.smartsave.variable.isBlacklisted"> 
+				<equals value="true"></equals>
+			</with> 
+		</definition>
+
+		<definition 
+			id="com.laboki.eclipse.plugin.smartsave.expression.isNotBlacklisted">
+			<with 
+				variable="com.laboki.eclipse.plugin.smartsave.variable.isBlacklisted"> 
+				<equals value="false"></equals>
+			</with> 
+		</definition>
+		
 		<definition 
 			id="com.laboki.eclipse.plugin.smartsave.expression.smartSaveIsEnabled">
 			<with 

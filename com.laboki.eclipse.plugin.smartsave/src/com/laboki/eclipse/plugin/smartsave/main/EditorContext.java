@@ -1,12 +1,18 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
@@ -18,8 +24,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
@@ -80,32 +89,52 @@ public enum EditorContext {
 	private static final Logger LOGGER =
 		Logger.getLogger(EditorContext.class.getName());
 
-	public static IPartService
-	getPartService() {
-		return (IPartService) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-			.getService(IPartService.class);
-	}
-
-	public static Shell
+	public static Optional<Shell>
 	getShell() {
-		return EditorContext.WORKBENCH.getModalDialogShellProvider().getShell();
+		return Optional.fromNullable(EditorContext.WORKBENCH.getModalDialogShellProvider()
+			.getShell());
 	}
 
-	public static IEditorPart
+	public static Optional<IPartService>
+	getPartService() {
+		final Optional<IWorkbenchWindow> window =
+			EditorContext.getActiveWorkbenchWindow();
+		if (!window.isPresent()) return Optional.absent();
+		return Optional.fromNullable((IPartService) window.get()
+			.getService(IPartService.class));
+	}
+
+	public static Optional<IEditorPart>
 	getEditor() {
-		return EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-			.getActivePage()
-			.getActiveEditor();
+		final Optional<IWorkbenchWindow> window =
+			EditorContext.getActiveWorkbenchWindow();
+		if (!window.isPresent()) return Optional.absent();
+		final Optional<IWorkbenchPage> page = EditorContext.getActivePage(window);
+		if (!page.isPresent()) return Optional.absent();
+		return Optional.fromNullable(page.get().getActiveEditor());
 	}
 
-	public static Control
+	private static Optional<IWorkbenchWindow>
+	getActiveWorkbenchWindow() {
+		return Optional.fromNullable(EditorContext.WORKBENCH.getActiveWorkbenchWindow());
+	}
+
+	private static Optional<IWorkbenchPage>
+	getActivePage(final Optional<IWorkbenchWindow> activeWorkbenchWindow) {
+		return Optional.fromNullable(activeWorkbenchWindow.get().getActivePage());
+	}
+
+	public static Optional<Control>
 	getControl(final IEditorPart editor) {
-		return (Control) editor.getAdapter(Control.class);
+		return Optional.fromNullable((Control) editor.getAdapter(Control.class));
 	}
 
-	public static StyledText
+	public static Optional<StyledText>
 	getBuffer(final IEditorPart editor) {
-		return (StyledText) EditorContext.getControl(editor);
+		final Optional<Control> control = EditorContext.getControl(editor);
+		if (!control.isPresent()) return Optional.absent();
+		return Optional.fromNullable((StyledText) EditorContext.getControl(editor)
+			.get());
 	}
 
 	public static Optional<SourceViewer>
@@ -131,7 +160,9 @@ public enum EditorContext {
 
 	public static boolean
 	canSaveAutomatically() {
-		return Store.getCanSaveAutomatically();
+		if (!Store.getCanSaveAutomatically()) return false;
+		if (EditorContext.isBlacklisted()) return false;
+		return true;
 	}
 
 	public static void
@@ -174,8 +205,10 @@ public enum EditorContext {
 
 	public static boolean
 	hasSelection(final IEditorPart editor) {
-		return (EditorContext.getBuffer(editor).getSelectionCount() > 0)
-			|| EditorContext.getBuffer(editor).getBlockSelection();
+		final Optional<StyledText> buffer = EditorContext.getBuffer(editor);
+		if (!buffer.isPresent()) return false;
+		return (buffer.get().getSelectionCount() > 0)
+			|| buffer.get().getBlockSelection();
 	}
 
 	public static boolean
@@ -255,6 +288,12 @@ public enum EditorContext {
 
 	public static void
 	forceSave() {
+		if (!EditorContext.canSaveAutomatically()) return;
+		EditorContext.startForceSaveTask();
+	}
+
+	private static void
+	startForceSaveTask() {
 		new Task() {
 
 			@Override
@@ -283,9 +322,19 @@ public enum EditorContext {
 		}.setFamily(EditorContext.SAVER_TASK_FAMILY).start();
 	}
 
-	static IFile
-	getFile(final IEditorPart editor) {
-		return ((FileEditorInput) editor.getEditorInput()).getFile();
+	static Optional<IFile>
+	getFile(final Optional<IEditorPart> editor) {
+		final Optional<FileEditorInput> fileEditorInput =
+			EditorContext.getFileEditorInput(editor);
+		if (!fileEditorInput.isPresent()) return Optional.absent();
+		return Optional.fromNullable(fileEditorInput.get().getFile());
+	}
+
+	private static Optional<FileEditorInput>
+	getFileEditorInput(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return Optional.absent();
+		return Optional.fromNullable((FileEditorInput) editor.get()
+			.getEditorInput());
 	}
 
 	public static int
@@ -441,5 +490,66 @@ public enum EditorContext {
 		final Job currentJob = EditorContext.JOB_MANAGER.currentJob();
 		if (currentJob == null) return false;
 		return currentJob.isBlocking();
+	}
+
+	public static ArrayList<String>
+	getBlacklist() {
+		final String blacklist = Store.getContentTypeBlacklist();
+		if (blacklist.isEmpty()) return new ArrayList<>();
+		return new ArrayList<>(Arrays.asList(blacklist.split(";")));
+	}
+
+	public static void
+	setBlacklist(final String contentTypes) {
+		Store.setContentTypeBlacklist(contentTypes);
+	}
+
+	public static boolean
+	isBlacklisted() {
+		final ArrayList<String> blacklist = EditorContext.getBlacklist();
+		if (blacklist.isEmpty()) return false;
+		if (blacklist.contains(EditorContext.getContentTypeId())) return true;
+		return false;
+	}
+
+	private static String
+	getContentTypeId() {
+		final Optional<IContentType> contentType = EditorContext.getContentType();
+		if (contentType.isPresent()) return contentType.get().getId();
+		return "";
+	}
+
+	private static Optional<IContentType>
+	getContentType() {
+		final Optional<IEditorPart> editor = EditorContext.getEditor();
+		if (!editor.isPresent()) return Optional.absent();
+		final Optional<IContentDescription> description =
+			EditorContext.getContentDescription(editor);
+		if (!description.isPresent()) return Optional.absent();
+		return Optional.fromNullable(description.get().getContentType());
+	}
+
+	private static Optional<IContentDescription>
+	getContentDescription(final Optional<IEditorPart> editor) {
+		try {
+			return EditorContext.tryToGetContentDescription(editor);
+		}
+		catch (final CoreException e) {
+			EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
+			return Optional.absent();
+		}
+	}
+
+	private static Optional<IContentDescription>
+	tryToGetContentDescription(final Optional<IEditorPart> editor)
+		throws CoreException {
+		final Optional<IFile> file = EditorContext.getFile(editor);
+		if (!file.isPresent()) return Optional.absent();
+		return Optional.fromNullable(file.get().getContentDescription());
+	}
+
+	public static IContentType[]
+	getContentTypes() {
+		return Platform.getContentTypeManager().getAllContentTypes();
 	}
 }

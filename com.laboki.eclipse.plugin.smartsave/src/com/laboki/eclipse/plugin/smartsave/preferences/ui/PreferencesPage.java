@@ -9,9 +9,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 
@@ -123,6 +125,13 @@ public final class PreferencesPage extends PreferencePage
 		Store.clear();
 	}
 
+	@Override
+	public void
+	dispose() {
+		// EventBus.post(new PreferencesWidgetDisposedEvent());
+		super.dispose();
+	}
+
 	private enum FONT {
 		INSTANCE;
 
@@ -138,17 +147,19 @@ public final class PreferencesPage extends PreferencePage
 
 		private static String
 		getDefaultFontName() {
-			return FONT.getDefaultFontData().getName();
+			return FONT.getDefaultFontData().get().getName();
 		}
 
 		private static int
 		getDefaultFontHeight() {
-			return FONT.getDefaultFontData().getHeight();
+			return FONT.getDefaultFontData().get().getHeight();
 		}
 
-		private static FontData
+		private static Optional<FontData>
 		getDefaultFontData() {
-			return EditorContext.getShell().getFont().getFontData()[0];
+			final Optional<Shell> shell = EditorContext.getShell();
+			if (!shell.isPresent()) return Optional.absent();
+			return Optional.fromNullable(shell.get().getFont().getFontData()[0]);
 		}
 	}
 }

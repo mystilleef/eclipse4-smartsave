@@ -17,6 +17,7 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 	implements
 		IPreferenceChangeListener {
 
+	private static final String FAMILY = "Preferences Change Listener Family";
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 	private static final String TASK_NAME =
 		"smartsave preference change event listener";
@@ -37,7 +38,8 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 			execute() {
 				EventBus.post(new PreferenceStoreChangeEvent());
 			}
-		}.setName(PreferenceChangeListener.TASK_NAME)
+		}.setFamily(PreferenceChangeListener.FAMILY)
+			.setName(PreferenceChangeListener.TASK_NAME)
 			.setRule(PreferenceChangeListener.RULE)
 			.setDelay(EditorContext.SHORT_DELAY)
 			.start();
