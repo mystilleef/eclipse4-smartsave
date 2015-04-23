@@ -6,7 +6,14 @@ import org.eclipse.ui.IEditorPart;
 public final class ForceSaveJob extends SaveJob {
 
 	public ForceSaveJob() {
+		this.setName("");
 		this.setRule(ResourcesPlugin.getWorkspace().getRoot());
+	}
+
+	@Override
+	public boolean
+	belongsTo(final Object family) {
+		return false;
 	}
 
 	@Override
