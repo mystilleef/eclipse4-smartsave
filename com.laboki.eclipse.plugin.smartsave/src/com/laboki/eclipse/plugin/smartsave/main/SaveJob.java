@@ -1,11 +1,14 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
+
+import com.google.common.base.Optional;
 
 public class SaveJob extends WorkspaceJob implements Runnable {
 
@@ -72,6 +75,9 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 	private void
 	setNewRule(final IEditorPart editorPart) {
 		if (this.editor == editorPart) return;
-		this.setRule(EditorContext.getFile(editorPart));
+		final Optional<IFile> file =
+			EditorContext.getFile(Optional.fromNullable(editorPart));
+		if (!file.isPresent()) return;
+		this.setRule(file.get());
 	}
 }
