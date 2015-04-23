@@ -13,6 +13,8 @@ public final class ToggleSmartSaveCommandState
 	extends
 		AbstractEventBusInstance {
 
+	private static final int ONE_SECOND = 1000;
+	private static final String FAMILY = "Toggle Smart Save Command Family";
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 
 	public ToggleSmartSaveCommandState() {
@@ -29,9 +31,10 @@ public final class ToggleSmartSaveCommandState
 			execute() {
 				ToggleSmartSaveCommandState.updateState();
 			}
-		}.setPriority(Job.INTERACTIVE)
+		}.setFamily(ToggleSmartSaveCommandState.FAMILY)
+			.setPriority(Job.INTERACTIVE)
 			.setRule(ToggleSmartSaveCommandState.RULE)
-			.setDelay(EditorContext.SHORT_DELAY)
+			.setDelay(ToggleSmartSaveCommandState.ONE_SECOND)
 			.start();
 	}
 
