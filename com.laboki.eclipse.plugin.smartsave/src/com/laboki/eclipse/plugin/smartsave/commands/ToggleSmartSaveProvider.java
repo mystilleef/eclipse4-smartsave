@@ -16,9 +16,13 @@ import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 
+	private static final int ONE_SECOND = 1000;
+	private static final String FAMILY = "Toggle smart save provider family";
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 	public final static String SMART_SAVE_IS_ENABLED =
 		"com.laboki.eclipse.plugin.smartsave.variable.smartSaveIsEnabled";
+	public final static String IS_BLACKLISTED =
+		"com.laboki.eclipse.plugin.smartsave.variable.isBlacklisted";
 
 	public ToggleSmartSaveProvider() {
 		EventBus.register(this);
@@ -31,6 +35,8 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 		final Map<String, Boolean> currentState = new HashMap<>(1);
 		currentState.put(ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());
+		currentState.put(ToggleSmartSaveProvider.IS_BLACKLISTED,
+			EditorContext.isBlacklisted());
 		return currentState;
 	}
 
@@ -38,7 +44,8 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 	public String[]
 	getProvidedSourceNames() {
 		return new String[] {
-			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED
+			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
+			ToggleSmartSaveProvider.IS_BLACKLISTED
 		};
 	}
 
@@ -58,8 +65,9 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 			execute() {
 				ToggleSmartSaveProvider.this.update();
 			}
-		}.setPriority(Job.INTERACTIVE)
-			.setDelay(EditorContext.SHORT_DELAY)
+		}.setFamily(ToggleSmartSaveProvider.FAMILY)
+			.setPriority(Job.INTERACTIVE)
+			.setDelay(ToggleSmartSaveProvider.ONE_SECOND)
 			.setRule(ToggleSmartSaveProvider.RULE)
 			.start();
 	}
@@ -69,5 +77,8 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			EditorContext.canSaveAutomatically());
+		this.fireSourceChanged(ISources.WORKBENCH,
+			ToggleSmartSaveProvider.IS_BLACKLISTED,
+			EditorContext.isBlacklisted());
 	}
 }
