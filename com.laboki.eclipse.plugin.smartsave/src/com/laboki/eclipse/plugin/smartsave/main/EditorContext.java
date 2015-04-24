@@ -158,6 +158,7 @@ public enum EditorContext {
 
 	public static boolean
 	canSaveAutomatically(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		if (!Store.getCanSaveAutomatically()) return false;
 		if (EditorContext.isBlacklisted(editor)) return false;
 		return true;
@@ -299,6 +300,7 @@ public enum EditorContext {
 
 	public static void
 	forceSave(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return;
 		if (!EditorContext.canSaveAutomatically(editor)) return;
 		EditorContext.startForceSaveTask(editor);
 	}
