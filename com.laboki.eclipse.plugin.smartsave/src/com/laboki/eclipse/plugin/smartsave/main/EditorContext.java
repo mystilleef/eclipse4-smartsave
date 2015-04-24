@@ -498,9 +498,4 @@ public enum EditorContext {
 	getContentTypes() {
 		return Platform.getContentTypeManager().getAllContentTypes();
 	}
-
-	public static void
-	out(final Object message) {
-		DebugConsole.out(message);
-	}
 }
