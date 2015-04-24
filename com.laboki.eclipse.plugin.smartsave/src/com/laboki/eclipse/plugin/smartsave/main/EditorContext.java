@@ -30,9 +30,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 
@@ -56,8 +53,6 @@ public enum EditorContext {
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 	public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
-	// public static final MessageConsole CONSOLE =
-	// EditorContext.getConsole("Smart Save");
 	public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
 	public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
 	static final SaveJob SAVE_JOB = new SaveJob();
@@ -391,51 +386,6 @@ public enum EditorContext {
 		return EditorContext.JOB_MANAGER.find(SaveJob.JOB_FAMILY).length > 0;
 	}
 
-	// public static void
-	// out(final Object message) {
-	// EditorContext.CONSOLE.newMessageStream().println(String.valueOf(message));
-	// }
-	// public static void
-	// showPluginConsole() {
-	// try {
-	// EditorContext.tryToShowConsole();
-	// }
-	// catch (final PartInitException e) {
-	// EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
-	// }
-	// }
-	// private static void
-	// tryToShowConsole() throws PartInitException {
-	// ((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-	// .getActivePage()
-	// .showView(IConsoleConstants.ID_CONSOLE_VIEW)).display(EditorContext.CONSOLE);
-	// }
-	@SuppressWarnings("unused")
-	private static MessageConsole
-	getConsole(final String name) {
-		final MessageConsole console = EditorContext.findConsole(name);
-		if (console != null) return console;
-		return EditorContext.newConsole(name);
-	}
-
-	private static MessageConsole
-	findConsole(final String name) {
-		final IConsole[] consoles =
-			ConsolePlugin.getDefault().getConsoleManager().getConsoles();
-		for (final IConsole console : consoles)
-			if (name.equals(console.getName())) return (MessageConsole) console;
-		return null;
-	}
-
-	private static MessageConsole
-	newConsole(final String name) {
-		final MessageConsole myConsole = new MessageConsole(name, null);
-		ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[] {
-			myConsole
-		});
-		return myConsole;
-	}
-
 	public static void
 	asyncExec(final Runnable runnable) {
 		if (EditorContext.displayDoesNotExist()) return;
@@ -547,5 +497,10 @@ public enum EditorContext {
 	public static IContentType[]
 	getContentTypes() {
 		return Platform.getContentTypeManager().getAllContentTypes();
+	}
+
+	public static void
+	out(final Object message) {
+		DebugConsole.out(message);
 	}
 }
