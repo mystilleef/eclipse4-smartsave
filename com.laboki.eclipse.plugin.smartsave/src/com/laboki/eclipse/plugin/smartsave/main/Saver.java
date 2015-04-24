@@ -69,6 +69,6 @@ public final class Saver extends AbstractEventBusInstance {
 	void
 	save() {
 		if (!this.editor.isPresent()) return;
-		EditorContext.save(this.editor.get());
+		EditorContext.save(this.editor);
 	}
 }

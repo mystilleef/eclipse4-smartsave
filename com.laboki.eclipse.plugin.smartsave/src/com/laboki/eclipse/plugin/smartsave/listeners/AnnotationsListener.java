@@ -44,7 +44,7 @@ public class AnnotationsListener extends AbstractListener
 	getAnnotationModel() {
 		final Optional<IEditorPart> editor = EditorContext.getEditor();
 		if (!editor.isPresent()) return Optional.absent();
-		final Optional<SourceViewer> view = EditorContext.getView(editor.get());
+		final Optional<SourceViewer> view = EditorContext.getView(editor);
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getAnnotationModel());
 	}

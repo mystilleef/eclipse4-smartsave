@@ -14,7 +14,7 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 
 	private static final String TASK_NAME = "SMART_SAVE_WORKSPACE_SAVE_JOB";
 	public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
-	private IEditorPart editor;
+	private Optional<IEditorPart> editor;
 
 	public SaveJob() {
 		super(SaveJob.TASK_NAME);
@@ -36,7 +36,8 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 
 	protected void
 	save() {
-		this.editor.getSite().getPage().saveEditor(this.editor, false);
+		if (!this.editor.isPresent()) return;
+		this.editor.get().getSite().getPage().saveEditor(this.editor.get(), false);
 	}
 
 	@Override
@@ -66,17 +67,18 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 	}
 
 	public void
-	execute(final IEditorPart editorPart) {
+	execute(final Optional<IEditorPart> editorPart) {
 		this.setNewRule(editorPart);
 		this.editor = editorPart;
 		this.schedule(EditorContext.SHORT_DELAY);
 	}
 
 	private void
-	setNewRule(final IEditorPart editorPart) {
+	setNewRule(final Optional<IEditorPart> editorPart) {
 		if (this.editor == editorPart) return;
+		if (!editorPart.isPresent()) return;
 		final Optional<IFile> file =
-			EditorContext.getFile(Optional.fromNullable(editorPart));
+			EditorContext.getFile(Optional.fromNullable(editorPart.get()));
 		if (!file.isPresent()) return;
 		this.setRule(file.get());
 	}

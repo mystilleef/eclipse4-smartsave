@@ -19,7 +19,7 @@ public final class VerifyEventListener extends AbstractListener
 	getBuffer() {
 		final Optional<IEditorPart> editor = EditorContext.getEditor();
 		if (!editor.isPresent()) return Optional.absent();
-		return EditorContext.getBuffer(editor.get());
+		return EditorContext.getBuffer(editor);
 	}
 
 	public VerifyEventListener() {

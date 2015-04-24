@@ -19,7 +19,7 @@ public final class KeyEventListener extends AbstractListener
 	getControl() {
 		final Optional<IEditorPart> editor = EditorContext.getEditor();
 		if (!editor.isPresent()) return Optional.absent();
-		return EditorContext.getControl(editor.get());
+		return EditorContext.getControl(editor);
 	}
 
 	public KeyEventListener() {

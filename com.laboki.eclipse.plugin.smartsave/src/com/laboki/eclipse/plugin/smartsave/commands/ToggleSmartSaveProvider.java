@@ -37,7 +37,7 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 		currentState.put(ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
 			Store.getCanSaveAutomatically());
 		currentState.put(ToggleSmartSaveProvider.IS_BLACKLISTED,
-			EditorContext.isBlacklisted());
+			EditorContext.isBlacklisted(EditorContext.getEditor()));
 		return currentState;
 	}
 
@@ -80,6 +80,6 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 			Store.getCanSaveAutomatically());
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.IS_BLACKLISTED,
-			EditorContext.isBlacklisted());
+			EditorContext.isBlacklisted(EditorContext.getEditor()));
 	}
 }

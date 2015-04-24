@@ -117,12 +117,15 @@ public enum EditorContext {
 	}
 
 	public static Optional<Control>
-	getControl(final IEditorPart editor) {
-		return Optional.fromNullable((Control) editor.getAdapter(Control.class));
+	getControl(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return Optional.absent();
+		return Optional.fromNullable((Control) editor.get()
+			.getAdapter(Control.class));
 	}
 
 	public static Optional<StyledText>
-	getBuffer(final IEditorPart editor) {
+	getBuffer(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return Optional.absent();
 		final Optional<Control> control = EditorContext.getControl(editor);
 		if (!control.isPresent()) return Optional.absent();
 		return Optional.fromNullable((StyledText) EditorContext.getControl(editor)
@@ -130,12 +133,14 @@ public enum EditorContext {
 	}
 
 	public static Optional<SourceViewer>
-	getView(final IEditorPart editor) {
-		return Optional.fromNullable((SourceViewer) editor.getAdapter(ITextOperationTarget.class));
+	getView(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return Optional.absent();
+		return Optional.fromNullable((SourceViewer) editor.get()
+			.getAdapter(ITextOperationTarget.class));
 	}
 
 	public static void
-	save(final IEditorPart editor) {
+	save(final Optional<IEditorPart> editor) {
 		try {
 			if (EditorContext.canSave(editor)) EditorContext.tryToSave(editor);
 		}
@@ -145,15 +150,16 @@ public enum EditorContext {
 	}
 
 	private static boolean
-	canSave(final IEditorPart editor) {
-		return EditorContext.canSaveAutomatically()
+	canSave(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
+		return EditorContext.canSaveAutomatically(editor)
 			&& EditorContext.canSaveFile(editor);
 	}
 
 	public static boolean
-	canSaveAutomatically() {
+	canSaveAutomatically(final Optional<IEditorPart> editor) {
 		if (!Store.getCanSaveAutomatically()) return false;
-		if (EditorContext.isBlacklisted()) return false;
+		if (EditorContext.isBlacklisted(editor)) return false;
 		return true;
 	}
 
@@ -168,35 +174,41 @@ public enum EditorContext {
 	}
 
 	private static boolean
-	canSaveFile(final IEditorPart editor) {
+	canSaveFile(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return !(EditorContext.isNotModified(editor)
 			|| EditorContext.isBeingEdited(editor) || EditorContext.hasProblems(editor));
 	}
 
 	private static boolean
-	isBeingEdited(final IEditorPart editor) {
+	isBeingEdited(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return EditorContext.hasSelection(editor)
 			|| EditorContext.isInLinkMode(editor);
 	}
 
 	private static boolean
-	hasProblems(final IEditorPart editor) {
+	hasProblems(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return EditorContext.bufferHasErrors(editor)
 			|| EditorContext.bufferHasWarnings(editor);
 	}
 
 	public static boolean
-	isNotModified(final IEditorPart editor) {
+	isNotModified(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return !EditorContext.isModified(editor);
 	}
 
 	public static boolean
-	isModified(final IEditorPart editor) {
-		return editor.isDirty();
+	isModified(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
+		return editor.get().isDirty();
 	}
 
 	public static boolean
-	hasSelection(final IEditorPart editor) {
+	hasSelection(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		final Optional<StyledText> buffer = EditorContext.getBuffer(editor);
 		if (!buffer.isPresent()) return false;
 		return (buffer.get().getSelectionCount() > 0)
@@ -204,12 +216,14 @@ public enum EditorContext {
 	}
 
 	public static boolean
-	isInLinkMode(final IEditorPart editor) {
+	isInLinkMode(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return EditorContext.hasLinkAnnotations(editor);
 	}
 
 	private static boolean
-	hasLinkAnnotations(final IEditorPart editor) {
+	hasLinkAnnotations(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		final Optional<SourceViewer> view = EditorContext.getView(editor);
 		if (!view.isPresent()) return false;
 		final Iterator<Annotation> iterator =
@@ -226,7 +240,8 @@ public enum EditorContext {
 	}
 
 	private static boolean
-	bufferHasErrors(final IEditorPart editor) {
+	bufferHasErrors(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		if (EditorContext.canSaveIfErrors()) return false;
 		return EditorContext.hasErrors(editor);
 	}
@@ -237,13 +252,15 @@ public enum EditorContext {
 	}
 
 	public static boolean
-	hasErrors(final IEditorPart editor) {
+	hasErrors(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_ERROR,
 			editor);
 	}
 
 	private static boolean
-	bufferHasWarnings(final IEditorPart editor) {
+	bufferHasWarnings(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		if (EditorContext.canSaveIfWarnings()) return false;
 		return EditorContext.hasWarnings(editor);
 	}
@@ -254,13 +271,15 @@ public enum EditorContext {
 	}
 
 	public static boolean
-	hasWarnings(final IEditorPart editor) {
+	hasWarnings(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return false;
 		return EditorContext.getAnnotationSeverity(EditorContext.ANNOTATION_WARNING,
 			editor);
 	}
 
 	private static boolean
-	getAnnotationSeverity(final String problemSeverity, final IEditorPart editor) {
+	getAnnotationSeverity(final String problemSeverity,
+												final Optional<IEditorPart> editor) {
 		final Optional<SourceViewer> view = EditorContext.getView(editor);
 		if (!view.isPresent()) return false;
 		final Iterator<Annotation> iterator =
@@ -279,25 +298,25 @@ public enum EditorContext {
 	}
 
 	public static void
-	forceSave() {
-		if (!EditorContext.canSaveAutomatically()) return;
-		EditorContext.startForceSaveTask();
+	forceSave(final Optional<IEditorPart> editor) {
+		if (!EditorContext.canSaveAutomatically(editor)) return;
+		EditorContext.startForceSaveTask(editor);
 	}
 
 	private static void
-	startForceSaveTask() {
+	startForceSaveTask(final Optional<IEditorPart> editor) {
 		new Task() {
 
 			@Override
 			public void
 			execute() {
-				EditorContext.FORCE_SAVE_JOB.execute(null);
+				EditorContext.FORCE_SAVE_JOB.execute(editor);
 			}
 		}.start();
 	}
 
 	public static void
-	tryToSave(final IEditorPart editor) {
+	tryToSave(final Optional<IEditorPart> editor) {
 		new Task() {
 
 			@Override
@@ -451,23 +470,23 @@ public enum EditorContext {
 	}
 
 	public static boolean
-	isBlacklisted() {
+	isBlacklisted(final Optional<IEditorPart> editor) {
 		final ArrayList<String> blacklist = EditorContext.getBlacklist();
 		if (blacklist.isEmpty()) return false;
-		if (blacklist.contains(EditorContext.getContentTypeId())) return true;
+		if (blacklist.contains(EditorContext.getContentTypeId(editor))) return true;
 		return false;
 	}
 
 	private static String
-	getContentTypeId() {
-		final Optional<IContentType> contentType = EditorContext.getContentType();
+	getContentTypeId(final Optional<IEditorPart> editor) {
+		final Optional<IContentType> contentType =
+			EditorContext.getContentType(editor);
 		if (contentType.isPresent()) return contentType.get().getId();
 		return "";
 	}
 
 	private static Optional<IContentType>
-	getContentType() {
-		final Optional<IEditorPart> editor = EditorContext.getEditor();
+	getContentType(final Optional<IEditorPart> editor) {
 		if (!editor.isPresent()) return Optional.absent();
 		final Optional<IContentDescription> description =
 			EditorContext.getContentDescription(editor);

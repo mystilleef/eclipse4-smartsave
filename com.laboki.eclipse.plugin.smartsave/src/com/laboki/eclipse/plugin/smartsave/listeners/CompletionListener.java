@@ -94,8 +94,7 @@ public final class CompletionListener extends AbstractEventBusInstance
 	private Optional<ContentAssistantFacade>
 	getContentAssistant() {
 		if (!this.editor.isPresent()) return Optional.absent();
-		final Optional<SourceViewer> view =
-			EditorContext.getView(this.editor.get());
+		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getContentAssistantFacade());
 	}
@@ -103,8 +102,7 @@ public final class CompletionListener extends AbstractEventBusInstance
 	private Optional<IQuickAssistAssistant>
 	getQuickAssistant() {
 		if (!this.editor.isPresent()) return Optional.absent();
-		final Optional<SourceViewer> view =
-			EditorContext.getView(this.editor.get());
+		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getQuickAssistAssistant());
 	}
