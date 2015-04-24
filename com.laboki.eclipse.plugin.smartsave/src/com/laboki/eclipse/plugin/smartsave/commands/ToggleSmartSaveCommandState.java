@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
@@ -40,6 +40,6 @@ public final class ToggleSmartSaveCommandState
 
 	protected static void
 	updateState() {
-		ToggleSmartSaveCommand.setState(EditorContext.canSaveAutomatically());
+		ToggleSmartSaveCommand.setState(Store.getCanSaveAutomatically());
 	}
 }

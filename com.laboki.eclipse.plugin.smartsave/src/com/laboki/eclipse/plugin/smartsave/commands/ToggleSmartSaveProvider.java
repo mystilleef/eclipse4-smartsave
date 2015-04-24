@@ -11,6 +11,7 @@ import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
+import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
@@ -34,7 +35,7 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 	getCurrentState() {
 		final Map<String, Boolean> currentState = new HashMap<>(1);
 		currentState.put(ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
-			EditorContext.canSaveAutomatically());
+			Store.getCanSaveAutomatically());
 		currentState.put(ToggleSmartSaveProvider.IS_BLACKLISTED,
 			EditorContext.isBlacklisted());
 		return currentState;
@@ -76,7 +77,7 @@ public final class ToggleSmartSaveProvider extends AbstractSourceProvider {
 	update() {
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.SMART_SAVE_IS_ENABLED,
-			EditorContext.canSaveAutomatically());
+			Store.getCanSaveAutomatically());
 		this.fireSourceChanged(ISources.WORKBENCH,
 			ToggleSmartSaveProvider.IS_BLACKLISTED,
 			EditorContext.isBlacklisted());
