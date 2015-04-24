@@ -23,18 +23,15 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.IConsoleConstants;
-import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
@@ -59,8 +56,8 @@ public enum EditorContext {
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 	public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 	public static final Display DISPLAY = EditorContext.WORKBENCH.getDisplay();
-	public static final MessageConsole CONSOLE =
-		EditorContext.getConsole("Smart Save");
+	// public static final MessageConsole CONSOLE =
+	// EditorContext.getConsole("Smart Save");
 	public static final String SAVER_TASK_FAMILY = "SAVER_TASK_FAMILY";
 	public static final ISchedulingRule SAVER_TASK_RULE = new TaskMutexRule();
 	static final SaveJob SAVE_JOB = new SaveJob();
@@ -333,8 +330,9 @@ public enum EditorContext {
 	private static Optional<FileEditorInput>
 	getFileEditorInput(final Optional<IEditorPart> editor) {
 		if (!editor.isPresent()) return Optional.absent();
-		return Optional.fromNullable((FileEditorInput) editor.get()
-			.getEditorInput());
+		final IEditorInput editorInput = editor.get().getEditorInput();
+		if (!(editorInput instanceof FileEditorInput)) return Optional.absent();
+		return Optional.fromNullable((FileEditorInput) editorInput);
 	}
 
 	public static int
@@ -393,28 +391,26 @@ public enum EditorContext {
 		return EditorContext.JOB_MANAGER.find(SaveJob.JOB_FAMILY).length > 0;
 	}
 
-	public static void
-	out(final Object message) {
-		EditorContext.CONSOLE.newMessageStream().println(String.valueOf(message));
-	}
-
-	public static void
-	showPluginConsole() {
-		try {
-			EditorContext.tryToShowConsole();
-		}
-		catch (final PartInitException e) {
-			EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
-		}
-	}
-
-	private static void
-	tryToShowConsole() throws PartInitException {
-		((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
-			.getActivePage()
-			.showView(IConsoleConstants.ID_CONSOLE_VIEW)).display(EditorContext.CONSOLE);
-	}
-
+	// public static void
+	// out(final Object message) {
+	// EditorContext.CONSOLE.newMessageStream().println(String.valueOf(message));
+	// }
+	// public static void
+	// showPluginConsole() {
+	// try {
+	// EditorContext.tryToShowConsole();
+	// }
+	// catch (final PartInitException e) {
+	// EditorContext.LOGGER.log(Level.WARNING, e.getMessage(), e);
+	// }
+	// }
+	// private static void
+	// tryToShowConsole() throws PartInitException {
+	// ((IConsoleView) EditorContext.WORKBENCH.getActiveWorkbenchWindow()
+	// .getActivePage()
+	// .showView(IConsoleConstants.ID_CONSOLE_VIEW)).display(EditorContext.CONSOLE);
+	// }
+	@SuppressWarnings("unused")
 	private static MessageConsole
 	getConsole(final String name) {
 		final MessageConsole console = EditorContext.findConsole(name);
