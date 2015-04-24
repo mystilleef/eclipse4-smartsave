@@ -15,7 +15,6 @@ import com.laboki.eclipse.plugin.smartsave.events.PreferencesWidgetDisposedEvent
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
-import com.laboki.eclipse.plugin.smartsave.preferences.ContentTypeBlacklistUpdater;
 
 public final class ContentTypeTableViewer implements Instance {
 

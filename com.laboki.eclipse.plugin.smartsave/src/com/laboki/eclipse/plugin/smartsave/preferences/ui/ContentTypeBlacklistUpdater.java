@@ -1,4 +1,4 @@
-package com.laboki.eclipse.plugin.smartsave.preferences;
+package com.laboki.eclipse.plugin.smartsave.preferences.ui;
 
 import java.util.ArrayList;
 

@@ -77,6 +77,8 @@ public final class ContentTypePreferencesPage extends PreferencePage
 		data.verticalAlignment = GridData.CENTER;
 		data.grabExcessVerticalSpace = false;
 		text.setLayoutData(data);
+		parent.layout();
+		parent.pack();
 	}
 
 	private static void
