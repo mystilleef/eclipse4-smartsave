@@ -23,19 +23,14 @@ public final class ForceSaveJob extends SaveJob {
 	@Override
 	protected void
 	save() {
-		if (this.editor.isPresent()) {
-			this.editor.get()
-				.getSite()
-				.getPage()
-				.saveEditor(this.editor.get(), false);
-			System.out.println("Force save successful");
-		} else System.out.println("Force save UNsucessful");
+		if (!this.editor.isPresent()) return;
+		this.editor.get().getSite().getPage().saveEditor(this.editor.get(), false);
 	}
 
 	@Override
 	public void
 	execute(final Optional<IEditorPart> editor) {
 		this.editor = editor;
-		this.schedule(EditorContext.SHORT_DELAY);
+		this.schedule();
 	}
 }
