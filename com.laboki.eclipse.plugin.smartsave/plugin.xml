@@ -11,7 +11,7 @@
 			id="com.laboki.eclipse.plugin.smartsave.PreferencePage"
 			class="com.laboki.eclipse.plugin.smartsave.preferences.ui.PreferencesPage"
 			name="%page.name">
-		</page>
+		</page>   
 
 		<page 
 			id="com.laboki.eclipse.plugin.smartsave.content.types.PreferencePage"

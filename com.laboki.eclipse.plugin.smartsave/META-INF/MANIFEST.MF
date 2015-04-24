@@ -87,4 +87,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.console,
  org.eclipse.ui.texteditor
-Bundle-Version: 20150423
+Bundle-Version: 20150424
