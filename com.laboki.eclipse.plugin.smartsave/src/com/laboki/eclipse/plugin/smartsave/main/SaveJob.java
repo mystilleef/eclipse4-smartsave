@@ -73,12 +73,11 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 		this.schedule(EditorContext.SHORT_DELAY);
 	}
 
-	private void
+	protected void
 	setNewRule(final Optional<IEditorPart> editorPart) {
 		if (this.editor == editorPart) return;
 		if (!editorPart.isPresent()) return;
-		final Optional<IFile> file =
-			EditorContext.getFile(Optional.fromNullable(editorPart.get()));
+		final Optional<IFile> file = EditorContext.getFile(editorPart);
 		if (!file.isPresent()) return;
 		this.setRule(file.get());
 	}
