@@ -58,22 +58,21 @@ Export-Package: com.google.common.annotations,
    org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.listeners.abstraction;uses:="com.laboki.eclipse.plugin.smartsave.instance,com.laboki.eclipse.plugin.smartsave.events",
  com.laboki.eclipse.plugin.smartsave.main;
-  uses:="com.google.common.base,
+  uses:="org.eclipse.core.runtime.jobs,
+   org.eclipse.ui,
+   org.eclipse.core.runtime,
+   com.google.common.base,
    com.laboki.eclipse.plugin.smartsave.instance,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.swt.widgets,
-   org.eclipse.core.runtime.jobs,
-   org.eclipse.ui,
-   org.eclipse.ui.console,
-   org.eclipse.core.runtime,
    com.google.common.eventbus,
    org.eclipse.core.resources",
- com.laboki.eclipse.plugin.smartsave.preferences;uses:="com.laboki.eclipse.plugin.smartsave.instance,com.laboki.eclipse.plugin.smartsave.events,org.eclipse.core.runtime.preferences",
+ com.laboki.eclipse.plugin.smartsave.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.preferences.ui;
   uses:="org.eclipse.ui,
    org.eclipse.swt.graphics,
-   org.eclipse.jface.resource,
    com.laboki.eclipse.plugin.smartsave.instance,
+   org.eclipse.jface.resource,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.swt.widgets,
    org.eclipse.jface.preference,
@@ -86,4 +85,4 @@ Bundle-ClassPath: .,
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.texteditor
-Bundle-Version: 20150424.1
+Bundle-Version: 20150426
