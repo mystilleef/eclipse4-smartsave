@@ -18,10 +18,7 @@ public final class ContentTypeText implements Instance {
 
 	public ContentTypeText(final Composite parent) {
 		this.text =
-			new Text(parent, SWT.SEARCH
-				| SWT.ICON_CANCEL
-				| SWT.ICON_SEARCH
-				| SWT.NO_FOCUS);
+			new Text(parent, SWT.SEARCH | SWT.ICON_CANCEL | SWT.ICON_SEARCH);
 		this.setLayout();
 		this.setProperties();
 		this.addListeners();
