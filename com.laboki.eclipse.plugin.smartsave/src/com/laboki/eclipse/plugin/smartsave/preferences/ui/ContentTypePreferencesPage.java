@@ -7,7 +7,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -39,10 +38,8 @@ public final class ContentTypePreferencesPage extends PreferencePage
 	createContents(final Composite parent) {
 		final Composite composite = Util.createComposite(parent, 1);
 		ContentTypePreferencesPage.createLabel(composite);
-		// ContentTypePreferencesPage.createSearchField(composite);
+		ContentTypePreferencesPage.createSearchField(composite);
 		ContentTypePreferencesPage.createListView(composite);
-		composite.layout();
-		composite.pack();
 		parent.layout();
 		parent.pack();
 		return composite;
@@ -63,20 +60,9 @@ public final class ContentTypePreferencesPage extends PreferencePage
 		parent.pack();
 	}
 
-	@SuppressWarnings("unused")
 	private static void
 	createSearchField(final Composite parent) {
-		final Text text =
-			new Text(parent, SWT.SEARCH
-				| SWT.ICON_CANCEL
-				| SWT.ICON_SEARCH
-				| SWT.NO_FOCUS);
-		final GridData data = new GridData();
-		data.horizontalAlignment = GridData.FILL;
-		data.grabExcessHorizontalSpace = true;
-		data.verticalAlignment = GridData.CENTER;
-		data.grabExcessVerticalSpace = false;
-		text.setLayoutData(data);
+		new ContentTypeText(parent).start();
 		parent.layout();
 		parent.pack();
 	}

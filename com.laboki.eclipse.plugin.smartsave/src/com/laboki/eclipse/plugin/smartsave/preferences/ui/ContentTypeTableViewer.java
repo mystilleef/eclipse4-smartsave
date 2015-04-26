@@ -5,23 +5,28 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableItem;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.events.ContentFilterQueryUpdatedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PreferencesWidgetDisposedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class ContentTypeTableViewer implements Instance {
 
-	private static final CheckStateListener LISTENER = new CheckStateListener();
-	private CheckboxTableViewer viewer;
+	static final CheckStateListener LISTENER = new CheckStateListener();
+	protected CheckboxTableViewer viewer;
 	private final ContentTypeBlacklistUpdater blacklistUpdater =
 		new ContentTypeBlacklistUpdater();
+	private final ContentTypeFilter searchFilter = new ContentTypeFilter();
 
 	public ContentTypeTableViewer(final Composite parent) {
 		this.viewer =
@@ -54,6 +59,9 @@ public final class ContentTypeTableViewer implements Instance {
 	private void
 	setProperties() {
 		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
+		this.viewer.setFilters(new ViewerFilter[] {
+			this.searchFilter
+		});
 		this.viewer.setInput(EditorContext.getContentTypes());
 		this.viewer.setLabelProvider(new ContentTypeLabelProvider());
 		this.viewer.getTable().setLinesVisible(true);
@@ -68,7 +76,7 @@ public final class ContentTypeTableViewer implements Instance {
 				false);
 	}
 
-	private static boolean
+	static boolean
 	isBlacklisted(final ArrayList<String> blacklist, final Object element) {
 		return blacklist.contains(((IContentType) element).getId());
 	}
@@ -78,8 +86,9 @@ public final class ContentTypeTableViewer implements Instance {
 	start() {
 		EventBus.register(this);
 		this.blacklistUpdater.start();
-		this.viewer.getControl().setFocus();
+		this.searchFilter.start();
 		this.viewer.refresh();
+		this.viewer.getControl().setFocus();
 		this.addListeners();
 		return this;
 	}
@@ -93,6 +102,7 @@ public final class ContentTypeTableViewer implements Instance {
 	public Instance
 	stop() {
 		EventBus.unregister(this);
+		this.searchFilter.stop();
 		this.blacklistUpdater.stop();
 		this.removeListeners();
 		this.viewer = null;
@@ -109,5 +119,51 @@ public final class ContentTypeTableViewer implements Instance {
 	public void
 	eventHandler(final PreferencesWidgetDisposedEvent event) {
 		this.stop();
+	}
+
+	@Subscribe
+	@AllowConcurrentEvents
+	public void
+	eventHandler(final ContentFilterQueryUpdatedEvent event) {
+		new AsyncTask() {
+
+			@Override
+			public void
+			execute() {
+				ContentTypeTableViewer.this.viewer.refresh(true, true);
+				this.toggleChecks();
+			}
+
+			private void
+			toggleChecks() {
+				ContentTypeTableViewer.this.viewer.removeCheckStateListener(ContentTypeTableViewer.LISTENER);
+				this.iterateElements();
+				ContentTypeTableViewer.this.viewer.addCheckStateListener(ContentTypeTableViewer.LISTENER);
+			}
+
+			private void
+			iterateElements() {
+				final ArrayList<String> blacklist = EditorContext.getBlacklist();
+				for (final TableItem tableItem : ContentTypeTableViewer.this.viewer.getTable()
+					.getItems())
+					this.toggleElement(blacklist, tableItem.getData());
+			}
+
+			private void
+			toggleElement(final ArrayList<String> blacklist, final Object element) {
+				if (ContentTypeTableViewer.isBlacklisted(blacklist, element)) this.uncheck(element);
+				else this.check(element);
+			}
+
+			private void
+			uncheck(final Object element) {
+				ContentTypeTableViewer.this.viewer.setChecked(element, false);
+			}
+
+			private void
+			check(final Object element) {
+				ContentTypeTableViewer.this.viewer.setChecked(element, true);
+			}
+		}.start();
 	}
 }
