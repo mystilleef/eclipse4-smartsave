@@ -28,13 +28,14 @@ public enum Store {
 	public static String
 	getContentTypeBlacklist() {
 		return Store.getString(Store.CONTENT_TYPE_BLACKLIST_KEY,
-			Store.CONTENT_TYPE_BLACKLIST_DEFAULT_VALUE);
+			Store.CONTENT_TYPE_BLACKLIST_DEFAULT_VALUE).trim();
 	}
 
 	public static void
 	setContentTypeBlacklist(final String contentTypeBlacklist) {
-		if (Store.getContentTypeBlacklist().equals(contentTypeBlacklist)) return;
-		Store.setString(Store.CONTENT_TYPE_BLACKLIST_KEY, contentTypeBlacklist);
+		if (Store.getContentTypeBlacklist().equals(contentTypeBlacklist.trim())) return;
+		Store.setString(Store.CONTENT_TYPE_BLACKLIST_KEY,
+			contentTypeBlacklist.trim());
 	}
 
 	public static void
