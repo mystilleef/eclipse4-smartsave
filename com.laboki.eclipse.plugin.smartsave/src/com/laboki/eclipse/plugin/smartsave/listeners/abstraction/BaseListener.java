@@ -1,5 +1,8 @@
 package com.laboki.eclipse.plugin.smartsave.listeners.abstraction;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 
@@ -21,15 +24,18 @@ public abstract class BaseListener extends AbstractEventBusInstance
 		MultiRule.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
 	private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
 	private static final int ONE_SECOND_DELAY = 1000;
-
-	public BaseListener() {
-		super();
-	}
+	private static final Logger LOGGER =
+		Logger.getLogger(BaseListener.class.getName());
 
 	@Override
 	public Instance
 	start() {
-		this.add();
+		try {
+			this.add();
+		}
+		catch (final Exception e) {
+			BaseListener.LOGGER.log(Level.FINEST, e.getMessage(), e);
+		}
 		return super.start();
 	}
 
@@ -60,17 +66,22 @@ public abstract class BaseListener extends AbstractEventBusInstance
 	}
 
 	@Override
-	public void
-	add() {}
+	public abstract void
+	add();
 
 	@Override
-	public void
-	remove() {}
+	public abstract void
+	remove();
 
 	@Override
 	public final Instance
 	stop() {
-		this.remove();
+		try {
+			this.remove();
+		}
+		catch (final Exception e) {
+			BaseListener.LOGGER.log(Level.FINEST, e.getMessage(), e);
+		}
 		return super.stop();
 	}
 
