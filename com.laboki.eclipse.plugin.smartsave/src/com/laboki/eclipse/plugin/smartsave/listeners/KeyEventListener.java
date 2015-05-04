@@ -6,10 +6,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
-import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-public final class KeyEventListener extends AbstractListener
+public final class KeyEventListener extends BaseListener
 	implements
 		KeyListener {
 
@@ -49,6 +49,6 @@ public final class KeyEventListener extends AbstractListener
 	@Override
 	public void
 	keyReleased(final KeyEvent event) {
-		AbstractListener.scheduleSave();
+		BaseListener.scheduleSave();
 	}
 }

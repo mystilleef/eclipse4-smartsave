@@ -6,10 +6,10 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
-import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-public class AnnotationsListener extends AbstractListener
+public class AnnotationsListener extends BaseListener
 	implements
 		IAnnotationModelListener {
 
@@ -37,7 +37,7 @@ public class AnnotationsListener extends AbstractListener
 	@Override
 	public void
 	modelChanged(final IAnnotationModel model) {
-		AbstractListener.scheduleSave();
+		BaseListener.scheduleSave();
 	}
 
 	private static Optional<IAnnotationModel>

@@ -6,10 +6,10 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
-import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.AbstractListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-public final class VerifyEventListener extends AbstractListener
+public final class VerifyEventListener extends BaseListener
 	implements
 		VerifyListener {
 
@@ -43,6 +43,6 @@ public final class VerifyEventListener extends AbstractListener
 	@Override
 	public void
 	verifyText(final VerifyEvent arg0) {
-		AbstractListener.scheduleSave();
+		BaseListener.scheduleSave();
 	}
 }
