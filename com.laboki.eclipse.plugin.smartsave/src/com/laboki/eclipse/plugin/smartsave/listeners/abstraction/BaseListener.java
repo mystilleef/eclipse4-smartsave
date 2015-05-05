@@ -41,7 +41,7 @@ public abstract class BaseListener extends AbstractEventBusInstance
 
 	@Subscribe
 	public final void
-	addListener(final EnableSaveListenersEvent event) {
+	eventHandler(final EnableSaveListenersEvent event) {
 		new AsyncTask() {
 
 			@Override
@@ -54,7 +54,7 @@ public abstract class BaseListener extends AbstractEventBusInstance
 
 	@Subscribe
 	public final void
-	removeListener(final DisableSaveListenersEvent event) {
+	eventHandler(final DisableSaveListenersEvent event) {
 		new AsyncTask() {
 
 			@Override
