@@ -85,4 +85,4 @@ Bundle-ClassPath: .,
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.texteditor
-Bundle-Version: 20150426
+Bundle-Version: 20150504
