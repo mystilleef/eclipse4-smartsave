@@ -78,7 +78,6 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 		if (this.editor == editorPart) return;
 		if (!editorPart.isPresent()) return;
 		final Optional<IFile> file = EditorContext.getFile(editorPart);
-		if (!file.isPresent()) return;
-		this.setRule(file.get());
+		if (file.isPresent()) this.setRule(file.get());
 	}
 }
