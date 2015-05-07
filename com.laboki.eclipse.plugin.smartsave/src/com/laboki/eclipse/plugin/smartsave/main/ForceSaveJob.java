@@ -41,7 +41,6 @@ public final class ForceSaveJob extends SaveJob {
 	setNewRule(final Optional<IEditorPart> editorPart) {
 		if (!this.editor.isPresent()) return;
 		final Optional<IFile> file = EditorContext.getFile(this.editor);
-		if (!file.isPresent()) return;
-		this.setRule(file.get());
+		if (file.isPresent()) this.setRule(file.get());
 	}
 }
