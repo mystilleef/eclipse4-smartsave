@@ -13,21 +13,21 @@ public class AnnotationsListener extends BaseListener
 	implements
 		IAnnotationModelListener {
 
-	private final Optional<IAnnotationModel> annotationModel =
+	private final Optional<IAnnotationModel> model =
 		AnnotationsListener.getAnnotationModel();
 
 	@Override
 	public void
 	add() {
-		if (!this.annotationModel.isPresent()) return;
-		this.annotationModel.get().addAnnotationModelListener(this);
+		if (!this.model.isPresent()) return;
+		this.model.get().addAnnotationModelListener(this);
 	}
 
 	@Override
 	public void
 	remove() {
-		if (!this.annotationModel.isPresent()) return;
-		this.annotationModel.get().removeAnnotationModelListener(this);
+		if (!this.model.isPresent()) return;
+		this.model.get().removeAnnotationModelListener(this);
 	}
 
 	@Override
