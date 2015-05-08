@@ -18,10 +18,6 @@ public final class Saver extends AbstractEventBusInstance {
 	boolean completionAssistantIsActive;
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
-	public Saver() {
-		super();
-	}
-
 	@Subscribe
 	public void
 	eventHandler(final AssistSessionStartedEvent event) {

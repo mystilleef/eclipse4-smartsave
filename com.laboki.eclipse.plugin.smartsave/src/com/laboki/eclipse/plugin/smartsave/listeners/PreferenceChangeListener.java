@@ -24,10 +24,6 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 	private static final IEclipsePreferences PREFERENCES =
 		Store.getPreferences();
 
-	public PreferenceChangeListener() {
-		super();
-	}
-
 	@Override
 	public void
 	preferenceChange(final PreferenceChangeEvent event) {

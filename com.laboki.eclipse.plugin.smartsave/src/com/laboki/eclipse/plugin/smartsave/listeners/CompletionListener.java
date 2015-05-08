@@ -27,10 +27,6 @@ public final class CompletionListener extends AbstractEventBusInstance
 	private final Optional<IQuickAssistAssistant> quickAssistant =
 		this.getQuickAssistant();
 
-	public CompletionListener() {
-		super();
-	}
-
 	@Override
 	public void
 	assistSessionEnded(final ContentAssistEvent event) {

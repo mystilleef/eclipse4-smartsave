@@ -22,10 +22,6 @@ public final class VerifyEventListener extends BaseListener
 		return EditorContext.getBuffer(editor);
 	}
 
-	public VerifyEventListener() {
-		super();
-	}
-
 	@Override
 	public void
 	add() {

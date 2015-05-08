@@ -18,10 +18,6 @@ public final class ListenerSwitch extends AbstractEventBusInstance {
 
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
-	public ListenerSwitch() {
-		super();
-	}
-
 	@Subscribe
 	public void
 	toggleListeners(final PartChangedEvent event) {

@@ -22,10 +22,6 @@ public final class KeyEventListener extends BaseListener
 		return EditorContext.getControl(editor);
 	}
 
-	public KeyEventListener() {
-		super();
-	}
-
 	@Override
 	public void
 	add() {

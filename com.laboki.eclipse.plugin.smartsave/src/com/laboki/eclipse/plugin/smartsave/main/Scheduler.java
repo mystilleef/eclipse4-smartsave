@@ -16,10 +16,6 @@ public final class Scheduler extends AbstractEventBusInstance {
 	private static final String SAVER_TASK = "SCHEDULER_SAVER_TASK";
 	boolean completionAssistantIsActive;
 
-	public Scheduler() {
-		super();
-	}
-
 	@Subscribe
 	public void
 	eventHandler(final AssistSessionStartedEvent event) {

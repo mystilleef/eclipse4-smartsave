@@ -16,10 +16,6 @@ public final class DirtyPartListener extends AbstractEventBusInstance
 
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
-	public DirtyPartListener() {
-		super();
-	}
-
 	public void
 	add() {
 		if (!this.editor.isPresent()) return;
