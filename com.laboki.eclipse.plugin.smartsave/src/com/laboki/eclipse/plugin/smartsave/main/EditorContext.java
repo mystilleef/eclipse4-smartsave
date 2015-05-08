@@ -446,6 +446,11 @@ public enum EditorContext {
 		EditorContext.JOB_MANAGER.cancel(SaveJob.JOB_FAMILY);
 	}
 
+	public static void
+	cancelEventTasks() {
+		EditorContext.JOB_MANAGER.cancel(EventBus.FAMILY);
+	}
+
 	public static boolean
 	canScheduleSave() {
 		if (EditorContext.taskDoesNotExist(EditorContext.SAVER_TASK_FAMILY)) return true;

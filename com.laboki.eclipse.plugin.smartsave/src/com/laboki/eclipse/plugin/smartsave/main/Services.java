@@ -48,14 +48,20 @@ public final class Services implements Instance {
 	@Override
 	public Instance
 	stop() {
+		Services.cancelTasks();
 		this.stopServices();
 		this.instances.clear();
 		return this;
 	}
 
+	private static void
+	cancelTasks() {
+		EditorContext.cancelAllSaverTasks();
+		EditorContext.cancelEventTasks();
+	}
+
 	private void
 	stopServices() {
-		EditorContext.cancelAllSaverTasks();
 		for (final Instance instance : ImmutableList.copyOf(this.instances))
 			this.stopService(instance);
 	}
