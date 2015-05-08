@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.MultiRule;
 
 import com.google.common.eventbus.Subscribe;
@@ -52,6 +53,10 @@ public abstract class BaseListener extends AbstractEventBusInstance
 		}.start();
 	}
 
+	@Override
+	public abstract void
+	add();
+
 	@Subscribe
 	public final void
 	eventHandler(final DisableSaveListenersEvent event) {
@@ -66,14 +71,6 @@ public abstract class BaseListener extends AbstractEventBusInstance
 	}
 
 	@Override
-	public abstract void
-	add();
-
-	@Override
-	public abstract void
-	remove();
-
-	@Override
 	public final Instance
 	stop() {
 		try {
@@ -85,13 +82,24 @@ public abstract class BaseListener extends AbstractEventBusInstance
 		return super.stop();
 	}
 
+	@Override
+	public abstract void
+	remove();
+
 	protected static final void
 	scheduleSave() {
-		EditorContext.cancelAllSaverTasks();
-		BaseListener.scheduleTask();
+		new Task() {
+
+			@Override
+			public void
+			execute() {
+				EditorContext.cancelAllSaverTasks();
+				BaseListener.scheduleTask();
+			}
+		}.setPriority(Job.INTERACTIVE).setRule(BaseListener.RULE).start();
 	}
 
-	private static void
+	protected static void
 	scheduleTask() {
 		new Task() {
 
