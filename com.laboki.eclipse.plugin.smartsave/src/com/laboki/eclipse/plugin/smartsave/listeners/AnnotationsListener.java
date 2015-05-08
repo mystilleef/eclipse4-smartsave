@@ -16,10 +16,6 @@ public class AnnotationsListener extends BaseListener
 	private final Optional<IAnnotationModel> annotationModel =
 		AnnotationsListener.getAnnotationModel();
 
-	public AnnotationsListener() {
-		super();
-	}
-
 	@Override
 	public void
 	add() {
