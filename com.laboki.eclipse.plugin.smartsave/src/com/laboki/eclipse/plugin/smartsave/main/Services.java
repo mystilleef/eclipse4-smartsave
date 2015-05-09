@@ -58,6 +58,7 @@ public final class Services implements Instance {
 	cancelTasks() {
 		EditorContext.cancelAllSaverTasks();
 		EditorContext.cancelEventTasks();
+		EditorContext.cancelPluginTasks();
 	}
 
 	private void

@@ -37,6 +37,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
+import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
@@ -449,6 +450,11 @@ public enum EditorContext {
 	public static void
 	cancelEventTasks() {
 		EditorContext.JOB_MANAGER.cancel(EventBus.FAMILY);
+	}
+
+	public static void
+	cancelPluginTasks() {
+		EditorContext.JOB_MANAGER.cancel(BaseTask.FAMILY);
 	}
 
 	public static boolean
