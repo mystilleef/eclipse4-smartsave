@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="libs/guava-18.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins">
 		<accessrules>
 			<accessrule kind="accessible" pattern="org/e*/**"/>
@@ -12,10 +13,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="guava-18.0.jar" sourcepath="guava-18.0-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/com.laboki.eclipse.plugin.smartsave/guava-18.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
