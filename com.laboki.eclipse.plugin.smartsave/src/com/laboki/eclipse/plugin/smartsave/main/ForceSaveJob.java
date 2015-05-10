@@ -1,6 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.ui.IEditorPart;
 
@@ -32,15 +31,6 @@ public final class ForceSaveJob extends SaveJob {
 	public void
 	execute(final Optional<IEditorPart> editor) {
 		this.editor = editor;
-		// this.setNewRule(editor);
 		this.schedule();
-	}
-
-	@Override
-	protected void
-	setNewRule(final Optional<IEditorPart> editorPart) {
-		if (!this.editor.isPresent()) return;
-		final Optional<IFile> file = EditorContext.getFile(this.editor);
-		if (file.isPresent()) this.setRule(file.get());
 	}
 }
