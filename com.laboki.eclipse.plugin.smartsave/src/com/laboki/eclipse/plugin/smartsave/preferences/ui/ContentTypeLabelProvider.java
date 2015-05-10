@@ -7,8 +7,6 @@ import org.eclipse.swt.graphics.Image;
 
 public final class ContentTypeLabelProvider implements ILabelProvider {
 
-	public ContentTypeLabelProvider() {}
-
 	@Override
 	public void
 	addListener(final ILabelProviderListener listener) {}

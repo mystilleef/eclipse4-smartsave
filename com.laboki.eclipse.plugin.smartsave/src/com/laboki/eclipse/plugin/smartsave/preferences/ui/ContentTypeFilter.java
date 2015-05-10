@@ -22,8 +22,6 @@ public final class ContentTypeFilter extends ViewerFilter implements Instance {
 		| Pattern.CANON_EQ
 		| Pattern.UNICODE_CASE;
 
-	public ContentTypeFilter() {}
-
 	public void
 	setSearchText(final String s) {
 		this.query = ".*" + Pattern.quote(s) + ".*";

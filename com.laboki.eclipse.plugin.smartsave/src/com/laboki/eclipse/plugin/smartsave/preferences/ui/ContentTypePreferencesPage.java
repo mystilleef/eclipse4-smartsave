@@ -17,8 +17,6 @@ public final class ContentTypePreferencesPage extends PreferencePage
 	implements
 		IWorkbenchPreferencePage {
 
-	public ContentTypePreferencesPage() {}
-
 	public ContentTypePreferencesPage(final String title) {
 		super(title);
 	}

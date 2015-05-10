@@ -4,8 +4,6 @@ import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public abstract class SyncTask extends BaseTask implements ExecuteTask {
 
-	public SyncTask() {}
-
 	@Override
 	protected TaskJob
 	newTaskJob() {
