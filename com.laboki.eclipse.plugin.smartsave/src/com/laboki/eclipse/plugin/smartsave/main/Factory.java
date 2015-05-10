@@ -41,8 +41,13 @@ public enum Factory implements Instance {
 		@Override
 		public void
 		partDeactivated(final IWorkbenchPart part) {
-			if (part instanceof IEditorPart) EditorContext.forceSave(Optional.fromNullable((IEditorPart) part));
+			if (part instanceof IEditorPart) PartListener.forceSave(part);
 			Factory.stopAllSaverServices();
+		}
+
+		private static void
+		forceSave(final IWorkbenchPart part) {
+			EditorContext.forceSave(Optional.fromNullable((IEditorPart) part));
 		}
 
 		@Override
