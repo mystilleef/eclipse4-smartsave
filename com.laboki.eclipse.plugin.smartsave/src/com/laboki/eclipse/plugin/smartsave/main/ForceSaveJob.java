@@ -32,7 +32,7 @@ public final class ForceSaveJob extends SaveJob {
 	public void
 	execute(final Optional<IEditorPart> editor) {
 		this.editor = editor;
-		this.setNewRule(editor);
+		// this.setNewRule(editor);
 		this.schedule();
 	}
 
