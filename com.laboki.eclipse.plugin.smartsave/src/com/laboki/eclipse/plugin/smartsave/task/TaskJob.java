@@ -17,8 +17,13 @@ public abstract class TaskJob extends Job {
 	@Override
 	public boolean
 	belongsTo(final Object family) {
-		if ((this.family == null) || (family == null)) return false;
+		if (this.familyIsNull(family)) return false;
 		return this.family.equals(family);
+	}
+
+	private boolean
+	familyIsNull(final Object family) {
+		return (this.family == null) || (family == null);
 	}
 
 	@Override
