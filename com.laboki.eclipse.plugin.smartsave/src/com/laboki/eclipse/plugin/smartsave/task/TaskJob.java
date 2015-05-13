@@ -7,17 +7,17 @@ import org.eclipse.core.runtime.jobs.Job;
 
 public abstract class TaskJob extends Job {
 
+	private static final String NAME = "SmartSavePluginJob";
 	private Object family;
 
 	public TaskJob() {
-		super("");
+		super(TaskJob.NAME);
 	}
 
 	@Override
 	public boolean
 	belongsTo(final Object family) {
-		if (this.family == null) return false;
-		if (family == null) return false;
+		if ((this.family == null) || (family == null)) return false;
 		return this.family.equals(family);
 	}
 
