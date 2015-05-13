@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 
-public abstract class BaseTask implements Runnable, Instance {
+public abstract class BaseTask implements Runnable, Instance, ExecuteTask {
 
 	public static final String FAMILY = "SmartSavePluginTaskFamily";
 	private final TaskJob job;
