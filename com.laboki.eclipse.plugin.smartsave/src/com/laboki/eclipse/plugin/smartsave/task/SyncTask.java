@@ -2,7 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.task;
 
 import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
-public abstract class SyncTask extends BaseTask {
+public abstract class SyncTask extends Task {
 
 	@Override
 	protected TaskJob
@@ -16,8 +16,4 @@ public abstract class SyncTask extends BaseTask {
 			}
 		};
 	}
-
-	@Override
-	public abstract void
-	execute();
 }
