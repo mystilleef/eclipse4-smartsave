@@ -15,7 +15,6 @@ import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class CompletionListener extends EventBusInstance
 	implements
@@ -30,27 +29,13 @@ public final class CompletionListener extends EventBusInstance
 	@Override
 	public void
 	assistSessionEnded(final ContentAssistEvent event) {
-		new Task() {
-
-			@Override
-			public void
-			execute() {
-				EventBus.post(new AssistSessionEndedEvent());
-			}
-		}.start();
+		EventBus.post(new AssistSessionEndedEvent());
 	}
 
 	@Override
 	public void
 	assistSessionStarted(final ContentAssistEvent event) {
-		new Task() {
-
-			@Override
-			public void
-			execute() {
-				EventBus.post(new AssistSessionStartedEvent());
-			}
-		}.start();
+		EventBus.post(new AssistSessionStartedEvent());
 	}
 
 	@Override
@@ -89,7 +74,6 @@ public final class CompletionListener extends EventBusInstance
 
 	private Optional<ContentAssistantFacade>
 	getContentAssistant() {
-		if (!this.editor.isPresent()) return Optional.absent();
 		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getContentAssistantFacade());
@@ -97,7 +81,6 @@ public final class CompletionListener extends EventBusInstance
 
 	private Optional<IQuickAssistAssistant>
 	getQuickAssistant() {
-		if (!this.editor.isPresent()) return Optional.absent();
 		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getQuickAssistAssistant());
