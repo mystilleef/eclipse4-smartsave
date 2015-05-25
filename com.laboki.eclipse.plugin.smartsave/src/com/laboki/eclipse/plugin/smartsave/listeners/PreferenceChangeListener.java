@@ -9,6 +9,7 @@ import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
+import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
@@ -17,10 +18,9 @@ public final class PreferenceChangeListener extends EventBusInstance
 		IPreferenceChangeListener {
 
 	private static final int DELAY = 125;
-	private static final String FAMILY = "Preferences Change Listener Family";
+	private static final String FAMILY =
+		"SmartSavePreferencesChangeListenerFamily";
 	private static final TaskMutexRule RULE = new TaskMutexRule();
-	private static final String TASK_NAME =
-		"smartsave preference change event listener";
 	private static final IEclipsePreferences PREFERENCES =
 		Store.getPreferences();
 
@@ -30,12 +30,17 @@ public final class PreferenceChangeListener extends EventBusInstance
 		new Task() {
 
 			@Override
+			protected boolean
+			shouldSchedule() {
+				return BaseTask.noTaskFamilyExists(BaseTask.FAMILY);
+			};
+
+			@Override
 			public void
 			execute() {
 				EventBus.post(new PreferenceStoreChangeEvent());
 			}
 		}.setFamily(PreferenceChangeListener.FAMILY)
-			.setName(PreferenceChangeListener.TASK_NAME)
 			.setRule(PreferenceChangeListener.RULE)
 			.setDelay(PreferenceChangeListener.DELAY)
 			.start();
