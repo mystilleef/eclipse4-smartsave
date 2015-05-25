@@ -67,6 +67,7 @@ Export-Package: com.google.common.annotations,
    org.eclipse.swt.widgets,
    com.google.common.eventbus,
    org.eclipse.core.resources",
+ com.laboki.eclipse.plugin.smartsave.main.services,
  com.laboki.eclipse.plugin.smartsave.preferences;uses:="org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.preferences.ui;
   uses:="org.eclipse.ui,
