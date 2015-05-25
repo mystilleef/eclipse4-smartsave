@@ -36,6 +36,7 @@ import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.laboki.eclipse.plugin.smartsave.Activator;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
@@ -46,8 +47,7 @@ public enum EditorContext {
 	INSTANCE;
 
 	static final ForceSaveJob FORCE_SAVE_JOB = new ForceSaveJob();
-	public static final String PLUGIN_NAME =
-		"com.laboki.eclipse.plugin.smartsave";
+	public static final String PLUGIN_NAME = Activator.PLUGIN_ID;
 	public static final String CONTRIBUTOR_URI =
 		MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
 	public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
