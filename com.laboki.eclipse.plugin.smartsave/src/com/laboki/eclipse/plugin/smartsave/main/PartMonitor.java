@@ -37,14 +37,6 @@ public final class PartMonitor implements Instance, IPartListener {
 
 	@Override
 	public void
-	partClosed(final IWorkbenchPart part) {}
-
-	@Override
-	public void
-	partBroughtToTop(final IWorkbenchPart part) {}
-
-	@Override
-	public void
 	partDeactivated(final IWorkbenchPart part) {
 		this.stopPartServices(part);
 	}
@@ -53,6 +45,14 @@ public final class PartMonitor implements Instance, IPartListener {
 	stopPartServices(final IWorkbenchPart part) {
 		if (EditorContext.isEditorPart(part)) this.partServices.stop();
 	}
+
+	@Override
+	public void
+	partClosed(final IWorkbenchPart part) {}
+
+	@Override
+	public void
+	partBroughtToTop(final IWorkbenchPart part) {}
 
 	@Override
 	public void
