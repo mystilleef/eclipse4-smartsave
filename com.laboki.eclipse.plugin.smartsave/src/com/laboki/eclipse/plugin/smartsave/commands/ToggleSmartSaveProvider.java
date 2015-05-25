@@ -8,8 +8,8 @@ import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.ISources;
 
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;

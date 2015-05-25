@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 
 public class SaveJob extends WorkspaceJob implements Runnable {
 
@@ -51,14 +52,7 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 	@Override
 	public boolean
 	belongsTo(final Object family) {
-		return family.equals(SaveJob.JOB_FAMILY);
-	}
-
-	@Override
-	public boolean
-	shouldSchedule() {
-		if (EditorContext.currentJobIsBlocking()) return false;
-		return EditorContext.canScheduleSave();
+		return family.equals(Scheduler.FAMILY);
 	}
 
 	public static boolean
@@ -70,7 +64,7 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 	execute(final Optional<IEditorPart> editorPart) {
 		this.setNewRule(editorPart);
 		this.editor = editorPart;
-		this.schedule(EditorContext.SHORT_DELAY);
+		this.schedule(Scheduler.DELAY);
 	}
 
 	protected void

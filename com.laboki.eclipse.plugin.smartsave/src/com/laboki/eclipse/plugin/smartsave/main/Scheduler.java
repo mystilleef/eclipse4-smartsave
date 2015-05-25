@@ -2,6 +2,7 @@ package com.laboki.eclipse.plugin.smartsave.main;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
@@ -9,18 +10,22 @@ import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class Scheduler extends AbstractEventBusInstance {
 
-	private static final String SAVER_TASK = "SCHEDULER_SAVER_TASK";
+	public static final int DELAY = 10;
+	public static final TaskMutexRule RULE = new TaskMutexRule();
+	public static final String FAMILY = "SmartSaveSchedulerTaskFamily";
 	boolean completionAssistantIsActive;
 
 	@Subscribe
 	public void
 	eventHandler(final AssistSessionStartedEvent event) {
 		this.completionAssistantIsActive = true;
-		Scheduler.cancelAllJobs();
+		Scheduler.cancelTasks();
 	}
 
 	@Subscribe
@@ -39,19 +44,18 @@ public final class Scheduler extends AbstractEventBusInstance {
 			public boolean
 			shouldSchedule() {
 				if (Scheduler.this.completionAssistantIsActive) return false;
-				return EditorContext.canScheduleSave();
+				return BaseTask.noTaskFamilyExists(BaseTask.FAMILY);
 			}
 
 			@Override
 			public void
 			execute() {
-				Scheduler.cancelAllJobs();
+				Scheduler.cancelTasks();
 				EventBus.post(new StartSaveScheduleEvent());
 			}
-		}.setName(Scheduler.SAVER_TASK)
-			.setDelay(EditorContext.getSaveIntervalInMilliSeconds())
-			.setFamily(EditorContext.SAVER_TASK_FAMILY)
-			.setRule(EditorContext.SAVER_TASK_RULE)
+		}.setDelay(Scheduler.DELAY)
+			.setFamily(Scheduler.FAMILY)
+			.setRule(Scheduler.RULE)
 			.start();
 	}
 
@@ -63,22 +67,22 @@ public final class Scheduler extends AbstractEventBusInstance {
 			@Override
 			public void
 			execute() {
-				EditorContext.scheduleSave(EditorContext.SHORT_DELAY);
+				EventBus.post(new ScheduleSaveEvent());
 			}
-		}.setName(Scheduler.SAVER_TASK)
-			.setFamily(EditorContext.SAVER_TASK_FAMILY)
-			.setRule(EditorContext.SAVER_TASK_RULE)
+		}.setDelay(Scheduler.DELAY)
+			.setFamily(Scheduler.FAMILY)
+			.setRule(Scheduler.RULE)
 			.start();
 	}
 
 	@Subscribe
 	public static void
 	eventHandler(final DisableSaveListenersEvent event) {
-		Scheduler.cancelAllJobs();
+		Scheduler.cancelTasks();
 	}
 
 	static void
-	cancelAllJobs() {
-		EditorContext.cancelAllSaverTasks();
+	cancelTasks() {
+		EditorContext.cancelSaverTasks();
 	}
 }

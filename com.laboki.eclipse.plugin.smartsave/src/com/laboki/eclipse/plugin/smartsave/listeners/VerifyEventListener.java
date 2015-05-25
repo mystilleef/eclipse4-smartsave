@@ -6,8 +6,8 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public final class VerifyEventListener extends BaseListener
 	implements

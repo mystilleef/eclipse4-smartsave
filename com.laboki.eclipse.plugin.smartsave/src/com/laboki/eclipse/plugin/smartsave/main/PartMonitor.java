@@ -6,6 +6,7 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPart;
 
 import com.google.common.base.Optional;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 
 public final class PartMonitor implements Instance, IPartListener {

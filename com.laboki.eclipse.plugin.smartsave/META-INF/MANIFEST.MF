@@ -45,6 +45,7 @@ Export-Package: com.google.common.annotations,
    com.laboki.eclipse.plugin.smartsave.instance,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.core.commands",
+ com.laboki.eclipse.plugin.smartsave.contexts,
  com.laboki.eclipse.plugin.smartsave.events,
  com.laboki.eclipse.plugin.smartsave.instance,
  com.laboki.eclipse.plugin.smartsave.listeners;

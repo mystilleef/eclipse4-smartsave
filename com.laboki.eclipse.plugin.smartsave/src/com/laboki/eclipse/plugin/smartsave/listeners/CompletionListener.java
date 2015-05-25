@@ -9,11 +9,11 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 

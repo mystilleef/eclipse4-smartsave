@@ -1,6 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveCommandState;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.DirtyPartListener;
@@ -30,7 +31,7 @@ public final class PartServices extends BaseServices {
 	@Override
 	protected void
 	cancelTasks() {
-		EditorContext.cancelAllSaverTasks();
+		EditorContext.cancelSaverTasks();
 		super.cancelTasks();
 	}
 }

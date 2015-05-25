@@ -13,10 +13,10 @@ import org.eclipse.swt.widgets.TableItem;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.ContentFilterQueryUpdatedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PreferencesWidgetDisposedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 

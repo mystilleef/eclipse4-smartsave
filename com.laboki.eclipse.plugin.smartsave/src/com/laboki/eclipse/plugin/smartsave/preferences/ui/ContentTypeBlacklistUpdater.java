@@ -6,10 +6,10 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import com.google.common.base.Joiner;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AddContentTypeToBlacklistEvent;
 import com.laboki.eclipse.plugin.smartsave.events.RemoveContentTypeFromBlacklistEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 

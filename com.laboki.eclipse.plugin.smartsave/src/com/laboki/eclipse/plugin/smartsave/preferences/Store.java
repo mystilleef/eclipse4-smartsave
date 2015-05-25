@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 
 public enum Store {
 	INSTANCE;
@@ -152,7 +152,7 @@ public enum Store {
 
 	public static IEclipsePreferences
 	getPreferences() {
-		return ConfigurationScope.INSTANCE.getNode(EditorContext.PLUGIN_NAME);
+		return ConfigurationScope.INSTANCE.getNode(EditorContext.PLUGIN_ID);
 	}
 
 	private static void

@@ -4,16 +4,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.MultiRule;
 
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
+import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
+import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
@@ -21,10 +22,9 @@ public abstract class BaseListener extends AbstractEventBusInstance
 	implements
 		IListener {
 
-	private static final ISchedulingRule RULE =
-		MultiRule.combine(EditorContext.SAVER_TASK_RULE, new TaskMutexRule());
-	private static final String SAVER_TASK = "ABSTRACT_LISTENER_SAVER_TASK";
-	private static final int ONE_SECOND_DELAY = 1000;
+	public static final String FAMILY = "SmartSaveBaseListenerTaskFamily";
+	private static final ISchedulingRule RULE = new TaskMutexRule();
+	private static final String TASK = "ABSTRACT_LISTENER_SAVER_TASK";
 	private static final Logger LOGGER =
 		Logger.getLogger(BaseListener.class.getName());
 
@@ -88,15 +88,8 @@ public abstract class BaseListener extends AbstractEventBusInstance
 
 	protected static final void
 	scheduleSave() {
-		new Task() {
-
-			@Override
-			public void
-			execute() {
-				EditorContext.cancelAllSaverTasks();
-				BaseListener.scheduleTask();
-			}
-		}.setPriority(Job.INTERACTIVE).setRule(BaseListener.RULE).start();
+		EditorContext.cancelSaverTasks();
+		BaseListener.scheduleTask();
 	}
 
 	protected static void
@@ -106,17 +99,17 @@ public abstract class BaseListener extends AbstractEventBusInstance
 			@Override
 			public boolean
 			shouldSchedule() {
-				return EditorContext.canScheduleSave();
+				return BaseTask.noTaskFamilyExists(BaseTask.FAMILY);
 			}
 
 			@Override
 			public void
 			execute() {
-				EditorContext.scheduleSave();
+				EventBus.post(new ScheduleSaveEvent());
 			}
-		}.setName(BaseListener.SAVER_TASK)
-			.setFamily(EditorContext.SAVER_TASK_FAMILY)
-			.setDelay(BaseListener.ONE_SECOND_DELAY)
+		}.setName(BaseListener.TASK)
+			.setFamily(BaseListener.FAMILY)
+			.setDelay(EditorContext.getSaveIntervalInMilliSeconds())
 			.setRule(BaseListener.RULE)
 			.start();
 	}

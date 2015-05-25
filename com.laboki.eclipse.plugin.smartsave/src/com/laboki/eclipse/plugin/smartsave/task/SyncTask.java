@@ -1,6 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.task;
 
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 
 public abstract class SyncTask extends Task {
 

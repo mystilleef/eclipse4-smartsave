@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
@@ -17,6 +16,7 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 	implements
 		IPreferenceChangeListener {
 
+	private static final int DELAY = 125;
 	private static final String FAMILY = "Preferences Change Listener Family";
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 	private static final String TASK_NAME =
@@ -37,7 +37,7 @@ public final class PreferenceChangeListener extends AbstractEventBusInstance
 		}.setFamily(PreferenceChangeListener.FAMILY)
 			.setName(PreferenceChangeListener.TASK_NAME)
 			.setRule(PreferenceChangeListener.RULE)
-			.setDelay(EditorContext.SHORT_DELAY)
+			.setDelay(PreferenceChangeListener.DELAY)
 			.start();
 	}
 

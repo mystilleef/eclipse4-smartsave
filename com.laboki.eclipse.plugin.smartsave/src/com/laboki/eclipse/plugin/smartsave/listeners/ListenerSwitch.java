@@ -4,13 +4,13 @@ import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
 import com.google.common.eventbus.Subscribe;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PartChangedEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 

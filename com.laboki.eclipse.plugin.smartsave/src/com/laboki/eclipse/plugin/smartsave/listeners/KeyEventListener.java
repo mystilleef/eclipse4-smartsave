@@ -6,8 +6,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
-import com.laboki.eclipse.plugin.smartsave.main.EditorContext;
 
 public final class KeyEventListener extends BaseListener
 	implements
@@ -39,7 +39,7 @@ public final class KeyEventListener extends BaseListener
 	@Override
 	public void
 	keyPressed(final KeyEvent event) {
-		EditorContext.cancelAllSaverTasks();
+		EditorContext.cancelSaverTasks();
 	}
 
 	@Override
