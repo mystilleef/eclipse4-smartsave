@@ -1,6 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -48,9 +47,6 @@ public enum EditorContext {
 
 	static final ForceSaveJob FORCE_SAVE_JOB = new ForceSaveJob();
 	public static final String PLUGIN_NAME = Activator.PLUGIN_ID;
-	public static final String CONTRIBUTOR_URI =
-		MessageFormat.format("plugin://{0}", EditorContext.PLUGIN_NAME);
-	public static final String CONTRIBUTION_URI = "bundleclass://{0}/{1}";
 	public static final int SHORT_DELAY = 125;
 	public static final IJobManager JOB_MANAGER = Job.getJobManager();
 	public static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
