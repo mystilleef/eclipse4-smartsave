@@ -9,13 +9,13 @@ import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AddContentTypeToBlacklistEvent;
 import com.laboki.eclipse.plugin.smartsave.events.RemoveContentTypeFromBlacklistEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class ContentTypeBlacklistUpdater
 	extends
-		AbstractEventBusInstance {
+		EventBusInstance {
 
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 

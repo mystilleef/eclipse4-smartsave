@@ -1,8 +1,6 @@
 package com.laboki.eclipse.plugin.smartsave.instance;
 
-public abstract class AbstractInstance implements Instance {
-
-	protected AbstractInstance() {}
+public abstract class BaseInstance implements Instance {
 
 	@Override
 	public Instance

@@ -12,11 +12,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import com.laboki.eclipse.plugin.smartsave.events.FocusSaveIntervalDialogSpinnerEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
-final class SaveIntervalDialog extends AbstractEventBusInstance {
+final class SaveIntervalDialog extends EventBusInstance {
 
 	private static final int SPINNER_GRID_LAYOUT_COLUMNS = 3;
 	private static final int MARGIN_SIZE = 10;

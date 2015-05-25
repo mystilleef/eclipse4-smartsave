@@ -9,12 +9,12 @@ import com.laboki.eclipse.plugin.smartsave.events.DisableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.EnableSaveListenersEvent;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-public final class Scheduler extends AbstractEventBusInstance {
+public final class Scheduler extends EventBusInstance {
 
 	public static final int DELAY = 10;
 	public static final TaskMutexRule RULE = new TaskMutexRule();

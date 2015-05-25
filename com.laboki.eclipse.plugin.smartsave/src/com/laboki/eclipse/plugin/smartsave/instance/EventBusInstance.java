@@ -2,11 +2,9 @@ package com.laboki.eclipse.plugin.smartsave.instance;
 
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 
-public abstract class AbstractEventBusInstance implements Instance {
+public abstract class EventBusInstance extends BaseInstance {
 
 	private boolean isRegistered = false;
-
-	protected AbstractEventBusInstance() {}
 
 	@Override
 	public Instance

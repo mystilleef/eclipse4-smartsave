@@ -7,7 +7,6 @@ import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
-import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
 
 public class AnnotationsListener extends BaseListener
 	implements

@@ -23,7 +23,7 @@ import org.eclipse.ui.PlatformUI;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.Activator;
-import com.laboki.eclipse.plugin.smartsave.listeners.abstraction.BaseListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.BaseListener;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.main.SaveJob;
 import com.laboki.eclipse.plugin.smartsave.main.Scheduler;

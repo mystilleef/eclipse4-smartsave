@@ -11,13 +11,13 @@ import org.eclipse.swt.widgets.Spinner;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.FocusSaveIntervalDialogSpinnerEvent;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-final class SaveIntervalDialogSpinner extends AbstractEventBusInstance {
+final class SaveIntervalDialogSpinner extends EventBusInstance {
 
 	private static final String FOCUS_TASK = "save dialog interval focuc task";
 	private static final String SELECTION_TASK =

@@ -11,13 +11,13 @@ import org.eclipse.swt.widgets.Composite;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-final class SaveIntervalButton extends AbstractEventBusInstance {
+final class SaveIntervalButton extends EventBusInstance {
 
 	private static final String TASK_NAME = "save interval button task";
 	private static final TaskMutexRule RULE = new TaskMutexRule();

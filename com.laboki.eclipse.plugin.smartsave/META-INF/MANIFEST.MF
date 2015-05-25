@@ -57,7 +57,6 @@ Export-Package: com.google.common.annotations,
    com.laboki.eclipse.plugin.smartsave.instance,
    com.laboki.eclipse.plugin.smartsave.events,
    org.eclipse.core.runtime.preferences",
- com.laboki.eclipse.plugin.smartsave.listeners.abstraction;uses:="com.laboki.eclipse.plugin.smartsave.instance,com.laboki.eclipse.plugin.smartsave.events",
  com.laboki.eclipse.plugin.smartsave.main;
   uses:="org.eclipse.core.runtime.jobs,
    org.eclipse.ui,

@@ -4,14 +4,14 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.PreferenceStoreChangeEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public final class ToggleSmartSaveCommandState
 	extends
-		AbstractEventBusInstance {
+		EventBusInstance {
 
 	private static final int ONE_SECOND = 1000;
 	private static final String FAMILY = "Toggle Smart Save Command Family";

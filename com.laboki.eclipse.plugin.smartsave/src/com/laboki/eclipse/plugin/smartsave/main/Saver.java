@@ -7,10 +7,10 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
-import com.laboki.eclipse.plugin.smartsave.instance.AbstractEventBusInstance;
+import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
-public final class Saver extends AbstractEventBusInstance {
+public final class Saver extends EventBusInstance {
 
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
