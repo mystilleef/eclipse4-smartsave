@@ -17,7 +17,7 @@ public enum ToggleSmartSaveCommand {
 
 	private static Command
 	getCommand() {
-		return ((ICommandService) Activator.getInstance()
+		return ((ICommandService) Activator.getDefault()
 			.getWorkbench()
 			.getService(ICommandService.class)).getCommand(ToggleSmartSaveCommand.ID);
 	}

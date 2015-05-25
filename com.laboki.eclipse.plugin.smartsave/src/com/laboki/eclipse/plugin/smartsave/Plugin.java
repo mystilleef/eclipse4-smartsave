@@ -1,11 +1,15 @@
 package com.laboki.eclipse.plugin.smartsave;
 
+import org.eclipse.core.runtime.jobs.Job;
+
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.main.Factory;
+import com.laboki.eclipse.plugin.smartsave.main.Services;
 import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public enum Plugin implements Instance {
 	INSTANCE;
+
+	protected static final Services SERVICES = new Services();
 
 	@Override
 	public Instance
@@ -15,16 +19,16 @@ public enum Plugin implements Instance {
 			@Override
 			public void
 			execute() {
-				Factory.INSTANCE.start();
+				Plugin.SERVICES.start();
 			}
-		}.start();
+		}.setPriority(Job.INTERACTIVE).start();
 		return this;
 	}
 
 	@Override
 	public Instance
 	stop() {
-		Factory.INSTANCE.stop();
+		Plugin.SERVICES.stop();
 		return this;
 	}
 }

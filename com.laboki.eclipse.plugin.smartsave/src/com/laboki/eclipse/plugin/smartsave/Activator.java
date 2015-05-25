@@ -5,29 +5,27 @@ import org.osgi.framework.BundleContext;
 
 public final class Activator extends AbstractUIPlugin {
 
-	private static Activator instance;
-
-	public Activator() {
-		Activator.instance = this;
-	}
+	public static final String PLUGIN_ID = "com.laboki.eclipse.plugin.smartsave";
+	private static Activator plugin;
 
 	@Override
 	public void
 	start(final BundleContext context) throws Exception {
 		super.start(context);
+		Activator.plugin = this;
 		Plugin.INSTANCE.start();
 	}
 
 	@Override
 	public void
 	stop(final BundleContext context) throws Exception {
-		Activator.instance = null;
 		Plugin.INSTANCE.stop();
 		super.stop(context);
+		Activator.plugin = null;
 	}
 
 	public static Activator
-	getInstance() {
-		return Activator.instance;
+	getDefault() {
+		return Activator.plugin;
 	}
 }

@@ -28,6 +28,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
@@ -529,5 +530,10 @@ public enum EditorContext {
 	public static IContentType[]
 	getContentTypes() {
 		return Platform.getContentTypeManager().getAllContentTypes();
+	}
+
+	public static boolean
+	isEditorPart(final IWorkbenchPart part) {
+		return part instanceof IEditorPart;
 	}
 }
