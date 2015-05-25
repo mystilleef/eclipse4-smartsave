@@ -11,7 +11,7 @@ import com.laboki.eclipse.plugin.smartsave.instance.Instance;
 public final class PartMonitor implements Instance, IPartListener {
 
 	private final Instance partServices = new PartServices();
-	private static final Optional<IPartService> SERVICE =
+	private final Optional<IPartService> service =
 		EditorContext.getPartService();
 
 	public PartMonitor() {
@@ -61,16 +61,16 @@ public final class PartMonitor implements Instance, IPartListener {
 	@Override
 	public Instance
 	start() {
-		if (!PartMonitor.SERVICE.isPresent()) return this;
-		PartMonitor.SERVICE.get().addPartListener(this);
+		if (!this.service.isPresent()) return this;
+		this.service.get().addPartListener(this);
 		return this;
 	}
 
 	@Override
 	public Instance
 	stop() {
-		if (!PartMonitor.SERVICE.isPresent()) return this;
-		PartMonitor.SERVICE.get().removePartListener(this);
+		if (!this.service.isPresent()) return this;
+		this.service.get().removePartListener(this);
 		return this;
 	}
 }
