@@ -25,13 +25,13 @@ public final class ContentTypeFilter extends ViewerFilter implements Instance {
 
 	public void
 	setSearchText(final String s) {
-		this.query = ContentTypeFilter.buildQuery(s);
+		this.query = ContentTypeFilter.buildQuery(s, "");
 		EventBus.post(new ContentFilterQueryUpdatedEvent());
 	}
 
 	private static String
-	buildQuery(final String string) {
-		return ".*" + Joiner.on(".*").join(string.split("")) + ".*";
+	buildQuery(final String string, final String pattern) {
+		return ".*" + Joiner.on(".*").join(string.split(pattern)) + ".*";
 	}
 
 	@Subscribe
