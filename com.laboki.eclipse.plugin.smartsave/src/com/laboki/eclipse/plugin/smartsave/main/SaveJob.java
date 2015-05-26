@@ -1,6 +1,7 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -13,12 +14,11 @@ import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 
 public class SaveJob extends WorkspaceJob implements Runnable {
 
-	private static final String TASK_NAME = "SMART_SAVE_WORKSPACE_SAVE_JOB";
-	public static final String JOB_FAMILY = "++SAVE_WORKSPACE_JOB_FAMILY++";
+	private static final String NAME = "SmartSaveSaveJobName";
 	private Optional<IEditorPart> editor;
 
 	public SaveJob() {
-		super(SaveJob.TASK_NAME);
+		super(SaveJob.NAME);
 		this.setProperties();
 	}
 
@@ -27,6 +27,7 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 		this.setPriority(Job.DECORATE);
 		this.setUser(false);
 		this.setSystem(true);
+		this.setRule(ResourcesPlugin.getWorkspace().getRoot());
 	}
 
 	@Override
@@ -51,13 +52,27 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 
 	@Override
 	public boolean
-	belongsTo(final Object family) {
-		return family.equals(Scheduler.FAMILY);
+	shouldSchedule() {
+		return SaveJob.currentJobIsBlocking();
 	}
 
-	public static boolean
-	doesNotExists() {
-		return Job.getJobManager().find(SaveJob.JOB_FAMILY).length == 0;
+	@Override
+	public boolean
+	shouldRun() {
+		return SaveJob.currentJobIsBlocking();
+	}
+
+	private static boolean
+	currentJobIsBlocking() {
+		final Job job = EditorContext.JOB_MANAGER.currentJob();
+		if (job == null) return true;
+		return !job.isBlocking();
+	}
+
+	@Override
+	public boolean
+	belongsTo(final Object family) {
+		return family.equals(Scheduler.FAMILY);
 	}
 
 	public void
