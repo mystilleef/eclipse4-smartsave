@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.main.Scheduler;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
-public final class BlacklistCheckers extends EventBusInstance {
+public final class BlacklistChecker extends EventBusInstance {
 
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
@@ -36,7 +36,7 @@ public final class BlacklistCheckers extends EventBusInstance {
 
 			private boolean
 			fileIsBlacklisted() {
-				return EditorContext.isBlacklisted(BlacklistCheckers.this.editor);
+				return EditorContext.isBlacklisted(BlacklistChecker.this.editor);
 			}
 
 			private void
