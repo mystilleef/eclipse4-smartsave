@@ -1,5 +1,11 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
+import com.laboki.eclipse.plugin.smartsave.checkers.BlacklistChecker;
+import com.laboki.eclipse.plugin.smartsave.checkers.BusyChecker;
+import com.laboki.eclipse.plugin.smartsave.checkers.DirtyChecker;
+import com.laboki.eclipse.plugin.smartsave.checkers.ErrorChecker;
+import com.laboki.eclipse.plugin.smartsave.checkers.PreferencesChecker;
+import com.laboki.eclipse.plugin.smartsave.checkers.WarningChecker;
 import com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveCommandState;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
@@ -14,7 +20,13 @@ public final class PartServices extends BaseServices {
 	@Override
 	protected void
 	startServices() {
-		this.startService(new Saver());
+		this.startService(new NewSaver());
+		this.startService(new WarningChecker());
+		this.startService(new ErrorChecker());
+		this.startService(new BusyChecker());
+		this.startService(new DirtyChecker());
+		this.startService(new BlacklistChecker());
+		this.startService(new PreferencesChecker());
 		this.startService(new Scheduler());
 		this.startService(new VerifyEventListener());
 		this.startService(new AnnotationsListener());
