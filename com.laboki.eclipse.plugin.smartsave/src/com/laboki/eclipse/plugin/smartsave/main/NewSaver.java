@@ -15,6 +15,7 @@ import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.SaveEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class NewSaver extends WorkspaceJob implements Instance {
@@ -59,14 +60,32 @@ public final class NewSaver extends WorkspaceJob implements Instance {
 	public IStatus
 	runInWorkspace(final IProgressMonitor monitor) throws CoreException {
 		if (monitor.isCanceled()) return Status.CANCEL_STATUS;
-		this.save();
+		this.startSaveTask();
 		return Status.OK_STATUS;
 	}
 
-	protected void
-	save() {
-		if (!this.editor.isPresent()) return;
-		this.editor.get().getSite().getPage().saveEditor(this.editor.get(), false);
+	private void
+	startSaveTask() {
+		new AsyncTask() {
+
+			@Override
+			public void
+			execute() {
+				this.save();
+			}
+
+			private void
+			save() {
+				if (!NewSaver.this.editor.isPresent()) return;
+				NewSaver.this.editor.get()
+					.getSite()
+					.getPage()
+					.saveEditor(NewSaver.this.editor.get(), false);
+			}
+		}.setFamily(Scheduler.FAMILY)
+			.setDelay(Scheduler.DELAY)
+			.setRule(Scheduler.RULE)
+			.start();
 	}
 
 	@Override

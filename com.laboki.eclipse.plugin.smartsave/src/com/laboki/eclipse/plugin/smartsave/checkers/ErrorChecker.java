@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.main.Scheduler;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class ErrorChecker extends EventBusInstance {
 
@@ -23,7 +23,7 @@ public final class ErrorChecker extends EventBusInstance {
 	@AllowConcurrentEvents
 	public void
 	eventHandler(final CheckErrorEvent event) {
-		new Task() {
+		new AsyncTask() {
 
 			@Override
 			public void
@@ -38,7 +38,8 @@ public final class ErrorChecker extends EventBusInstance {
 
 			private boolean
 			editorHasErrors() {
-				return this.canCheckError() && this.hasErrors();
+				if (this.canCheckError()) return this.hasErrors();
+				return false;
 			}
 
 			private boolean

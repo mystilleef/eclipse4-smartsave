@@ -11,7 +11,7 @@ import com.laboki.eclipse.plugin.smartsave.events.CheckDirtyEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.main.Scheduler;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class BlacklistChecker extends EventBusInstance {
 
@@ -21,7 +21,7 @@ public final class BlacklistChecker extends EventBusInstance {
 	@AllowConcurrentEvents
 	public void
 	eventHandler(final CheckBlacklistEvent event) {
-		new Task() {
+		new AsyncTask() {
 
 			@Override
 			public void

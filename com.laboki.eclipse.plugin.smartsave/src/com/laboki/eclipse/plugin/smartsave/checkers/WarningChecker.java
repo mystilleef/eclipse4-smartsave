@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
 import com.laboki.eclipse.plugin.smartsave.main.Scheduler;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
-import com.laboki.eclipse.plugin.smartsave.task.Task;
+import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class WarningChecker extends EventBusInstance {
 
@@ -23,7 +23,7 @@ public final class WarningChecker extends EventBusInstance {
 	@AllowConcurrentEvents
 	public void
 	eventHandler(final CheckWarningEvent event) {
-		new Task() {
+		new AsyncTask() {
 
 			@Override
 			public void
@@ -38,7 +38,8 @@ public final class WarningChecker extends EventBusInstance {
 
 			private boolean
 			editorHasWarnings() {
-				return this.canCheckWarning() && this.hasWarnings();
+				if (this.canCheckWarning()) return this.hasWarnings();
+				return false;
 			}
 
 			private boolean
