@@ -12,10 +12,6 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class PreferencesChecker extends EventBusInstance {
 
-	public PreferencesChecker() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Subscribe
 	@AllowConcurrentEvents
 	public static void
@@ -36,5 +32,5 @@ public final class PreferencesChecker extends EventBusInstance {
 			.setFamily(Scheduler.FAMILY)
 			.setRule(Scheduler.RULE)
 			.start();
-	};
+	}
 }
