@@ -20,7 +20,7 @@ public final class PartServices extends BaseServices {
 	@Override
 	protected void
 	startServices() {
-		this.startService(new NewSaver());
+		this.startService(new Saver());
 		this.startService(new WarningChecker());
 		this.startService(new ErrorChecker());
 		this.startService(new BusyChecker());
