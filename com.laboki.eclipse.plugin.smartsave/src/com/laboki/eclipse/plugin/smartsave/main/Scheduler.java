@@ -5,8 +5,8 @@ import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionStartedEvent;
+import com.laboki.eclipse.plugin.smartsave.events.CheckPreferencesEvent;
 import com.laboki.eclipse.plugin.smartsave.events.ScheduleSaveEvent;
-import com.laboki.eclipse.plugin.smartsave.events.StartSaveScheduleEvent;
 import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
@@ -51,7 +51,7 @@ public final class Scheduler extends EventBusInstance {
 			public void
 			execute() {
 				Scheduler.cancelTasks();
-				EventBus.post(new StartSaveScheduleEvent());
+				EventBus.post(new CheckPreferencesEvent());
 			}
 		}.setDelay(Scheduler.DELAY)
 			.setFamily(Scheduler.FAMILY)
