@@ -6,6 +6,7 @@ import org.eclipse.ui.IEditorPart;
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.main.ForceSaveJob;
 import com.laboki.eclipse.plugin.smartsave.main.SaveJob;
+import com.laboki.eclipse.plugin.smartsave.main.Scheduler;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 
@@ -106,7 +107,10 @@ public enum SaveContext {
 			execute() {
 				SaveContext.SAVER.execute(editor);
 			}
-		}.start();
+		}.setRule(Scheduler.RULE)
+			.setDelay(Scheduler.DELAY)
+			.setFamily(Scheduler.FAMILY)
+			.start();
 	}
 
 	public static void
@@ -125,6 +129,6 @@ public enum SaveContext {
 			execute() {
 				SaveContext.FORCE_SAVER.execute(editor);
 			}
-		}.start();
+		}.setFamily("").start();
 	}
 }
