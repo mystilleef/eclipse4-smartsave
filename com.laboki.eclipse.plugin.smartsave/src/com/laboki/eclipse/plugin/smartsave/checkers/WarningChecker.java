@@ -38,13 +38,12 @@ public final class WarningChecker extends EventBusInstance {
 
 			private boolean
 			editorHasWarnings() {
-				if (this.canCheckWarning()) return this.hasWarnings();
-				return false;
+				return this.canCheckWarning() && this.hasWarnings();
 			}
 
 			private boolean
 			canCheckWarning() {
-				return Store.getCanSaveIfWarnings();
+				return !Store.getCanSaveIfWarnings();
 			}
 
 			private boolean

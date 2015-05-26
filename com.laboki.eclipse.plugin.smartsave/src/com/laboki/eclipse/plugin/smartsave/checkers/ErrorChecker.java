@@ -38,13 +38,12 @@ public final class ErrorChecker extends EventBusInstance {
 
 			private boolean
 			editorHasErrors() {
-				if (this.canCheckError()) return this.hasErrors();
-				return false;
+				return this.canCheckError() && this.hasErrors();
 			}
 
 			private boolean
 			canCheckError() {
-				return Store.getCanSaveIfErrors();
+				return !Store.getCanSaveIfErrors();
 			}
 
 			private boolean
