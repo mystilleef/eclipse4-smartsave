@@ -94,25 +94,6 @@ public final class Saver extends WorkspaceJob implements Instance {
 		return family.equals(Scheduler.FAMILY);
 	}
 
-	@Override
-	public boolean
-	shouldSchedule() {
-		return Saver.currentJobIsBlocking();
-	}
-
-	@Override
-	public boolean
-	shouldRun() {
-		return Saver.currentJobIsBlocking();
-	}
-
-	private static boolean
-	currentJobIsBlocking() {
-		final Job job = EditorContext.JOB_MANAGER.currentJob();
-		if (job == null) return true;
-		return !job.isBlocking();
-	}
-
 	@Subscribe
 	@AllowConcurrentEvents
 	public void
