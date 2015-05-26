@@ -25,7 +25,6 @@ import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.Activator;
 import com.laboki.eclipse.plugin.smartsave.listeners.BaseListener;
 import com.laboki.eclipse.plugin.smartsave.main.EventBus;
-import com.laboki.eclipse.plugin.smartsave.main.SaveJob;
 import com.laboki.eclipse.plugin.smartsave.main.Scheduler;
 import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.BaseTask;
@@ -196,7 +195,6 @@ public enum EditorContext {
 	cancelSaverTasks() {
 		EditorContext.JOB_MANAGER.cancel(Scheduler.FAMILY);
 		EditorContext.JOB_MANAGER.cancel(BaseListener.FAMILY);
-		EditorContext.JOB_MANAGER.cancel(SaveJob.JOB_FAMILY);
 	}
 
 	public static void
