@@ -1,6 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.events;
 
-
 public class AddContentTypeToBlacklistEvent {
 
 	private final String string;

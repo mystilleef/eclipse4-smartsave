@@ -13,9 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-public final class ContentTypeBlacklistUpdater
-	extends
-		EventBusInstance {
+public final class ContentTypeBlacklistUpdater extends EventBusInstance {
 
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 
