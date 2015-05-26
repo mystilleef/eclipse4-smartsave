@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
+import com.google.common.base.Joiner;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.ContentFilterQueryUpdatedEvent;
 import com.laboki.eclipse.plugin.smartsave.events.ContentTypeSearchQueryEvent;
@@ -24,8 +25,13 @@ public final class ContentTypeFilter extends ViewerFilter implements Instance {
 
 	public void
 	setSearchText(final String s) {
-		this.query = ".*" + Pattern.quote(s) + ".*";
+		this.query = ContentTypeFilter.buildQuery(s);
 		EventBus.post(new ContentFilterQueryUpdatedEvent());
+	}
+
+	private static String
+	buildQuery(final String string) {
+		return ".*" + Joiner.on(".*").join(string.split("")) + ".*";
 	}
 
 	@Subscribe
