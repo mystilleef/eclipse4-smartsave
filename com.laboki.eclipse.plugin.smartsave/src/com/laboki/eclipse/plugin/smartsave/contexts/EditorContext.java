@@ -105,16 +105,6 @@ public enum EditorContext {
 		return part instanceof IEditorPart;
 	}
 
-	public static void
-	save(final Optional<IEditorPart> editor) {
-		SaveContext.save(editor);
-	}
-
-	public static void
-	forceSave(final Optional<IEditorPart> editor) {
-		SaveContext.forceSave(editor);
-	}
-
 	public static boolean
 	canSaveAutomatically(final Optional<IEditorPart> editor) {
 		if (!editor.isPresent()) return false;
