@@ -21,6 +21,18 @@ public final class ForceSaveJob extends SaveJob {
 	}
 
 	@Override
+	public boolean
+	shouldSchedule() {
+		return true;
+	}
+
+	@Override
+	public boolean
+	shouldRun() {
+		return true;
+	}
+
+	@Override
 	protected void
 	save() {
 		if (!this.editor.isPresent()) return;
