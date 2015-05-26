@@ -9,12 +9,10 @@ import com.laboki.eclipse.plugin.smartsave.preferences.Store;
 import com.laboki.eclipse.plugin.smartsave.task.Task;
 import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
-public final class ToggleSmartSaveCommandState
-	extends
-		EventBusInstance {
+public final class ToggleSmartSaveCommandState extends EventBusInstance {
 
 	private static final int ONE_SECOND = 1000;
-	private static final String FAMILY = "Toggle Smart Save Command Family";
+	private static final String FAMILY = "ToggleSmartSaveCommandFamily";
 	private static final TaskMutexRule RULE = new TaskMutexRule();
 
 	public ToggleSmartSaveCommandState() {
