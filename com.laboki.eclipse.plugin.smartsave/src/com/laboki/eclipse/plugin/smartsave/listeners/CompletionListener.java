@@ -6,7 +6,6 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
 import org.eclipse.jface.text.source.ContentAssistantFacade;
 import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
@@ -20,11 +19,10 @@ public final class CompletionListener extends EventBusInstance
 	implements
 		ICompletionListener {
 
-	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 	private final Optional<ContentAssistantFacade> contentAssistant =
-		this.getContentAssistant();
+		CompletionListener.getContentAssistant();
 	private final Optional<IQuickAssistAssistant> quickAssistant =
-		this.getQuickAssistant();
+		CompletionListener.getQuickAssistant();
 
 	@Override
 	public void
@@ -72,17 +70,24 @@ public final class CompletionListener extends EventBusInstance
 			.removeCompletionListener(this);
 	}
 
-	private Optional<ContentAssistantFacade>
+	private static Optional<ContentAssistantFacade>
 	getContentAssistant() {
-		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
+		final Optional<SourceViewer> view = CompletionListener.getView();
 		if (!view.isPresent()) return Optional.absent();
-		return Optional.fromNullable(view.get().getContentAssistantFacade());
+		final ContentAssistantFacade facade =
+			view.get().getContentAssistantFacade();
+		return Optional.fromNullable(facade);
 	}
 
-	private Optional<IQuickAssistAssistant>
+	private static Optional<IQuickAssistAssistant>
 	getQuickAssistant() {
-		final Optional<SourceViewer> view = EditorContext.getView(this.editor);
+		final Optional<SourceViewer> view = CompletionListener.getView();
 		if (!view.isPresent()) return Optional.absent();
 		return Optional.fromNullable(view.get().getQuickAssistAssistant());
+	}
+
+	private static Optional<SourceViewer>
+	getView() {
+		return EditorContext.getView(EditorContext.getEditor());
 	}
 }
