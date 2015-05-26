@@ -77,7 +77,7 @@ public class SaveJob extends WorkspaceJob implements Runnable {
 
 	public void
 	execute(final Optional<IEditorPart> editorPart) {
-		this.setNewRule(editorPart);
+		// this.setNewRule(editorPart);
 		this.editor = editorPart;
 		this.schedule(Scheduler.DELAY);
 	}
