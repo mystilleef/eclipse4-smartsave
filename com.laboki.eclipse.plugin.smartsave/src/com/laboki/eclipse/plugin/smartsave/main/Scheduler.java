@@ -43,7 +43,7 @@ public final class Scheduler extends EventBusInstance {
 			@Override
 			public boolean
 			shouldSchedule() {
-				if (!Scheduler.this.canSchedule) return false;
+				if (Scheduler.this.canSchedule == false) return false;
 				return BaseTask.noTaskFamilyExists(Scheduler.FAMILY);
 			}
 
