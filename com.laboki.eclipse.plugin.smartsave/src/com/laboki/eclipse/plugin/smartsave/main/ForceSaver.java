@@ -25,7 +25,7 @@ public final class ForceSaver extends WorkspaceJob {
 
 	private void
 	setProperties() {
-		this.setPriority(Job.DECORATE);
+		this.setPriority(Job.INTERACTIVE);
 		this.setUser(false);
 		this.setSystem(true);
 		this.updateRule();
