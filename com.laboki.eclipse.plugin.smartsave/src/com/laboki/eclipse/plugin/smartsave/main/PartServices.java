@@ -8,6 +8,7 @@ import com.laboki.eclipse.plugin.smartsave.checkers.PreferencesChecker;
 import com.laboki.eclipse.plugin.smartsave.checkers.WarningChecker;
 import com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveCommandState;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
+import com.laboki.eclipse.plugin.smartsave.contexts.FinalSaver;
 import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
@@ -20,6 +21,7 @@ public final class PartServices extends BaseServices {
 	@Override
 	protected void
 	startServices() {
+		this.startService(new FinalSaver());
 		this.startService(new Saver());
 		this.startService(new WarningChecker());
 		this.startService(new ErrorChecker());

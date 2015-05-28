@@ -44,16 +44,7 @@ public final class PartMonitor implements Instance, IPartListener {
 
 	private void
 	stopPartServices(final IWorkbenchPart part) {
-		if (!EditorContext.isEditorPart(part)) return;
-		this.partServices.stop();
-		PartMonitor.forceSave((IEditorPart) part);
-	}
-
-	private static void
-	forceSave(final IEditorPart part) {
-		final Optional<IEditorPart> editor = Optional.fromNullable(part);
-		if (!editor.isPresent()) return;
-		if (EditorContext.canSaveAutomatically(editor)) new ForceSaver(part).save();
+		if (EditorContext.isEditorPart(part)) this.partServices.stop();
 	}
 
 	@Override
