@@ -1,11 +1,11 @@
-package com.laboki.eclipse.plugin.smartsave.contexts;
+package com.laboki.eclipse.plugin.smartsave.main;
 
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
+import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.instance.EventBusInstance;
 import com.laboki.eclipse.plugin.smartsave.instance.Instance;
-import com.laboki.eclipse.plugin.smartsave.main.ForceSaver;
 
 public final class FinalSaver extends EventBusInstance {
 
