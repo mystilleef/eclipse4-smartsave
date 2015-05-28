@@ -100,6 +100,12 @@ public enum EditorContext {
 		return FileContext.getFile(editor);
 	}
 
+	public static void
+	savePart(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return;
+		editor.get().getSite().getPage().saveEditor(editor.get(), false);
+	}
+
 	public static boolean
 	isEditorPart(final IWorkbenchPart part) {
 		return part instanceof IEditorPart;
