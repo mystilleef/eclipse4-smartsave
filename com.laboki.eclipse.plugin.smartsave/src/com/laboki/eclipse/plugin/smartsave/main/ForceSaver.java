@@ -15,11 +15,11 @@ import com.laboki.eclipse.plugin.smartsave.task.AsyncTask;
 
 public final class ForceSaver extends WorkspaceJob {
 
-	private final IEditorPart editor;
+	private final Optional<IEditorPart> editor;
 
 	public ForceSaver(final IEditorPart editor) {
 		super("");
-		this.editor = editor;
+		this.editor = Optional.fromNullable(editor);
 		this.setProperties();
 	}
 
@@ -33,8 +33,7 @@ public final class ForceSaver extends WorkspaceJob {
 
 	private void
 	updateRule() {
-		final Optional<IFile> file =
-			EditorContext.getFile(Optional.fromNullable(this.editor));
+		final Optional<IFile> file = EditorContext.getFile(this.editor);
 		if (file.isPresent()) this.setRule(file.get());
 	}
 
@@ -53,7 +52,7 @@ public final class ForceSaver extends WorkspaceJob {
 			@Override
 			public void
 			execute() {
-				EditorContext.savePart(Optional.fromNullable(ForceSaver.this.editor));
+				EditorContext.savePart(ForceSaver.this.editor);
 			}
 		}.setFamily("").start();
 	}
