@@ -71,16 +71,7 @@ public final class Saver extends WorkspaceJob implements Instance {
 			@Override
 			public void
 			execute() {
-				this.save();
-			}
-
-			private void
-			save() {
-				if (!Saver.this.editor.isPresent()) return;
-				Saver.this.editor.get()
-					.getSite()
-					.getPage()
-					.saveEditor(Saver.this.editor.get(), false);
+				EditorContext.savePart(Saver.this.editor);
 			}
 		}.setFamily(Scheduler.FAMILY)
 			.setDelay(Scheduler.DELAY)
