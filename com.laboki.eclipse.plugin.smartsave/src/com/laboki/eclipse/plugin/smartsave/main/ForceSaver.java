@@ -54,7 +54,7 @@ public final class ForceSaver extends WorkspaceJob {
 			execute() {
 				EditorContext.savePart(ForceSaver.this.editor);
 			}
-		}.setFamily("").start();
+		}.setFamily("").setPriority(Job.INTERACTIVE).start();
 	}
 
 	public void
