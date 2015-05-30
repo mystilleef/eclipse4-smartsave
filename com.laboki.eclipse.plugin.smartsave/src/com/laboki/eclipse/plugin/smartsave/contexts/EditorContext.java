@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.custom.StyledText;
@@ -20,6 +21,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.Activator;
@@ -98,6 +101,21 @@ public enum EditorContext {
 	public static Optional<IFile>
 	getFile(final Optional<IEditorPart> editor) {
 		return FileContext.getFile(editor);
+	}
+
+	public static Optional<IDocument>
+	getDocument(final Optional<IEditorPart> editor) {
+		final Optional<IDocumentProvider> provider =
+			EditorContext.getDocumentProvider(editor);
+		if (!provider.isPresent()) return Optional.absent();
+		return Optional.fromNullable(provider.get()
+			.getDocument(((ITextEditor) editor.get()).getEditorInput()));
+	}
+
+	private static Optional<IDocumentProvider>
+	getDocumentProvider(final Optional<IEditorPart> editor) {
+		if (!editor.isPresent()) return Optional.absent();
+		return Optional.fromNullable(((ITextEditor) editor.get()).getDocumentProvider());
 	}
 
 	public static void

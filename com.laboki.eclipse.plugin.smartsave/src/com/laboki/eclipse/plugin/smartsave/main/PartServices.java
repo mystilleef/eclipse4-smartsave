@@ -10,6 +10,7 @@ import com.laboki.eclipse.plugin.smartsave.commands.ToggleSmartSaveCommandState;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.listeners.AnnotationsListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
+import com.laboki.eclipse.plugin.smartsave.listeners.DocumentListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.VerifyEventListener;
@@ -29,6 +30,7 @@ public final class PartServices extends BaseServices {
 		this.startService(new BlacklistChecker());
 		this.startService(new PreferencesChecker());
 		this.startService(new Scheduler());
+		this.startService(new DocumentListener());
 		this.startService(new VerifyEventListener());
 		this.startService(new AnnotationsListener());
 		this.startService(new KeyEventListener());
