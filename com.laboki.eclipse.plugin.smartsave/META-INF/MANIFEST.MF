@@ -59,6 +59,7 @@ Export-Package: com.google.common.annotations,
    org.eclipse.swt.events,
    org.eclipse.jface.text.source,
    com.laboki.eclipse.plugin.smartsave.instance,
+   org.eclipse.jface.text,
    org.eclipse.core.runtime.preferences",
  com.laboki.eclipse.plugin.smartsave.main;
   uses:="org.eclipse.ui,
@@ -86,6 +87,6 @@ Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.texteditor
-Bundle-Version: 20150526.4
+Bundle-Version: 20150530
 Bundle-ClassPath: .,
  libs/guava-18.0.jar
