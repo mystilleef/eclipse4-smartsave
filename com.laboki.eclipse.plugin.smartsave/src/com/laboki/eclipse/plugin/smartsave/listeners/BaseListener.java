@@ -42,7 +42,7 @@ public abstract class BaseListener extends EventBusInstance {
 		BaseListener.scheduleTask();
 	}
 
-	protected static void
+	private static void
 	scheduleTask() {
 		new Task() {
 
