@@ -3,7 +3,6 @@ package com.laboki.eclipse.plugin.smartsave.checkers;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.AnnotationContext;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
@@ -20,7 +19,6 @@ public final class WarningChecker extends EventBusInstance {
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void
 	eventHandler(final CheckWarningEvent event) {
 		new AsyncTask() {

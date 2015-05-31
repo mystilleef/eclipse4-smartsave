@@ -3,7 +3,6 @@ package com.laboki.eclipse.plugin.smartsave.checkers;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.CheckBlacklistEvent;
@@ -18,7 +17,6 @@ public final class BlacklistChecker extends EventBusInstance {
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void
 	eventHandler(final CheckBlacklistEvent event) {
 		new AsyncTask() {

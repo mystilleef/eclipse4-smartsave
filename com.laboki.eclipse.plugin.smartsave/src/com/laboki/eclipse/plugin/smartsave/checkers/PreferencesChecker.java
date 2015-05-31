@@ -1,6 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.checkers;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.events.CheckBlacklistEvent;
 import com.laboki.eclipse.plugin.smartsave.events.CheckPreferencesEvent;
@@ -13,7 +12,6 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public final class PreferencesChecker extends EventBusInstance {
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public static void
 	eventHandler(final CheckPreferencesEvent event) {
 		new Task() {

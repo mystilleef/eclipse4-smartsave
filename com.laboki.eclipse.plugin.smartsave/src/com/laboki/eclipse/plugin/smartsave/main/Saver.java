@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.IEditorPart;
 
 import com.google.common.base.Optional;
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.SaveEvent;
@@ -19,7 +18,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 
 public final class Saver extends WorkspaceJob implements Instance, Runnable {
 
-	private static final String NAME = "SaverWorkspaceJobName";
+	private static final String NAME = "+SaverWorkspaceJobName+";
 	private final Optional<IEditorPart> editor = EditorContext.getEditor();
 
 	public Saver() {
@@ -76,7 +75,6 @@ public final class Saver extends WorkspaceJob implements Instance, Runnable {
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void
 	eventHandler(final SaveEvent event) {
 		new Task() {

@@ -1,6 +1,5 @@
 package com.laboki.eclipse.plugin.smartsave.main;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.laboki.eclipse.plugin.smartsave.contexts.EditorContext;
 import com.laboki.eclipse.plugin.smartsave.events.AssistSessionEndedEvent;
@@ -20,7 +19,6 @@ public final class Scheduler extends EventBusInstance {
 	boolean canSchedule = true;
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void
 	eventHandler(final AssistSessionStartedEvent event) {
 		this.canSchedule = false;
@@ -28,14 +26,12 @@ public final class Scheduler extends EventBusInstance {
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void
 	eventHandler(final AssistSessionEndedEvent event) {
 		this.canSchedule = true;
 	}
 
 	@Subscribe
-	@AllowConcurrentEvents
 	public void
 	eventHandler(final ScheduleSaveEvent event) {
 		new Task() {
