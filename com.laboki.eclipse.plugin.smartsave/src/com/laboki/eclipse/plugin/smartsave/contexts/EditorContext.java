@@ -21,8 +21,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.Activator;
@@ -105,29 +103,7 @@ public enum EditorContext {
 
 	public static Optional<IDocument>
 	getDocument(final Optional<IEditorPart> editor) {
-		final Optional<IDocumentProvider> provider =
-			EditorContext.getDocumentProvider(editor);
-		if (!provider.isPresent()) return Optional.absent();
-		return Optional.fromNullable(provider.get()
-			.getDocument(((ITextEditor) editor.get()).getEditorInput()));
-	}
-
-	private static Optional<IDocumentProvider>
-	getDocumentProvider(final Optional<IEditorPart> editor) {
-		if (!editor.isPresent()) return Optional.absent();
-		final IEditorPart part = editor.get();
-		if (EditorContext.isNotTextEditor(part)) return Optional.absent();
-		return Optional.fromNullable(((ITextEditor) part).getDocumentProvider());
-	}
-
-	private static boolean
-	isNotTextEditor(final IEditorPart part) {
-		return !EditorContext.isTextEditor(part);
-	}
-
-	private static boolean
-	isTextEditor(final IEditorPart part) {
-		return part instanceof ITextEditor;
+		return DocumentContext.getDocument(editor);
 	}
 
 	public static void
