@@ -87,6 +87,6 @@ Plugin-Class: com.laboki.eclipse.plugin.smartsave.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.laboki.eclipse.plugin.smartsave.Activator
 Import-Package: org.eclipse.ui.texteditor
-Bundle-Version: 20150530
+Bundle-Version: 20150530.1
 Bundle-ClassPath: .,
  libs/guava-18.0.jar
