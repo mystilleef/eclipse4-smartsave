@@ -13,7 +13,7 @@ import com.laboki.eclipse.plugin.smartsave.task.TaskMutexRule;
 
 public abstract class BaseListener extends EventBusInstance {
 
-	public static final String FAMILY = "SmartSaveBaseListenerTaskFamily";
+	public static final String FAMILY = "+SmartSaveBaseListenerTaskFamily+";
 	private static final ISchedulingRule RULE = new TaskMutexRule();
 
 	@Override

@@ -16,7 +16,7 @@ public final class Scheduler extends EventBusInstance {
 
 	public static final int DELAY = 10;
 	public static final TaskMutexRule RULE = new TaskMutexRule();
-	public static final String FAMILY = "SmartSaveSchedulerTaskFamily";
+	public static final String FAMILY = "+SmartSaveSchedulerTaskFamily+";
 	boolean canSchedule = true;
 
 	@Subscribe

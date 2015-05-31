@@ -10,7 +10,7 @@ import com.laboki.eclipse.plugin.smartsave.task.Task;
 public enum EventBus {
 	INSTANCE;
 
-	public static final String FAMILY = "SmartSave Event Bus Task Family";
+	public static final String FAMILY = "+SmartSave Event Bus Task Family+";
 	protected static final AsyncEventBus BUS =
 		new AsyncEventBus(Executors.newCachedThreadPool());
 
