@@ -115,7 +115,19 @@ public enum EditorContext {
 	private static Optional<IDocumentProvider>
 	getDocumentProvider(final Optional<IEditorPart> editor) {
 		if (!editor.isPresent()) return Optional.absent();
-		return Optional.fromNullable(((ITextEditor) editor.get()).getDocumentProvider());
+		final IEditorPart part = editor.get();
+		if (EditorContext.isNotTextEditor(part)) return Optional.absent();
+		return Optional.fromNullable(((ITextEditor) part).getDocumentProvider());
+	}
+
+	private static boolean
+	isNotTextEditor(final IEditorPart part) {
+		return !EditorContext.isTextEditor(part);
+	}
+
+	private static boolean
+	isTextEditor(final IEditorPart part) {
+		return part instanceof ITextEditor;
 	}
 
 	public static void
