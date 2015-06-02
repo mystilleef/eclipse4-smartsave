@@ -49,7 +49,7 @@ public abstract class BaseListener extends EventBusInstance {
 			@Override
 			public boolean
 			shouldSchedule() {
-				return BaseTask.noTaskFamilyExists(BaseTask.FAMILY);
+				return BaseTask.noTaskFamilyExists(BaseListener.FAMILY);
 			}
 
 			@Override
