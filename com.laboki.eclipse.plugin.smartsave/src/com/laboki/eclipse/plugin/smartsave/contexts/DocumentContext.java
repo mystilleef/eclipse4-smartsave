@@ -15,8 +15,8 @@ public enum DocumentContext {
 		final Optional<IDocumentProvider> provider =
 			DocumentContext.getDocumentProvider(editor);
 		if (!provider.isPresent()) return Optional.absent();
-		return Optional.fromNullable(provider.get()
-			.getDocument(((ITextEditor) editor.get()).getEditorInput()));
+		return Optional.fromNullable(provider.get().getDocument(editor.get()
+			.getEditorInput()));
 	}
 
 	private static Optional<IDocumentProvider>
