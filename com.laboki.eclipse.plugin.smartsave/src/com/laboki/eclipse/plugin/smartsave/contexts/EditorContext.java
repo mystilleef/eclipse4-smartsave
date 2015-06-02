@@ -21,6 +21,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.MultiPageEditorPart;
 
 import com.google.common.base.Optional;
 import com.laboki.eclipse.plugin.smartsave.Activator;
@@ -115,6 +116,11 @@ public enum EditorContext {
 	public static boolean
 	isEditorPart(final IWorkbenchPart part) {
 		return part instanceof IEditorPart;
+	}
+
+	public static boolean
+	isMultiEditorPart(final IWorkbenchPart part) {
+		return part instanceof MultiPageEditorPart;
 	}
 
 	public static boolean
