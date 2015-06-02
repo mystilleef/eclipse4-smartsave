@@ -13,7 +13,6 @@ import com.laboki.eclipse.plugin.smartsave.listeners.CompletionListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.DocumentListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.KeyEventListener;
 import com.laboki.eclipse.plugin.smartsave.listeners.PreferenceChangeListener;
-import com.laboki.eclipse.plugin.smartsave.listeners.VerifyEventListener;
 import com.laboki.eclipse.plugin.smartsave.main.services.BaseServices;
 
 public final class PartServices extends BaseServices {
@@ -31,7 +30,6 @@ public final class PartServices extends BaseServices {
 		this.startService(new PreferencesChecker());
 		this.startService(new Scheduler());
 		this.startService(new DocumentListener());
-		this.startService(new VerifyEventListener());
 		this.startService(new AnnotationsListener());
 		this.startService(new KeyEventListener());
 		this.startService(new CompletionListener());
