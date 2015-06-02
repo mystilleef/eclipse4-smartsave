@@ -32,8 +32,8 @@ public final class PreferenceChangeListener extends EventBusInstance
 			@Override
 			protected boolean
 			shouldSchedule() {
-				return BaseTask.noTaskFamilyExists(BaseTask.FAMILY);
-			};
+				return BaseTask.noTaskFamilyExists(PreferenceChangeListener.FAMILY);
+			}
 
 			@Override
 			public void
